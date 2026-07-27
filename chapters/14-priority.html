@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,9 +376,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-real-formula-straight-from-the-machine" id="toc-the-real-formula-straight-from-the-machine" class="nav-link active" data-scroll-target="#the-real-formula-straight-from-the-machine"><span class="header-section-number">14.1</span> The real formula (straight from the machine)</a></li>
-  <li><a href="#what-each-factor-means-for-you" id="toc-what-each-factor-means-for-you" class="nav-link" data-scroll-target="#what-each-factor-means-for-you"><span class="header-section-number">14.2</span> What each factor means for you</a></li>
-  <li><a href="#the-one-practical-takeaway" id="toc-the-one-practical-takeaway" class="nav-link" data-scroll-target="#the-one-practical-takeaway"><span class="header-section-number">14.3</span> The one practical takeaway</a></li>
+  <li><a href="#the-formula" id="toc-the-formula" class="nav-link active" data-scroll-target="#the-formula"><span class="header-section-number">14.1</span> The formula</a></li>
+  <li><a href="#what-each-factor-means" id="toc-what-each-factor-means" class="nav-link" data-scroll-target="#what-each-factor-means"><span class="header-section-number">14.2</span> What each factor means</a></li>
+  <li><a href="#practical-takeaway" id="toc-practical-takeaway" class="nav-link" data-scroll-target="#practical-takeaway"><span class="header-section-number">14.3</span> Practical takeaway</a></li>
   <li><a href="#backfill-why-a-small-job-can-jump-the-line" id="toc-backfill-why-a-small-job-can-jump-the-line" class="nav-link" data-scroll-target="#backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">14.4</span> Backfill: why a small job can jump the line</a></li>
   <li><a href="#seeing-your-own-priority" id="toc-seeing-your-own-priority" class="nav-link" data-scroll-target="#seeing-your-own-priority"><span class="header-section-number">14.5</span> Seeing your own priority</a></li>
   </ul>
@@ -407,52 +407,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Your position in line is a weighted sum of factors. On MedicineBow the weights are <strong>QOS × 200, fair-share × 100, job-size × 100, age × 10.</strong> QOS dominates — it’s weighted twice fair-share and twenty times age. Translation: <strong>which QOS you pick matters more than anything else you do.</strong> You cannot out-wait a better QOS by sitting in the queue.</p>
+<p>Your position in line is a weighted sum of factors. On MedicineBow the weights are <strong>QOS × 200, fair-share × 100, job-size × 100, age × 10.</strong> QOS dominates — twice the weight of fair-share and twenty times age — so which QOS you pick matters more than anything else, and you cannot out-wait a better QOS by sitting in the queue.</p>
 </div>
-<section id="the-real-formula-straight-from-the-machine" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="the-real-formula-straight-from-the-machine"><span class="header-section-number">14.1</span> The real formula (straight from the machine)</h2>
-<p>Slurm computes a priority score for every pending job and runs the highest scores first (subject to backfill, below). The score is a weighted sum, and MedicineBow’s actual weights are:</p>
+<section id="the-formula" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="the-formula"><span class="header-section-number">14.1</span> The formula</h2>
+<p>Slurm computes a priority score for every pending job and runs the highest scores first (subject to backfill, below). The score is a weighted sum; MedicineBow’s weights are:</p>
 <pre class="text"><code>PriorityWeightQOS       = 200     &lt;- dominant
 PriorityWeightFairShare = 100
 PriorityWeightJobSize   = 100
 PriorityWeightAge       = 10
 PriorityWeightPartition = 0       (partition doesn't affect priority here)</code></pre>
-<p>Each factor is a number between 0 and 1, multiplied by its weight, and summed. So the biggest lever, by a wide margin, is <strong>QOS</strong>.</p>
+<p>Each factor is a number between 0 and 1, multiplied by its weight, and summed. The biggest lever, by a wide margin, is <strong>QOS</strong>.</p>
 </section>
-<section id="what-each-factor-means-for-you" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="what-each-factor-means-for-you"><span class="header-section-number">14.2</span> What each factor means for you</h2>
-<p><strong>QOS (weight 200) — the big one.</strong> Higher-priority QOS = dramatically better position. From <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>: <code>interactive</code> (90) &gt; <code>fast</code> (80) &gt; <code>normal</code> (70) &gt; <code>long</code> (60). Choosing <code>fast</code> over <code>long</code> is worth more priority than any amount of waiting will earn you. This is <em>why</em> the short-vs-long decision in <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a> matters so much.</p>
-<p><strong>Fair-share (weight 100) — recent usage.</strong> Slurm tracks how much your account has used lately, relative to its share. Burn a lot this week and your fair-share factor drops, lowering priority for a while; it recovers as usage decays (half-life ~7 days here). You can’t game this — it’s the mechanism that stops any one group from monopolizing the machine. It rewards <em>steady</em> use over <em>bursty</em> hogging.</p>
-<p><strong>Job size (weight 100).</strong> A factor based on the resources requested. Combined with the <code>SMALL_RELATIVE_TO_TIME</code> flag this cluster sets, it interacts with your time request — another reason not to over-ask (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
-<p><strong>Age (weight 10) — time spent waiting.</strong> Your job slowly gains priority the longer it sits, maxing out after ~3 days. But at weight 10, age is a tie-breaker, <strong>not</strong> a strategy. You will not age your way past someone who chose a better QOS. Waiting is the weakest lever there is.</p>
+<section id="what-each-factor-means" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="what-each-factor-means"><span class="header-section-number">14.2</span> What each factor means</h2>
+<p><strong>QOS (weight 200).</strong> Higher-priority QOS means a better position. From <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>: <code>interactive</code> (90) &gt; <code>fast</code> (80) &gt; <code>normal</code> (70) &gt; <code>long</code> (60). Choosing <code>fast</code> over <code>long</code> is worth more priority than any amount of waiting, which is why the short-vs-long decision in <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a> matters.</p>
+<p><strong>Fair-share (weight 100) — recent usage.</strong> Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.</p>
+<p><strong>Job size (weight 100).</strong> A factor based on the resources requested. With the <code>SMALL_RELATIVE_TO_TIME</code> flag this cluster sets, it interacts with your time request — another reason not to over-ask (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
+<p><strong>Age (weight 10) — time spent waiting.</strong> A job gains priority the longer it sits, maxing out after ~3 days. At weight 10, age is a tie-breaker, not a strategy; you won’t age past someone who chose a better QOS.</p>
 </section>
-<section id="the-one-practical-takeaway" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="the-one-practical-takeaway"><span class="header-section-number">14.3</span> The one practical takeaway</h2>
+<section id="practical-takeaway" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="practical-takeaway"><span class="header-section-number">14.3</span> Practical takeaway</h2>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Pick the QOS, don’t play the queue
+QOS dominates priority
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Because QOS is weighted 2× fair-share and 20× age, the highest-leverage thing you can do for start time is <strong>choose the most appropriate high-priority QOS your job fits into</strong> — the shortest walltime tier that still lets your job finish (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>). Everything else — waiting longer, resubmitting, submitting at 3am — is noise by comparison.</p>
+<p>Because QOS is weighted 2× fair-share and 20× age, the highest-leverage choice for start time is the most appropriate high-priority QOS your job fits — the shortest walltime tier that still lets it finish (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>). Waiting longer, resubmitting, or submitting at 3am have little effect by comparison.</p>
 </div>
 </div>
 </section>
 <section id="backfill-why-a-small-job-can-jump-the-line" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">14.4</span> Backfill: why a small job can jump the line</h2>
-<p>Priority decides the <em>order</em>, but Slurm also <strong>backfills</strong>: if the top job is waiting for, say, 40 nodes to free up, Slurm will slot in a smaller, shorter job that fits in the gap <em>right now</em> — as long as doing so won’t delay that top job’s reserved start time. This is why a tiny 20-minute test can start immediately even when the queue looks deep, and it’s a big part of why short jobs feel so much snappier than long ones. Requesting <strong>less time and fewer resources makes your job backfill-eligible in more gaps</strong> — yet another payoff for right-sizing.</p>
+<p>Priority sets the order, but Slurm also <strong>backfills</strong>: if the top job is waiting for, say, 40 nodes to free up, Slurm slots a smaller, shorter job into the gap now, as long as that doesn’t delay the top job’s reserved start time. This is why a 20-minute test can start immediately even when the queue looks deep, and why short jobs start sooner than long ones. Requesting less time and fewer resources makes your job backfill-eligible in more gaps — another payoff for right-sizing.</p>
 </section>
 <section id="seeing-your-own-priority" class="level2" data-number="14.5">
 <h2 data-number="14.5" class="anchored" data-anchor-id="seeing-your-own-priority"><span class="header-section-number">14.5</span> Seeing your own priority</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sprio</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>            <span class="co"># the priority breakdown for a pending job</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sprio</span> <span class="at">-l</span>                    <span class="co"># all pending jobs, with factor columns</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>      <span class="co"># ARCC helper: plain-language "why am I waiting?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If <code>sprio</code> shows your QOS factor is low because you’re on <code>long</code>, and the job would actually finish in 10 hours, resubmitting under <code>fast</code> is the single most effective change you can make.</p>
-<p>With priority understood, let’s watch jobs actually run — and diagnose them when they don’t (<a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>).</p>
+<p>If <code>sprio</code> shows a low QOS factor because you’re on <code>long</code> but the job would finish in 10 hours, resubmitting under <code>fast</code> is the most effective change you can make.</p>
+<p>Next: watching jobs run and diagnosing them when they don’t (<a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>).</p>
 
 
 </section>

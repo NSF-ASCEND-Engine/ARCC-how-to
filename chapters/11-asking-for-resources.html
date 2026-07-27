@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11&nbsp; Asking for resources (and why over-asking punishes you) – Getting Started on ARCC MedicineBow</title>
+<title>11&nbsp; Asking for resources – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/11-asking-for-resources.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/11-asking-for-resources.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,9 +377,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#cores-tasks-and-the-words-slurm-uses" id="toc-cores-tasks-and-the-words-slurm-uses" class="nav-link active" data-scroll-target="#cores-tasks-and-the-words-slurm-uses"><span class="header-section-number">11.1</span> Cores, tasks, and the words Slurm uses</a></li>
-  <li><a href="#memory-the-directive-people-forget-then-regret" id="toc-memory-the-directive-people-forget-then-regret" class="nav-link" data-scroll-target="#memory-the-directive-people-forget-then-regret"><span class="header-section-number">11.2</span> Memory — the directive people forget, then regret</a></li>
-  <li><a href="#time-long-enough-to-finish-short-enough-to-start" id="toc-time-long-enough-to-finish-short-enough-to-start" class="nav-link" data-scroll-target="#time-long-enough-to-finish-short-enough-to-start"><span class="header-section-number">11.3</span> Time — long enough to finish, short enough to start</a></li>
-  <li><a href="#over-asking-punishes-you-first" id="toc-over-asking-punishes-you-first" class="nav-link" data-scroll-target="#over-asking-punishes-you-first"><span class="header-section-number">11.4</span> Over-asking punishes you first</a></li>
+  <li><a href="#memory" id="toc-memory" class="nav-link" data-scroll-target="#memory"><span class="header-section-number">11.2</span> Memory</a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time"><span class="header-section-number">11.3</span> Time</a></li>
+  <li><a href="#over-asking-slows-you-down" id="toc-over-asking-slows-you-down" class="nav-link" data-scroll-target="#over-asking-slows-you-down"><span class="header-section-number">11.4</span> Over-asking slows you down</a></li>
   <li><a href="#measure-then-right-size-with-seff" id="toc-measure-then-right-size-with-seff" class="nav-link" data-scroll-target="#measure-then-right-size-with-seff"><span class="header-section-number">11.5</span> Measure, then right-size, with <code>seff</code></a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/11-asking-for-resources.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -387,9 +387,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/11-asking-for-resources.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/11-asking-for-resources.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-resources" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></h1>
+<h1 class="title"><span id="sec-resources" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></h1>
 </div>
 
 
@@ -407,11 +407,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Ask for what your job actually needs — cores, memory, time — and no more. Every extra core, gigabyte, or hour makes your job <strong>harder to schedule</strong>, so it waits longer, and it burns more of your allocation. Over-asking hurts <em>you</em> first. Two rules: <strong>always set <code>--mem</code> explicitly</strong>, and <strong>measure real usage with <code>seff</code> after your first run</strong>, then right-size.</p>
+<p>Ask for what your job needs — cores, memory, time — and no more. Every extra core, gigabyte, or hour makes the job harder to schedule, so it waits longer and burns more of your allocation. Always set <code>--mem</code> explicitly, and measure real usage with <code>seff</code> after your first run, then right-size.</p>
 </div>
 <section id="cores-tasks-and-the-words-slurm-uses" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="cores-tasks-and-the-words-slurm-uses"><span class="header-section-number">11.1</span> Cores, tasks, and the words Slurm uses</h2>
-<p>Slurm’s vocabulary is a little fussy, but for most jobs you only need two ideas:</p>
+<p>For most jobs you need two ideas:</p>
 <ul>
 <li>A <strong>task</strong> is one instance of your program. Most jobs are a single task.</li>
 <li><strong>CPUs per task</strong> is how many cores that program can use (its threads).</li>
@@ -424,10 +424,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Multithreaded (OpenMP, most numpy/xarray work)?</strong> <code>--ntasks=1 --cpus-per-task=N</code>, and set <code>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK</code>.</li>
 <li><strong>MPI across many nodes?</strong> Use <code>--nodes</code> and <code>--ntasks</code>, and launch with <code>srun</code> (<a href="23-parallelism-ladder.html" class="quarto-xref"><span>Chapter 20</span></a>).</li>
 </ul>
-<p>Asking for 8 cores does <strong>not</strong> make a single-threaded program faster — it just reserves 7 idle cores and makes you wait longer. Match the request to what your code can actually use.</p>
+<p>Asking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores and makes you wait longer. Match the request to what your code can use.</p>
 </section>
-<section id="memory-the-directive-people-forget-then-regret" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="memory-the-directive-people-forget-then-regret"><span class="header-section-number">11.2</span> Memory — the directive people forget, then regret</h2>
+<section id="memory" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="memory"><span class="header-section-number">11.2</span> Memory</h2>
 <p>Set memory explicitly, every time. Two ways:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G              # total memory for the whole job (simplest)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
@@ -438,42 +438,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Remember the 10 GB/core default on <code>mb</code>
+The 10 GB/core default on <code>mb</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you omit <code>--mem</code> on the default partition, you get <strong>10 GB per core</strong>, so <code>--cpus-per-task=8</code> silently becomes a 80 GB request. That queues slower and can be rejected outright if it exceeds a limit. Name your memory. (Full story in <a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>.)</p>
+<p>If you omit <code>--mem</code> on the default partition, you get 10 GB per core, so <code>--cpus-per-task=8</code> becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set your memory explicitly. (Full story in <a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>.)</p>
 </div>
 </div>
-<p>How much do you actually need? For a first run, estimate high-ish so it doesn’t get killed, then <strong>measure and right-size</strong> (below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer (<a href="19-when-jobs-fail.html" class="quarto-xref"><span>Chapter 19</span></a>) — so memory is the one resource where running out is fatal rather than merely slow.</p>
+<p>For a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer (<a href="19-when-jobs-fail.html" class="quarto-xref"><span>Chapter 19</span></a>), so memory is the one resource where running out is fatal rather than slow.</p>
 </section>
-<section id="time-long-enough-to-finish-short-enough-to-start" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="time-long-enough-to-finish-short-enough-to-start"><span class="header-section-number">11.3</span> Time — long enough to finish, short enough to start</h2>
+<section id="time" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="time"><span class="header-section-number">11.3</span> Time</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your job is <strong>killed the instant it hits this limit</strong>, so the request must exceed the real runtime — pad by, say, 25%. But don’t pad wildly: a shorter time limit means a <strong>lower QOS ceiling and better odds of backfilling into gaps</strong>, so it often <em>starts sooner</em> (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>). There’s a real tension here, and picking the time limit thoughtfully is one of the highest-leverage things you do.</p>
+<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower QOS ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-There is no per-partition default time — so set <code>--time</code>
+No per-partition default time, so set <code>--time</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Partitions on MedicineBow don’t set a default wall time. If you don’t specify <code>--time</code>, you inherit the partition maximum (7 days), which your QOS will then likely reject (the <code>normal</code> QOS caps at 3 days). Always set <code>--time</code> yourself so the job’s request is coherent.</p>
+<p>Partitions on MedicineBow don’t set a default wall time. Without <code>--time</code>, you inherit the partition maximum (7 days), which your QOS will likely reject (the <code>normal</code> QOS caps at 3 days). Always set <code>--time</code> yourself.</p>
 </div>
 </div>
 </section>
-<section id="over-asking-punishes-you-first" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="over-asking-punishes-you-first"><span class="header-section-number">11.4</span> Over-asking punishes you first</h2>
-<p>It’s worth making this concrete, because it’s counterintuitive to newcomers:</p>
+<section id="over-asking-slows-you-down" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="over-asking-slows-you-down"><span class="header-section-number">11.4</span> Over-asking slows you down</h2>
+<p>A bigger request is a rarer set of free resources to find:</p>
 <ul>
-<li><strong>More cores / memory</strong> → fewer nodes can satisfy you → <strong>longer wait</strong>, and you’re charged for cores you didn’t use.</li>
-<li><strong>More time</strong> → lower-priority QOS tier and fewer backfill opportunities → <strong>longer wait</strong>.</li>
-<li><strong>A GPU you don’t use</strong> → you sit in the (busy) GPU queue for nothing (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</li>
+<li><strong>More cores / memory</strong> → fewer nodes can satisfy you → longer wait, and you’re charged for cores you didn’t use.</li>
+<li><strong>More time</strong> → lower-priority QOS tier and fewer backfill opportunities → longer wait.</li>
+<li><strong>A GPU you don’t use</strong> → you sit in the busy GPU queue for nothing (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</li>
 </ul>
-<p>The scheduler isn’t punishing you on purpose; a bigger, longer request is simply a rarer set of free resources to find. The lesson: <strong>right-size</strong>.</p>
+<p>The fix is to right-size.</p>
 </section>
 <section id="measure-then-right-size-with-seff" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="measure-then-right-size-with-seff"><span class="header-section-number">11.5</span> Measure, then right-size, with <code>seff</code></h2>
@@ -485,10 +485,10 @@ Cores: 8
 CPU Efficiency: 24.13% of 04:16:00 core-walltime      &lt;- you used ~2 of 8 cores
 Memory Utilized: 5.31 GB
 Memory Efficiency: 16.59% of 32.00 GB                 &lt;- 32G reserved, 5G used</code></pre>
-<p>Read that as: <em>next time ask for ~2 cores and ~8 GB.</em> Low CPU efficiency means you reserved cores your code can’t use; low memory efficiency means you can ask for far less and start sooner. One measured run is worth a dozen guesses.</p>
-<p>Check what you’re even <em>allowed</em> to ask for with ARCC’s helper:</p>
+<p>Read that as: <em>next time ask for ~2 cores and ~8 GB.</em> Low CPU efficiency means you reserved cores your code can’t use; low memory efficiency means you can ask for far less and start sooner.</p>
+<p>Check what you’re allowed to ask for with ARCC’s helper:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that you can size a job, the next decision is <em>where</em> to send it — partitions and QOS, and the queue-time consequences of each (<a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>, <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
+<p>Next: where to send the job — partitions and QOS, and their queue-time consequences (<a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>, <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
 
 
 </section>

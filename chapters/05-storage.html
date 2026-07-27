@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-single-most-important-sentence-in-this-book" id="toc-the-single-most-important-sentence-in-this-book" class="nav-link active" data-scroll-target="#the-single-most-important-sentence-in-this-book"><span class="header-section-number">5.1</span> The single most important sentence in this book</a></li>
+  <li><a href="#nothing-is-backed-up" id="toc-nothing-is-backed-up" class="nav-link active" data-scroll-target="#nothing-is-backed-up"><span class="header-section-number">5.1</span> Nothing is backed up</a></li>
   <li><a href="#the-three-filesystems" id="toc-the-three-filesystems" class="nav-link" data-scroll-target="#the-three-filesystems"><span class="header-section-number">5.2</span> The three filesystems</a>
   <ul class="collapse">
   <li><a href="#home-small-personal-for-config-not-data" id="toc-home-small-personal-for-config-not-data" class="nav-link" data-scroll-target="#home-small-personal-for-config-not-data"><span class="header-section-number">5.2.1</span> <code>/home</code> — small, personal, for config not data</a></li>
@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#gscratchuser-fast-and-disposable" id="toc-gscratchuser-fast-and-disposable" class="nav-link" data-scroll-target="#gscratchuser-fast-and-disposable"><span class="header-section-number">5.2.3</span> <code>/gscratch/$USER</code> — fast and disposable</a></li>
   <li><a href="#lscratch-node-local-gone-when-the-job-ends" id="toc-lscratch-node-local-gone-when-the-job-ends" class="nav-link" data-scroll-target="#lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">5.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</a></li>
   </ul></li>
-  <li><a href="#the-1-self-inflicted-wound-installing-software-into-home" id="toc-the-1-self-inflicted-wound-installing-software-into-home" class="nav-link" data-scroll-target="#the-1-self-inflicted-wound-installing-software-into-home"><span class="header-section-number">5.3</span> The #1 self-inflicted wound: installing software into home</a></li>
+  <li><a href="#install-software-in-project-space-not-home" id="toc-install-software-in-project-space-not-home" class="nav-link" data-scroll-target="#install-software-in-project-space-not-home"><span class="header-section-number">5.3</span> Install software in project space, not home</a></li>
   <li><a href="#a-sane-layout-to-adopt-on-day-one" id="toc-a-sane-layout-to-adopt-on-day-one" class="nav-link" data-scroll-target="#a-sane-layout-to-adopt-on-day-one"><span class="header-section-number">5.4</span> A sane layout to adopt on day one</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/05-storage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -412,15 +412,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>MedicineBow gives you three filesystems: <strong>home</strong> (50 GB, small and precious), <strong>project</strong> (5 TB, shared with your group, where real datasets and results live), and <strong>scratch</strong> (5 TB, fast, temporary, purged after 90 days of inactivity). <strong>None of them is backed up.</strong> Install software into <code>/project/&lt;proj&gt;/software</code>, not home — one conda env can fill your entire home directory.</p>
+<p>MedicineBow has three filesystems: <strong>home</strong> (50 GB, small), <strong>project</strong> (5 TB, shared with your group, where datasets and results live), and <strong>scratch</strong> (5 TB, fast, purged after 90 days of inactivity). <strong>None is backed up.</strong> Install software into <code>/project/&lt;proj&gt;/software</code>, not home — one conda env can fill your home directory.</p>
 </div>
-<section id="the-single-most-important-sentence-in-this-book" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="the-single-most-important-sentence-in-this-book"><span class="header-section-number">5.1</span> The single most important sentence in this book</h2>
-<blockquote class="blockquote">
+<section id="nothing-is-backed-up" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">5.1</span> Nothing is backed up</h2>
 <p><strong>Nothing on MedicineBow is backed up. Not home, not project, not scratch.</strong></p>
-</blockquote>
-<p>There <em>are</em> snapshots (point-in-time copies you can sometimes restore from), but snapshots live on the <strong>same storage array</strong> as your live data. If that array fails, the snapshots fail with it. Snapshots protect you from <em>“I accidentally deleted that file yesterday”</em> — they do <strong>not</strong> protect you from hardware loss. Anything you cannot afford to lose must have a copy somewhere else (your institution’s storage, a cloud bucket, the separate <strong>Alcova</strong> service which <em>does</em> have real nightly backups, etc.).</p>
-<p>Internalize this before you generate a month of simulation output onto scratch and assume it’s safe.</p>
+<p>There <em>are</em> snapshots (point-in-time copies you can sometimes restore from), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
 </section>
 <section id="the-three-filesystems" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">5.2</span> The three filesystems</h2>
@@ -479,42 +476,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Check where you stand at any time:</p>
+<p>Check your usage and limits for home, scratch, and project:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arccquota</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>which prints your usage and limits for home, scratch, and project side by side.</p>
 <section id="home-small-personal-for-config-not-data" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="home-small-personal-for-config-not-data"><span class="header-section-number">5.2.1</span> <code>/home</code> — small, personal, for config not data</h3>
-<p>50 GB sounds like a lot until your first conda environment eats 15 GB of it. Home is for dotfiles, scripts, small configs — <strong>not</strong> datasets and <strong>not</strong> software installs. When home fills up, weird things break (jobs fail to write logs, logins misbehave), so keep an eye on it with <code>arccquota</code> and <code>du -sh ~/* | sort -h</code>.</p>
+<p>50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts, and small configs — not datasets and not software installs. When home fills up, things break (jobs fail to write logs, logins misbehave), so watch it with <code>arccquota</code> and <code>du -sh ~/* | sort -h</code>.</p>
 </section>
 <section id="projectproj-the-shared-workhorse" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="projectproj-the-shared-workhorse"><span class="header-section-number">5.2.2</span> <code>/project/&lt;proj&gt;</code> — the shared workhorse</h3>
-<p>5 TB, shared by everyone on your project (e.g.&nbsp;<code>cowy-firesurro</code>). This is where shared datasets, inputs, and results belong. Because it’s shared, agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project formally ends — long enough to get your data out, not a permanent archive.</p>
+<p>5 TB, shared by everyone on your project (e.g.&nbsp;<code>cowy-firesurro</code>). This is where shared datasets, inputs, and results belong. Agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project ends.</p>
 </section>
 <section id="gscratchuser-fast-and-disposable" class="level3" data-number="5.2.3">
 <h3 data-number="5.2.3" class="anchored" data-anchor-id="gscratchuser-fast-and-disposable"><span class="header-section-number">5.2.3</span> <code>/gscratch/$USER</code> — fast and disposable</h3>
-<p>Also 5 TB, and this is the <strong>fast</strong> filesystem — use it as the working directory for running jobs that do heavy I/O. The catch is in the name: it’s <em>scratch</em>. Files untouched for <strong>90 days</strong> are purged automatically. Never keep the only copy of anything here.</p>
+<p>Also 5 TB, and the <strong>fast</strong> filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for <strong>90 days</strong> are purged automatically. Never keep the only copy of anything here.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Is it 45 days or 90? It’s 90.
+Scratch purge is 90 days, not 45
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The legacy Confluence docs say scratch is purged after 45 days of inactivity. The current ARCC wiki says 90. Both pages are live on the web, which is confusing — but <strong>90 is the current policy.</strong> Either way: don’t treat scratch as storage.</p>
+<p>Legacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
 </div>
 </div>
 </section>
 <section id="lscratch-node-local-gone-when-the-job-ends" class="level3" data-number="5.2.4">
 <h3 data-number="5.2.4" class="anchored" data-anchor-id="lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">5.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</h3>
-<p>Each compute node has its own local disk mounted at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), which makes it ideal for scratch files a single job reads and rewrites constantly. But it is <strong>wiped the instant your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> <em>before</em> your job exits.</p>
-<p>(There is no <code>/data</code> filesystem, despite what some docs suggest — it doesn’t exist on the machine.)</p>
+<p>Each compute node has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
+<p>(There is no <code>/data</code> filesystem, despite what some docs suggest.)</p>
 </section>
 </section>
-<section id="the-1-self-inflicted-wound-installing-software-into-home" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="the-1-self-inflicted-wound-installing-software-into-home"><span class="header-section-number">5.3</span> The #1 self-inflicted wound: installing software into home</h2>
+<section id="install-software-in-project-space-not-home" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="install-software-in-project-space-not-home"><span class="header-section-number">5.3</span> Install software in project space, not home</h2>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -525,8 +521,8 @@ Install software into <code>/project/&lt;proj&gt;/software</code>, not <code>/ho
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Your project has an extra <strong>250 GB</strong> quota specifically at <code>/project/&lt;proj&gt;/software</code> for installing software — and ARCC wants you to use it. A single conda environment with a few scientific packages can be 10–20 GB. Put two of those in your 50 GB home directory and you’re full, with mysterious failures everywhere.</p>
-<p>Point conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>) shows exactly how.</p>
+<p>Your project has an extra <strong>250 GB</strong> quota at <code>/project/&lt;proj&gt;/software</code> for installing software. A single conda environment with a few scientific packages can be 10–20 GB — two of those fills a 50 GB home directory.</p>
+<p>Point conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>) shows how.</p>
 </div>
 </div>
 </section>
@@ -538,7 +534,7 @@ Install software into <code>/project/&lt;proj&gt;/software</code>, not <code>/ho
     data/                         # shared input datasets
     &lt;you&gt;/                        # your working area within the project
 /gscratch/&lt;you&gt;/                  # active job working dirs, heavy I/O, big temp output</code></pre>
-<p>With storage sorted, the next question is how to get data <em>into</em> these filesystems — which is <a href="06-moving-data.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
+<p>Next: getting data into these filesystems (<a href="06-moving-data.html" class="quarto-xref"><span>Chapter 6</span></a>).</p>
 
 
 </section>

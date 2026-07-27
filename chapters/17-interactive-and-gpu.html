@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#sec-gpu" id="toc-sec-gpu" class="nav-link" data-scroll-target="#sec-gpu"><span class="header-section-number">17.2</span> GPU jobs</a>
   <ul class="collapse">
-  <li><a href="#which-gpu-partition-match-it-to-the-phase-of-work" id="toc-which-gpu-partition-match-it-to-the-phase-of-work" class="nav-link" data-scroll-target="#which-gpu-partition-match-it-to-the-phase-of-work"><span class="header-section-number">17.2.1</span> Which GPU partition? Match it to the phase of work</a></li>
+  <li><a href="#choosing-a-gpu-partition" id="toc-choosing-a-gpu-partition" class="nav-link" data-scroll-target="#choosing-a-gpu-partition"><span class="header-section-number">17.2.1</span> Choosing a GPU partition</a></li>
   <li><a href="#checking-gpu-availability-and-usage" id="toc-checking-gpu-availability-and-usage" class="nav-link" data-scroll-target="#checking-gpu-availability-and-usage"><span class="header-section-number">17.2.2</span> Checking GPU availability and usage</a></li>
   </ul></li>
   </ul>
@@ -411,14 +411,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>For hands-on work, <code>salloc</code> gives you a live shell on a compute node (start it inside <code>tmux</code> so a dropped connection doesn’t kill it). For GPUs, add <code>--gres=gpu:N</code> and pick a GPU partition — develop on cheap <strong>A30s</strong> (start in minutes), reserve <strong>H100s</strong> for jobs that truly need them (start in hours). GPU CUDA work needs the deprecated <code>gcc/13.2.0</code>.</p>
+<p><code>salloc</code> gives you a live shell on a compute node; start it inside <code>tmux</code> so a dropped connection doesn’t kill it. For GPUs, add <code>--gres=gpu:N</code> and pick a GPU partition — develop on <strong>A30s</strong> (start in minutes), reserve <strong>H100s</strong> for jobs that need them (start in hours). GPU CUDA work needs the deprecated <code>gcc/13.2.0</code>.</p>
 </div>
 <section id="sec-salloc" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="sec-salloc"><span class="header-section-number">17.1</span> Interactive sessions with <code>salloc</code></h2>
-<p>When you need to poke at things by hand — debug a crash, explore a dataset, build and test a model interactively — request an interactive allocation:</p>
+<p>For hands-on work — debugging a crash, exploring a dataset, building a model interactively — request an interactive allocation:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">--account</span><span class="op">=</span>cowy-firesurro <span class="at">--qos</span><span class="op">=</span>interactive <span class="dt">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">--time</span><span class="op">=</span>02:00:00 <span class="at">--cpus-per-task</span><span class="op">=</span>4 <span class="at">--mem</span><span class="op">=</span>16G</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>salloc</code> requires at least <code>--account</code> and <code>--time</code>. When it grants the allocation you get a shell <strong>on a compute node</strong> — now you can run heavy things freely, because you’re no longer on the login node. The <code>interactive</code> QOS is tuned for exactly this: it starts in ~10–30 seconds (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) with an 8-hour ceiling.</p>
+<p><code>salloc</code> requires at least <code>--account</code> and <code>--time</code>. It grants a shell <strong>on a compute node</strong>, where you can run heavy work off the login node. The <code>interactive</code> QOS starts in ~10–30 seconds (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) with an 8-hour ceiling.</p>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -429,13 +429,13 @@ Launch <code>salloc</code> from inside <code>tmux</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>An interactive session lives in <em>your shell</em>. If your laptop sleeps or WiFi drops, the shell dies and the session ends. Start <code>tmux</code> on the login node <strong>first</strong>, then <code>salloc</code> inside it (<a href="04-linux-survival.html#sec-tmux" class="quarto-xref"><span>Section 4.6</span></a>). Now you can detach, close the laptop, and reattach tomorrow with the session intact — as long as it’s within your <code>--time</code>.</p>
+<p>An interactive session lives in your shell. If your laptop sleeps or WiFi drops, the shell dies and the session ends. Start <code>tmux</code> on the login node first, then <code>salloc</code> inside it (<a href="04-linux-survival.html#sec-tmux" class="quarto-xref"><span>Section 4.6</span></a>). You can then detach, close the laptop, and reattach later with the session intact, as long as it’s within your <code>--time</code>.</p>
 </div>
 </div>
-<p>When you’re done, <code>exit</code> the shell to release the allocation (don’t sit on idle cores — it hurts your fair-share and blocks others).</p>
+<p>When you’re done, <code>exit</code> the shell to release the allocation and free the cores for others.</p>
 <section id="interactive-apps-in-the-portal" class="level3" data-number="17.1.1">
 <h3 data-number="17.1.1" class="anchored" data-anchor-id="interactive-apps-in-the-portal"><span class="header-section-number">17.1.1</span> Interactive apps in the portal</h3>
-<p>The web portal (<a href="03-first-login.html" class="quarto-xref"><span>Chapter 3</span></a>) offers graphical interactive apps — a full XFCE desktop, <strong>RStudio</strong>, and almost certainly <strong>Jupyter</strong> — that launch as scheduled jobs behind the scenes. These are the friendliest way to do interactive/GPU notebook work without wrangling <code>salloc</code> and port-forwarding by hand.</p>
+<p>The web portal (<a href="03-first-login.html" class="quarto-xref"><span>Chapter 3</span></a>) offers graphical interactive apps — a full XFCE desktop, <strong>RStudio</strong>, and <strong>Jupyter</strong> — that launch as scheduled jobs behind the scenes. These handle interactive and GPU notebook work without manual <code>salloc</code> and port-forwarding.</p>
 </section>
 </section>
 <section id="sec-gpu" class="level2" data-number="17.2">
@@ -455,8 +455,8 @@ Launch <code>salloc</code> from inside <code>tmux</code>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span>                                    <span class="co"># confirm the GPU is visible</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To request a <strong>specific GPU type</strong> you can also use the typed form, e.g.&nbsp;<code>--gres=gpu:h100:2</code> for two H100s on one node.</p>
-<section id="which-gpu-partition-match-it-to-the-phase-of-work" class="level3" data-number="17.2.1">
-<h3 data-number="17.2.1" class="anchored" data-anchor-id="which-gpu-partition-match-it-to-the-phase-of-work"><span class="header-section-number">17.2.1</span> Which GPU partition? Match it to the phase of work</h3>
+<section id="choosing-a-gpu-partition" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="choosing-a-gpu-partition"><span class="header-section-number">17.2.1</span> Choosing a GPU partition</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -505,11 +505,11 @@ Launch <code>salloc</code> from inside <code>tmux</code>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Don’t develop on H100s
+Develop on A30s, not H100s
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>H100 nodes are the most contended resource on the machine — waits of several hours are normal when they’re busy (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>). Do your iterate-fast development on <strong>A30s</strong>, which you can usually get in minutes, and only submit to <code>mb-h100</code> when you have a real training run that needs that horsepower. Check <code>gpuavail</code> and <code>showpartitions</code> before choosing.</p>
+<p>H100 nodes are the most contended resource on the machine — waits of several hours are normal when they’re busy (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>). Do fast-iteration development on <strong>A30s</strong>, usually available in minutes, and submit to <code>mb-h100</code> only for a real training run that needs it. Check <code>gpuavail</code> and <code>showpartitions</code> before choosing.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -518,11 +518,11 @@ Don’t develop on H100s
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The GPU compiler quirk
+GPU compiler requirement
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>cuda-toolkit</code> is built only against <strong><code>gcc/13.2.0</code></strong>, even though <code>gcc/13.2.0</code> prints a deprecation warning nudging you to <code>gcc/14.2.0</code>. For GPU/CUDA work, load <code>gcc/13.2.0</code> anyway and ignore the warning (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>). Inside containers, add <code>--nv</code> to expose the GPU (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>).</p>
+<p><code>cuda-toolkit</code> is built only against <strong><code>gcc/13.2.0</code></strong>, even though <code>gcc/13.2.0</code> prints a deprecation warning pointing to <code>gcc/14.2.0</code>. For GPU/CUDA work, load <code>gcc/13.2.0</code> and ignore the warning (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>). Inside containers, add <code>--nv</code> to expose the GPU (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>).</p>
 </div>
 </div>
 </section>
@@ -533,8 +533,7 @@ The GPU compiler quirk
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sinfo</span> <span class="at">-p</span> mb-h100 <span class="at">-o</span> <span class="st">"%P %t %G %D"</span>   <span class="co"># H100 node states this second</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span>                  <span class="co"># inside a GPU job: is my code actually using the GPU?</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nvtop</span>                       <span class="co"># inside a GPU job: live GPU usage, like htop for GPUs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If <code>nvidia-smi</code> shows 0% utilization while your job runs, your code isn’t actually on the GPU — a common and expensive mistake. Verify early.</p>
-<p>Next: what happens when the machine reclaims your node, and how to survive it.</p>
+<p>If <code>nvidia-smi</code> shows 0% utilization while your job runs, your code isn’t actually on the GPU. Verify early.</p>
 
 
 </section>
@@ -947,8 +946,8 @@ The GPU compiler quirk
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/16-job-arrays.html" class="pagination-link" aria-label="Job arrays: the feature that changes how you work">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span>
+      <a href="../chapters/16-job-arrays.html" class="pagination-link" aria-label="Job arrays">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

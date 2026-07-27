@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; Job arrays: the feature that changes how you work – Getting Started on ARCC MedicineBow</title>
+<title>16&nbsp; Job arrays – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-problem-it-solves" id="toc-the-problem-it-solves" class="nav-link active" data-scroll-target="#the-problem-it-solves"><span class="header-section-number">16.1</span> The problem it solves</a></li>
   <li><a href="#the-mechanics" id="toc-the-mechanics" class="nav-link" data-scroll-target="#the-mechanics"><span class="header-section-number">16.2</span> The mechanics</a></li>
   <li><a href="#driving-work-from-the-index" id="toc-driving-work-from-the-index" class="nav-link" data-scroll-target="#driving-work-from-the-index"><span class="header-section-number">16.3</span> Driving work from the index</a></li>
-  <li><a href="#throttling-be-a-good-neighbor" id="toc-throttling-be-a-good-neighbor" class="nav-link" data-scroll-target="#throttling-be-a-good-neighbor"><span class="header-section-number">16.4</span> Throttling: be a good neighbor</a></li>
+  <li><a href="#throttling" id="toc-throttling" class="nav-link" data-scroll-target="#throttling"><span class="header-section-number">16.4</span> Throttling</a></li>
   <li><a href="#managing-an-array" id="toc-managing-an-array" class="nav-link" data-scroll-target="#managing-an-array"><span class="header-section-number">16.5</span> Managing an array</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/16-job-arrays.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -387,9 +387,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-arrays" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></h1>
+<h1 class="title"><span id="sec-arrays" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></h1>
 </div>
 
 
@@ -407,11 +407,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>A job array runs the <em>same script</em> hundreds or thousands of times, each with a different index (<code>$SLURM_ARRAY_TASK_ID</code>). One <code>sbatch</code>, one script, N independent tasks that the scheduler spreads across the cluster and backfills into gaps. For parameter sweeps, ensembles, and per-file processing, this is the single biggest productivity unlock on the machine. MedicineBow allows arrays up to <strong>10,000</strong> tasks.</p>
+<p>A job array runs the <em>same script</em> many times, each with a different index (<code>$SLURM_ARRAY_TASK_ID</code>). One <code>sbatch</code>, one script, N independent tasks the scheduler spreads across the cluster and backfills into gaps. MedicineBow allows arrays up to <strong>10,000</strong> tasks.</p>
 </div>
 <section id="the-problem-it-solves" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="the-problem-it-solves"><span class="header-section-number">16.1</span> The problem it solves</h2>
-<p>You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. The wrong way is a bash loop that runs them one after another in a single job (serial, slow, and one crash near the end wastes everything). The other wrong way is copy-pasting 500 submit scripts. The right way is <strong>one array job</strong>: one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.</p>
+<p>You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. A bash loop runs them serially in one job, so one crash near the end wastes everything. Copy-pasting 500 submit scripts is no better. An <strong>array job</strong> is one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.</p>
 </section>
 <section id="the-mechanics" class="level2" data-number="16.2">
 <h2 data-number="16.2" class="anchored" data-anchor-id="the-mechanics"><span class="header-section-number">16.2</span> The mechanics</h2>
@@ -434,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Submit once:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> logs</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit_array.sh        <span class="co"># creates 500 tasks: 12345_1, 12345_2, ... 12345_500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Each task is scheduled independently. Because they’re small and short, they <strong>backfill beautifully</strong> (<a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>) and the whole sweep can finish far faster than the sum of its parts.</p>
+<p>Each task is scheduled independently. Because they’re small and short, they backfill well (<a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>) and the whole sweep finishes faster than running them in series.</p>
 </section>
 <section id="driving-work-from-the-index" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="driving-work-from-the-index"><span class="header-section-number">16.3</span> Driving work from the index</h2>
@@ -448,11 +448,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> process.py <span class="st">"</span><span class="va">$THIS</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(If you index files from a bash array, start <code>--array=0</code>; if you use <code>sed -n Np</code>, start <code>--array=1</code>. Off-by-one here is the classic array bug.)</p>
 </section>
-<section id="throttling-be-a-good-neighbor" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="throttling-be-a-good-neighbor"><span class="header-section-number">16.4</span> Throttling: be a good neighbor</h2>
-<p>Don’t necessarily unleash all 500 at once — cap how many run simultaneously with <code>%</code>:</p>
+<section id="throttling" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="throttling"><span class="header-section-number">16.4</span> Throttling</h2>
+<p>Cap how many tasks run simultaneously with <code>%</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20        # at most 20 tasks running at a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This keeps you from saturating your account’s core cap (and your fair-share, <a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>), while still churning through all 500. A modest <code>%</code> limit is often <em>faster overall</em> because you stop competing with yourself and stay backfill-friendly.</p>
+<p>This keeps you under your account’s core cap (and protects your fair-share, <a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
 </section>
 <section id="managing-an-array" class="level2" data-number="16.5">
 <h2 data-number="16.5" class="anchored" data-anchor-id="managing-an-array"><span class="header-section-number">16.5</span> Managing an array</h2>
@@ -469,15 +469,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Arrays vs.&nbsp;one big MPI job
+Arrays vs.&nbsp;MPI jobs
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>An array is for <strong>independent</strong> tasks that don’t talk to each other (embarrassingly parallel): sweeps, ensembles, per-file pipelines. If your tasks must communicate — a single domain-decomposed simulation — that’s an <strong>MPI</strong> job instead (<a href="23-parallelism-ladder.html" class="quarto-xref"><span>Chapter 20</span></a>), a different tool for a different shape of problem.</p>
+<p>An array is for <strong>independent</strong> tasks that don’t communicate: sweeps, ensembles, per-file pipelines. If your tasks must talk to each other — a single domain-decomposed simulation — use an <strong>MPI</strong> job instead (<a href="23-parallelism-ladder.html" class="quarto-xref"><span>Chapter 20</span></a>).</p>
 </div>
 </div>
-<p>Arrays are also the natural unit for <strong>ensembles</strong> — fire-weather members, hydrologic scenarios, Monte-Carlo draws — one array task per member, each writing to its own output, collected afterward. Reach for them early — most “I need to run this many times” problems are secretly array jobs.</p>
-<p>Next: interactive sessions and GPUs.</p>
+<p>Arrays are also the natural unit for <strong>ensembles</strong> — fire-weather members, hydrologic scenarios, Monte-Carlo draws — one array task per member, each writing to its own output, collected afterward.</p>
 
 
 </section>

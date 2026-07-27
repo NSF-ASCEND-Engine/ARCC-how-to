@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,11 +376,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-condo-model-plainly" id="toc-the-condo-model-plainly" class="nav-link active" data-scroll-target="#the-condo-model-plainly"><span class="header-section-number">18.1</span> The condo model, plainly</a></li>
+  <li><a href="#the-condo-model" id="toc-the-condo-model" class="nav-link active" data-scroll-target="#the-condo-model"><span class="header-section-number">18.1</span> The condo model</a></li>
   <li><a href="#two-ways-to-protect-a-long-run" id="toc-two-ways-to-protect-a-long-run" class="nav-link" data-scroll-target="#two-ways-to-protect-a-long-run"><span class="header-section-number">18.2</span> Two ways to protect a long run</a></li>
   <li><a href="#sec-checkpointing" id="toc-sec-checkpointing" class="nav-link" data-scroll-target="#sec-checkpointing"><span class="header-section-number">18.3</span> Checkpointing</a></li>
   <li><a href="#requeue-behavior-worth-knowing" id="toc-requeue-behavior-worth-knowing" class="nav-link" data-scroll-target="#requeue-behavior-worth-knowing"><span class="header-section-number">18.4</span> Requeue behavior worth knowing</a></li>
-  <li><a href="#the-one-line-policy" id="toc-the-one-line-policy" class="nav-link" data-scroll-target="#the-one-line-policy"><span class="header-section-number">18.5</span> The one-line policy</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/18-preemption-and-checkpointing.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -407,23 +406,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>MedicineBow is a <strong>condo</strong>: research groups buy <code>inv-*</code> nodes, and the rest of us borrow them when idle. The catch — <strong>the owner can reclaim their node at any moment, and your job is automatically requeued</strong> (killed and put back in line). Long jobs must therefore either run on <code>non-investor</code> partitions <em>or</em> <strong>checkpoint</strong> so a requeue costs minutes, not days.</p>
+<p>MedicineBow is a <strong>condo</strong>: research groups buy <code>inv-*</code> nodes, and others borrow them when idle. The owner can reclaim a node at any time, and your job is <strong>requeued</strong> (killed and put back in line). Long jobs should therefore run on <code>non-investor</code> partitions <em>or</em> <strong>checkpoint</strong> so a requeue costs minutes, not days.</p>
 </div>
-<section id="the-condo-model-plainly" class="level2" data-number="18.1">
-<h2 data-number="18.1" class="anchored" data-anchor-id="the-condo-model-plainly"><span class="header-section-number">18.1</span> The condo model, plainly</h2>
-<p>A lot of MedicineBow’s hardware was purchased by individual research groups. Those <code>inv-*</code> partitions “belong” to their investors, who get top priority (QOS 110) on them. To keep the machine busy, everyone else’s jobs can <strong>backfill</strong> onto idle investor nodes — free capacity, most of the time.</p>
-<p>The deal has a string attached:</p>
+<section id="the-condo-model" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="the-condo-model"><span class="header-section-number">18.1</span> The condo model</h2>
+<p>Much of MedicineBow’s hardware was purchased by individual research groups. Those <code>inv-*</code> partitions belong to their investors, who get top priority (QOS 110) on them. Everyone else’s jobs can <strong>backfill</strong> onto idle investor nodes — free capacity most of the time, with one condition.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-An investor can reclaim their node and requeue your job
+An investor can reclaim a node and requeue your job
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you land on investor hardware and the owner submits work, <strong>your job is preempted</strong> — Slurm kills it and (by default here) <strong>requeues</strong> it: it goes back into the pending queue to start over from the beginning when resources free up. Any progress not written to disk is lost. This can happen minutes into a job or days in. For a long, un-checkpointed simulation, that’s potentially days of wasted compute.</p>
+<p>If you land on investor hardware and the owner submits work, your job is <strong>preempted</strong> — Slurm kills it and, by default here, <strong>requeues</strong> it: it returns to the pending queue and starts over from the beginning when resources free up. Any progress not written to disk is lost. This can happen minutes into a job or days in.</p>
 </div>
 </div>
 </section>
@@ -432,12 +430,12 @@ An investor can reclaim their node and requeue your job
 <p><strong>1. Run where you can’t be preempted.</strong> Submit long production jobs to the non-preemptible pool:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=non-investor        # 110 CPU nodes, not reclaimable</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or non-investor-gpu for GPU work</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This is the correct home for anything long that you haven’t checkpointed. (The <code>--constraint=non-investor</code> some docs mention <strong>does not work</strong> — it’s a <em>partition</em>, not a constraint. See <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>.)</p>
-<p><strong>2. Checkpoint, so preemption is cheap.</strong> If you <em>do</em> run on borrowable hardware (or list several partitions for faster starts), make preemption survivable by saving state periodically.</p>
+<p>This is the right home for anything long that you haven’t checkpointed. (The <code>--constraint=non-investor</code> some docs mention <strong>does not work</strong> — it’s a <em>partition</em>, not a constraint. See <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>.)</p>
+<p><strong>2. Checkpoint, so preemption is cheap.</strong> If you run on borrowable hardware (or list several partitions for faster starts), save state periodically so a requeue is survivable.</p>
 </section>
 <section id="sec-checkpointing" class="level2" data-number="18.3">
 <h2 data-number="18.3" class="anchored" data-anchor-id="sec-checkpointing"><span class="header-section-number">18.3</span> Checkpointing</h2>
-<p>A checkpoint is a periodic save of enough state to <em>resume</em> rather than <em>restart</em>. It protects you from three things at once: preemption, node failures, and hitting your walltime limit. Any job measured in days should checkpoint.</p>
+<p>A checkpoint is a periodic save of enough state to <em>resume</em> rather than <em>restart</em>. It protects against preemption, node failures, and hitting your walltime limit. Any job measured in days should checkpoint.</p>
 <p><strong>The pattern:</strong></p>
 <ol type="1">
 <li>Every so often (every N iterations, or every ~30–60 min of wall time), write current state to a checkpoint file in <code>/gscratch</code> or <code>/project</code> — not <code>/lscratch</code>, which is wiped when the job ends (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>).</li>
@@ -445,7 +443,7 @@ An investor can reclaim their node and requeue your job
 <li>Write checkpoints atomically (write to a temp file, then rename) so a crash mid-write can’t corrupt your only checkpoint. Keep the last one or two.</li>
 </ol>
 <p>Many scientific codes have this built in — WRF has restart files, PyTorch has <code>torch.save</code>/<code>load</code> for model+optimizer state, PETSc and Sundials have checkpoint hooks. Turn these on and set the interval to your risk tolerance.</p>
-<p><strong>Auto-resubmit on requeue.</strong> Combine checkpointing with a self-resubmitting job so a preempted or timed-out job comes back automatically:</p>
+<p><strong>Auto-resubmit on requeue.</strong> Combine checkpointing with a self-resubmitting job so a preempted or timed-out job resumes automatically:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --requeue                          # allow this job to be requeued</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --open-mode=append                 # don't clobber the log on requeue</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --signal=B:USR1@120                # send USR1 120s before the walltime kill</span></span>
@@ -456,7 +454,7 @@ An investor can reclaim their node and requeue your job
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">./simulate</span> <span class="at">--fresh</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>--signal</code> line asks Slurm to warn your script 120 seconds before it’s killed for walltime; trap that signal to flush a final checkpoint before you go.</p>
+<p>The <code>--signal</code> line asks Slurm to warn your script 120 seconds before the walltime kill; trap that signal to flush a final checkpoint.</p>
 </section>
 <section id="requeue-behavior-worth-knowing" class="level2" data-number="18.4">
 <h2 data-number="18.4" class="anchored" data-anchor-id="requeue-behavior-worth-knowing"><span class="header-section-number">18.4</span> Requeue behavior worth knowing</h2>
@@ -465,23 +463,19 @@ An investor can reclaim their node and requeue your job
 <li><code>--open-mode=append</code> stops the requeued run from overwriting the previous log.</li>
 <li>Check whether a job was requeued with <code>sacct -j &lt;id&gt; --format=JobID,State,Start,End</code> — you’ll see multiple rows.</li>
 </ul>
-</section>
-<section id="the-one-line-policy" class="level2" data-number="18.5">
-<h2 data-number="18.5" class="anchored" data-anchor-id="the-one-line-policy"><span class="header-section-number">18.5</span> The one-line policy</h2>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-If a job runs longer than a few hours, checkpoint it
+Checkpoint jobs that run longer than a few hours
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Short jobs (minutes to an hour or two) can just be rerun if something goes wrong — don’t over-engineer them. But <strong>any multi-hour or multi-day job should checkpoint</strong>, and any long production run should also prefer <code>non-investor</code>. The combination — non-preemptible partition <em>and</em> checkpoints — is what lets big simulations finish reliably on a shared, condo-model machine.</p>
+<p>Short jobs (minutes to an hour or two) can just be rerun if something goes wrong. Any multi-hour or multi-day job should checkpoint, and any long production run should also prefer <code>non-investor</code>. A non-preemptible partition plus checkpoints is what lets big simulations finish reliably on a shared machine.</p>
 </div>
 </div>
-<p>Next: reading the wreckage when a job fails outright.</p>
 
 
 </section>
@@ -898,8 +892,8 @@ If a job runs longer than a few hours, checkpoint it
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/19-when-jobs-fail.html" class="pagination-link" aria-label="When jobs fail: reading the wreckage">
-        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/19-when-jobs-fail.html" class="pagination-link" aria-label="When jobs fail">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

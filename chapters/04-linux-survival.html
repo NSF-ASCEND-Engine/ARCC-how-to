@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -381,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#editing-files" id="toc-editing-files" class="nav-link" data-scroll-target="#editing-files"><span class="header-section-number">4.3</span> Editing files</a></li>
   <li><a href="#finding-things" id="toc-finding-things" class="nav-link" data-scroll-target="#finding-things"><span class="header-section-number">4.4</span> Finding things</a></li>
   <li><a href="#environment-variables-and-your-shell" id="toc-environment-variables-and-your-shell" class="nav-link" data-scroll-target="#environment-variables-and-your-shell"><span class="header-section-number">4.5</span> Environment variables and your shell</a></li>
-  <li><a href="#sec-tmux" id="toc-sec-tmux" class="nav-link" data-scroll-target="#sec-tmux"><span class="header-section-number">4.6</span> <code>tmux</code>: don’t let a dropped connection kill your work</a></li>
+  <li><a href="#sec-tmux" id="toc-sec-tmux" class="nav-link" data-scroll-target="#sec-tmux"><span class="header-section-number">4.6</span> <code>tmux</code>: keep work alive across a dropped connection</a></li>
   <li><a href="#permissions-briefly" id="toc-permissions-briefly" class="nav-link" data-scroll-target="#permissions-briefly"><span class="header-section-number">4.7</span> Permissions, briefly</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/04-linux-survival.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -409,9 +409,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>You don’t need to become a Linux wizard. You need to move around the filesystem, edit a file, find things, inspect what your jobs produced, and — crucially — keep work alive when your connection drops, using <code>tmux</code>. This chapter is the minimum, and no more.</p>
+<p>The minimum Linux for cluster work: move around the filesystem, edit files, find things, inspect job output, and keep work alive when your connection drops with <code>tmux</code>.</p>
 </div>
-<p>If you already live in a terminal, skim the <code>tmux</code> section and move on. Everything here is standard Linux; nothing is ARCC-specific except the paths.</p>
+<p>If you already live in a terminal, skim the <code>tmux</code> section. Everything here is standard Linux; nothing is ARCC-specific except the paths.</p>
 <section id="moving-around" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="moving-around"><span class="header-section-number">4.1</span> Moving around</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                 <span class="co"># where am I?</span></span>
@@ -419,7 +419,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /project/cowy-firesurro   <span class="co"># go somewhere</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span>                  <span class="co"># go home ($HOME)</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="at">-</span>                <span class="co"># go back to where you just were</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Three shortcuts you’ll use constantly: <code>~</code> is your home directory, <code>.</code> is “here”, and <code>..</code> is “up one”. Tab-completion (press <kbd>Tab</kbd> to finish a half-typed path) will save you more time than any other single habit.</p>
+<p>Three shortcuts you’ll use constantly: <code>~</code> is your home directory, <code>.</code> is “here”, and <code>..</code> is “up one”. Press <kbd>Tab</kbd> to complete a half-typed path.</p>
 </section>
 <section id="looking-at-files-without-opening-them" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="looking-at-files-without-opening-them"><span class="header-section-number">4.2</span> Looking at files without opening them</h2>
@@ -428,13 +428,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 file       <span class="co"># first 20 lines</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 50 file       <span class="co"># last 50 lines</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> slurm-123.out <span class="co"># follow a job's output live as it's written</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>tail -f</code> on your job’s output file is the classic “is my job doing anything?” move.</p>
+<p><code>tail -f</code> on a job’s output file shows whether it’s doing anything.</p>
 </section>
 <section id="editing-files" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="editing-files"><span class="header-section-number">4.3</span> Editing files</h2>
-<p><code>nano</code> is the friendly choice — arrow keys work, and the shortcuts are listed at the bottom of the screen (<code>^O</code> = save, <code>^X</code> = exit).</p>
+<p><code>nano</code> is the easy choice — arrow keys work, and shortcuts are listed at the bottom of the screen (<code>^O</code> = save, <code>^X</code> = exit).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> submit.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>vim</code> is everywhere and powerful, but has a learning curve; if you don’t already know it, <code>nano</code> is fine for editing a submit script. For anything bigger, edit on your laptop and use the portal’s file browser, VS Code’s Remote-SSH, or <code>rsync</code> (<a href="06-moving-data.html" class="quarto-xref"><span>Chapter 6</span></a>).</p>
+<p><code>vim</code> is powerful but has a learning curve; if you don’t know it, <code>nano</code> is fine for a submit script. For anything bigger, edit on your laptop and use the portal’s file browser, VS Code’s Remote-SSH, or <code>rsync</code> (<a href="06-moving-data.html" class="quarto-xref"><span>Chapter 6</span></a>).</p>
 </section>
 <section id="finding-things" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="finding-things"><span class="header-section-number">4.4</span> Finding things</h2>
@@ -442,7 +442,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.nc"</span>          <span class="co"># find files by name</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-size</span> +1G             <span class="co"># find files bigger than 1 GB (great for quota hunts)</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> <span class="pp">*</span>                     <span class="co"># how big is each thing in this directory?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>du -sh * | sort -h</code> to find what’s eating your quota is a habit worth building, given the 50 GB home limit (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
+<p><code>du -sh * | sort -h</code> finds what’s eating your quota — useful given the 50 GB home limit (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>).</p>
 </section>
 <section id="environment-variables-and-your-shell" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="environment-variables-and-your-shell"><span class="header-section-number">4.5</span> Environment variables and your shell</h2>
@@ -457,14 +457,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Run <code>source ~/.bashrc</code> (or log out and back in) to apply changes.</p>
 </section>
 <section id="sec-tmux" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="sec-tmux"><span class="header-section-number">4.6</span> <code>tmux</code>: don’t let a dropped connection kill your work</h2>
-<p>This is the most important section in the chapter. When you SSH in and start something — even a legitimate interactive session — <strong>closing your laptop or losing WiFi kills that shell and everything running in it.</strong> <code>tmux</code> fixes this by keeping your session alive <em>on the login node</em> whether or not you’re connected.</p>
+<h2 data-number="4.6" class="anchored" data-anchor-id="sec-tmux"><span class="header-section-number">4.6</span> <code>tmux</code>: keep work alive across a dropped connection</h2>
+<p>When you SSH in and start something, <strong>closing your laptop or losing WiFi kills that shell and everything running in it.</strong> <code>tmux</code> keeps your session alive on the login node whether or not you’re connected.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> new <span class="at">-s</span> work     <span class="co"># start a named session "work"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   ... do things, launch an interactive job, watch output ...</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   detach with:  Ctrl-b then d</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> ls              <span class="co"># list your sessions</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> attach <span class="at">-t</span> work  <span class="co"># reattach later, even from a different computer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The workflow that saves people:</p>
+<p>The workflow:</p>
 <ol type="1">
 <li>SSH into the login node.</li>
 <li><code>tmux new -s work</code>.</li>
@@ -478,20 +478,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-tmux keeps <em>login-node</em> shells alive — batch jobs don’t need it
+tmux is for login-node shells, not batch jobs
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A submitted batch job (<code>sbatch</code>, <a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>) already runs independently of your connection — you can log out and it keeps going. <code>tmux</code> is for the things that live in <em>your shell</em>: interactive sessions, long-running monitoring, an editor you don’t want to lose.</p>
+<p>A batch job (<code>sbatch</code>, <a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>) already runs independently of your connection — log out and it keeps going. <code>tmux</code> is for things that live in your shell: interactive sessions, monitoring, an editor you don’t want to lose.</p>
 </div>
 </div>
 </section>
 <section id="permissions-briefly" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="permissions-briefly"><span class="header-section-number">4.7</span> Permissions, briefly</h2>
-<p>You’ll occasionally see <code>chmod</code> and permission strings like <code>-rw-r-----</code>. The one you’ll actually use is fixing your SSH keys (<code>chmod 0600 -R ~/.ssh</code>, from <a href="03-first-login.html" class="quarto-xref"><span>Chapter 3</span></a>) and occasionally making a script executable:</p>
+<p>You’ll occasionally see <code>chmod</code> and permission strings like <code>-rw-r-----</code>. The main uses are fixing your SSH keys (<code>chmod 0600 -R ~/.ssh</code>, from <a href="03-first-login.html" class="quarto-xref"><span>Chapter 3</span></a>) and making a script executable:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x run.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>There is <strong>no <code>sudo</code> on the cluster</strong>, ever. You can’t install system packages or change things outside your own directories — and you don’t need to. Everything you install goes in your own space (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>) or as modules (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
-<p>That’s the survival kit. On to where your data actually lives.</p>
+<p>There is <strong>no <code>sudo</code> on the cluster</strong>. You can’t install system packages or change things outside your own directories, and you don’t need to — everything you install goes in your own space (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>) or as modules (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
 
 
 </section>

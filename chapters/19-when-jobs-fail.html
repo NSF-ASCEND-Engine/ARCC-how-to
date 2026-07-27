@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>19&nbsp; When jobs fail: reading the wreckage – Getting Started on ARCC MedicineBow</title>
+<title>19&nbsp; When jobs fail – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -381,16 +381,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#timeout" id="toc-timeout" class="nav-link" data-scroll-target="#timeout"><span class="header-section-number">19.3</span> Timeout</a></li>
   <li><a href="#your-program-crashed-failed" id="toc-your-program-crashed-failed" class="nav-link" data-scroll-target="#your-program-crashed-failed"><span class="header-section-number">19.4</span> Your program crashed (<code>FAILED</code>)</a></li>
   <li><a href="#node-failure-and-preemption" id="toc-node-failure-and-preemption" class="nav-link" data-scroll-target="#node-failure-and-preemption"><span class="header-section-number">19.5</span> Node failure and preemption</a></li>
-  <li><a href="#a-debugging-loop-that-works" id="toc-a-debugging-loop-that-works" class="nav-link" data-scroll-target="#a-debugging-loop-that-works"><span class="header-section-number">19.6</span> A debugging loop that works</a></li>
+  <li><a href="#a-debugging-loop" id="toc-a-debugging-loop" class="nav-link" data-scroll-target="#a-debugging-loop"><span class="header-section-number">19.6</span> A debugging loop</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/19-when-jobs-fail.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-fail" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></h1>
+<h1 class="title"><span id="sec-fail" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></h1>
 </div>
 
 
@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>COMPLETED</code></td>
 <td>exit code 0</td>
-<td>🎉 (but check the output is <em>correct</em>)</td>
+<td>none (but check the output is <em>correct</em>)</td>
 </tr>
 <tr class="even">
 <td><code>OUT_OF_MEMORY</code></td>
@@ -468,10 +468,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="out-of-memory" class="level2" data-number="19.2">
 <h2 data-number="19.2" class="anchored" data-anchor-id="out-of-memory"><span class="header-section-number">19.2</span> Out of memory</h2>
-<p>The most common surprise. A job that exceeds its memory reservation is killed instantly by the Linux OOM killer — you’ll see <code>OUT_OF_MEMORY</code> in <code>sacct</code>, and often a truncated or empty output file.</p>
+<p>A job that exceeds its memory reservation is killed by the Linux OOM killer — you’ll see <code>OUT_OF_MEMORY</code> in <code>sacct</code>, and often a truncated or empty output file.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,MaxRSS,ReqMem</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># MaxRSS is peak memory actually used; compare to ReqMem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If <code>MaxRSS</code> is near (or above) <code>ReqMem</code>, raise <code>--mem</code> and resubmit. Then use <code>seff</code> (<a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>) on the successful run to right-size going forward. Remember the 10 GB/core default trap on <code>mb</code> (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>) — sometimes the fix is realizing you <em>did</em> have enough memory and something else was wrong.</p>
+<p>If <code>MaxRSS</code> is near or above <code>ReqMem</code>, raise <code>--mem</code> and resubmit. Then use <code>seff</code> (<a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>) on the successful run to right-size going forward. Note the 10 GB/core default on <code>mb</code> (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>) — sometimes you already had enough memory and something else was wrong.</p>
 </section>
 <section id="timeout" class="level2" data-number="19.3">
 <h2 data-number="19.3" class="anchored" data-anchor-id="timeout"><span class="header-section-number">19.3</span> Timeout</h2>
@@ -484,9 +484,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="your-program-crashed-failed" class="level2" data-number="19.4">
 <h2 data-number="19.4" class="anchored" data-anchor-id="your-program-crashed-failed"><span class="header-section-number">19.4</span> Your program crashed (<code>FAILED</code>)</h2>
-<p><code>FAILED</code> with a non-zero exit code is usually <em>your</em> code, not the cluster. Read the output:</p>
+<p><code>FAILED</code> with a non-zero exit code is usually your code, not the cluster. Read the output:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> slurm-123456.out          <span class="co"># stdout+stderr (or separate --error file)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Common culprits on a cluster specifically:</p>
+<p>Common cluster-specific culprits:</p>
 <ul>
 <li><strong>Module not loaded in the script.</strong> Interactive worked, batch didn’t — because you loaded modules on the login node but not <em>inside</em> the submit script. Put <code>module load</code> in the script (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>).</li>
 <li><strong>Wrong paths.</strong> A relative path that existed where you ran <code>sbatch</code> but not where the job ran. Use absolute paths or <code>$SLURM_SUBMIT_DIR</code>.</li>
@@ -496,18 +496,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="node-failure-and-preemption" class="level2" data-number="19.5">
 <h2 data-number="19.5" class="anchored" data-anchor-id="node-failure-and-preemption"><span class="header-section-number">19.5</span> Node failure and preemption</h2>
-<p><code>NODE_FAIL</code> (hardware died) and <code>PREEMPTED</code>/<code>REQUEUED</code> (investor reclaimed the node, <a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>) aren’t your fault and aren’t your bug. The response is the same: <strong>checkpoint so a restart is cheap</strong>, run long jobs on <code>non-investor</code>, and add <code>--requeue</code> so they come back automatically. If node failures recur on the same node, report it to <code>arcc-help@uwyo.edu</code> with the job ID.</p>
+<p><code>NODE_FAIL</code> (hardware died) and <code>PREEMPTED</code>/<code>REQUEUED</code> (investor reclaimed the node, <a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>) are not your bug. The response is the same: <strong>checkpoint so a restart is cheap</strong>, run long jobs on <code>non-investor</code>, and add <code>--requeue</code> so they come back automatically. If node failures recur on the same node, report it to <code>arcc-help@uwyo.edu</code> with the job ID.</p>
 </section>
-<section id="a-debugging-loop-that-works" class="level2" data-number="19.6">
-<h2 data-number="19.6" class="anchored" data-anchor-id="a-debugging-loop-that-works"><span class="header-section-number">19.6</span> A debugging loop that works</h2>
+<section id="a-debugging-loop" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="a-debugging-loop"><span class="header-section-number">19.6</span> A debugging loop</h2>
 <ol type="1">
-<li><code>sacct -j &lt;id&gt; ...</code> → get the <strong>State</strong>. That narrows it to one of the four families above.</li>
-<li>If resource-related (OOM/timeout) → adjust <code>--mem</code>/<code>--time</code>, resubmit.</li>
-<li>If <code>FAILED</code> → read <code>slurm-&lt;id&gt;.out</code>, fix the code/env, and <strong>reproduce it fast</strong> in a <code>debug</code>-QOS job (near-instant start, <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) rather than waiting in a long queue each iteration.</li>
+<li><code>sacct -j &lt;id&gt; ...</code> → get the <strong>State</strong>, narrowing it to one of the four families above.</li>
+<li>Resource-related (OOM/timeout) → adjust <code>--mem</code>/<code>--time</code>, resubmit.</li>
+<li><code>FAILED</code> → read <code>slurm-&lt;id&gt;.out</code>, fix the code/env, and reproduce it fast in a <code>debug</code>-QOS job (near-instant start, <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) rather than waiting in a long queue each iteration.</li>
 <li>Once it works, <code>seff &lt;id&gt;</code> → right-size → promote to the real partition/QOS.</li>
 </ol>
-<p>Using the <code>debug</code> partition as your fast edit-run-debug loop, and only graduating to big queues once the job is known-good, will save you more time than any other habit on the machine.</p>
-<p>That’s the operational core. Part VI is quick reference you’ll come back to.</p>
+<p>Use the <code>debug</code> partition as your fast edit-run-debug loop, and graduate to big queues only once the job is known-good.</p>
 
 
 </section>

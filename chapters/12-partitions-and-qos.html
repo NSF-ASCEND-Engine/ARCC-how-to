@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -378,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#partition-which-hardware" id="toc-partition-which-hardware" class="nav-link active" data-scroll-target="#partition-which-hardware"><span class="header-section-number">12.1</span> Partition = which hardware</a></li>
   <li><a href="#qos-which-service-tier" id="toc-qos-which-service-tier" class="nav-link" data-scroll-target="#qos-which-service-tier"><span class="header-section-number">12.2</span> QOS = which service tier</a></li>
-  <li><a href="#denyonlimit-rejected-at-submit-not-stuck-forever" id="toc-denyonlimit-rejected-at-submit-not-stuck-forever" class="nav-link" data-scroll-target="#denyonlimit-rejected-at-submit-not-stuck-forever"><span class="header-section-number">12.3</span> <code>DenyOnLimit</code>: rejected at submit, not stuck forever</a></li>
+  <li><a href="#denyonlimit-rejected-at-submit" id="toc-denyonlimit-rejected-at-submit" class="nav-link" data-scroll-target="#denyonlimit-rejected-at-submit"><span class="header-section-number">12.3</span> <code>DenyOnLimit</code>: rejected at submit</a></li>
   <li><a href="#putting-both-knobs-in-a-script" id="toc-putting-both-knobs-in-a-script" class="nav-link" data-scroll-target="#putting-both-knobs-in-a-script"><span class="header-section-number">12.4</span> Putting both knobs in a script</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/12-partitions-and-qos.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -406,11 +406,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Two knobs decide where and how your job runs. A <strong>partition</strong> picks the <em>hardware</em> (plain CPU nodes, H100 GPUs, the big absorbed Teton pool, …). A <strong>QOS</strong> picks the <em>service tier</em> — how long you may run, how much you may grab, and how high your priority is. The trade-off is clean: <strong>the longer the walltime you ask for, the lower your priority and the smaller your allowed footprint.</strong> Choosing well is the subject of <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>A <strong>partition</strong> picks the hardware; a <strong>QOS</strong> picks the service tier (walltime, footprint cap, priority). Longer requested walltime means lower priority and a smaller footprint cap. See <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a> for how to choose.</p>
 </div>
 <section id="partition-which-hardware" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="partition-which-hardware"><span class="header-section-number">12.1</span> Partition = which hardware</h2>
-<p>A partition is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>). Here’s what’s actually on the machine:</p>
+<p>A partition is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>).</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 16%">
@@ -538,7 +538,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><small>¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with <code>showpartitions</code> and <code>sinfo</code>.</small></p>
-<p><em>Teton, Beartooth, and WildIris</em> are the old retired clusters, now living on as big partitions inside MedicineBow — Teton alone is ~250 nodes, which is why it swallows so much throughput work. The <code>inv-*</code> partitions are <strong>investor (“condo”) hardware</strong>: you can run on them when they’re idle, but the owner can reclaim the node and bump your job (<a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>).</p>
+<p>Teton, Beartooth, and WildIris are retired clusters now folded into MedicineBow as large partitions; Teton alone is ~250 nodes. The <code>inv-*</code> partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and preempt your job (<a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -549,10 +549,10 @@ Avoiding preemption: use <code>non-investor</code>, not <code>--constraint</code
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some docs tell you to add <code>--constraint=non-investor</code> to avoid running on preemptible investor hardware. <strong>That constraint matches nothing on the current machine and silently does nothing.</strong> The real mechanism is a <strong>partition</strong>: submit to <code>--partition=non-investor</code> (110 CPU nodes) or <code>--partition=non-investor-gpu</code> (7 GPU nodes) to stay on hardware that won’t be reclaimed out from under you. This is the correct home for long, un-checkpointed runs.</p>
+<p><code>--constraint=non-investor</code> matches nothing on the current machine and does nothing. Use a <strong>partition</strong> instead: <code>--partition=non-investor</code> (110 CPU nodes) or <code>--partition=non-investor-gpu</code> (7 GPU nodes) stays on hardware that won’t be reclaimed. This is the right home for long, un-checkpointed runs.</p>
 </div>
 </div>
-<p>You can list several partitions and let Slurm use whichever frees up first — <code>--partition=mb,teton,beartooth</code> is common for CPU throughput work and is exactly what the busiest jobs on the machine do.</p>
+<p>You can list several partitions and let Slurm use whichever frees up first; <code>--partition=mb,teton,beartooth</code> is common for CPU throughput work.</p>
 </section>
 <section id="qos-which-service-tier" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="qos-which-service-tier"><span class="header-section-number">12.2</span> QOS = which service tier</h2>
@@ -636,17 +636,17 @@ Avoiding preemption: use <code>non-investor</code>, not <code>--constraint</code
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The core trade-off, in one sentence
+The walltime trade-off
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>The longer the walltime you ask for, the lower your priority <em>and</em> the smaller your allowed footprint.</strong> <code>fast</code> (12 h) gives you priority 80 and the full 4746-core cap. <code>long</code> (7 d) drops you to priority 60 and a ~40%-smaller cap. You pay for patience with priority, and for size with time. This single fact drives every recommendation in <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>Longer requested walltime means lower priority and a smaller footprint cap. <code>fast</code> (12 h) gives priority 80 and the full 4746-core cap; <code>long</code> (7 d) drops to priority 60 and a ~40%-smaller cap. This trade-off drives the recommendations in <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 </div>
 </div>
 </section>
-<section id="denyonlimit-rejected-at-submit-not-stuck-forever" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="denyonlimit-rejected-at-submit-not-stuck-forever"><span class="header-section-number">12.3</span> <code>DenyOnLimit</code>: rejected at submit, not stuck forever</h2>
-<p>Every QOS is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm <strong>rejects the job the moment you submit it</strong>, with a clear error. It does <em>not</em> silently queue it forever. That’s good news: you find out immediately, fix the request, and resubmit.</p>
+<section id="denyonlimit-rejected-at-submit" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="denyonlimit-rejected-at-submit"><span class="header-section-number">12.3</span> <code>DenyOnLimit</code>: rejected at submit</h2>
+<p>Every QOS is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.</p>
 </section>
 <section id="putting-both-knobs-in-a-script" class="level2" data-number="12.4">
 <h2 data-number="12.4" class="anchored" data-anchor-id="putting-both-knobs-in-a-script"><span class="header-section-number">12.4</span> Putting both knobs in a script</h2>
@@ -658,7 +658,7 @@ The core trade-off, in one sentence
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=normal</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1            # ask for 1 GPU (see @sec-gpu)</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=08:00:00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now — <em>which</em> combination should you actually pick? That depends entirely on whether you’re doing a quick proof-of-concept or a long production run, and how busy each queue is right now. That’s the next chapter, and it’s the one to read carefully.</p>
+<p>Which combination to pick depends on whether you’re doing a quick proof-of-concept or a long production run, and on how busy each queue is. That’s <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 
 
 </section>
@@ -1070,8 +1070,8 @@ The core trade-off, in one sentence
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/11-asking-for-resources.html" class="pagination-link" aria-label="Asking for resources (and why over-asking punishes you)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span>
+      <a href="../chapters/11-asking-for-resources.html" class="pagination-link" aria-label="Asking for resources">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

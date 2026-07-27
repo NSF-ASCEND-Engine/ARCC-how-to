@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#two-ways-in-portal-and-ssh" id="toc-two-ways-in-portal-and-ssh" class="nav-link active" data-scroll-target="#two-ways-in-portal-and-ssh"><span class="header-section-number">3.1</span> Two ways in: portal and SSH</a></li>
   <li><a href="#step-1-log-into-the-portal" id="toc-step-1-log-into-the-portal" class="nav-link" data-scroll-target="#step-1-log-into-the-portal"><span class="header-section-number">3.2</span> Step 1 — Log into the portal</a></li>
   <li><a href="#step-2-generate-your-ssh-key-with-the-ssh-key-manager" id="toc-step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="nav-link" data-scroll-target="#step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</a></li>
-  <li><a href="#step-3-a-comfortable-ssh-config-optional-but-worth-it" id="toc-step-3-a-comfortable-ssh-config-optional-but-worth-it" class="nav-link" data-scroll-target="#step-3-a-comfortable-ssh-config-optional-but-worth-it"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional but worth it)</a></li>
+  <li><a href="#step-3-a-comfortable-ssh-config-optional" id="toc-step-3-a-comfortable-ssh-config-optional" class="nav-link" data-scroll-target="#step-3-a-comfortable-ssh-config-optional"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional)</a></li>
   <li><a href="#which-door-should-i-use" id="toc-which-door-should-i-use" class="nav-link" data-scroll-target="#which-door-should-i-use"><span class="header-section-number">3.5</span> Which door should I use?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/03-first-login.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -407,13 +407,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Your entry point is the web portal at <strong><a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a></strong> (Open OnDemand). Log in there first with your UW credentials and Duo 2FA. SSH does <strong>not</strong> use a password — you generate a key with the portal’s <strong>SSH Key Manager</strong>, download it, and drop it in <code>~/.ssh</code>. Those keys <strong>expire after one year</strong>, which is the answer to a mysterious future “why did my login suddenly stop working?”</p>
+<p>Your entry point is the web portal at <strong><a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a></strong> (Open OnDemand). Log in with your UW credentials and Duo 2FA. SSH uses a key, not a password: generate one with the portal’s <strong>SSH Key Manager</strong>, download it, and drop it in <code>~/.ssh</code>. The keys <strong>expire after one year</strong> — that’s why a working login later stops working.</p>
 </div>
 <section id="two-ways-in-portal-and-ssh" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="two-ways-in-portal-and-ssh"><span class="header-section-number">3.1</span> Two ways in: portal and SSH</h2>
 <p>MedicineBow has a single hostname that serves both the web portal and SSH: <code>medicinebow.arcc.uwyo.edu</code>.</p>
 <ul>
-<li><strong>The web portal</strong> (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, and — almost certainly — Jupyter). Start here on day one.</li>
+<li><strong>The web portal</strong> (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start here on day one.</li>
 <li><strong>SSH</strong> is the terminal way in, and how you’ll work day-to-day once set up. It requires a key you generate through the portal first.</li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -422,22 +422,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-“Southpass” is dead — don’t use it
+Don’t use “Southpass”
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Older notes and search results may point you at <code>southpass.arcc.uwyo.edu</code>. That was the portal for the <em>retired Beartooth cluster</em>. The DNS name still resolves, but there’s no live service behind it for you. The current portal is <code>medicinebow.arcc.uwyo.edu</code>.</p>
+<p>Older notes may point you at <code>southpass.arcc.uwyo.edu</code>, the portal for the <em>retired Beartooth cluster</em>. The DNS name still resolves but has no live service behind it. The current portal is <code>medicinebow.arcc.uwyo.edu</code>.</p>
 </div>
 </div>
 </section>
 <section id="step-1-log-into-the-portal" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="step-1-log-into-the-portal"><span class="header-section-number">3.2</span> Step 1 — Log into the portal</h2>
 <p>Go to <a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a> and sign in with your UW username and password. You’ll be prompted for <strong>Duo</strong> two-factor authentication. If you’ve never set up Duo, do it at <a href="https://wyosecure.uwyo.edu" class="uri">https://wyosecure.uwyo.edu</a>. No VPN is needed.</p>
-<p>Once in, take the tour: there’s a <strong>Files</strong> menu (browse <code>/home</code>, <code>/project</code>, <code>/gscratch</code>), a <strong>Clusters → Shell</strong> option (a terminal in your browser), and an <strong>Interactive Apps</strong> menu.</p>
+<p>Once in, note the <strong>Files</strong> menu (browse <code>/home</code>, <code>/project</code>, <code>/gscratch</code>), the <strong>Clusters → Shell</strong> option (a terminal in your browser), and the <strong>Interactive Apps</strong> menu.</p>
 </section>
 <section id="step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</h2>
-<p>SSH on MedicineBow is <strong>key-and-certificate based, not password based</strong>. You don’t set a password for SSH; you generate a key pair through the portal:</p>
+<p>SSH on MedicineBow is <strong>key-and-certificate based, not password based</strong>. Generate a key pair through the portal:</p>
 <ol type="1">
 <li>In the portal, open the <strong>SSH Key Manager</strong>.</li>
 <li>Generate a key. It downloads as a zip named after your username.</li>
@@ -458,12 +458,12 @@ SSH keys expire after one year
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is the single best FAQ entry in the whole book. One day, roughly a year after you set up, your <code>ssh</code> will simply stop working — permission denied, no obvious reason. <strong>The key expired.</strong> Go back to the portal’s SSH Key Manager, generate a fresh key, unzip it into <code>~/.ssh</code> again, and you’re back. Nothing is broken; it’s by design.</p>
+<p>Roughly a year after setup, your <code>ssh</code> stops working — permission denied, no obvious reason. The key expired. Go back to the portal’s SSH Key Manager, generate a fresh key, and unzip it into <code>~/.ssh</code> again. This is by design.</p>
 </div>
 </div>
 </section>
-<section id="step-3-a-comfortable-ssh-config-optional-but-worth-it" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="step-3-a-comfortable-ssh-config-optional-but-worth-it"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional but worth it)</h2>
+<section id="step-3-a-comfortable-ssh-config-optional" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="step-3-a-comfortable-ssh-config-optional"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional)</h2>
 <p>Add this to <code>~/.ssh/config</code> on your laptop so you can just type <code>ssh medbow</code>:</p>
 <pre><code>Host medbow
     HostName medicinebow.arcc.uwyo.edu
@@ -508,7 +508,7 @@ SSH keys expire after one year
 </tr>
 </tbody>
 </table>
-<p>Once you can log in and get a shell prompt, you’re ready for the Linux survival kit (<a href="04-linux-survival.html" class="quarto-xref"><span>Chapter 4</span></a>) — or, if you already know your way around a terminal, skip ahead to storage (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>) and Slurm (Part V), which is where cluster-specific knowledge really starts.</p>
+<p>Once you can log in and get a shell prompt, continue to the Linux survival kit (<a href="04-linux-survival.html" class="quarto-xref"><span>Chapter 4</span></a>), or skip ahead to storage (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>) and Slurm (Part V) if you already know a terminal.</p>
 
 
 </section>

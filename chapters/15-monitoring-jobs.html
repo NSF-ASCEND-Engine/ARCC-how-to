@@ -104,6 +104,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -232,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -380,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#after-it-finishes-did-it-work-and-was-it-sized-right" id="toc-after-it-finishes-did-it-work-and-was-it-sized-right" class="nav-link" data-scroll-target="#after-it-finishes-did-it-work-and-was-it-sized-right"><span class="header-section-number">15.2</span> After it finishes: did it work, and was it sized right?</a></li>
   <li><a href="#arccs-own-helpers" id="toc-arccs-own-helpers" class="nav-link" data-scroll-target="#arccs-own-helpers"><span class="header-section-number">15.3</span> ARCC’s own helpers</a></li>
   <li><a href="#cancelling" id="toc-cancelling" class="nav-link" data-scroll-target="#cancelling"><span class="header-section-number">15.4</span> Cancelling</a></li>
-  <li><a href="#a-tiny-monitoring-routine" id="toc-a-tiny-monitoring-routine" class="nav-link" data-scroll-target="#a-tiny-monitoring-routine"><span class="header-section-number">15.5</span> A tiny monitoring routine</a></li>
+  <li><a href="#a-monitoring-routine" id="toc-a-monitoring-routine" class="nav-link" data-scroll-target="#a-monitoring-routine"><span class="header-section-number">15.5</span> A monitoring routine</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/15-monitoring-jobs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -407,14 +410,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p><code>squeue --me</code> shows what’s pending/running now. <code>showjobreasons &lt;jobid&gt;</code> explains <em>why</em> something is still waiting in plain English. After a job ends, <code>sacct</code> and <code>seff</code> tell you what it did and whether you sized it right. ARCC ships extra helpers (<code>showjob</code>, <code>shownode</code>, <code>showuserjobs</code>) that answer common questions in one word.</p>
+<p><code>squeue --me</code> shows what’s pending or running; <code>showjobreasons &lt;jobid&gt;</code> explains why a job is waiting. After a job ends, <code>sacct</code> and <code>seff</code> show what it did and whether you sized it right. ARCC also ships helpers like <code>showjob</code>, <code>shownode</code>, and <code>showuserjobs</code>.</p>
 </div>
 <section id="while-its-queued-or-running" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="while-its-queued-or-running"><span class="header-section-number">15.1</span> While it’s queued or running</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                       <span class="co"># all my jobs, with state and reason</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span> <span class="at">-t</span> PENDING            <span class="co"># just the ones still waiting</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">-j</span> 123456                  <span class="co"># one specific job</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <strong>state</strong> column: <code>PD</code> pending, <code>R</code> running, <code>CG</code> completing. For pending jobs, the <strong>reason</strong> in parentheses is the important part:</p>
+<p>The <strong>state</strong> column: <code>PD</code> pending, <code>R</code> running, <code>CG</code> completing. For pending jobs, the <strong>reason</strong> in parentheses is what matters:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -465,18 +468,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> 123456       <span class="co"># "why isn't this running?" in plain language</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Follow a running job’s output live:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> slurm-123456.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The states a job moves through, and how it can end:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-lifecycle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-lifecycle">stateDiagram-v2
+    [*] --&gt; PENDING: sbatch
+    PENDING --&gt; RUNNING: your turn
+    RUNNING --&gt; COMPLETED: exits 0
+    RUNNING --&gt; FAILED: exits non-zero
+    RUNNING --&gt; TIMEOUT: hits time limit
+    RUNNING --&gt; OUT_OF_MEMORY: exceeds memory
+    RUNNING --&gt; PENDING: preempted / requeued
+    COMPLETED --&gt; [*]
+    FAILED --&gt; [*]
+    TIMEOUT --&gt; [*]
+    OUT_OF_MEMORY --&gt; [*]
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: A job waits (PENDING), runs, then reaches one terminal state. TIMEOUT and OUT_OF_MEMORY mean you under-requested; preemption sends the job back to PENDING.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="after-it-finishes-did-it-work-and-was-it-sized-right" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="after-it-finishes-did-it-work-and-was-it-sized-right"><span class="header-section-number">15.2</span> After it finishes: did it work, and was it sized right?</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,Elapsed,MaxRSS,ReqMem,TotalCPU,ExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Key columns: <strong>State</strong> (<code>COMPLETED</code>, <code>FAILED</code>, <code>TIMEOUT</code>, <code>OUT_OF_MEMORY</code>, <code>CANCELLED</code>), <strong>Elapsed</strong> (wall time used vs.&nbsp;your <code>--time</code>), <strong>MaxRSS</strong> (peak memory actually used vs. your <code>--mem</code>), and <strong>ExitCode</strong>.</p>
-<p><code>seff</code> is the friendlier summary and the one to build a habit around:</p>
+<p><code>seff</code> is a friendlier summary:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> 123456</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>It prints CPU efficiency and memory efficiency as percentages. <strong>Low numbers mean you over-asked</strong> — reclaim the difference next time and start sooner (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
+<p>It prints CPU and memory efficiency as percentages. <strong>Low numbers mean you over-asked</strong> — reduce the request next time to start sooner (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
 </section>
 <section id="arccs-own-helpers" class="level2" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="arccs-own-helpers"><span class="header-section-number">15.3</span> ARCC’s own helpers</h2>
-<p>These live on your <code>PATH</code> by default and each answers a question that would otherwise take several <code>squeue</code>/<code>scontrol</code> incantations:</p>
+<p>These live on your <code>PATH</code> by default and each replaces several <code>squeue</code>/<code>scontrol</code> commands:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserjobs</span>                <span class="co"># everything you (and optionally others) have queued/running</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">showjob</span> 123456              <span class="co"># a rich, readable view of one job</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">shownode</span> mbcpu-001          <span class="co"># what's running on a given node, and how loaded it is</span></span>
@@ -504,16 +536,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="at">--me</span> <span class="at">--state</span><span class="op">=</span>PENDING   <span class="co"># cancel only my still-waiting jobs</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> 123456_7            <span class="co"># cancel one element of a job array (@sec-arrays)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="a-tiny-monitoring-routine" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="a-tiny-monitoring-routine"><span class="header-section-number">15.5</span> A tiny monitoring routine</h2>
-<p>For a job you care about, this is enough:</p>
+<section id="a-monitoring-routine" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="a-monitoring-routine"><span class="header-section-number">15.5</span> A monitoring routine</h2>
+<p>For a job you care about:</p>
 <ol type="1">
 <li><code>sbatch submit.sh</code> → note the job ID.</li>
 <li><code>squeue --me</code> → is it <code>PD</code> or <code>R</code>? If <code>PD</code> for a while, <code>showjobreasons &lt;id&gt;</code>.</li>
 <li>Running → <code>tail -f slurm-&lt;id&gt;.out</code>.</li>
 <li>Done → <code>seff &lt;id&gt;</code> to right-size the next one.</li>
 </ol>
-<p>Next: the one Slurm feature that changes how you work — job arrays.</p>
+<p>Next: job arrays.</p>
 
 
 </section>
@@ -930,8 +962,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/16-job-arrays.html" class="pagination-link" aria-label="Job arrays: the feature that changes how you work">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/16-job-arrays.html" class="pagination-link" aria-label="Job arrays">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

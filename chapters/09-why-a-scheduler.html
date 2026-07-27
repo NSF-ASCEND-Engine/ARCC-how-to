@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-tragedy-of-the-commons-made-concrete" id="toc-the-tragedy-of-the-commons-made-concrete" class="nav-link active" data-scroll-target="#the-tragedy-of-the-commons-made-concrete"><span class="header-section-number">9.1</span> The tragedy of the commons, made concrete</a></li>
+  <li><a href="#why-share-a-machine" id="toc-why-share-a-machine" class="nav-link active" data-scroll-target="#why-share-a-machine"><span class="header-section-number">9.1</span> Why share a machine</a></li>
   <li><a href="#the-two-ways-to-run-work" id="toc-the-two-ways-to-run-work" class="nav-link" data-scroll-target="#the-two-ways-to-run-work"><span class="header-section-number">9.2</span> The two ways to run work</a></li>
   <li><a href="#the-three-questions-every-job-answers" id="toc-the-three-questions-every-job-answers" class="nav-link" data-scroll-target="#the-three-questions-every-job-answers"><span class="header-section-number">9.3</span> The three questions every job answers</a></li>
   <li><a href="#a-first-look-at-the-tools" id="toc-a-first-look-at-the-tools" class="nav-link" data-scroll-target="#a-first-look-at-the-tools"><span class="header-section-number">9.4</span> A first look at the tools</a></li>
@@ -406,29 +406,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Hundreds of people share the same few hundred nodes. A scheduler — <strong>Slurm</strong> — is the referee: you describe a job (how many cores, how much memory, how long, which kind of node), Slurm puts it in line, and runs it when the resources you asked for are free. You interact with the cluster almost entirely through Slurm.</p>
+<p>Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job (cores, memory, time, node type), it puts the job in line and runs it when those resources are free. You interact with the cluster almost entirely through Slurm.</p>
 </div>
-<section id="the-tragedy-of-the-commons-made-concrete" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="the-tragedy-of-the-commons-made-concrete"><span class="header-section-number">9.1</span> The tragedy of the commons, made concrete</h2>
-<p>Imagine 300 researchers and 300 nodes, and no referee. Everyone logs into whatever node looks idle and starts running. Two people land on the same node and thrash its memory until both jobs crash. Someone starts a two-week run on the node you need for a five-minute test. Nobody can tell whether a node is free or about to be. It’s chaos, and nothing finishes.</p>
-<p>Slurm replaces “grab a node and hope” with a simple contract:</p>
+<section id="why-share-a-machine" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="why-share-a-machine"><span class="header-section-number">9.1</span> Why share a machine</h2>
+<p>With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
+<p>Slurm replaces “grab a node and hope” with a contract:</p>
 <ol type="1">
 <li>You <strong>describe</strong> the work: resources and a time limit.</li>
 <li>Slurm <strong>reserves</strong> exactly that, on nodes that can provide it, and <strong>accounts</strong> for it.</li>
-<li>Your job runs with those resources guaranteed and isolated from everyone else’s.</li>
-<li>When your time limit is up, the job ends — which is what keeps the line moving.</li>
+<li>Your job runs with those resources guaranteed and isolated from other jobs.</li>
+<li>When your time limit is up, the job ends, which keeps the line moving.</li>
 </ol>
-<p>Everything in the rest of this book is really about writing that description well.</p>
+<p>The rest of this book is about writing that description well.</p>
 </section>
 <section id="the-two-ways-to-run-work" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="the-two-ways-to-run-work"><span class="header-section-number">9.2</span> The two ways to run work</h2>
-<p><strong>Batch jobs</strong> (<code>sbatch</code>) are the normal mode: you write a script that says what resources you need and what commands to run, submit it, and walk away. Slurm runs it whenever your turn comes — maybe now, maybe in an hour — and writes the output to a file. This is how you should run essentially all real computation. (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>)</p>
-<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a compute node</em> for when you need to poke at things by hand — debugging, exploring data, developing a script. You’re still going through the scheduler and still consuming your allocation, but you get a prompt instead of a script. (<a href="17-interactive-and-gpu.html" class="quarto-xref"><span>Chapter 17</span></a>)</p>
-<p>Both run on <strong>compute nodes</strong>. Neither runs on the login node — that’s the whole point (<a href="01-what-is-a-cluster.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
+<p><strong>Batch jobs</strong> (<code>sbatch</code>) are the normal mode: you write a script that lists the resources you need and the commands to run, submit it, and walk away. Slurm runs it when your turn comes and writes the output to a file. Use this for essentially all real computation. (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>)</p>
+<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a compute node</em> for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (<a href="17-interactive-and-gpu.html" class="quarto-xref"><span>Chapter 17</span></a>)</p>
+<p>Both run on <strong>compute nodes</strong>, not the login node (<a href="01-what-is-a-cluster.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
 </section>
 <section id="the-three-questions-every-job-answers" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="the-three-questions-every-job-answers"><span class="header-section-number">9.3</span> The three questions every job answers</h2>
-<p>Whether batch or interactive, you’re always telling Slurm three things:</p>
+<p>Whether batch or interactive, you tell Slurm three things:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -460,18 +460,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Get those right and the cluster is smooth. Get them wrong and you either wait forever, get rejected at submit time, or watch your job die halfway through. The next chapters take them one at a time.</p>
+<p>Get these right and jobs run smoothly. Get them wrong and you wait a long time, get rejected at submit time, or watch the job die partway through. The next chapters take them one at a time.</p>
 </section>
 <section id="a-first-look-at-the-tools" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="a-first-look-at-the-tools"><span class="header-section-number">9.4</span> A first look at the tools</h2>
-<p>You’ll meet all of these properly later, but here’s the vocabulary:</p>
+<p>You’ll meet these properly later; here’s the vocabulary:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh        <span class="co"># submit a batch job</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> ...              <span class="co"># get an interactive session</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>             <span class="co"># what are my jobs doing?</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>         <span class="co"># cancel a job</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>        <span class="co"># after the fact: what happened, and how much did it use?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ARCC also ships its own friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I even allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — which we lean on in <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a> and <a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
-<p>Let’s write an actual job.</p>
+<p>ARCC also ships friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — used in <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a> and <a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<p>Next: writing an actual job.</p>
 
 
 </section>

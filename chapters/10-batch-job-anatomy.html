@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,9 +377,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#the-smallest-useful-job" id="toc-the-smallest-useful-job" class="nav-link active" data-scroll-target="#the-smallest-useful-job"><span class="header-section-number">10.1</span> The smallest useful job</a></li>
-  <li><a href="#the-one-directive-you-cannot-omit" id="toc-the-one-directive-you-cannot-omit" class="nav-link" data-scroll-target="#the-one-directive-you-cannot-omit"><span class="header-section-number">10.2</span> The one directive you cannot omit</a></li>
+  <li><a href="#the-required-directive---account" id="toc-the-required-directive---account" class="nav-link" data-scroll-target="#the-required-directive---account"><span class="header-section-number">10.2</span> The required directive: <code>--account</code></a></li>
   <li><a href="#anatomy-directive-by-directive" id="toc-anatomy-directive-by-directive" class="nav-link" data-scroll-target="#anatomy-directive-by-directive"><span class="header-section-number">10.3</span> Anatomy, directive by directive</a></li>
-  <li><a href="#set-memory-explicitly-always" id="toc-set-memory-explicitly-always" class="nav-link" data-scroll-target="#set-memory-explicitly-always"><span class="header-section-number">10.4</span> Set memory explicitly — always</a></li>
+  <li><a href="#set-memory-explicitly" id="toc-set-memory-explicitly" class="nav-link" data-scroll-target="#set-memory-explicitly"><span class="header-section-number">10.4</span> Set memory explicitly</a></li>
   <li><a href="#making-the-environment-reproducible" id="toc-making-the-environment-reproducible" class="nav-link" data-scroll-target="#making-the-environment-reproducible"><span class="header-section-number">10.5</span> Making the environment reproducible</a></li>
   <li><a href="#useful-variables-inside-a-job" id="toc-useful-variables-inside-a-job" class="nav-link" data-scroll-target="#useful-variables-inside-a-job"><span class="header-section-number">10.6</span> Useful variables inside a job</a></li>
   </ul>
@@ -408,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>A batch job is a shell script with <code>#SBATCH</code> directives at the top. The one directive you <strong>cannot</strong> omit is <code>--account=&lt;project&gt;</code> — your project name, not your username. Submit with <code>sbatch</code>, and Slurm writes output to <code>slurm-&lt;jobid&gt;.out</code>.</p>
+<p>A batch job is a shell script with <code>#SBATCH</code> directives at the top. The required directive is <code>--account=&lt;project&gt;</code> — your project name, not your username. Submit with <code>sbatch</code>; Slurm writes output to <code>slurm-&lt;jobid&gt;.out</code>.</p>
 </div>
 <section id="the-smallest-useful-job" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="the-smallest-useful-job"><span class="header-section-number">10.1</span> The smallest useful job</h2>
@@ -436,10 +436,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Watch it and read the output:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                 <span class="co"># is it pending / running?</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> slurm-123456.out    <span class="co"># follow output as it's written</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>That’s the whole loop: write script → <code>sbatch</code> → watch → read output. Everything else is refinement.</p>
+<p>That’s the loop: write script, <code>sbatch</code>, watch, read output. Everything else is refinement.</p>
 </section>
-<section id="the-one-directive-you-cannot-omit" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="the-one-directive-you-cannot-omit"><span class="header-section-number">10.2</span> The one directive you cannot omit</h2>
+<section id="the-required-directive---account" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="the-required-directive---account"><span class="header-section-number">10.2</span> The required directive: <code>--account</code></h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -451,10 +451,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Every job on MedicineBow <strong>must</strong> specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the single most common first error. Confirm your exact project name with your PI (<a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) and put it in every script — or set it once as a default:</p>
+<p>Every job on MedicineBow must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (<a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) and put it in every script, or set it once as a default:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add to ~/.bashrc so you never forget it</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SBATCH_ACCOUNT</span><span class="op">=</span>cowy-firesurro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Even so, keep <code>--account</code> in the script itself — it documents intent and survives being run by a collaborator whose default differs.</p>
+<p>Even so, keep <code>--account</code> in the script itself. It documents intent and survives being run by a collaborator whose default differs.</p>
 </div>
 </div>
 </section>
@@ -521,29 +521,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p><code>#SBATCH</code> lines must come <strong>before any real commands</strong> — the first non-comment, non-<code>#SBATCH</code> line ends the directive block. After that, it’s just a bash script that runs on the compute node.</p>
+<p><code>#SBATCH</code> lines must come before any real commands; the first non-comment, non-<code>#SBATCH</code> line ends the directive block. After that, it’s a bash script that runs on the compute node.</p>
 </section>
-<section id="set-memory-explicitly-always" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="set-memory-explicitly-always"><span class="header-section-number">10.4</span> Set memory explicitly — always</h2>
+<section id="set-memory-explicitly" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="set-memory-explicitly"><span class="header-section-number">10.4</span> Set memory explicitly</h2>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The 10 GB-per-core memory trap
+The 10 GB-per-core default on <code>mb</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>On the default <code>mb</code> partition, if you don’t set <code>--mem</code>, Slurm gives you <strong>10 GB per CPU core</strong> (<code>DefMemPerCPU=10000</code>). So this innocent-looking request:</p>
+<p>On the default <code>mb</code> partition, if you don’t set <code>--mem</code>, Slurm gives you 10 GB per CPU core (<code>DefMemPerCPU=10000</code>). So this request:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8       # and no --mem line</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>silently asks for <strong>80 GB of RAM</strong> — and then you queue behind a number you never typed, because 80 GB is harder to schedule than the 8 GB you probably needed. <strong>Always set <code>--mem</code> (whole-job) or <code>--mem-per-cpu</code> explicitly.</strong> This is covered in depth in <a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
+<p>asks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the job queues longer. Set <code>--mem</code> (whole-job) or <code>--mem-per-cpu</code> explicitly. Covered in depth in <a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
 </div>
 </div>
 </section>
 <section id="making-the-environment-reproducible" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="making-the-environment-reproducible"><span class="header-section-number">10.5</span> Making the environment reproducible</h2>
-<p>A batch job starts in a clean-ish environment. Build the environment you need <em>inside the script</em> so it runs the same way every time and doesn’t depend on what you happened to have loaded when you hit submit:</p>
+<p>A batch job starts in a mostly clean environment. Build the environment you need <em>inside the script</em> so it runs the same way every time, independent of what you had loaded at submit time:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore geostack        <span class="co"># a saved module set (see @sec-modules)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or, for conda:</span></span>
@@ -557,9 +557,9 @@ The 10 GB-per-core memory trap
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_CPUS_PER_TASK</span>   <span class="co"># cores you were given — pass to your program's thread count</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_ARRAY_TASK_ID</span>   <span class="co"># which array element this is (see @sec-arrays)</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_SUBMIT_DIR</span>      <span class="co"># the directory you ran sbatch from</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A common pattern is to match your program’s threads to what Slurm gave you:</p>
+<p>A common pattern matches your program’s threads to what Slurm gave you:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMP_NUM_THREADS</span><span class="op">=</span><span class="va">$SLURM_CPUS_PER_TASK</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that you can submit a job, the next two chapters are about doing it <em>well</em>: asking for the right resources (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>), and choosing the right queue (<a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>).</p>
+<p>The next two chapters cover doing this well: asking for the right resources (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>) and choosing the right queue (<a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>).</p>
 
 
 </section>
@@ -976,8 +976,8 @@ The 10 GB-per-core memory trap
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/11-asking-for-resources.html" class="pagination-link" aria-label="Asking for resources (and why over-asking punishes you)">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/11-asking-for-resources.html" class="pagination-link" aria-label="Asking for resources">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

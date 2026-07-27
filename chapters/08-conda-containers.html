@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,10 +376,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#conda-great-but-point-it-away-from-home-first" id="toc-conda-great-but-point-it-away-from-home-first" class="nav-link active" data-scroll-target="#conda-great-but-point-it-away-from-home-first"><span class="header-section-number">8.1</span> Conda: great, but point it away from home first</a></li>
+  <li><a href="#point-conda-away-from-home-first" id="toc-point-conda-away-from-home-first" class="nav-link active" data-scroll-target="#point-conda-away-from-home-first"><span class="header-section-number">8.1</span> Point conda away from home first</a></li>
   <li><a href="#apptainer-containers-for-reproducibility-and-portability" id="toc-apptainer-containers-for-reproducibility-and-portability" class="nav-link" data-scroll-target="#apptainer-containers-for-reproducibility-and-portability"><span class="header-section-number">8.2</span> Apptainer: containers for reproducibility and portability</a>
   <ul class="collapse">
-  <li><a href="#when-to-reach-for-a-container-vs.-a-module-vs.-conda" id="toc-when-to-reach-for-a-container-vs.-a-module-vs.-conda" class="nav-link" data-scroll-target="#when-to-reach-for-a-container-vs.-a-module-vs.-conda"><span class="header-section-number">8.2.1</span> When to reach for a container vs.&nbsp;a module vs.&nbsp;conda</a></li>
+  <li><a href="#container-vs.-module-vs.-conda" id="toc-container-vs.-module-vs.-conda" class="nav-link" data-scroll-target="#container-vs.-module-vs.-conda"><span class="header-section-number">8.2.1</span> Container vs.&nbsp;module vs.&nbsp;conda</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/08-conda-containers.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -407,13 +407,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>Conda is supported, but its default is to dump gigabytes into your 50 GB home directory — which will fill it and break things. <strong>Redirect conda’s package cache and environments into <code>/project/&lt;proj&gt;/software</code> before you create anything.</strong> For reproducible, portable software (especially things that are painful to build), use <strong>Apptainer</strong> containers instead.</p>
+<p>Conda writes gigabytes into your 50 GB home directory by default. Redirect its package cache and environments into <code>/project/&lt;proj&gt;/software</code> before creating anything. For reproducible, portable software, use Apptainer containers.</p>
 </div>
-<section id="conda-great-but-point-it-away-from-home-first" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="conda-great-but-point-it-away-from-home-first"><span class="header-section-number">8.1</span> Conda: great, but point it away from home first</h2>
+<section id="point-conda-away-from-home-first" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="point-conda-away-from-home-first"><span class="header-section-number">8.1</span> Point conda away from home first</h2>
 <p>The <code>miniconda3</code> module gives you conda:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniconda3/24.3.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By default, conda writes environments and a package cache into <code>~/.conda</code> and <code>~/miniconda3</code> — i.e.&nbsp;straight into your <strong>50 GB home quota</strong>. A couple of scientific environments will fill it. Fix this <strong>once, before creating any environments</strong>, by telling conda to live in your project’s 250 GB software space.</p>
+<p>By default, conda writes environments and a package cache into <code>~/.conda</code> and <code>~/miniconda3</code>, inside your 50 GB home quota. A couple of scientific environments will fill it. Before creating any environments, point conda at your project’s 250 GB software space.</p>
 <p>Create <code>~/.condarc</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pkgs_dirs</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> /project/cowy-firesurro/software/&lt;you&gt;/conda/pkgs</span></span>
@@ -428,23 +428,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Do this before your first <code>conda create</code>
+Set <code>.condarc</code> before your first <code>conda create</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you create environments first and <em>then</em> set <code>.condarc</code>, the old ones are stranded in home and you’ll wonder why home is still full. Set <code>.condarc</code> on day one. If you’ve already made the mess: <code>conda env list</code>, remove the home-based envs, and recreate them under project space.</p>
+<p>Environments created before you set <code>.condarc</code> are stranded in home. If you’ve already made the mess: <code>conda env list</code>, remove the home-based envs, and recreate them under project space.</p>
 </div>
 </div>
 <p>Other conda notes:</p>
 <ul>
-<li><strong>No <code>mamba</code></strong> is installed anywhere on the cluster — use <code>conda</code> directly. (Recent conda is much faster than it used to be, so this is less painful than it once was.)</li>
-<li>Activate conda <strong>inside your submit script</strong>, not just interactively, so batch jobs get the same environment (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>).</li>
-<li><code>conda clean -a</code> reclaims space from the package cache periodically.</li>
+<li>No <code>mamba</code> is installed on the cluster; use <code>conda</code> directly. Recent conda is much faster than it used to be.</li>
+<li>Activate conda inside your submit script, not just interactively, so batch jobs get the same environment (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>).</li>
+<li><code>conda clean -a</code> reclaims space from the package cache.</li>
 </ul>
 </section>
 <section id="apptainer-containers-for-reproducibility-and-portability" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="apptainer-containers-for-reproducibility-and-portability"><span class="header-section-number">8.2</span> Apptainer: containers for reproducibility and portability</h2>
-<p>A <strong>container</strong> bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is <strong>Apptainer</strong> (formerly Singularity) — it runs containers as <em>you</em>, with no root, which is why it’s the HPC-safe alternative to Docker.</p>
+<p>A container bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as <em>you</em>, with no root, which makes it the HPC-safe alternative to Docker.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer/1.4.1</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull a Docker image and convert it to an Apptainer image (.sif):</span></span>
@@ -456,8 +456,8 @@ Do this before your first <code>conda create</code>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind your data into the container so it can see it:</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--bind</span> /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Store <code>.sif</code> images in <code>/project/&lt;proj&gt;/software</code> — they can be large.</p>
-<section id="when-to-reach-for-a-container-vs.-a-module-vs.-conda" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="when-to-reach-for-a-container-vs.-a-module-vs.-conda"><span class="header-section-number">8.2.1</span> When to reach for a container vs.&nbsp;a module vs.&nbsp;conda</h3>
+<section id="container-vs.-module-vs.-conda" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="container-vs.-module-vs.-conda"><span class="header-section-number">8.2.1</span> Container vs.&nbsp;module vs.&nbsp;conda</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -505,7 +505,7 @@ GPUs inside containers
 <p>To use the node’s GPUs from inside a container, add the <code>--nv</code> flag so Apptainer exposes the NVIDIA driver: <code>apptainer exec --nv mytool.sif ...</code>. Pair this with a GPU job (<a href="17-interactive-and-gpu.html#sec-gpu" class="quarto-xref"><span>Section 17.2</span></a>).</p>
 </div>
 </div>
-<p>With software sorted, we reach the heart of the book: getting the scheduler to run your work (Part V, starting at <a href="09-why-a-scheduler.html" class="quarto-xref"><span>Chapter 9</span></a>).</p>
+<p>Next: running your work through the scheduler (Part V, starting at <a href="09-why-a-scheduler.html" class="quarto-xref"><span>Chapter 9</span></a>).</p>
 
 
 </section>
@@ -918,8 +918,8 @@ GPUs inside containers
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules (and why `module avail` lies)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span>
+      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules (and why `module avail` misleads)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

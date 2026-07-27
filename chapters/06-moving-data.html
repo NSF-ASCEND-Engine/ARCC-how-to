@@ -232,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
   </div>
 </li>
       </ul>
@@ -407,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="tldr">
-<p>For big or important transfers, use <strong>Globus</strong> — it’s restartable, verified, and doesn’t die when your laptop sleeps. For small stuff, <code>scp</code>/<code>rsync</code> over SSH to <code>medicinebow.arcc.uwyo.edu</code> is fine, and <code>rclone</code> (a module) is ARCC’s recommended CLI for cloud storage. The gotcha: <strong>external collaborators on ARCC-Only accounts can’t use Globus.</strong></p>
+<p>For big or important transfers, use <strong>Globus</strong> — restartable, verified, survives a sleeping laptop. For small stuff, <code>scp</code>/<code>rsync</code> over SSH to <code>medicinebow.arcc.uwyo.edu</code> works, and <code>rclone</code> (a module) is ARCC’s recommended CLI for cloud storage. Note: <strong>external collaborators on ARCC-Only accounts can’t use Globus.</strong></p>
 </div>
 <section id="pick-the-right-tool-for-the-size-of-the-job" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">6.1</span> Pick the right tool for the size of the job</h2>
@@ -437,11 +437,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the login nodes, and Globus manages its own endpoint. That’s another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
+<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the login nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
 </section>
 <section id="globus-the-recommended-path-for-real-data" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">6.2</span> Globus — the recommended path for real data</h2>
-<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side — so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
+<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side, so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
 <ol type="1">
 <li>Log in at <a href="https://app.globus.org" class="uri">https://app.globus.org</a> (choose “University of Wyoming” as your organization, or your own institution).</li>
 <li>Search collections for <strong><code>uwyo-ARCC</code></strong> and pick <strong>“Medicine Bow”</strong>.</li>
@@ -458,7 +458,7 @@ Globus needs a full UW account
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ARCC-Only accounts (external collaborators — <a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you. Sort this out before you’re blocked on a deadline.</p>
+<p>ARCC-Only accounts (external collaborators — <a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you.</p>
 </div>
 </div>
 </section>
@@ -470,26 +470,26 @@ Globus needs a full UW account
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/gscratch/<span class="op">&lt;</span>you<span class="op">&gt;</span>/output.nc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>rsync</code> is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> ./localdir/ <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/dir/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For anything more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
+<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
 </section>
 <section id="rclone-cloud-storage-s3-google-drive-box" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">6.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h2>
-<p><code>rclone</code> is ARCC’s recommended CLI tool for moving data to and from cloud services. It’s a module:</p>
+<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a module:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load rclone/1.63.1</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rclone</code> verifies and retries, and handles the many small-file case far better than a naive loop of <code>scp</code>s.</p>
+<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s.</p>
 </section>
 <section id="a-quick-decision-guide" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">6.5</span> A quick decision guide</h2>
 <ul>
 <li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
-<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or just edit in the portal).</li>
+<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or edit in the portal).</li>
 <li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
-<li><strong>You’re an external collaborator without Globus?</strong> Talk to your UW PI about a guest collection <em>now</em>.</li>
+<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection.</li>
 </ul>
-<p>Next up: making software available, starting with the module system that trips up nearly everyone (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
+<p>Next: making software available, starting with the module system (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
 
 
 </section>
@@ -906,8 +906,8 @@ Globus needs a full UW account
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules (and why `module avail` lies)">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules (and why `module avail` misleads)">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> misleads)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
