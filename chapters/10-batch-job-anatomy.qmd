@@ -111,10 +111,10 @@ loaded when you hit submit:
 
 ```bash
 module purge
-module restore firestack        # a saved module set (see @sec-modules)
+module restore geostack        # a saved module set (see @sec-modules)
 # or, for conda:
 module load miniconda3/24.3.0
-conda activate fire
+conda activate geo
 ```
 
 ## Useful variables inside a job

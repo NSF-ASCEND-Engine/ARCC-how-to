@@ -10,11 +10,12 @@ machine. MedicineBow allows arrays up to **10,000** tasks.
 
 ## The problem it solves
 
-You have 500 fire-weather scenarios to run, or 500 input tiles to process. The wrong way is a
-bash loop that runs them one after another in a single job (serial, slow, and one crash near
-the end wastes everything). The other wrong way is copy-pasting 500 submit scripts. The right
-way is **one array job**: one script, submitted once, that Slurm turns into 500 independent
-tasks it can run in parallel and backfill wherever there's room.
+You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days
+to process. The wrong way is a bash loop that runs them one after another in a single job
+(serial, slow, and one crash near the end wastes everything). The other wrong way is
+copy-pasting 500 submit scripts. The right way is **one array job**: one script, submitted
+once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever
+there's room.
 
 ## The mechanics
 
@@ -35,7 +36,7 @@ module purge
 module load gcc/14.2.0 python/3.12.0
 
 # Use the task index to select this task's work:
-python run_scenario.py --scenario-id ${SLURM_ARRAY_TASK_ID}
+python run_case.py --case-id ${SLURM_ARRAY_TASK_ID}
 ```
 
 Submit once:
@@ -108,8 +109,9 @@ domain-decomposed simulation — that's an **MPI** job instead (@sec-ladder), a 
 for a different shape of problem.
 :::
 
-Arrays are also the natural unit for **ensembles** in fire/atmospheric work: one array task
-per ensemble member, each writing to its own output, collected afterward. Reach for them
-early — most "I need to run this many times" problems are secretly array jobs.
+Arrays are also the natural unit for **ensembles** — fire-weather members, hydrologic
+scenarios, Monte-Carlo draws — one array task per member, each writing to its own output,
+collected afterward. Reach for them early — most "I need to run this many times" problems are
+secretly array jobs.
 
 Next: interactive sessions and GPUs.

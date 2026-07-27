@@ -89,10 +89,10 @@ Once you know the stack a project needs, save it as a named collection so you do
 ```bash
 module purge
 module load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi
-module save firestack          # remember this set as "firestack"
+module save geostack          # remember this set as "geostack"
 
 # next session:
-module restore firestack
+module restore geostack
 ```
 
 Prefer `module restore` in your submit scripts over hand-loading a long list — it's

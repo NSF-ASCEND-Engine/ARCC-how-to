@@ -32,8 +32,8 @@ envs_dirs:
 Now new environments and the download cache land in project space:
 
 ```bash
-conda create -n fire python=3.12 numpy xarray netcdf4
-conda activate fire
+conda create -n geo python=3.12 numpy xarray netcdf4
+conda activate geo
 ```
 
 ::: {.callout-important}

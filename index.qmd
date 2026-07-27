@@ -4,12 +4,15 @@ This is a practical, opinionated guide to getting real work done on **MedicineBo
 the University of Wyoming's flagship high-performance computing (HPC) cluster, run by
 the **Advanced Research Computing Center (ARCC)**.
 
-It is written for people joining the **ASCEND** engine and its **ARID** program —
-researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but
-almost everything here applies to any new MedicineBow user. It assumes you are
-comfortable-ish on a computer but have never used a shared supercomputer before. Every
-chapter tries to explain *why* before *how*, because on a cluster the "why" is usually
-what keeps you out of trouble.
+It is written for people joining the **ASCEND** engine and its **ARID** program — whose
+mission is protecting **power and water utilities from wildfire and its aftermath**, which
+in practice means a broad mix of scientific computing: wildfire-risk and fire-weather
+modeling, hydrology and post-fire water-quality analysis, remote sensing, and the machine
+learning that ties them together. The examples in this book are drawn from that space, but
+they're deliberately generic — almost everything here applies to any new MedicineBow user,
+whatever your science. It assumes you are comfortable-ish on a computer but have never used
+a shared supercomputer before. Every chapter tries to explain *why* before *how*, because on
+a cluster the "why" is usually what keeps you out of trouble.
 
 ## Why this book exists
 
