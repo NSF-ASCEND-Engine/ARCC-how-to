@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rallypoint One">
-<meta name="dcterms.date" content="2026-07-27">
 
-<title>Getting Started on ARCC MedicineBow</title>
+<title>16&nbsp; Job arrays: the feature that changes how you work – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./chapters/01-what-is-a-cluster.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/17-interactive-and-gpu.html" rel="next">
+<link href="../chapters/15-monitoring-jobs.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Getting Started on ARCC MedicineBow</a> 
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -113,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -128,19 +162,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
   </div>
 </li>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span></a>
   </div>
 </li>
@@ -174,13 +208,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/05-storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
   </div>
 </li>
@@ -197,13 +231,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/07-modules.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span></a>
   </div>
 </li>
@@ -211,76 +245,76 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Part V — Slurm</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/14-priority.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is actually computed here</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
   </div>
 </li>
@@ -297,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
   </div>
 </li>
@@ -314,19 +348,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
   </div>
 </li>
@@ -342,41 +376,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
-  <li><a href="#the-shortest-possible-orientation" id="toc-the-shortest-possible-orientation" class="nav-link" data-scroll-target="#the-shortest-possible-orientation">The shortest possible orientation</a></li>
-  <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
-  </ul></li>
+  <li><a href="#the-problem-it-solves" id="toc-the-problem-it-solves" class="nav-link active" data-scroll-target="#the-problem-it-solves"><span class="header-section-number">16.1</span> The problem it solves</a></li>
+  <li><a href="#the-mechanics" id="toc-the-mechanics" class="nav-link" data-scroll-target="#the-mechanics"><span class="header-section-number">16.2</span> The mechanics</a></li>
+  <li><a href="#driving-work-from-the-index" id="toc-driving-work-from-the-index" class="nav-link" data-scroll-target="#driving-work-from-the-index"><span class="header-section-number">16.3</span> Driving work from the index</a></li>
+  <li><a href="#throttling-be-a-good-neighbor" id="toc-throttling-be-a-good-neighbor" class="nav-link" data-scroll-target="#throttling-be-a-good-neighbor"><span class="header-section-number">16.4</span> Throttling: be a good neighbor</a></li>
+  <li><a href="#managing-an-array" id="toc-managing-an-array" class="nav-link" data-scroll-target="#managing-an-array"><span class="header-section-number">16.5</span> Managing an array</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/16-job-arrays.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/16-job-arrays.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Getting Started on ARCC MedicineBow</h1>
-<p class="subtitle lead">A practical onboarding guide for ASCEND / ARID researchers</p>
+<h1 class="title"><span id="sec-arrays" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rallypoint One </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -386,53 +406,80 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a practical, opinionated guide to getting real work done on <strong>MedicineBow</strong>, the University of Wyoming’s flagship high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program — researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but almost everything here applies to any new MedicineBow user. It assumes you are comfortable-ish on a computer but have never used a shared supercomputer before. Every chapter tries to explain <em>why</em> before <em>how</em>, because on a cluster the “why” is usually what keeps you out of trouble.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>MedicineBow is a genuinely large, shared machine, and the official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and, in a few places, is out of date relative to the machine as it actually runs today. The content here was written by working through onboarding on the live cluster and <strong>cross-checking every important claim against the running system</strong> in July 2026. Where the docs and the machine disagree, this book follows the machine and calls out the conflict, because a newcomer following stale docs will hit exactly those conflicts.</p>
+<div class="tldr">
+<p>A job array runs the <em>same script</em> hundreds or thousands of times, each with a different index (<code>$SLURM_ARRAY_TASK_ID</code>). One <code>sbatch</code>, one script, N independent tasks that the scheduler spreads across the cluster and backfills into gaps. For parameter sweeps, ensembles, and per-file processing, this is the single biggest productivity unlock on the machine. MedicineBow allows arrays up to <strong>10,000</strong> tasks.</p>
+</div>
+<section id="the-problem-it-solves" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="the-problem-it-solves"><span class="header-section-number">16.1</span> The problem it solves</h2>
+<p>You have 500 fire-weather scenarios to run, or 500 input tiles to process. The wrong way is a bash loop that runs them one after another in a single job (serial, slow, and one crash near the end wastes everything). The other wrong way is copy-pasting 500 submit scripts. The right way is <strong>one array job</strong>: one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.</p>
+</section>
+<section id="the-mechanics" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="the-mechanics"><span class="header-section-number">16.2</span> The mechanics</h2>
+<p>Add <code>--array</code> and use <code>$SLURM_ARRAY_TASK_ID</code> to pick which piece of work this task does:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=sweep</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500                 # 500 tasks, indices 1..500</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast                    # short independent tasks → high-priority QOS</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:30:00               # per task</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=8G</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=logs/sweep-%A_%a.out # %A = array job id, %a = task index</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the task index to select this task's work:</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_scenario.py <span class="at">--scenario-id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Submit once:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> logs</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit_array.sh        <span class="co"># creates 500 tasks: 12345_1, 12345_2, ... 12345_500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each task is scheduled independently. Because they’re small and short, they <strong>backfill beautifully</strong> (<a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>) and the whole sweep can finish far faster than the sum of its parts.</p>
+</section>
+<section id="driving-work-from-the-index" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="driving-work-from-the-index"><span class="header-section-number">16.3</span> Driving work from the index</h2>
+<p>The index is just a number; you map it to real work. Common patterns:</p>
+<p><strong>Line N of a parameter file:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">PARAM</span><span class="op">=</span><span class="va">$(</span><span class="fu">sed</span> <span class="at">-n</span> <span class="st">"</span><span class="va">${SLURM_ARRAY_TASK_ID}</span><span class="st">p"</span> params.txt<span class="va">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="va">$PARAM</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>The Nth input file:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">FILES</span><span class="op">=</span><span class="va">(</span>/project/cowy-firesurro/data/tiles/<span class="pp">*</span>.tif<span class="va">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">THIS</span><span class="op">=</span><span class="va">${FILES</span><span class="op">[</span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="op">]</span><span class="va">}</span>      <span class="co"># note: arrays are 0-indexed in bash</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> process.py <span class="st">"</span><span class="va">$THIS</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(If you index files from a bash array, start <code>--array=0</code>; if you use <code>sed -n Np</code>, start <code>--array=1</code>. Off-by-one here is the classic array bug.)</p>
+</section>
+<section id="throttling-be-a-good-neighbor" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="throttling-be-a-good-neighbor"><span class="header-section-number">16.4</span> Throttling: be a good neighbor</h2>
+<p>Don’t necessarily unleash all 500 at once — cap how many run simultaneously with <code>%</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20        # at most 20 tasks running at a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This keeps you from saturating your account’s core cap (and your fair-share, <a href="14-priority.html" class="quarto-xref"><span>Chapter 14</span></a>), while still churning through all 500. A modest <code>%</code> limit is often <em>faster overall</em> because you stop competing with yourself and stay backfill-friendly.</p>
+</section>
+<section id="managing-an-array" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="managing-an-array"><span class="header-section-number">16.5</span> Managing an array</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                     <span class="co"># shows pending tasks collapsed, e.g. 12345_[6-500]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> 12345                   <span class="co"># cancel the whole array</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> 12345_7                 <span class="co"># cancel just task 7</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 12345                  <span class="co"># per-task outcomes after the fact</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To find which tasks failed (so you can rerun only those):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 12345 <span class="at">--format</span><span class="op">=</span>JobID,State,ExitCode <span class="at">-n</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> COMPLETED</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>then resubmit just those indices: <code>sbatch --array=17,43,88 submit_array.sh</code>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-This is not an official ARCC document
+Arrays vs.&nbsp;one big MPI job
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
+<p>An array is for <strong>independent</strong> tasks that don’t talk to each other (embarrassingly parallel): sweeps, ensembles, per-file pipelines. If your tasks must communicate — a single domain-decomposed simulation — that’s an <strong>MPI</strong> job instead (<a href="23-parallelism-ladder.html" class="quarto-xref"><span>Chapter 20</span></a>), a different tool for a different shape of problem.</p>
 </div>
 </div>
-</section>
-<section id="the-shortest-possible-orientation" class="level2">
-<h2 class="anchored" data-anchor-id="the-shortest-possible-orientation">The shortest possible orientation</h2>
-<p>If you read nothing else, read this:</p>
-<ol type="1">
-<li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/02-getting-an-account.html" class="quarto-xref"><span>2&nbsp; Getting an account (your PI must do this)</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/05-storage.html" class="quarto-xref"><span>5&nbsp; Where your data lives (and why nothing is backed up)</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/09-why-a-scheduler.html" class="quarto-xref"><span>9&nbsp; Why a scheduler exists</span></a>.)</li>
-<li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code> — it’s the one directive you cannot omit. (See <a href="chapters/10-batch-job-anatomy.html" class="quarto-xref"><span>10&nbsp; Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues. This is the point of <a href="chapters/12-partitions-and-qos.html" class="quarto-xref"><span>12&nbsp; Partitions and QOS on MedicineBow</span></a> and <a href="chapters/13-queue-times.html" class="quarto-xref"><span>13&nbsp; Queue times: which partition for what</span></a>, and it’s the single most useful thing to get right early.</li>
-</ol>
-</section>
-<section id="how-the-book-is-organized" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
-<ul>
-<li><strong>Part I</strong> gets you an account and logged in.</li>
-<li><strong>Part II</strong> is a minimal Linux survival kit — no more than you need.</li>
-<li><strong>Part III</strong> covers the filesystems and moving data in and out.</li>
-<li><strong>Part IV</strong> covers software: modules, conda, and containers.</li>
-<li><strong>Part V</strong> is the heart of the book: <strong>Slurm</strong>, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive preemption and failures.</li>
-<li><strong>Part VI</strong> is quick reference: a cheat sheet, troubleshooting, and a glossary.</li>
-</ul>
-<p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> are places people reliably get burned — they earned their place by actually biting someone.</p>
-<p>Let’s get you an account.</p>
+<p>Arrays are also the natural unit for <strong>ensembles</strong> in fire/atmospheric work: one array task per ensemble member, each writing to its own output, collected afterward. Reach for them early — most “I need to run this many times” problems are secretly array jobs.</p>
+<p>Next: interactive sessions and GPUs.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -842,10 +889,13 @@ This is not an official ARCC document
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../chapters/15-monitoring-jobs.html" class="pagination-link" aria-label="Watching a job">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/01-what-is-a-cluster.html" class="pagination-link" aria-label="What a cluster is (and why your laptop isn't one)">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/17-interactive-and-gpu.html" class="pagination-link" aria-label="Interactive sessions and GPU jobs">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -857,7 +907,7 @@ This is not an official ARCC document
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/16-job-arrays.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

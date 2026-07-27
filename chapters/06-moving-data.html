@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rallypoint One">
-<meta name="dcterms.date" content="2026-07-27">
 
-<title>Getting Started on ARCC MedicineBow</title>
+<title>6&nbsp; Moving data in and out – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./chapters/01-what-is-a-cluster.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/07-modules.html" rel="next">
+<link href="../chapters/05-storage.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-storage.html">Part III — Where your data lives</a></li><li class="breadcrumb-item"><a href="../chapters/06-moving-data.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Getting Started on ARCC MedicineBow</a> 
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -113,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -128,19 +162,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
   </div>
 </li>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span></a>
   </div>
 </li>
@@ -165,22 +199,22 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Part III — Where your data lives</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/05-storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
   </div>
 </li>
@@ -197,13 +231,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/07-modules.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span></a>
   </div>
 </li>
@@ -220,67 +254,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/14-priority.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is actually computed here</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
   </div>
 </li>
@@ -297,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
   </div>
 </li>
@@ -314,19 +348,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
   </div>
 </li>
@@ -342,41 +376,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
-  <li><a href="#the-shortest-possible-orientation" id="toc-the-shortest-possible-orientation" class="nav-link" data-scroll-target="#the-shortest-possible-orientation">The shortest possible orientation</a></li>
-  <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
-  </ul></li>
+  <li><a href="#pick-the-right-tool-for-the-size-of-the-job" id="toc-pick-the-right-tool-for-the-size-of-the-job" class="nav-link active" data-scroll-target="#pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">6.1</span> Pick the right tool for the size of the job</a></li>
+  <li><a href="#globus-the-recommended-path-for-real-data" id="toc-globus-the-recommended-path-for-real-data" class="nav-link" data-scroll-target="#globus-the-recommended-path-for-real-data"><span class="header-section-number">6.2</span> Globus — the recommended path for real data</a></li>
+  <li><a href="#scp-and-rsync-fine-for-small-everyday-transfers" id="toc-scp-and-rsync-fine-for-small-everyday-transfers" class="nav-link" data-scroll-target="#scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">6.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</a></li>
+  <li><a href="#rclone-cloud-storage-s3-google-drive-box" id="toc-rclone-cloud-storage-s3-google-drive-box" class="nav-link" data-scroll-target="#rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">6.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</a></li>
+  <li><a href="#a-quick-decision-guide" id="toc-a-quick-decision-guide" class="nav-link" data-scroll-target="#a-quick-decision-guide"><span class="header-section-number">6.5</span> A quick decision guide</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/06-moving-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-storage.html">Part III — Where your data lives</a></li><li class="breadcrumb-item"><a href="../chapters/06-moving-data.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Getting Started on ARCC MedicineBow</h1>
-<p class="subtitle lead">A practical onboarding guide for ASCEND / ARID researchers</p>
+<h1 class="title"><span id="sec-moving-data" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rallypoint One </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -386,53 +406,92 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a practical, opinionated guide to getting real work done on <strong>MedicineBow</strong>, the University of Wyoming’s flagship high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program — researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but almost everything here applies to any new MedicineBow user. It assumes you are comfortable-ish on a computer but have never used a shared supercomputer before. Every chapter tries to explain <em>why</em> before <em>how</em>, because on a cluster the “why” is usually what keeps you out of trouble.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>MedicineBow is a genuinely large, shared machine, and the official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and, in a few places, is out of date relative to the machine as it actually runs today. The content here was written by working through onboarding on the live cluster and <strong>cross-checking every important claim against the running system</strong> in July 2026. Where the docs and the machine disagree, this book follows the machine and calls out the conflict, because a newcomer following stale docs will hit exactly those conflicts.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
+<div class="tldr">
+<p>For big or important transfers, use <strong>Globus</strong> — it’s restartable, verified, and doesn’t die when your laptop sleeps. For small stuff, <code>scp</code>/<code>rsync</code> over SSH to <code>medicinebow.arcc.uwyo.edu</code> is fine, and <code>rclone</code> (a module) is ARCC’s recommended CLI for cloud storage. The gotcha: <strong>external collaborators on ARCC-Only accounts can’t use Globus.</strong></p>
+</div>
+<section id="pick-the-right-tool-for-the-size-of-the-job" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">6.1</span> Pick the right tool for the size of the job</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Transfer</th>
+<th>Best tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hundreds of GB / TB, or must-not-corrupt datasets</td>
+<td><strong>Globus</strong></td>
+</tr>
+<tr class="even">
+<td>A few files, a script, a config</td>
+<td><code>scp</code> or <code>rsync</code> over SSH</td>
+</tr>
+<tr class="odd">
+<td>To/from cloud storage (S3, Google Drive, etc.)</td>
+<td><code>rclone</code></td>
+</tr>
+<tr class="even">
+<td>Drag-and-drop a handful of files in a browser</td>
+<td>Portal → Files</td>
+</tr>
+</tbody>
+</table>
+<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the login nodes, and Globus manages its own endpoint. That’s another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
+</section>
+<section id="globus-the-recommended-path-for-real-data" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">6.2</span> Globus — the recommended path for real data</h2>
+<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side — so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
+<ol type="1">
+<li>Log in at <a href="https://app.globus.org" class="uri">https://app.globus.org</a> (choose “University of Wyoming” as your organization, or your own institution).</li>
+<li>Search collections for <strong><code>uwyo-ARCC</code></strong> and pick <strong>“Medicine Bow”</strong>.</li>
+<li>The Medicine Bow collection’s root is <strong><code>cluster</code></strong>, so your project shows up at a path like <code>/cluster/medbow/project/cowy-firesurro/...</code>.</li>
+<li>Set the other side to your institutional or personal collection (install <strong>Globus Connect Personal</strong> on your own machine to make it an endpoint), pick files, and hit <strong>Start</strong>.</li>
+</ol>
+<div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-This is not an official ARCC document
+Globus needs a full UW account
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
+<p>ARCC-Only accounts (external collaborators — <a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you. Sort this out before you’re blocked on a deadline.</p>
 </div>
 </div>
 </section>
-<section id="the-shortest-possible-orientation" class="level2">
-<h2 class="anchored" data-anchor-id="the-shortest-possible-orientation">The shortest possible orientation</h2>
-<p>If you read nothing else, read this:</p>
-<ol type="1">
-<li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/02-getting-an-account.html" class="quarto-xref"><span>2&nbsp; Getting an account (your PI must do this)</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/05-storage.html" class="quarto-xref"><span>5&nbsp; Where your data lives (and why nothing is backed up)</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/09-why-a-scheduler.html" class="quarto-xref"><span>9&nbsp; Why a scheduler exists</span></a>.)</li>
-<li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code> — it’s the one directive you cannot omit. (See <a href="chapters/10-batch-job-anatomy.html" class="quarto-xref"><span>10&nbsp; Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues. This is the point of <a href="chapters/12-partitions-and-qos.html" class="quarto-xref"><span>12&nbsp; Partitions and QOS on MedicineBow</span></a> and <a href="chapters/13-queue-times.html" class="quarto-xref"><span>13&nbsp; Queue times: which partition for what</span></a>, and it’s the single most useful thing to get right early.</li>
-</ol>
+<section id="scp-and-rsync-fine-for-small-everyday-transfers" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">6.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</h2>
+<p>From your laptop, push a file up:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> results.csv <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pull one down:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/gscratch/<span class="op">&lt;</span>you<span class="op">&gt;</span>/output.nc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>rsync</code> is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> ./localdir/ <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/dir/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For anything more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
 </section>
-<section id="how-the-book-is-organized" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
+<section id="rclone-cloud-storage-s3-google-drive-box" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">6.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h2>
+<p><code>rclone</code> is ARCC’s recommended CLI tool for moving data to and from cloud services. It’s a module:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load rclone/1.63.1</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>rclone</code> verifies and retries, and handles the many small-file case far better than a naive loop of <code>scp</code>s.</p>
+</section>
+<section id="a-quick-decision-guide" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">6.5</span> A quick decision guide</h2>
 <ul>
-<li><strong>Part I</strong> gets you an account and logged in.</li>
-<li><strong>Part II</strong> is a minimal Linux survival kit — no more than you need.</li>
-<li><strong>Part III</strong> covers the filesystems and moving data in and out.</li>
-<li><strong>Part IV</strong> covers software: modules, conda, and containers.</li>
-<li><strong>Part V</strong> is the heart of the book: <strong>Slurm</strong>, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive preemption and failures.</li>
-<li><strong>Part VI</strong> is quick reference: a cheat sheet, troubleshooting, and a glossary.</li>
+<li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
+<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or just edit in the portal).</li>
+<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
+<li><strong>You’re an external collaborator without Globus?</strong> Talk to your UW PI about a guest collection <em>now</em>.</li>
 </ul>
-<p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> are places people reliably get burned — they earned their place by actually biting someone.</p>
-<p>Let’s get you an account.</p>
+<p>Next up: making software available, starting with the module system that trips up nearly everyone (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -842,10 +901,13 @@ This is not an official ARCC document
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../chapters/05-storage.html" class="pagination-link" aria-label="Where your data lives (and why nothing is backed up)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/01-what-is-a-cluster.html" class="pagination-link" aria-label="What a cluster is (and why your laptop isn't one)">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules (and why `module avail` lies)">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -857,7 +919,7 @@ This is not an official ARCC document
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/06-moving-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

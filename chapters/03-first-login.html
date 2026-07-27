@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rallypoint One">
-<meta name="dcterms.date" content="2026-07-27">
 
-<title>Getting Started on ARCC MedicineBow</title>
+<title>3&nbsp; First login, the portal, and SSH keys – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./chapters/01-what-is-a-cluster.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-linux-survival.html" rel="next">
+<link href="../chapters/02-getting-an-account.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-what-is-a-cluster.html">Part I — Getting oriented</a></li><li class="breadcrumb-item"><a href="../chapters/03-first-login.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Getting Started on ARCC MedicineBow</a> 
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -113,34 +147,34 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Part I — Getting oriented</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
   </div>
 </li>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span></a>
   </div>
 </li>
@@ -174,13 +208,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/05-storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
   </div>
 </li>
@@ -197,13 +231,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/07-modules.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span></a>
   </div>
 </li>
@@ -220,67 +254,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/14-priority.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is actually computed here</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
   </div>
 </li>
@@ -297,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
   </div>
 </li>
@@ -314,19 +348,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
   </div>
 </li>
@@ -342,41 +376,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
-  <li><a href="#the-shortest-possible-orientation" id="toc-the-shortest-possible-orientation" class="nav-link" data-scroll-target="#the-shortest-possible-orientation">The shortest possible orientation</a></li>
-  <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
-  </ul></li>
+  <li><a href="#two-ways-in-portal-and-ssh" id="toc-two-ways-in-portal-and-ssh" class="nav-link active" data-scroll-target="#two-ways-in-portal-and-ssh"><span class="header-section-number">3.1</span> Two ways in: portal and SSH</a></li>
+  <li><a href="#step-1-log-into-the-portal" id="toc-step-1-log-into-the-portal" class="nav-link" data-scroll-target="#step-1-log-into-the-portal"><span class="header-section-number">3.2</span> Step 1 — Log into the portal</a></li>
+  <li><a href="#step-2-generate-your-ssh-key-with-the-ssh-key-manager" id="toc-step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="nav-link" data-scroll-target="#step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</a></li>
+  <li><a href="#step-3-a-comfortable-ssh-config-optional-but-worth-it" id="toc-step-3-a-comfortable-ssh-config-optional-but-worth-it" class="nav-link" data-scroll-target="#step-3-a-comfortable-ssh-config-optional-but-worth-it"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional but worth it)</a></li>
+  <li><a href="#which-door-should-i-use" id="toc-which-door-should-i-use" class="nav-link" data-scroll-target="#which-door-should-i-use"><span class="header-section-number">3.5</span> Which door should I use?</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/03-first-login.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-what-is-a-cluster.html">Part I — Getting oriented</a></li><li class="breadcrumb-item"><a href="../chapters/03-first-login.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Getting Started on ARCC MedicineBow</h1>
-<p class="subtitle lead">A practical onboarding guide for ASCEND / ARID researchers</p>
+<h1 class="title"><span id="sec-first-login" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rallypoint One </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -386,53 +406,111 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a practical, opinionated guide to getting real work done on <strong>MedicineBow</strong>, the University of Wyoming’s flagship high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program — researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but almost everything here applies to any new MedicineBow user. It assumes you are comfortable-ish on a computer but have never used a shared supercomputer before. Every chapter tries to explain <em>why</em> before <em>how</em>, because on a cluster the “why” is usually what keeps you out of trouble.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>MedicineBow is a genuinely large, shared machine, and the official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and, in a few places, is out of date relative to the machine as it actually runs today. The content here was written by working through onboarding on the live cluster and <strong>cross-checking every important claim against the running system</strong> in July 2026. Where the docs and the machine disagree, this book follows the machine and calls out the conflict, because a newcomer following stale docs will hit exactly those conflicts.</p>
+<div class="tldr">
+<p>Your entry point is the web portal at <strong><a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a></strong> (Open OnDemand). Log in there first with your UW credentials and Duo 2FA. SSH does <strong>not</strong> use a password — you generate a key with the portal’s <strong>SSH Key Manager</strong>, download it, and drop it in <code>~/.ssh</code>. Those keys <strong>expire after one year</strong>, which is the answer to a mysterious future “why did my login suddenly stop working?”</p>
+</div>
+<section id="two-ways-in-portal-and-ssh" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="two-ways-in-portal-and-ssh"><span class="header-section-number">3.1</span> Two ways in: portal and SSH</h2>
+<p>MedicineBow has a single hostname that serves both the web portal and SSH: <code>medicinebow.arcc.uwyo.edu</code>.</p>
+<ul>
+<li><strong>The web portal</strong> (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, and — almost certainly — Jupyter). Start here on day one.</li>
+<li><strong>SSH</strong> is the terminal way in, and how you’ll work day-to-day once set up. It requires a key you generate through the portal first.</li>
+</ul>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-This is not an official ARCC document
+“Southpass” is dead — don’t use it
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
+<p>Older notes and search results may point you at <code>southpass.arcc.uwyo.edu</code>. That was the portal for the <em>retired Beartooth cluster</em>. The DNS name still resolves, but there’s no live service behind it for you. The current portal is <code>medicinebow.arcc.uwyo.edu</code>.</p>
 </div>
 </div>
 </section>
-<section id="the-shortest-possible-orientation" class="level2">
-<h2 class="anchored" data-anchor-id="the-shortest-possible-orientation">The shortest possible orientation</h2>
-<p>If you read nothing else, read this:</p>
+<section id="step-1-log-into-the-portal" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="step-1-log-into-the-portal"><span class="header-section-number">3.2</span> Step 1 — Log into the portal</h2>
+<p>Go to <a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a> and sign in with your UW username and password. You’ll be prompted for <strong>Duo</strong> two-factor authentication. If you’ve never set up Duo, do it at <a href="https://wyosecure.uwyo.edu" class="uri">https://wyosecure.uwyo.edu</a>. No VPN is needed.</p>
+<p>Once in, take the tour: there’s a <strong>Files</strong> menu (browse <code>/home</code>, <code>/project</code>, <code>/gscratch</code>), a <strong>Clusters → Shell</strong> option (a terminal in your browser), and an <strong>Interactive Apps</strong> menu.</p>
+</section>
+<section id="step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</h2>
+<p>SSH on MedicineBow is <strong>key-and-certificate based, not password based</strong>. You don’t set a password for SSH; you generate a key pair through the portal:</p>
 <ol type="1">
-<li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/02-getting-an-account.html" class="quarto-xref"><span>2&nbsp; Getting an account (your PI must do this)</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/05-storage.html" class="quarto-xref"><span>5&nbsp; Where your data lives (and why nothing is backed up)</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/09-why-a-scheduler.html" class="quarto-xref"><span>9&nbsp; Why a scheduler exists</span></a>.)</li>
-<li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code> — it’s the one directive you cannot omit. (See <a href="chapters/10-batch-job-anatomy.html" class="quarto-xref"><span>10&nbsp; Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues. This is the point of <a href="chapters/12-partitions-and-qos.html" class="quarto-xref"><span>12&nbsp; Partitions and QOS on MedicineBow</span></a> and <a href="chapters/13-queue-times.html" class="quarto-xref"><span>13&nbsp; Queue times: which partition for what</span></a>, and it’s the single most useful thing to get right early.</li>
+<li>In the portal, open the <strong>SSH Key Manager</strong>.</li>
+<li>Generate a key. It downloads as a zip named after your username.</li>
+<li>Unpack it into your local <code>~/.ssh</code> and fix permissions:</li>
 </ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> ~/Downloads/<span class="op">&lt;</span>username<span class="op">&gt;</span>.zip <span class="at">-d</span> ~/.ssh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 <span class="at">-R</span> ~/.ssh</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now you can connect from your own terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+SSH keys expire after one year
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the single best FAQ entry in the whole book. One day, roughly a year after you set up, your <code>ssh</code> will simply stop working — permission denied, no obvious reason. <strong>The key expired.</strong> Go back to the portal’s SSH Key Manager, generate a fresh key, unzip it into <code>~/.ssh</code> again, and you’re back. Nothing is broken; it’s by design.</p>
+</div>
+</div>
 </section>
-<section id="how-the-book-is-organized" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
-<ul>
-<li><strong>Part I</strong> gets you an account and logged in.</li>
-<li><strong>Part II</strong> is a minimal Linux survival kit — no more than you need.</li>
-<li><strong>Part III</strong> covers the filesystems and moving data in and out.</li>
-<li><strong>Part IV</strong> covers software: modules, conda, and containers.</li>
-<li><strong>Part V</strong> is the heart of the book: <strong>Slurm</strong>, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive preemption and failures.</li>
-<li><strong>Part VI</strong> is quick reference: a cheat sheet, troubleshooting, and a glossary.</li>
-</ul>
-<p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> are places people reliably get burned — they earned their place by actually biting someone.</p>
-<p>Let’s get you an account.</p>
+<section id="step-3-a-comfortable-ssh-config-optional-but-worth-it" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="step-3-a-comfortable-ssh-config-optional-but-worth-it"><span class="header-section-number">3.4</span> Step 3 — A comfortable SSH config (optional but worth it)</h2>
+<p>Add this to <code>~/.ssh/config</code> on your laptop so you can just type <code>ssh medbow</code>:</p>
+<pre><code>Host medbow
+    HostName medicinebow.arcc.uwyo.edu
+    User &lt;username&gt;
+    ServerAliveInterval 60
+    ServerAliveCountMax 5</code></pre>
+<p><code>ServerAliveInterval</code> sends a small keepalive every 60 seconds so campus/VPN firewalls don’t silently drop your connection while you’re reading output.</p>
+</section>
+<section id="which-door-should-i-use" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="which-door-should-i-use"><span class="header-section-number">3.5</span> Which door should I use?</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>You want to…</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>First-time setup, generate SSH keys</td>
+<td>Portal (required)</td>
+</tr>
+<tr class="even">
+<td>A quick browser terminal from any machine</td>
+<td>Portal → Clusters → Shell</td>
+</tr>
+<tr class="odd">
+<td>A graphical desktop, RStudio, Jupyter</td>
+<td>Portal → Interactive Apps</td>
+</tr>
+<tr class="even">
+<td>Everyday scripting, editing, job submission</td>
+<td>SSH from your terminal</td>
+</tr>
+<tr class="odd">
+<td>Drag-and-drop a few files</td>
+<td>Portal → Files (for big data, see <a href="06-moving-data.html" class="quarto-xref"><span>Chapter 6</span></a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Once you can log in and get a shell prompt, you’re ready for the Linux survival kit (<a href="04-linux-survival.html" class="quarto-xref"><span>Chapter 4</span></a>) — or, if you already know your way around a terminal, skip ahead to storage (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>) and Slurm (Part V), which is where cluster-specific knowledge really starts.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -842,10 +920,13 @@ This is not an official ARCC document
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../chapters/02-getting-an-account.html" class="pagination-link" aria-label="Getting an account (your PI must do this)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/01-what-is-a-cluster.html" class="pagination-link" aria-label="What a cluster is (and why your laptop isn't one)">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/04-linux-survival.html" class="pagination-link" aria-label="The Linux you actually need">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -857,7 +938,7 @@ This is not an official ARCC document
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/03-first-login.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

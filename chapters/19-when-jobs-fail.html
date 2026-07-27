@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rallypoint One">
-<meta name="dcterms.date" content="2026-07-27">
 
-<title>Getting Started on ARCC MedicineBow</title>
+<title>19&nbsp; When jobs fail: reading the wreckage – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./chapters/01-what-is-a-cluster.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/23-parallelism-ladder.html" rel="next">
+<link href="../chapters/18-preemption-and-checkpointing.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Getting Started on ARCC MedicineBow</a> 
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -113,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -128,19 +162,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
   </div>
 </li>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span></a>
   </div>
 </li>
@@ -174,13 +208,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/05-storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
   </div>
 </li>
@@ -197,13 +231,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/07-modules.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span></a>
   </div>
 </li>
@@ -211,76 +245,76 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Part V — Slurm</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/14-priority.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is actually computed here</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
   </div>
 </li>
@@ -297,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
   </div>
 </li>
@@ -314,19 +348,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
   </div>
 </li>
@@ -342,41 +376,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
-  <li><a href="#the-shortest-possible-orientation" id="toc-the-shortest-possible-orientation" class="nav-link" data-scroll-target="#the-shortest-possible-orientation">The shortest possible orientation</a></li>
-  <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
-  </ul></li>
+  <li><a href="#step-one-what-state-did-it-end-in" id="toc-step-one-what-state-did-it-end-in" class="nav-link active" data-scroll-target="#step-one-what-state-did-it-end-in"><span class="header-section-number">19.1</span> Step one: what state did it end in?</a></li>
+  <li><a href="#out-of-memory" id="toc-out-of-memory" class="nav-link" data-scroll-target="#out-of-memory"><span class="header-section-number">19.2</span> Out of memory</a></li>
+  <li><a href="#timeout" id="toc-timeout" class="nav-link" data-scroll-target="#timeout"><span class="header-section-number">19.3</span> Timeout</a></li>
+  <li><a href="#your-program-crashed-failed" id="toc-your-program-crashed-failed" class="nav-link" data-scroll-target="#your-program-crashed-failed"><span class="header-section-number">19.4</span> Your program crashed (<code>FAILED</code>)</a></li>
+  <li><a href="#node-failure-and-preemption" id="toc-node-failure-and-preemption" class="nav-link" data-scroll-target="#node-failure-and-preemption"><span class="header-section-number">19.5</span> Node failure and preemption</a></li>
+  <li><a href="#a-debugging-loop-that-works" id="toc-a-debugging-loop-that-works" class="nav-link" data-scroll-target="#a-debugging-loop-that-works"><span class="header-section-number">19.6</span> A debugging loop that works</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/19-when-jobs-fail.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html">Part V — Slurm</a></li><li class="breadcrumb-item"><a href="../chapters/19-when-jobs-fail.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Getting Started on ARCC MedicineBow</h1>
-<p class="subtitle lead">A practical onboarding guide for ASCEND / ARID researchers</p>
+<h1 class="title"><span id="sec-fail" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rallypoint One </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -386,53 +407,109 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a practical, opinionated guide to getting real work done on <strong>MedicineBow</strong>, the University of Wyoming’s flagship high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program — researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but almost everything here applies to any new MedicineBow user. It assumes you are comfortable-ish on a computer but have never used a shared supercomputer before. Every chapter tries to explain <em>why</em> before <em>how</em>, because on a cluster the “why” is usually what keeps you out of trouble.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>MedicineBow is a genuinely large, shared machine, and the official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and, in a few places, is out of date relative to the machine as it actually runs today. The content here was written by working through onboarding on the live cluster and <strong>cross-checking every important claim against the running system</strong> in July 2026. Where the docs and the machine disagree, this book follows the machine and calls out the conflict, because a newcomer following stale docs will hit exactly those conflicts.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="tldr">
+<p>Most failures are one of four things: <strong>out of memory</strong> (raise <code>--mem</code>), <strong>timeout</strong> (raise <code>--time</code> or checkpoint), <strong>a bug in your code</strong> (read the <code>.out</code> file), or <strong>preemption/node failure</strong> (requeue + checkpoint). <code>sacct</code> tells you which one it was; the <code>slurm-*.out</code> file tells you why.</p>
 </div>
-<div class="callout-title-container flex-fill">
-This is not an official ARCC document
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
-</div>
-</div>
+<section id="step-one-what-state-did-it-end-in" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="step-one-what-state-did-it-end-in"><span class="header-section-number">19.1</span> Step one: what state did it end in?</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,ExitCode,Elapsed,MaxRSS,ReqMem,DerivedExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong>State</strong> column is your first clue:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>State</th>
+<th>Meaning</th>
+<th>Usual fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>COMPLETED</code></td>
+<td>exit code 0</td>
+<td>🎉 (but check the output is <em>correct</em>)</td>
+</tr>
+<tr class="even">
+<td><code>OUT_OF_MEMORY</code></td>
+<td>killed by the OOM killer</td>
+<td>raise <code>--mem</code> (see below)</td>
+</tr>
+<tr class="odd">
+<td><code>TIMEOUT</code></td>
+<td>hit the <code>--time</code> limit</td>
+<td>raise <code>--time</code>, or checkpoint (<a href="18-preemption-and-checkpointing.html#sec-checkpointing" class="quarto-xref"><span>Section 18.3</span></a>)</td>
+</tr>
+<tr class="even">
+<td><code>FAILED</code></td>
+<td>your program exited non-zero</td>
+<td>read the <code>.out</code>/<code>.err</code> file — it’s your bug</td>
+</tr>
+<tr class="odd">
+<td><code>NODE_FAIL</code></td>
+<td>the hardware died</td>
+<td>resubmit; checkpoint so it’s cheap</td>
+</tr>
+<tr class="even">
+<td><code>PREEMPTED</code> / <code>REQUEUED</code></td>
+<td>investor reclaimed the node</td>
+<td><a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a></td>
+</tr>
+<tr class="odd">
+<td><code>CANCELLED</code></td>
+<td>someone ran <code>scancel</code> (maybe you)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="the-shortest-possible-orientation" class="level2">
-<h2 class="anchored" data-anchor-id="the-shortest-possible-orientation">The shortest possible orientation</h2>
-<p>If you read nothing else, read this:</p>
+<section id="out-of-memory" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="out-of-memory"><span class="header-section-number">19.2</span> Out of memory</h2>
+<p>The most common surprise. A job that exceeds its memory reservation is killed instantly by the Linux OOM killer — you’ll see <code>OUT_OF_MEMORY</code> in <code>sacct</code>, and often a truncated or empty output file.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,MaxRSS,ReqMem</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># MaxRSS is peak memory actually used; compare to ReqMem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If <code>MaxRSS</code> is near (or above) <code>ReqMem</code>, raise <code>--mem</code> and resubmit. Then use <code>seff</code> (<a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>) on the successful run to right-size going forward. Remember the 10 GB/core default trap on <code>mb</code> (<a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a>) — sometimes the fix is realizing you <em>did</em> have enough memory and something else was wrong.</p>
+</section>
+<section id="timeout" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="timeout"><span class="header-section-number">19.3</span> Timeout</h2>
+<p><code>TIMEOUT</code> means your job was still running when the clock ran out and Slurm killed it. Options, in order of preference:</p>
 <ol type="1">
-<li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/02-getting-an-account.html" class="quarto-xref"><span>2&nbsp; Getting an account (your PI must do this)</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/05-storage.html" class="quarto-xref"><span>5&nbsp; Where your data lives (and why nothing is backed up)</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/09-why-a-scheduler.html" class="quarto-xref"><span>9&nbsp; Why a scheduler exists</span></a>.)</li>
-<li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code> — it’s the one directive you cannot omit. (See <a href="chapters/10-batch-job-anatomy.html" class="quarto-xref"><span>10&nbsp; Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues. This is the point of <a href="chapters/12-partitions-and-qos.html" class="quarto-xref"><span>12&nbsp; Partitions and QOS on MedicineBow</span></a> and <a href="chapters/13-queue-times.html" class="quarto-xref"><span>13&nbsp; Queue times: which partition for what</span></a>, and it’s the single most useful thing to get right early.</li>
+<li><strong>Checkpoint</strong> so the next run resumes instead of restarting (<a href="18-preemption-and-checkpointing.html#sec-checkpointing" class="quarto-xref"><span>Section 18.3</span></a>). This is the durable fix for genuinely long work.</li>
+<li><strong>Raise <code>--time</code></strong> — but staying under your QOS ceiling (<code>normal</code> = 3 d, <code>long</code> = 7 d), and knowing a longer request may wait longer to start (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>).</li>
+<li><strong>Make the job finish faster</strong> — more cores if it scales, or a smaller problem per job (an array, <a href="16-job-arrays.html" class="quarto-xref"><span>Chapter 16</span></a>).</li>
 </ol>
 </section>
-<section id="how-the-book-is-organized" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
+<section id="your-program-crashed-failed" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="your-program-crashed-failed"><span class="header-section-number">19.4</span> Your program crashed (<code>FAILED</code>)</h2>
+<p><code>FAILED</code> with a non-zero exit code is usually <em>your</em> code, not the cluster. Read the output:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> slurm-123456.out          <span class="co"># stdout+stderr (or separate --error file)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Common culprits on a cluster specifically:</p>
 <ul>
-<li><strong>Part I</strong> gets you an account and logged in.</li>
-<li><strong>Part II</strong> is a minimal Linux survival kit — no more than you need.</li>
-<li><strong>Part III</strong> covers the filesystems and moving data in and out.</li>
-<li><strong>Part IV</strong> covers software: modules, conda, and containers.</li>
-<li><strong>Part V</strong> is the heart of the book: <strong>Slurm</strong>, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive preemption and failures.</li>
-<li><strong>Part VI</strong> is quick reference: a cheat sheet, troubleshooting, and a glossary.</li>
+<li><strong>Module not loaded in the script.</strong> Interactive worked, batch didn’t — because you loaded modules on the login node but not <em>inside</em> the submit script. Put <code>module load</code> in the script (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>).</li>
+<li><strong>Wrong paths.</strong> A relative path that existed where you ran <code>sbatch</code> but not where the job ran. Use absolute paths or <code>$SLURM_SUBMIT_DIR</code>.</li>
+<li><strong>conda env not activated</strong> in the script (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>).</li>
+<li><strong>Wrote to <code>/lscratch</code> and it vanished</strong> — that’s node-local and wiped at job end (<a href="05-storage.html" class="quarto-xref"><span>Chapter 5</span></a>).</li>
 </ul>
-<p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> are places people reliably get burned — they earned their place by actually biting someone.</p>
-<p>Let’s get you an account.</p>
-
-
 </section>
+<section id="node-failure-and-preemption" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="node-failure-and-preemption"><span class="header-section-number">19.5</span> Node failure and preemption</h2>
+<p><code>NODE_FAIL</code> (hardware died) and <code>PREEMPTED</code>/<code>REQUEUED</code> (investor reclaimed the node, <a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>) aren’t your fault and aren’t your bug. The response is the same: <strong>checkpoint so a restart is cheap</strong>, run long jobs on <code>non-investor</code>, and add <code>--requeue</code> so they come back automatically. If node failures recur on the same node, report it to <code>arcc-help@uwyo.edu</code> with the job ID.</p>
+</section>
+<section id="a-debugging-loop-that-works" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="a-debugging-loop-that-works"><span class="header-section-number">19.6</span> A debugging loop that works</h2>
+<ol type="1">
+<li><code>sacct -j &lt;id&gt; ...</code> → get the <strong>State</strong>. That narrows it to one of the four families above.</li>
+<li>If resource-related (OOM/timeout) → adjust <code>--mem</code>/<code>--time</code>, resubmit.</li>
+<li>If <code>FAILED</code> → read <code>slurm-&lt;id&gt;.out</code>, fix the code/env, and <strong>reproduce it fast</strong> in a <code>debug</code>-QOS job (near-instant start, <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) rather than waiting in a long queue each iteration.</li>
+<li>Once it works, <code>seff &lt;id&gt;</code> → right-size → promote to the real partition/QOS.</li>
+</ol>
+<p>Using the <code>debug</code> partition as your fast edit-run-debug loop, and only graduating to big queues once the job is known-good, will save you more time than any other habit on the machine.</p>
+<p>That’s the operational core. Part VI is quick reference you’ll come back to.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -842,10 +919,13 @@ This is not an official ARCC document
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../chapters/18-preemption-and-checkpointing.html" class="pagination-link" aria-label="Preemption, the condo model, and checkpointing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/01-what-is-a-cluster.html" class="pagination-link" aria-label="What a cluster is (and why your laptop isn't one)">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/23-parallelism-ladder.html" class="pagination-link" aria-label="The parallelism ladder">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -857,7 +937,7 @@ This is not an official ARCC document
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/19-when-jobs-fail.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

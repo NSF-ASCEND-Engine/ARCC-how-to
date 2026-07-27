@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rallypoint One">
-<meta name="dcterms.date" content="2026-07-27">
 
-<title>Getting Started on ARCC MedicineBow</title>
+<title>7&nbsp; Software modules (and why module avail lies) – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./chapters/01-what-is-a-cluster.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/08-conda-containers.html" rel="next">
+<link href="../chapters/06-moving-data.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07-modules.html">Part IV — Software</a></li><li class="breadcrumb-item"><a href="../chapters/07-modules.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Getting Started on ARCC MedicineBow</a> 
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -113,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -128,19 +162,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account (your PI must do this)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
   </div>
 </li>
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The Linux you actually need</span></span></a>
   </div>
 </li>
@@ -174,13 +208,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/05-storage.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives (and why nothing is backed up)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
   </div>
 </li>
@@ -188,22 +222,22 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Part IV — Software</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/07-modules.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span></a>
   </div>
 </li>
@@ -220,67 +254,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources (and why over-asking punishes you)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/14-priority.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is actually computed here</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays: the feature that changes how you work</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail: reading the wreckage</span></span></a>
   </div>
 </li>
@@ -297,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
   </div>
 </li>
@@ -314,19 +348,19 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
   </div>
 </li>
@@ -342,41 +376,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
-  <li><a href="#the-shortest-possible-orientation" id="toc-the-shortest-possible-orientation" class="nav-link" data-scroll-target="#the-shortest-possible-orientation">The shortest possible orientation</a></li>
-  <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
-  </ul></li>
+  <li><a href="#why-modules-exist" id="toc-why-modules-exist" class="nav-link active" data-scroll-target="#why-modules-exist"><span class="header-section-number">7.1</span> Why modules exist</a></li>
+  <li><a href="#the-hierarchy-the-thing-that-confuses-everyone" id="toc-the-hierarchy-the-thing-that-confuses-everyone" class="nav-link" data-scroll-target="#the-hierarchy-the-thing-that-confuses-everyone"><span class="header-section-number">7.2</span> The hierarchy — the thing that confuses everyone</a></li>
+  <li><a href="#whats-installed-a-tour" id="toc-whats-installed-a-tour" class="nav-link" data-scroll-target="#whats-installed-a-tour"><span class="header-section-number">7.3</span> What’s installed (a tour)</a></li>
+  <li><a href="#making-a-set-of-modules-load-automatically" id="toc-making-a-set-of-modules-load-automatically" class="nav-link" data-scroll-target="#making-a-set-of-modules-load-automatically"><span class="header-section-number">7.4</span> Making a set of modules load automatically</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/07-modules.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07-modules.html">Part IV — Software</a></li><li class="breadcrumb-item"><a href="../chapters/07-modules.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Getting Started on ARCC MedicineBow</h1>
-<p class="subtitle lead">A practical onboarding guide for ASCEND / ARID researchers</p>
+<h1 class="title"><span id="sec-modules" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules (and why <code>module avail</code> lies)</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rallypoint One </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 27, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -386,53 +405,97 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a practical, opinionated guide to getting real work done on <strong>MedicineBow</strong>, the University of Wyoming’s flagship high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program — researchers doing wildfire, fire-weather, atmospheric, and geospatial modeling — but almost everything here applies to any new MedicineBow user. It assumes you are comfortable-ish on a computer but have never used a shared supercomputer before. Every chapter tries to explain <em>why</em> before <em>how</em>, because on a cluster the “why” is usually what keeps you out of trouble.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>MedicineBow is a genuinely large, shared machine, and the official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and, in a few places, is out of date relative to the machine as it actually runs today. The content here was written by working through onboarding on the live cluster and <strong>cross-checking every important claim against the running system</strong> in July 2026. Where the docs and the machine disagree, this book follows the machine and calls out the conflict, because a newcomer following stale docs will hit exactly those conflicts.</p>
+<div class="tldr">
+<p>Software comes from <strong>Lmod modules</strong> you <code>module load</code>. The system is <em>hierarchical</em>: many packages are invisible until you first load a compiler. So <code>module avail</code> only shows what’s reachable <em>right now</em> and will swear things don’t exist — use <strong><code>module spider &lt;name&gt;</code></strong> to find the truth and learn what to load first.</p>
+</div>
+<section id="why-modules-exist" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="why-modules-exist"><span class="header-section-number">7.1</span> Why modules exist</h2>
+<p>A cluster has hundreds of users who need mutually incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. You can’t install all of that globally. Instead, <strong>modules</strong> let you load exactly the versions you want into <em>your</em> shell for <em>this</em> session, without affecting anyone else. Load a module and its programs appear on your <code>PATH</code>; unload it and they vanish.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># add gcc 14 to this shell</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> list                   <span class="co"># what do I currently have loaded?</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> unload gcc/14.2.0      <span class="co"># remove it</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge                  <span class="co"># clear everything and start clean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-hierarchy-the-thing-that-confuses-everyone" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="the-hierarchy-the-thing-that-confuses-everyone"><span class="header-section-number">7.2</span> The hierarchy — the thing that confuses everyone</h2>
+<p>MedicineBow uses <strong>Lmod</strong> in <em>hierarchical</em> mode. Modules are arranged in layers:</p>
+<ul>
+<li><strong>Core</strong> modules are always visible: the compilers (<code>gcc</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>), MPI, and standalone tools.</li>
+<li><strong>Compiler-dependent</strong> modules — Python, R, GDAL, NetCDF, HDF5, CUDA — are <strong>hidden until you load a compiler.</strong> They were built against a specific compiler, so Lmod won’t show them until you’ve picked one.</li>
+</ul>
+<p>This is why a brand-new user runs <code>module avail</code>, doesn’t see <code>gdal</code>, and concludes it isn’t installed. It is — it’s just one layer down.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Use <code>module spider</code>, not <code>module avail</code>, to answer “does X exist?”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>module avail</code> shows only what’s loadable <em>given what you’ve already loaded</em> — it lies by omission. <strong><code>module spider</code></strong> searches the entire tree and tells you both that something exists and what you must load first to reach it.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider gdal            <span class="co"># yes it exists; here are the versions</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider gdal/3.13.0     <span class="co"># ...and exactly what to load before it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>A typical geospatial stack, in order:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># 1. a compiler, first</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gdal/3.13.0       <span class="co"># 2. now GDAL is reachable</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load netcdf-c/4.9.2-ompi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="whats-installed-a-tour" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="whats-installed-a-tour"><span class="header-section-number">7.3</span> What’s installed (a tour)</h2>
+<p>Ask the machine for the current list with <code>module spider</code>, but roughly:</p>
+<ul>
+<li><strong>Compilers (core):</strong> <code>gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>, <code>openmpi/5.0.10</code>.</li>
+<li><strong>After loading a compiler:</strong> <code>python/{3.10.6, 3.12.0, 3.14.4}</code>, <code>r/{4.4.0, 4.5.3}</code>, <code>gdal/{3.7.3, 3.13.0}</code>, <code>netcdf-c/4.9.2-ompi</code>, <code>hdf5/1.14.3*</code>, <code>cuda-toolkit/{12.4.1, 12.6.1}</code>, <code>openmpi/4.1.6</code>, <code>rclone/1.63.1</code>.</li>
+<li><strong>Standalone:</strong> <code>apptainer/{1.3.5, 1.4.1}</code>, <code>singularity/4.1.0</code>, <code>miniconda3/24.3.0</code>, <code>julia/{1.10.3, 1.11.6}</code>.</li>
+</ul>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The GPU compiler contradiction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>gcc/13.2.0</code> prints a deprecation warning telling you to move to <code>gcc/14.2.0</code>. But <code>cuda-toolkit</code> is <strong>only built against <code>gcc/13.2.0</code></strong>. So GPU users have to knowingly load the “deprecated” compiler:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0        <span class="co"># yes, the one that warns you — CUDA needs it</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda-toolkit/12.6.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ignore the warning in this case; it’s a packaging quirk, not a mistake on your part.</p>
+</div>
+</div>
+</section>
+<section id="making-a-set-of-modules-load-automatically" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="making-a-set-of-modules-load-automatically"><span class="header-section-number">7.4</span> Making a set of modules load automatically</h2>
+<p>Once you know the stack a project needs, save it as a named collection so you don’t retype it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save firestack          <span class="co"># remember this set as "firestack"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># next session:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore firestack</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Prefer <code>module restore</code> in your submit scripts over hand-loading a long list — it’s reproducible and self-documents the environment your job needs.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-This is not an official ARCC document
+Load modules <em>in your submit script</em>, not just interactively
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
+<p>The modules you load on the login node don’t automatically carry into a batch job the way you’d expect across a fresh environment. Put the <code>module load</code> / <code>module restore</code> lines <strong>inside</strong> your <code>sbatch</code> script so the job builds the same environment every time (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>).</p>
 </div>
 </div>
-</section>
-<section id="the-shortest-possible-orientation" class="level2">
-<h2 class="anchored" data-anchor-id="the-shortest-possible-orientation">The shortest possible orientation</h2>
-<p>If you read nothing else, read this:</p>
-<ol type="1">
-<li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/02-getting-an-account.html" class="quarto-xref"><span>2&nbsp; Getting an account (your PI must do this)</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/05-storage.html" class="quarto-xref"><span>5&nbsp; Where your data lives (and why nothing is backed up)</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/09-why-a-scheduler.html" class="quarto-xref"><span>9&nbsp; Why a scheduler exists</span></a>.)</li>
-<li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code> — it’s the one directive you cannot omit. (See <a href="chapters/10-batch-job-anatomy.html" class="quarto-xref"><span>10&nbsp; Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues. This is the point of <a href="chapters/12-partitions-and-qos.html" class="quarto-xref"><span>12&nbsp; Partitions and QOS on MedicineBow</span></a> and <a href="chapters/13-queue-times.html" class="quarto-xref"><span>13&nbsp; Queue times: which partition for what</span></a>, and it’s the single most useful thing to get right early.</li>
-</ol>
-</section>
-<section id="how-the-book-is-organized" class="level2">
-<h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
-<ul>
-<li><strong>Part I</strong> gets you an account and logged in.</li>
-<li><strong>Part II</strong> is a minimal Linux survival kit — no more than you need.</li>
-<li><strong>Part III</strong> covers the filesystems and moving data in and out.</li>
-<li><strong>Part IV</strong> covers software: modules, conda, and containers.</li>
-<li><strong>Part V</strong> is the heart of the book: <strong>Slurm</strong>, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive preemption and failures.</li>
-<li><strong>Part VI</strong> is quick reference: a cheat sheet, troubleshooting, and a glossary.</li>
-</ul>
-<p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> are places people reliably get burned — they earned their place by actually biting someone.</p>
-<p>Let’s get you an account.</p>
+<p>When a package isn’t available as a module — or you need a pip/conda world — that’s the next chapter (<a href="08-conda-containers.html" class="quarto-xref"><span>Chapter 8</span></a>).</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -842,10 +905,13 @@ This is not an official ARCC document
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../chapters/06-moving-data.html" class="pagination-link" aria-label="Moving data in and out">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapters/01-what-is-a-cluster.html" class="pagination-link" aria-label="What a cluster is (and why your laptop isn't one)">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is (and why your laptop isn’t one)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/08-conda-containers.html" class="pagination-link" aria-label="Conda and containers without wrecking your home directory">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers without wrecking your home directory</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -857,7 +923,7 @@ This is not an official ARCC document
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/07-modules.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>
