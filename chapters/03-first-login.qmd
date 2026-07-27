@@ -2,10 +2,9 @@
 
 ::: {.tldr}
 Your entry point is the web portal at **<https://medicinebow.arcc.uwyo.edu>** (Open
-OnDemand). Log in there first with your UW credentials and Duo 2FA. SSH does **not** use a
-password — you generate a key with the portal's **SSH Key Manager**, download it, and drop
-it in `~/.ssh`. Those keys **expire after one year**, which is the answer to a mysterious
-future "why did my login suddenly stop working?"
+OnDemand). Log in with your UW credentials and Duo 2FA. SSH uses a key, not a password:
+generate one with the portal's **SSH Key Manager**, download it, and drop it in `~/.ssh`.
+The keys **expire after one year** — that's why a working login later stops working.
 :::
 
 ## Two ways in: portal and SSH
@@ -14,16 +13,16 @@ MedicineBow has a single hostname that serves both the web portal and SSH:
 `medicinebow.arcc.uwyo.edu`.
 
 - **The web portal** (Open OnDemand) is a browser interface: a file explorer, a terminal,
-  job submission forms, and interactive apps (desktop sessions, RStudio, and — almost
-  certainly — Jupyter). Start here on day one.
+  job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start
+  here on day one.
 - **SSH** is the terminal way in, and how you'll work day-to-day once set up. It requires a
   key you generate through the portal first.
 
 ::: {.callout-note}
-## "Southpass" is dead — don't use it
-Older notes and search results may point you at `southpass.arcc.uwyo.edu`. That was the
-portal for the *retired Beartooth cluster*. The DNS name still resolves, but there's no live
-service behind it for you. The current portal is `medicinebow.arcc.uwyo.edu`.
+## Don't use "Southpass"
+Older notes may point you at `southpass.arcc.uwyo.edu`, the portal for the *retired
+Beartooth cluster*. The DNS name still resolves but has no live service behind it. The
+current portal is `medicinebow.arcc.uwyo.edu`.
 :::
 
 ## Step 1 — Log into the portal
@@ -32,13 +31,13 @@ Go to <https://medicinebow.arcc.uwyo.edu> and sign in with your UW username and 
 You'll be prompted for **Duo** two-factor authentication. If you've never set up Duo, do it
 at <https://wyosecure.uwyo.edu>. No VPN is needed.
 
-Once in, take the tour: there's a **Files** menu (browse `/home`, `/project`, `/gscratch`),
-a **Clusters → Shell** option (a terminal in your browser), and an **Interactive Apps** menu.
+Once in, note the **Files** menu (browse `/home`, `/project`, `/gscratch`), the **Clusters →
+Shell** option (a terminal in your browser), and the **Interactive Apps** menu.
 
 ## Step 2 — Generate your SSH key with the SSH Key Manager
 
-SSH on MedicineBow is **key-and-certificate based, not password based**. You don't set a
-password for SSH; you generate a key pair through the portal:
+SSH on MedicineBow is **key-and-certificate based, not password based**. Generate a key pair
+through the portal:
 
 1. In the portal, open the **SSH Key Manager**.
 2. Generate a key. It downloads as a zip named after your username.
@@ -58,13 +57,12 @@ ssh <username>@medicinebow.arcc.uwyo.edu
 
 ::: {.callout-important}
 ## SSH keys expire after one year
-This is the single best FAQ entry in the whole book. One day, roughly a year after you set
-up, your `ssh` will simply stop working — permission denied, no obvious reason. **The key
-expired.** Go back to the portal's SSH Key Manager, generate a fresh key, unzip it into
-`~/.ssh` again, and you're back. Nothing is broken; it's by design.
+Roughly a year after setup, your `ssh` stops working — permission denied, no obvious
+reason. The key expired. Go back to the portal's SSH Key Manager, generate a fresh key, and
+unzip it into `~/.ssh` again. This is by design.
 :::
 
-## Step 3 — A comfortable SSH config (optional but worth it)
+## Step 3 — A comfortable SSH config (optional)
 
 Add this to `~/.ssh/config` on your laptop so you can just type `ssh medbow`:
 
@@ -89,6 +87,5 @@ don't silently drop your connection while you're reading output.
 | Everyday scripting, editing, job submission | SSH from your terminal |
 | Drag-and-drop a few files | Portal → Files (for big data, see @sec-moving-data) |
 
-Once you can log in and get a shell prompt, you're ready for the Linux survival kit
-(@sec-linux) — or, if you already know your way around a terminal, skip ahead to storage
-(@sec-storage) and Slurm (Part V), which is where cluster-specific knowledge really starts.
+Once you can log in and get a shell prompt, continue to the Linux survival kit (@sec-linux),
+or skip ahead to storage (@sec-storage) and Slurm (Part V) if you already know a terminal.

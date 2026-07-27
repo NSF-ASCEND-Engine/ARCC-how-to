@@ -1,4 +1,4 @@
-# When jobs fail: reading the wreckage {#sec-fail}
+# When jobs fail {#sec-fail}
 
 ::: {.tldr}
 Most failures are one of four things: **out of memory** (raise `--mem`), **timeout** (raise
@@ -17,7 +17,7 @@ The **State** column is your first clue:
 
 | State | Meaning | Usual fix |
 |---|---|---|
-| `COMPLETED` | exit code 0 | 🎉 (but check the output is *correct*) |
+| `COMPLETED` | exit code 0 | none (but check the output is *correct*) |
 | `OUT_OF_MEMORY` | killed by the OOM killer | raise `--mem` (see below) |
 | `TIMEOUT` | hit the `--time` limit | raise `--time`, or checkpoint (@sec-checkpointing) |
 | `FAILED` | your program exited non-zero | read the `.out`/`.err` file — it's your bug |
@@ -27,19 +27,18 @@ The **State** column is your first clue:
 
 ## Out of memory
 
-The most common surprise. A job that exceeds its memory reservation is killed instantly by the
-Linux OOM killer — you'll see `OUT_OF_MEMORY` in `sacct`, and often a truncated or empty
-output file.
+A job that exceeds its memory reservation is killed by the Linux OOM killer — you'll see
+`OUT_OF_MEMORY` in `sacct`, and often a truncated or empty output file.
 
 ```bash
 sacct -j 123456 --format=JobID,State,MaxRSS,ReqMem
 # MaxRSS is peak memory actually used; compare to ReqMem
 ```
 
-If `MaxRSS` is near (or above) `ReqMem`, raise `--mem` and resubmit. Then use `seff`
-(@sec-monitoring) on the successful run to right-size going forward. Remember the 10 GB/core
-default trap on `mb` (@sec-resources) — sometimes the fix is realizing you *did* have enough
-memory and something else was wrong.
+If `MaxRSS` is near or above `ReqMem`, raise `--mem` and resubmit. Then use `seff`
+(@sec-monitoring) on the successful run to right-size going forward. Note the 10 GB/core default
+on `mb` (@sec-resources) — sometimes you already had enough memory and something else was
+wrong.
 
 ## Timeout
 
@@ -55,13 +54,13 @@ in order of preference:
 
 ## Your program crashed (`FAILED`)
 
-`FAILED` with a non-zero exit code is usually *your* code, not the cluster. Read the output:
+`FAILED` with a non-zero exit code is usually your code, not the cluster. Read the output:
 
 ```bash
 cat slurm-123456.out          # stdout+stderr (or separate --error file)
 ```
 
-Common culprits on a cluster specifically:
+Common cluster-specific culprits:
 
 - **Module not loaded in the script.** Interactive worked, batch didn't — because you loaded
   modules on the login node but not *inside* the submit script. Put `module load` in the
@@ -75,22 +74,18 @@ Common culprits on a cluster specifically:
 ## Node failure and preemption
 
 `NODE_FAIL` (hardware died) and `PREEMPTED`/`REQUEUED` (investor reclaimed the node,
-@sec-preemption) aren't your fault and aren't your bug. The response is the same: **checkpoint
-so a restart is cheap**, run long jobs on `non-investor`, and add `--requeue` so they come back
-automatically. If node failures recur on the same node, report it to `arcc-help@uwyo.edu` with
-the job ID.
+@sec-preemption) are not your bug. The response is the same: **checkpoint so a restart is
+cheap**, run long jobs on `non-investor`, and add `--requeue` so they come back automatically.
+If node failures recur on the same node, report it to `arcc-help@uwyo.edu` with the job ID.
 
-## A debugging loop that works
+## A debugging loop
 
-1. `sacct -j <id> ...` → get the **State**. That narrows it to one of the four families above.
-2. If resource-related (OOM/timeout) → adjust `--mem`/`--time`, resubmit.
-3. If `FAILED` → read `slurm-<id>.out`, fix the code/env, and **reproduce it fast** in a
-   `debug`-QOS job (near-instant start, @sec-queue-times) rather than waiting in a long queue
-   each iteration.
+1. `sacct -j <id> ...` → get the **State**, narrowing it to one of the four families above.
+2. Resource-related (OOM/timeout) → adjust `--mem`/`--time`, resubmit.
+3. `FAILED` → read `slurm-<id>.out`, fix the code/env, and reproduce it fast in a `debug`-QOS
+   job (near-instant start, @sec-queue-times) rather than waiting in a long queue each
+   iteration.
 4. Once it works, `seff <id>` → right-size → promote to the real partition/QOS.
 
-Using the `debug` partition as your fast edit-run-debug loop, and only graduating to big
-queues once the job is known-good, will save you more time than any other habit on the
-machine.
-
-That's the operational core. Part VI is quick reference you'll come back to.
+Use the `debug` partition as your fast edit-run-debug loop, and graduate to big queues only
+once the job is known-good.

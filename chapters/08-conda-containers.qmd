@@ -1,13 +1,12 @@
 # Conda and containers without wrecking your home directory {#sec-conda}
 
 ::: {.tldr}
-Conda is supported, but its default is to dump gigabytes into your 50 GB home directory —
-which will fill it and break things. **Redirect conda's package cache and environments into
-`/project/<proj>/software` before you create anything.** For reproducible, portable software
-(especially things that are painful to build), use **Apptainer** containers instead.
+Conda writes gigabytes into your 50 GB home directory by default. Redirect its package cache
+and environments into `/project/<proj>/software` before creating anything. For reproducible,
+portable software, use Apptainer containers.
 :::
 
-## Conda: great, but point it away from home first
+## Point conda away from home first
 
 The `miniconda3` module gives you conda:
 
@@ -15,10 +14,9 @@ The `miniconda3` module gives you conda:
 module load miniconda3/24.3.0
 ```
 
-By default, conda writes environments and a package cache into `~/.conda` and
-`~/miniconda3` — i.e. straight into your **50 GB home quota**. A couple of scientific
-environments will fill it. Fix this **once, before creating any environments**, by telling
-conda to live in your project's 250 GB software space.
+By default, conda writes environments and a package cache into `~/.conda` and `~/miniconda3`,
+inside your 50 GB home quota. A couple of scientific environments will fill it. Before
+creating any environments, point conda at your project's 250 GB software space.
 
 Create `~/.condarc`:
 
@@ -37,26 +35,24 @@ conda activate geo
 ```
 
 ::: {.callout-important}
-## Do this before your first `conda create`
-If you create environments first and *then* set `.condarc`, the old ones are stranded in
-home and you'll wonder why home is still full. Set `.condarc` on day one. If you've already
-made the mess: `conda env list`, remove the home-based envs, and recreate them under project
-space.
+## Set `.condarc` before your first `conda create`
+Environments created before you set `.condarc` are stranded in home. If you've already made
+the mess: `conda env list`, remove the home-based envs, and recreate them under project space.
 :::
 
 Other conda notes:
 
-- **No `mamba`** is installed anywhere on the cluster — use `conda` directly. (Recent conda
-  is much faster than it used to be, so this is less painful than it once was.)
-- Activate conda **inside your submit script**, not just interactively, so batch jobs get the
+- No `mamba` is installed on the cluster; use `conda` directly. Recent conda is much faster
+  than it used to be.
+- Activate conda inside your submit script, not just interactively, so batch jobs get the
   same environment (@sec-anatomy).
-- `conda clean -a` reclaims space from the package cache periodically.
+- `conda clean -a` reclaims space from the package cache.
 
 ## Apptainer: containers for reproducibility and portability
 
-A **container** bundles an application with its entire operating-system environment into a
-single image file. On HPC the runtime is **Apptainer** (formerly Singularity) — it runs
-containers as *you*, with no root, which is why it's the HPC-safe alternative to Docker.
+A container bundles an application with its entire operating-system environment into a single
+image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as
+*you*, with no root, which makes it the HPC-safe alternative to Docker.
 
 ```bash
 module load apptainer/1.4.1
@@ -73,7 +69,7 @@ apptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/inpu
 
 Store `.sif` images in `/project/<proj>/software` — they can be large.
 
-### When to reach for a container vs. a module vs. conda
+### Container vs. module vs. conda
 
 | Situation | Best choice |
 |---|---|
@@ -89,5 +85,4 @@ To use the node's GPUs from inside a container, add the `--nv` flag so Apptainer
 NVIDIA driver: `apptainer exec --nv mytool.sif ...`. Pair this with a GPU job (@sec-gpu).
 :::
 
-With software sorted, we reach the heart of the book: getting the scheduler to run your work
-(Part V, starting at @sec-why-scheduler).
+Next: running your work through the scheduler (Part V, starting at @sec-why-scheduler).

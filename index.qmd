@@ -1,28 +1,23 @@
 # Preface {.unnumbered}
 
-This is a practical, opinionated guide to getting real work done on **MedicineBow**,
-the University of Wyoming's flagship high-performance computing (HPC) cluster, run by
-the **Advanced Research Computing Center (ARCC)**.
+A practical guide to getting work done on **MedicineBow**, the University of Wyoming's
+high-performance computing (HPC) cluster, run by the **Advanced Research Computing Center
+(ARCC)**.
 
-It is written for people joining the **ASCEND** engine and its **ARID** program — whose
-mission is protecting **power and water utilities from wildfire and its aftermath**, which
-in practice means a broad mix of scientific computing: wildfire-risk and fire-weather
-modeling, hydrology and post-fire water-quality analysis, remote sensing, and the machine
-learning that ties them together. The examples in this book are drawn from that space, but
-they're deliberately generic — almost everything here applies to any new MedicineBow user,
-whatever your science. It assumes you are comfortable-ish on a computer but have never used
-a shared supercomputer before. Every chapter tries to explain *why* before *how*, because on
-a cluster the "why" is usually what keeps you out of trouble.
+It is written for people joining the **ASCEND** engine and its **ARID** program, whose
+work spans wildfire-risk and fire-weather modeling, hydrology and post-fire water-quality
+analysis, remote sensing, and machine learning. The examples come from that space but are
+deliberately generic: almost everything here applies to any new MedicineBow user. It
+assumes you are comfortable on a computer but have never used a shared supercomputer. Each
+chapter explains *why* before *how*.
 
 ## Why this book exists
 
-MedicineBow is a genuinely large, shared machine, and the official documentation — the
-[ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) — is good but has gaps and,
-in a few places, is out of date relative to the machine as it actually runs today. The
-content here was written by working through onboarding on the live cluster and
-**cross-checking every important claim against the running system** in July 2026. Where
-the docs and the machine disagree, this book follows the machine and calls out the
-conflict, because a newcomer following stale docs will hit exactly those conflicts.
+The official documentation — the [ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) —
+is good but has gaps and is in places out of date. The content here was written while
+onboarding on the live cluster and cross-checked against the running system in July 2026.
+Where the docs and the machine disagree, this book follows the machine and notes the
+conflict.
 
 ::: {.callout-note}
 ## This is not an official ARCC document
@@ -32,9 +27,7 @@ policy at any time. When in doubt, the
 `arcc-help@uwyo.edu` are authoritative. Corrections are very welcome.
 :::
 
-## The shortest possible orientation
-
-If you read nothing else, read this:
+## Quick orientation
 
 1. **You cannot request your own account — your PI must.** No project, no account.
    (See @sec-account.)
@@ -42,26 +35,21 @@ If you read nothing else, read this:
    are snapshots, but they live on the same array. (See @sec-storage.)
 3. **Never run real computation on a login node.** Log in, then hand work to the
    scheduler (Slurm) or grab an interactive session. (See @sec-why-scheduler.)
-4. **Every job must name your project account** with `--account=<project>` — it's the
-   one directive you cannot omit. (See @sec-anatomy.)
+4. **Every job must name your project account** with `--account=<project>`. (See
+   @sec-anatomy.)
 5. **The partition and QOS you choose decide how long you wait and how big you can go.**
-   Short test runs and long simulations belong in different queues. This is the point of
-   @sec-partitions and @sec-queue-times, and it's the single most useful thing to get
-   right early.
+   Short test runs and long simulations belong in different queues (@sec-partitions,
+   @sec-queue-times).
 
 ## How the book is organized
 
 - **Part I** gets you an account and logged in.
-- **Part II** is a minimal Linux survival kit — no more than you need.
+- **Part II** is a minimal Linux survival kit.
 - **Part III** covers the filesystems and moving data in and out.
 - **Part IV** covers software: modules, conda, and containers.
-- **Part V** is the heart of the book: **Slurm**, the batch scheduler — how to ask for
-  resources, pick a queue, watch your jobs, run arrays, use GPUs, and survive
-  preemption and failures.
+- **Part V** covers **Slurm**, the batch scheduler — how to ask for resources, pick a
+  queue, watch your jobs, run arrays, use GPUs, and handle preemption and failures.
 - **Part VI** is quick reference: a cheat sheet, troubleshooting, and a glossary.
 
 Conventions: shell commands you type are shown in `code blocks`. Boxes marked
-**Gotcha** or **Important** are places people reliably get burned — they earned their
-place by actually biting someone.
-
-Let's get you an account.
+**Gotcha** or **Important** mark places people reliably get burned.

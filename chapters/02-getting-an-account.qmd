@@ -2,24 +2,24 @@
 
 ::: {.tldr}
 You cannot request your own ARCC account. A **PI** (UW faculty or research scientist) must
-request it against a specific **project**, in writing. No project means no account — full
-stop. Non-UW collaborators get restricted "ARCC-Only" accounts with real limitations. Sort
-this out first; it's the #1 thing that blocks new performers for weeks.
+request it against a specific **project**, in writing. No project means no account. Non-UW
+collaborators get restricted "ARCC-Only" accounts with real limitations. Sort this out
+first — it commonly blocks new performers for weeks.
 :::
 
-## The rule that surprises everyone
+## How accounts work
 
-On many systems you sign up yourself. **Not here.** ARCC will not create an account without
-written confirmation from a Principal Investigator who owns a project. This is deliberate:
-accounts are tied to funded projects for accounting and fair-share purposes.
+ARCC will not create an account without written confirmation from a Principal Investigator
+who owns a project. Accounts are tied to funded projects for accounting and fair-share
+purposes.
 
-So the actual first step in your ARCC journey is a conversation, not a form:
+So the first step is a conversation, not a form:
 
 > "Which project am I being added to, and can the PI email ARCC to add me?"
 
 For ASCEND/ARID performers the project is something like `cowy-firesurro` (the project this
-guide was written under). Ask your PI to confirm the exact project name — you will type it
-into **every single job** you ever run (@sec-anatomy), so it's worth knowing on day one.
+guide was written under). Confirm the exact project name with your PI — you type it into
+**every job** you run (@sec-anatomy).
 
 ## Who can be a PI
 
@@ -27,13 +27,13 @@ into **every single job** you ever run (@sec-anatomy), so it's worth knowing on 
 - **Not** adjunct, **not** emeritus, **not** a postdoc or student.
 
 If your advisor doesn't qualify, someone who does must sponsor the project. This matters for
-a multi-institution engine like ASCEND, where the natural leader of your sub-project might
-not be UW faculty.
+a multi-institution engine like ASCEND, where the leader of your sub-project might not be UW
+faculty.
 
 ## UW accounts vs. ARCC-Only accounts
 
-Because ASCEND spans UW, CSU, CU Boulder, Mines, NCAR, and NEON, this distinction will bite
-collaborators constantly:
+ASCEND spans UW, CSU, CU Boulder, Mines, NCAR, and NEON, so this distinction affects
+collaborators:
 
 | | Full UW account | ARCC-Only account |
 |---|---|---|
@@ -44,35 +44,32 @@ collaborators constantly:
 | Other UW services | ✅ | ❌ |
 
 ::: {.callout-warning}
-## The collaborator trap
-External collaborators on ARCC-Only accounts **cannot use Globus**, which is the
-recommended way to move large datasets (@sec-moving-data). They'll need a *guest collection*
-set up for them, or a UW person to broker transfers. Plan for this early if your data lives
-at CSU or NCAR.
+## ARCC-Only accounts and Globus
+External collaborators on ARCC-Only accounts **cannot use Globus**, the recommended way to
+move large datasets (@sec-moving-data). They'll need a *guest collection* set up for them,
+or a UW person to broker transfers. Plan for this early if your data lives at CSU or NCAR.
 :::
 
-## What you get: the free tier
+## The free tier
 
 Each researcher's baseline allocation:
 
 - **100,000 CPU core-hours per year**
 - **20,000 GPU-hours per year**
 
-That is a lot for getting started — 100,000 core-hours is roughly one 96-core node running
-flat out for six weeks. Investor projects and larger allocations exist beyond this, but you
-almost certainly won't hit the free-tier ceiling while you're learning. Core-hours are
-counted as (cores × wall-clock hours), which is one more reason not to over-ask for
-resources (@sec-resources).
+That is plenty for getting started — 100,000 core-hours is roughly one 96-core node running
+flat out for six weeks. Larger allocations and investor projects exist beyond this.
+Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources
+(@sec-resources).
 
 ## The practical checklist
 
 1. Confirm with your PI **which project** you're joining and its exact name.
 2. Have the **PI email `arcc-help@uwyo.edu`** to request your account on that project.
    (You emailing them yourself won't work — they need the PI's confirmation.)
-3. Once ARCC provisions you, you'll get a UW username. **Everything else in this book
-   starts from there** — your first login is @sec-first-login.
+3. Once ARCC provisions you, you'll get a UW username. Your first login is @sec-first-login.
 4. If you're an external collaborator, flag it now and ask how you'll move data, since
    Globus won't be available to you.
 
-No VPN is required to reach ARCC, on campus or off — so once your account exists, you can
-log in from anywhere.
+No VPN is required to reach ARCC, on campus or off, so once your account exists you can log
+in from anywhere.

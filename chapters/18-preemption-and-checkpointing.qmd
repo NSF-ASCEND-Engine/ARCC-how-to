@@ -1,28 +1,25 @@
 # Preemption, the condo model, and checkpointing {#sec-preemption}
 
 ::: {.tldr}
-MedicineBow is a **condo**: research groups buy `inv-*` nodes, and the rest of us borrow them
-when idle. The catch — **the owner can reclaim their node at any moment, and your job is
-automatically requeued** (killed and put back in line). Long jobs must therefore either run on
-`non-investor` partitions *or* **checkpoint** so a requeue costs minutes, not days.
+MedicineBow is a **condo**: research groups buy `inv-*` nodes, and others borrow them when
+idle. The owner can reclaim a node at any time, and your job is **requeued** (killed and put
+back in line). Long jobs should therefore run on `non-investor` partitions *or* **checkpoint**
+so a requeue costs minutes, not days.
 :::
 
-## The condo model, plainly
+## The condo model
 
-A lot of MedicineBow's hardware was purchased by individual research groups. Those `inv-*`
-partitions "belong" to their investors, who get top priority (QOS 110) on them. To keep the
-machine busy, everyone else's jobs can **backfill** onto idle investor nodes — free capacity,
-most of the time.
-
-The deal has a string attached:
+Much of MedicineBow's hardware was purchased by individual research groups. Those `inv-*`
+partitions belong to their investors, who get top priority (QOS 110) on them. Everyone else's
+jobs can **backfill** onto idle investor nodes — free capacity most of the time, with one
+condition.
 
 ::: {.callout-warning}
-## An investor can reclaim their node and requeue your job
-If you land on investor hardware and the owner submits work, **your job is preempted** — Slurm
-kills it and (by default here) **requeues** it: it goes back into the pending queue to start
-over from the beginning when resources free up. Any progress not written to disk is lost.
-This can happen minutes into a job or days in. For a long, un-checkpointed simulation, that's
-potentially days of wasted compute.
+## An investor can reclaim a node and requeue your job
+If you land on investor hardware and the owner submits work, your job is **preempted** — Slurm
+kills it and, by default here, **requeues** it: it returns to the pending queue and starts over
+from the beginning when resources free up. Any progress not written to disk is lost. This can
+happen minutes into a job or days in.
 :::
 
 ## Two ways to protect a long run
@@ -35,19 +32,18 @@ pool:
 # or non-investor-gpu for GPU work
 ```
 
-This is the correct home for anything long that you haven't checkpointed. (The
+This is the right home for anything long that you haven't checkpointed. (The
 `--constraint=non-investor` some docs mention **does not work** — it's a *partition*, not a
 constraint. See @sec-partitions.)
 
-**2. Checkpoint, so preemption is cheap.** If you *do* run on borrowable hardware (or list
-several partitions for faster starts), make preemption survivable by saving state
-periodically.
+**2. Checkpoint, so preemption is cheap.** If you run on borrowable hardware (or list several
+partitions for faster starts), save state periodically so a requeue is survivable.
 
 ## Checkpointing {#sec-checkpointing}
 
 A checkpoint is a periodic save of enough state to *resume* rather than *restart*. It protects
-you from three things at once: preemption, node failures, and hitting your walltime limit. Any
-job measured in days should checkpoint.
+against preemption, node failures, and hitting your walltime limit. Any job measured in days
+should checkpoint.
 
 **The pattern:**
 
@@ -63,7 +59,7 @@ Many scientific codes have this built in — WRF has restart files, PyTorch has
 these on and set the interval to your risk tolerance.
 
 **Auto-resubmit on requeue.** Combine checkpointing with a self-resubmitting job so a preempted
-or timed-out job comes back automatically:
+or timed-out job resumes automatically:
 
 ```bash
 #SBATCH --requeue                          # allow this job to be requeued
@@ -78,8 +74,8 @@ else
 fi
 ```
 
-The `--signal` line asks Slurm to warn your script 120 seconds before it's killed for
-walltime; trap that signal to flush a final checkpoint before you go.
+The `--signal` line asks Slurm to warn your script 120 seconds before the walltime kill; trap
+that signal to flush a final checkpoint.
 
 ## Requeue behavior worth knowing
 
@@ -89,15 +85,10 @@ walltime; trap that signal to flush a final checkpoint before you go.
 - Check whether a job was requeued with `sacct -j <id> --format=JobID,State,Start,End` — you'll
   see multiple rows.
 
-## The one-line policy
-
 ::: {.callout-important}
-## If a job runs longer than a few hours, checkpoint it
-Short jobs (minutes to an hour or two) can just be rerun if something goes wrong — don't
-over-engineer them. But **any multi-hour or multi-day job should checkpoint**, and any long
-production run should also prefer `non-investor`. The combination — non-preemptible partition
-*and* checkpoints — is what lets big simulations finish reliably on a shared, condo-model
-machine.
+## Checkpoint jobs that run longer than a few hours
+Short jobs (minutes to an hour or two) can just be rerun if something goes wrong. Any
+multi-hour or multi-day job should checkpoint, and any long production run should also prefer
+`non-investor`. A non-preemptible partition plus checkpoints is what lets big simulations
+finish reliably on a shared machine.
 :::
-
-Next: reading the wreckage when a job fails outright.

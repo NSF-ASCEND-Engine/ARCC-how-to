@@ -108,7 +108,7 @@ sinfo -p mb-h100 -o "%P %t %D"
 showuserlimits             # what am I allowed to ask for?
 ```
 
-## Don't-get-burned list
+## Common mistakes to avoid
 
 - `--account=<project>` is **required** on every job.
 - On `mb`, no `--mem` → **10 GB per core** silently. Always set `--mem`.

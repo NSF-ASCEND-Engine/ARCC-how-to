@@ -1,17 +1,14 @@
 # Partitions and QOS on MedicineBow {#sec-partitions}
 
 ::: {.tldr}
-Two knobs decide where and how your job runs. A **partition** picks the *hardware* (plain
-CPU nodes, H100 GPUs, the big absorbed Teton pool, …). A **QOS** picks the *service tier* —
-how long you may run, how much you may grab, and how high your priority is. The trade-off is
-clean: **the longer the walltime you ask for, the lower your priority and the smaller your
-allowed footprint.** Choosing well is the subject of @sec-queue-times.
+A **partition** picks the hardware; a **QOS** picks the service tier (walltime, footprint cap,
+priority). Longer requested walltime means lower priority and a smaller footprint cap. See
+@sec-queue-times for how to choose.
 :::
 
 ## Partition = which hardware
 
 A partition is a named pool of nodes. Submit with `--partition=<name>` (the default is `mb`).
-Here's what's actually on the machine:
 
 | Partition | Nodes | Cores/node | Mem/node | GPUs/node | Good for |
 |---|---|---|---|---|---|
@@ -31,23 +28,21 @@ Here's what's actually on the machine:
 
 <small>¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with `showpartitions` and `sinfo`.</small>
 
-*Teton, Beartooth, and WildIris* are the old retired clusters, now living on as big
-partitions inside MedicineBow — Teton alone is ~250 nodes, which is why it swallows so much
-throughput work. The `inv-*` partitions are **investor ("condo") hardware**: you can run on
-them when they're idle, but the owner can reclaim the node and bump your job (@sec-preemption).
+Teton, Beartooth, and WildIris are retired clusters now folded into MedicineBow as large
+partitions; Teton alone is ~250 nodes. The `inv-*` partitions are investor ("condo")
+hardware: you can run on them when they're idle, but the owner can reclaim the node and
+preempt your job (@sec-preemption).
 
 ::: {.callout-note}
 ## Avoiding preemption: use `non-investor`, not `--constraint`
-Some docs tell you to add `--constraint=non-investor` to avoid running on preemptible
-investor hardware. **That constraint matches nothing on the current machine and silently does
-nothing.** The real mechanism is a **partition**: submit to `--partition=non-investor` (110
-CPU nodes) or `--partition=non-investor-gpu` (7 GPU nodes) to stay on hardware that won't be
-reclaimed out from under you. This is the correct home for long, un-checkpointed runs.
+`--constraint=non-investor` matches nothing on the current machine and does nothing. Use a
+**partition** instead: `--partition=non-investor` (110 CPU nodes) or
+`--partition=non-investor-gpu` (7 GPU nodes) stays on hardware that won't be reclaimed. This
+is the right home for long, un-checkpointed runs.
 :::
 
-You can list several partitions and let Slurm use whichever frees up first —
-`--partition=mb,teton,beartooth` is common for CPU throughput work and is exactly what the
-busiest jobs on the machine do.
+You can list several partitions and let Slurm use whichever frees up first;
+`--partition=mb,teton,beartooth` is common for CPU throughput work.
 
 ## QOS = which service tier
 
@@ -73,19 +68,17 @@ sqos                         # full QOS table with limits
 ```
 
 ::: {.callout-important}
-## The core trade-off, in one sentence
-**The longer the walltime you ask for, the lower your priority *and* the smaller your allowed
-footprint.** `fast` (12 h) gives you priority 80 and the full 4746-core cap. `long` (7 d)
-drops you to priority 60 and a ~40%-smaller cap. You pay for patience with priority, and for
-size with time. This single fact drives every recommendation in @sec-queue-times.
+## The walltime trade-off
+Longer requested walltime means lower priority and a smaller footprint cap. `fast` (12 h)
+gives priority 80 and the full 4746-core cap; `long` (7 d) drops to priority 60 and a
+~40%-smaller cap. This trade-off drives the recommendations in @sec-queue-times.
 :::
 
-## `DenyOnLimit`: rejected at submit, not stuck forever
+## `DenyOnLimit`: rejected at submit
 
 Every QOS is flagged **`DenyOnLimit`**. If you ask for more than a QOS allows — say a 5-day
-run under `normal` (max 3 d), or more cores than the cap — Slurm **rejects the job the moment
-you submit it**, with a clear error. It does *not* silently queue it forever. That's good
-news: you find out immediately, fix the request, and resubmit.
+run under `normal` (max 3 d), or more cores than the cap — Slurm rejects the job at submit
+time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.
 
 ## Putting both knobs in a script
 
@@ -104,6 +97,5 @@ For a GPU job:
 #SBATCH --time=08:00:00
 ```
 
-Now — *which* combination should you actually pick? That depends entirely on whether you're
-doing a quick proof-of-concept or a long production run, and how busy each queue is right
-now. That's the next chapter, and it's the one to read carefully.
+Which combination to pick depends on whether you're doing a quick proof-of-concept or a long
+production run, and on how busy each queue is. That's @sec-queue-times.

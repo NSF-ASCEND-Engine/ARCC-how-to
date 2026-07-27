@@ -1,9 +1,9 @@
 # Anatomy of a batch job {#sec-anatomy}
 
 ::: {.tldr}
-A batch job is a shell script with `#SBATCH` directives at the top. The one directive you
-**cannot** omit is `--account=<project>` — your project name, not your username. Submit with
-`sbatch`, and Slurm writes output to `slurm-<jobid>.out`.
+A batch job is a shell script with `#SBATCH` directives at the top. The required directive is
+`--account=<project>` — your project name, not your username. Submit with `sbatch`; Slurm
+writes output to `slurm-<jobid>.out`.
 :::
 
 ## The smallest useful job
@@ -44,10 +44,9 @@ squeue --me                 # is it pending / running?
 tail -f slurm-123456.out    # follow output as it's written
 ```
 
-That's the whole loop: write script → `sbatch` → watch → read output. Everything else is
-refinement.
+That's the loop: write script, `sbatch`, watch, read output. Everything else is refinement.
 
-## The one directive you cannot omit
+## The required directive: `--account`
 
 ```bash
 #SBATCH --account=cowy-firesurro
@@ -55,18 +54,18 @@ refinement.
 
 ::: {.callout-important}
 ## `--account` is your *project*, not your username
-Every job on MedicineBow **must** specify an account, and it's the *project* name
+Every job on MedicineBow must specify an account, and it's the *project* name
 (`cowy-firesurro`), not your login name. Leave it out and the job is rejected immediately.
-This is the single most common first error. Confirm your exact project name with your PI
-(@sec-account) and put it in every script — or set it once as a default:
+This is the most common first error. Confirm your exact project name with your PI
+(@sec-account) and put it in every script, or set it once as a default:
 
 ```bash
 # add to ~/.bashrc so you never forget it
 export SBATCH_ACCOUNT=cowy-firesurro
 ```
 
-Even so, keep `--account` in the script itself — it documents intent and survives being run
-by a collaborator whose default differs.
+Even so, keep `--account` in the script itself. It documents intent and survives being run by
+a collaborator whose default differs.
 :::
 
 ## Anatomy, directive by directive
@@ -83,31 +82,30 @@ by a collaborator whose default differs.
 | `--output` | where stdout/stderr go | `%j` = job ID, `%x` = job name |
 | `--mail-type`, `--mail-user` | email on events | `END,FAIL` is a sane choice |
 
-`#SBATCH` lines must come **before any real commands** — the first non-comment, non-`#SBATCH`
-line ends the directive block. After that, it's just a bash script that runs on the compute
-node.
+`#SBATCH` lines must come before any real commands; the first non-comment, non-`#SBATCH` line
+ends the directive block. After that, it's a bash script that runs on the compute node.
 
-## Set memory explicitly — always
+## Set memory explicitly
 
 ::: {.callout-warning}
-## The 10 GB-per-core memory trap
-On the default `mb` partition, if you don't set `--mem`, Slurm gives you **10 GB per CPU
-core** (`DefMemPerCPU=10000`). So this innocent-looking request:
+## The 10 GB-per-core default on `mb`
+On the default `mb` partition, if you don't set `--mem`, Slurm gives you 10 GB per CPU core
+(`DefMemPerCPU=10000`). So this request:
 
 ```bash
 #SBATCH --cpus-per-task=8       # and no --mem line
 ```
 
-silently asks for **80 GB of RAM** — and then you queue behind a number you never typed,
-because 80 GB is harder to schedule than the 8 GB you probably needed. **Always set `--mem`
-(whole-job) or `--mem-per-cpu` explicitly.** This is covered in depth in @sec-resources.
+asks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the
+job queues longer. Set `--mem` (whole-job) or `--mem-per-cpu` explicitly. Covered in depth in
+@sec-resources.
 :::
 
 ## Making the environment reproducible
 
-A batch job starts in a clean-ish environment. Build the environment you need *inside the
-script* so it runs the same way every time and doesn't depend on what you happened to have
-loaded when you hit submit:
+A batch job starts in a mostly clean environment. Build the environment you need *inside the
+script* so it runs the same way every time, independent of what you had loaded at submit
+time:
 
 ```bash
 module purge
@@ -128,11 +126,11 @@ $SLURM_ARRAY_TASK_ID   # which array element this is (see @sec-arrays)
 $SLURM_SUBMIT_DIR      # the directory you ran sbatch from
 ```
 
-A common pattern is to match your program's threads to what Slurm gave you:
+A common pattern matches your program's threads to what Slurm gave you:
 
 ```bash
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 ```
 
-Now that you can submit a job, the next two chapters are about doing it *well*: asking for
-the right resources (@sec-resources), and choosing the right queue (@sec-partitions).
+The next two chapters cover doing this well: asking for the right resources (@sec-resources)
+and choosing the right queue (@sec-partitions).

@@ -1,10 +1,10 @@
 # Moving data in and out {#sec-moving-data}
 
 ::: {.tldr}
-For big or important transfers, use **Globus** — it's restartable, verified, and doesn't die
-when your laptop sleeps. For small stuff, `scp`/`rsync` over SSH to
-`medicinebow.arcc.uwyo.edu` is fine, and `rclone` (a module) is ARCC's recommended CLI for
-cloud storage. The gotcha: **external collaborators on ARCC-Only accounts can't use Globus.**
+For big or important transfers, use **Globus** — restartable, verified, survives a sleeping
+laptop. For small stuff, `scp`/`rsync` over SSH to `medicinebow.arcc.uwyo.edu` works, and
+`rclone` (a module) is ARCC's recommended CLI for cloud storage. Note: **external
+collaborators on ARCC-Only accounts can't use Globus.**
 :::
 
 ## Pick the right tool for the size of the job
@@ -17,13 +17,13 @@ cloud storage. The gotcha: **external collaborators on ARCC-Only accounts can't 
 | Drag-and-drop a handful of files in a browser | Portal → Files |
 
 There is **no dedicated data-transfer node (DTN)** — CLI transfers go through the login
-nodes, and Globus manages its own endpoint. That's another reason to prefer Globus for big
-moves: it won't tie up (or get killed on) a shared login node.
+nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it
+won't tie up (or get killed on) a shared login node.
 
 ## Globus — the recommended path for real data
 
 [Globus](https://www.globus.org/) transfers between "collections" (endpoints). It's
-restartable, checksums what it moves, retries failures, and runs server-side — so you can
+restartable, checksums what it moves, retries failures, and runs server-side, so you can
 start a multi-hundred-GB transfer, close your laptop, and get an email when it's done.
 
 1. Log in at <https://app.globus.org> (choose "University of Wyoming" as your organization,
@@ -39,8 +39,7 @@ start a multi-hundred-GB transfer, close your laptop, and get an email when it's
 ## Globus needs a full UW account
 ARCC-Only accounts (external collaborators — @sec-account) **cannot use Globus.** If your
 data lives at CSU, CU, or NCAR and you're on an ARCC-Only account, you'll need a UW-side
-person to broker the transfer, or a **guest collection** set up for you. Sort this out
-before you're blocked on a deadline.
+person to broker the transfer, or a **guest collection** set up for you.
 :::
 
 ## `scp` and `rsync` — fine for small, everyday transfers
@@ -65,13 +64,12 @@ rsync -avP ./localdir/ <username>@medicinebow.arcc.uwyo.edu:/project/cowy-firesu
 ```
 
 The `-P` flag shows progress and enables resume; `-a` preserves timestamps and permissions.
-For anything more than a few GB, prefer Globus — a login-node `scp` of a huge file competes
-with everyone else's login-node activity and will be slow.
+For more than a few GB, prefer Globus — a login-node `scp` of a huge file competes with
+everyone else's login-node activity and will be slow.
 
 ## `rclone` — cloud storage (S3, Google Drive, Box…)
 
-`rclone` is ARCC's recommended CLI tool for moving data to and from cloud services. It's a
-module:
+`rclone` is ARCC's recommended CLI for moving data to and from cloud services. It's a module:
 
 ```bash
 module load rclone/1.63.1
@@ -80,16 +78,13 @@ rclone copy mydata/ myremote:bucket/path/    # copy up
 rclone copy myremote:bucket/path/ ./mydata/  # copy down
 ```
 
-`rclone` verifies and retries, and handles the many small-file case far better than a naive
-loop of `scp`s.
+`rclone` verifies and retries, and handles many small files far better than a loop of `scp`s.
 
 ## A quick decision guide
 
 - **Moving your project's primary dataset onto the cluster?** Globus.
-- **Iterating on a submit script from your laptop?** `rsync` (or just edit in the portal).
+- **Iterating on a submit script from your laptop?** `rsync` (or edit in the portal).
 - **Pulling results into a cloud bucket for a collaborator?** `rclone`.
-- **You're an external collaborator without Globus?** Talk to your UW PI about a guest
-  collection *now*.
+- **External collaborator without Globus?** Ask your UW PI about a guest collection.
 
-Next up: making software available, starting with the module system that trips up nearly
-everyone (@sec-modules).
+Next: making software available, starting with the module system (@sec-modules).

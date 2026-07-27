@@ -1,44 +1,41 @@
 # Interactive sessions and GPU jobs {#sec-interactive}
 
 ::: {.tldr}
-For hands-on work, `salloc` gives you a live shell on a compute node (start it inside `tmux`
-so a dropped connection doesn't kill it). For GPUs, add `--gres=gpu:N` and pick a GPU
-partition — develop on cheap **A30s** (start in minutes), reserve **H100s** for jobs that
-truly need them (start in hours). GPU CUDA work needs the deprecated `gcc/13.2.0`.
+`salloc` gives you a live shell on a compute node; start it inside `tmux` so a dropped
+connection doesn't kill it. For GPUs, add `--gres=gpu:N` and pick a GPU partition — develop on
+**A30s** (start in minutes), reserve **H100s** for jobs that need them (start in hours). GPU
+CUDA work needs the deprecated `gcc/13.2.0`.
 :::
 
 ## Interactive sessions with `salloc` {#sec-salloc}
 
-When you need to poke at things by hand — debug a crash, explore a dataset, build and test a
-model interactively — request an interactive allocation:
+For hands-on work — debugging a crash, exploring a dataset, building a model interactively —
+request an interactive allocation:
 
 ```bash
 salloc --account=cowy-firesurro --qos=interactive \
        --time=02:00:00 --cpus-per-task=4 --mem=16G
 ```
 
-`salloc` requires at least `--account` and `--time`. When it grants the allocation you get a
-shell **on a compute node** — now you can run heavy things freely, because you're no longer on
-the login node. The `interactive` QOS is tuned for exactly this: it starts in ~10–30 seconds
+`salloc` requires at least `--account` and `--time`. It grants a shell **on a compute node**,
+where you can run heavy work off the login node. The `interactive` QOS starts in ~10–30 seconds
 (@sec-queue-times) with an 8-hour ceiling.
 
 ::: {.callout-important}
 ## Launch `salloc` from inside `tmux`
-An interactive session lives in *your shell*. If your laptop sleeps or WiFi drops, the shell
-dies and the session ends. Start `tmux` on the login node **first**, then `salloc` inside it
-(@sec-tmux). Now you can detach, close the laptop, and reattach tomorrow with the session
-intact — as long as it's within your `--time`.
+An interactive session lives in your shell. If your laptop sleeps or WiFi drops, the shell dies
+and the session ends. Start `tmux` on the login node first, then `salloc` inside it
+(@sec-tmux). You can then detach, close the laptop, and reattach later with the session intact,
+as long as it's within your `--time`.
 :::
 
-When you're done, `exit` the shell to release the allocation (don't sit on idle cores — it
-hurts your fair-share and blocks others).
+When you're done, `exit` the shell to release the allocation and free the cores for others.
 
 ### Interactive apps in the portal
 
 The web portal (@sec-first-login) offers graphical interactive apps — a full XFCE desktop,
-**RStudio**, and almost certainly **Jupyter** — that launch as scheduled jobs behind the
-scenes. These are the friendliest way to do interactive/GPU notebook work without wrangling
-`salloc` and port-forwarding by hand.
+**RStudio**, and **Jupyter** — that launch as scheduled jobs behind the scenes. These handle
+interactive and GPU notebook work without manual `salloc` and port-forwarding.
 
 ## GPU jobs {#sec-gpu}
 
@@ -63,7 +60,7 @@ python train.py
 To request a **specific GPU type** you can also use the typed form,
 e.g. `--gres=gpu:h100:2` for two H100s on one node.
 
-### Which GPU partition? Match it to the phase of work
+### Choosing a GPU partition
 
 | GPU partition | GPUs | Typical wait | Use for |
 |---|---|---|---|
@@ -73,19 +70,18 @@ e.g. `--gres=gpu:h100:2` for two H100s on one node.
 | `mb-h100` | 8× H100 | seconds–**hours** | **large training / production only** |
 
 ::: {.callout-warning}
-## Don't develop on H100s
+## Develop on A30s, not H100s
 H100 nodes are the most contended resource on the machine — waits of several hours are normal
-when they're busy (@sec-queue-times). Do your iterate-fast development on **A30s**, which you
-can usually get in minutes, and only submit to `mb-h100` when you have a real training run
-that needs that horsepower. Check `gpuavail` and `showpartitions` before choosing.
+when they're busy (@sec-queue-times). Do fast-iteration development on **A30s**, usually
+available in minutes, and submit to `mb-h100` only for a real training run that needs it. Check
+`gpuavail` and `showpartitions` before choosing.
 :::
 
 ::: {.callout-note}
-## The GPU compiler quirk
+## GPU compiler requirement
 `cuda-toolkit` is built only against **`gcc/13.2.0`**, even though `gcc/13.2.0` prints a
-deprecation warning nudging you to `gcc/14.2.0`. For GPU/CUDA work, load `gcc/13.2.0` anyway
-and ignore the warning (@sec-modules). Inside containers, add `--nv` to expose the GPU
-(@sec-conda).
+deprecation warning pointing to `gcc/14.2.0`. For GPU/CUDA work, load `gcc/13.2.0` and ignore
+the warning (@sec-modules). Inside containers, add `--nv` to expose the GPU (@sec-conda).
 :::
 
 ### Checking GPU availability and usage
@@ -98,7 +94,5 @@ nvidia-smi                  # inside a GPU job: is my code actually using the GP
 nvtop                       # inside a GPU job: live GPU usage, like htop for GPUs
 ```
 
-If `nvidia-smi` shows 0% utilization while your job runs, your code isn't actually on the GPU
-— a common and expensive mistake. Verify early.
-
-Next: what happens when the machine reclaims your node, and how to survive it.
+If `nvidia-smi` shows 0% utilization while your job runs, your code isn't actually on the GPU.
+Verify early.

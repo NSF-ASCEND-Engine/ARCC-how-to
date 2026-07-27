@@ -1,21 +1,18 @@
-# Job arrays: the feature that changes how you work {#sec-arrays}
+# Job arrays {#sec-arrays}
 
 ::: {.tldr}
-A job array runs the *same script* hundreds or thousands of times, each with a different
-index (`$SLURM_ARRAY_TASK_ID`). One `sbatch`, one script, N independent tasks that the
-scheduler spreads across the cluster and backfills into gaps. For parameter sweeps,
-ensembles, and per-file processing, this is the single biggest productivity unlock on the
-machine. MedicineBow allows arrays up to **10,000** tasks.
+A job array runs the *same script* many times, each with a different index
+(`$SLURM_ARRAY_TASK_ID`). One `sbatch`, one script, N independent tasks the scheduler spreads
+across the cluster and backfills into gaps. MedicineBow allows arrays up to **10,000** tasks.
 :::
 
 ## The problem it solves
 
 You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days
-to process. The wrong way is a bash loop that runs them one after another in a single job
-(serial, slow, and one crash near the end wastes everything). The other wrong way is
-copy-pasting 500 submit scripts. The right way is **one array job**: one script, submitted
-once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever
-there's room.
+to process. A bash loop runs them serially in one job, so one crash near the end wastes
+everything. Copy-pasting 500 submit scripts is no better. An **array job** is one script,
+submitted once, that Slurm turns into 500 independent tasks it can run in parallel and
+backfill wherever there's room.
 
 ## The mechanics
 
@@ -46,9 +43,8 @@ mkdir -p logs
 sbatch submit_array.sh        # creates 500 tasks: 12345_1, 12345_2, ... 12345_500
 ```
 
-Each task is scheduled independently. Because they're small and short, they **backfill
-beautifully** (@sec-priority) and the whole sweep can finish far faster than the sum of its
-parts.
+Each task is scheduled independently. Because they're small and short, they backfill well
+(@sec-priority) and the whole sweep finishes faster than running them in series.
 
 ## Driving work from the index
 
@@ -72,17 +68,17 @@ python process.py "$THIS"
 (If you index files from a bash array, start `--array=0`; if you use `sed -n Np`, start
 `--array=1`. Off-by-one here is the classic array bug.)
 
-## Throttling: be a good neighbor
+## Throttling
 
-Don't necessarily unleash all 500 at once — cap how many run simultaneously with `%`:
+Cap how many tasks run simultaneously with `%`:
 
 ```bash
 #SBATCH --array=1-500%20        # at most 20 tasks running at a time
 ```
 
-This keeps you from saturating your account's core cap (and your fair-share, @sec-priority),
-while still churning through all 500. A modest `%` limit is often *faster overall* because you
-stop competing with yourself and stay backfill-friendly.
+This keeps you under your account's core cap (and protects your fair-share, @sec-priority)
+while still processing all 500. A modest `%` limit is often faster overall, because you stop
+competing with yourself and stay backfill-friendly.
 
 ## Managing an array
 
@@ -102,16 +98,12 @@ sacct -j 12345 --format=JobID,State,ExitCode -n | grep -v COMPLETED
 then resubmit just those indices: `sbatch --array=17,43,88 submit_array.sh`.
 
 ::: {.callout-note}
-## Arrays vs. one big MPI job
-An array is for **independent** tasks that don't talk to each other (embarrassingly
-parallel): sweeps, ensembles, per-file pipelines. If your tasks must communicate — a single
-domain-decomposed simulation — that's an **MPI** job instead (@sec-ladder), a different tool
-for a different shape of problem.
+## Arrays vs. MPI jobs
+An array is for **independent** tasks that don't communicate: sweeps, ensembles, per-file
+pipelines. If your tasks must talk to each other — a single domain-decomposed simulation — use
+an **MPI** job instead (@sec-ladder).
 :::
 
 Arrays are also the natural unit for **ensembles** — fire-weather members, hydrologic
 scenarios, Monte-Carlo draws — one array task per member, each writing to its own output,
-collected afterward. Reach for them early — most "I need to run this many times" problems are
-secretly array jobs.
-
-Next: interactive sessions and GPUs.
+collected afterward.

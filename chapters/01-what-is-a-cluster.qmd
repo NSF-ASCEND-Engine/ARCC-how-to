@@ -1,61 +1,76 @@
 # What a cluster is (and why your laptop isn't one) {#sec-cluster}
 
 ::: {.tldr}
-A cluster is a few hundred computers that share storage and a waitlist. You never touch
-those computers directly — you log into a small *login node*, describe the work you want
-done, and a scheduler runs it on a *compute node* when resources free up. The golden rule:
-**log in on the login node, but do the computing on compute nodes.**
+A cluster is a few hundred computers that share storage and a waitlist. You don't touch
+them directly — you log into a small *login node*, describe the work, and a scheduler runs
+it on a *compute node* when resources free up. Log in on the login node; do the computing
+on compute nodes.
 :::
 
-## The one-sentence mental model
+## Mental model
 
-MedicineBow is not "a really big computer." It is a few hundred ordinary Linux servers
-("nodes") wired together, all mounting the same shared filesystems, all managed by a
-program that decides whose job runs where and when. That program is the **scheduler**
-(here, [Slurm](https://slurm.schedmd.com/)). Learning the cluster is mostly learning to
-work *with* the scheduler instead of against it.
+MedicineBow is not one big computer. It is a few hundred ordinary Linux servers ("nodes")
+wired together, all mounting the same shared filesystems, all managed by a program that
+decides whose job runs where and when. That program is the **scheduler** (here,
+[Slurm](https://slurm.schedmd.com/)). Learning the cluster is mostly learning to work
+*with* the scheduler.
 
 ## Login nodes vs. compute nodes
 
-There are two kinds of machines you'll deal with, and confusing them is the most common
-beginner mistake.
+There are two kinds of machines, and confusing them is the most common beginner mistake.
 
 **Login nodes** (`mblog1`, `mblog2`) are the front door. When you `ssh` in or open a
-terminal in the web portal, you land here. Login nodes are *shared by everyone at once* —
-dozens of people are on the same machine editing files, submitting jobs, and moving data.
-They are for lightweight work: editing scripts, managing files, compiling small things,
-submitting jobs, checking on jobs.
+terminal in the web portal, you land here. They are shared by everyone at once — dozens of
+people editing files, submitting jobs, and moving data. Use them for lightweight work:
+editing scripts, managing files, compiling small things, submitting and checking jobs.
 
-**Compute nodes** are where actual computation happens. You never SSH to them directly.
-Instead you ask the scheduler for one (or many), and it gives you exclusive, accounted-for
-access for a bounded amount of time. A compute node on MedicineBow is a serious machine —
-the default `mb` nodes have **96 CPU cores and ~1 TB of RAM each**, and the GPU nodes carry
-up to **8 NVIDIA H100s**. Your laptop has, what, 8 cores?
+**Compute nodes** are where computation happens. You never SSH to them directly; you ask
+the scheduler for one (or many), and it gives you exclusive, accounted-for access for a
+bounded time. The default `mb` nodes have **96 CPU cores and ~1 TB of RAM each**, and the
+GPU nodes carry up to **8 NVIDIA H100s**.
+
+```{mermaid}
+%%| label: fig-nodes
+%%| fig-cap: "You reach a shared login node from your laptop; the scheduler runs your jobs on dedicated compute nodes. All nodes see the same filesystems."
+flowchart LR
+    U["Your laptop"] -->|"ssh / web portal"| L
+    subgraph MB ["MedicineBow"]
+        L["Login nodes<br/>mblog1 / mblog2<br/>shared, lightweight only"]
+        S{{"Slurm scheduler"}}
+        L -->|"sbatch / salloc"| S
+        S --> C1["Compute node"]
+        S --> C2["Compute node"]
+        S --> C3["GPU node"]
+    end
+    FS[("Shared filesystems<br/>home, project, scratch")]
+    L --- FS
+    C1 --- FS
+    C3 --- FS
+```
 
 ::: {.callout-important}
-## The cardinal sin: computing on a login node
-If you run a heavy job directly on `mblog1`/`mblog2` — a big simulation, a data-crunching
-Python script, a multi-hour build — you slow the machine down for *everyone* trying to log
-in and work. ARCC monitors this and will kill runaway login-node processes (and email you).
+## Don't compute on login nodes
+A heavy job on `mblog1`/`mblog2` — a big simulation, a data-crunching Python script, a
+multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills
+runaway login-node processes (and emails you).
 
-A useful rule of thumb: anything that takes more than a couple of minutes, or uses more
-than a core or two, belongs in a Slurm job or an interactive session — never on the login
-node. See @sec-why-scheduler.
+Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core
+or two, belongs in a Slurm job or an interactive session. See @sec-why-scheduler.
 :::
 
 ## Why share a machine at all?
 
-Because the alternative is worse. If everyone had their own dedicated server, most servers
-would sit idle most of the time while a few people occasionally needed far more than one
-server could give. Pooling the hardware and scheduling access means:
+If everyone had their own dedicated server, most servers would sit idle while a few people
+occasionally needed far more than one server could give. Pooling the hardware and
+scheduling access means:
 
 - When you need 50 nodes for an ensemble, you can have them (briefly).
 - When you need nothing, someone else uses the hardware you're not using.
 - A fair-share accounting system stops any one person from hogging everything.
 
-The cost of this deal is that you sometimes **wait in line**, and you have to **describe
-your work up front** (how many cores, how much memory, how long). Most of this book is
-about making those two things painless.
+In exchange, you sometimes **wait in line** and you have to **describe your work up front**
+(how many cores, how much memory, how long). Most of this book is about making those two
+things painless.
 
 ## What MedicineBow is, concretely
 
@@ -66,13 +81,13 @@ MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:
   CUDA.
 - **Absorbed older clusters**: the retired *Teton*, *Beartooth*, and *WildIris* clusters
   now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.
-- **Investor ("condo") nodes**: hardware bought by specific research groups, which the
-  rest of us can borrow when it's idle — with the catch that the owner can reclaim it and
-  bump your job (see @sec-preemption).
+- **Investor ("condo") nodes**: hardware bought by specific research groups, which others
+  can borrow when it's idle — but the owner can reclaim it and bump your job (see
+  @sec-preemption).
 
-You don't need to memorize any of this yet. The partition chapter (@sec-partitions) lays
-out exactly which hardware to ask for, and the queue-times chapter (@sec-queue-times) tells
-you which choices leave you waiting versus running now.
+You don't need to memorize this. The partition chapter (@sec-partitions) covers which
+hardware to ask for, and the queue-times chapter (@sec-queue-times) covers which choices
+leave you waiting versus running now.
 
 ## Where to get help
 

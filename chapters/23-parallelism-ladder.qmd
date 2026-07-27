@@ -1,22 +1,31 @@
 # The parallelism ladder {#sec-ladder}
 
 ::: {.tldr}
-There's a ladder of ways to make work go faster, and you should climb it only as far as your
-problem needs: **serial → job array → multicore → MPI → GPU**. Each rung is more powerful and
-more complex. Most "make it faster" problems are solved one or two rungs up — usually by a job
-array — not at the top.
+Climb the ladder only as far as your problem needs: **serial → job array → multicore → MPI →
+GPU**. Each rung is more powerful and more complex. Most "make it faster" problems are solved
+one or two rungs up — usually by a job array.
 :::
 
 ## Climb only as high as you need
 
-Newcomers often reach straight for MPI or GPUs because they sound like "real HPC." Usually the
-right answer is much lower on the ladder and far simpler. Match the rung to the *shape* of your
-problem.
+MPI and GPUs sound like "real HPC," but the right answer is usually lower on the ladder and
+simpler. Match the rung to the *shape* of your problem.
+
+```{mermaid}
+%%| label: fig-ladder
+%%| fig-cap: "The parallelism ladder. Climb only as high as the problem needs; most work is solved at the job-array rung (highlighted)."
+flowchart LR
+    A["Serial<br/>1 core"] --> B["Job array<br/>many independent runs"]
+    B --> C["Multicore<br/>threads, 1 node"]
+    C --> D["MPI<br/>1 program, many nodes"]
+    D --> E["GPU<br/>ML / PINNs"]
+    style B stroke-width:3px,stroke:#4a2c82
+```
 
 ### Rung 1 — Serial
 
-One core, one task. Perfectly fine for small jobs, and the right baseline: get it correct on
-one core first. If a serial job is fast enough, you're done — don't parallelize for sport.
+One core, one task. Fine for small jobs, and the right baseline: get it correct on one core
+first. If a serial job is fast enough, you're done — don't parallelize unnecessarily.
 
 ```bash
 #SBATCH --ntasks=1
@@ -26,15 +35,15 @@ one core first. If a serial job is fast enough, you're done — don't paralleliz
 ### Rung 2 — Job array (many independent serial runs)
 
 If you need to run the *same* thing many times over different inputs — a parameter sweep, an
-ensemble, per-file processing — this is almost always the answer. It's the biggest bang for the
-least complexity, and it backfills beautifully (@sec-arrays).
+ensemble, per-file processing — this is almost always the answer. Low complexity, and it
+backfills well (@sec-arrays).
 
 ```bash
 #SBATCH --array=1-500%20
 python run.py --id ${SLURM_ARRAY_TASK_ID}
 ```
 
-**Reach here first** whenever the phrase "I need to run it N times" applies.
+Use this whenever "I need to run it N times" applies.
 
 ### Rung 3 — Multicore (one program, many threads, one node)
 
@@ -54,8 +63,8 @@ Only ask for as many cores as your code actually scales to — check with `seff`
 ### Rung 4 — MPI (one program across many nodes)
 
 When a single problem is too big for one node — a domain-decomposed simulation like WRF, where
-pieces must exchange data every step — you need **MPI**. This is genuine distributed computing:
-one program, many processes across many nodes, communicating.
+pieces must exchange data every step — you need **MPI**: one program, many processes across
+many nodes, communicating.
 
 ```bash
 #SBATCH --nodes=4
@@ -68,14 +77,13 @@ srun ./my_mpi_simulation             # srun launches the MPI ranks
 ```
 
 Use `srun` (not `mpirun`) to launch — it's integrated with Slurm and gets the task layout
-right automatically. MPI is powerful but a real step up in complexity; only climb here when a
-problem genuinely won't fit on one node. For long MPI runs, prefer `non-investor` and
-checkpoint (@sec-preemption).
+right automatically. MPI is a step up in complexity; use it only when a problem won't fit on
+one node. For long MPI runs, prefer `non-investor` and checkpoint (@sec-preemption).
 
 ### Rung 5 — GPU
 
 For workloads built for GPUs — deep learning, PINNs, some CFD/linear algebra — a GPU can beat
-dozens of CPU cores. But only if your code actually targets the GPU (@sec-gpu); a CPU program
+dozens of CPU cores, but only if your code actually targets the GPU (@sec-gpu); a CPU program
 gains nothing from a GPU node except a longer queue. Develop on `mb-a30`, scale up to
 `mb-h100` for real training (@sec-queue-times).
 
@@ -97,5 +105,5 @@ python train.py
 | Code is written for GPUs (ML/PINN) | GPU |
 
 You can combine rungs — e.g. an **array of multicore jobs** (a sweep where each run uses 8
-cores), which covers a huge fraction of real research computing. Start as low as you can; climb
-only when the machine tells you you need to.
+cores), which covers a large fraction of real research computing. Start as low as you can;
+climb only when you need to.

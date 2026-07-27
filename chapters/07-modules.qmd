@@ -1,19 +1,18 @@
-# Software modules (and why `module avail` lies) {#sec-modules}
+# Software modules (and why `module avail` misleads) {#sec-modules}
 
 ::: {.tldr}
 Software comes from **Lmod modules** you `module load`. The system is *hierarchical*: many
-packages are invisible until you first load a compiler. So `module avail` only shows what's
-reachable *right now* and will swear things don't exist — use **`module spider <name>`** to
-find the truth and learn what to load first.
+packages are invisible until you load a compiler, so `module avail` only shows what's
+reachable right now. Use **`module spider <name>`** to find a package and learn what to load
+first.
 :::
 
 ## Why modules exist
 
-A cluster has hundreds of users who need mutually incompatible software: three versions of
-Python, five compilers, conflicting builds of GDAL. You can't install all of that globally.
-Instead, **modules** let you load exactly the versions you want into *your* shell for *this*
-session, without affecting anyone else. Load a module and its programs appear on your `PATH`;
-unload it and they vanish.
+A cluster has hundreds of users who need incompatible software: three versions of Python,
+five compilers, conflicting builds of GDAL. **Modules** let you load exactly the versions you
+want into your shell for this session, without affecting anyone else. Load a module and its
+programs appear on your `PATH`; unload it and they vanish.
 
 ```bash
 module load gcc/14.2.0        # add gcc 14 to this shell
@@ -22,7 +21,7 @@ module unload gcc/14.2.0      # remove it
 module purge                  # clear everything and start clean
 ```
 
-## The hierarchy — the thing that confuses everyone
+## The hierarchy
 
 MedicineBow uses **Lmod** in *hierarchical* mode. Modules are arranged in layers:
 
@@ -32,14 +31,14 @@ MedicineBow uses **Lmod** in *hierarchical* mode. Modules are arranged in layers
   you load a compiler.** They were built against a specific compiler, so Lmod won't show them
   until you've picked one.
 
-This is why a brand-new user runs `module avail`, doesn't see `gdal`, and concludes it isn't
-installed. It is — it's just one layer down.
+So a new user runs `module avail`, doesn't see `gdal`, and concludes it isn't installed. It
+is — just one layer down.
 
 ::: {.callout-important}
-## Use `module spider`, not `module avail`, to answer "does X exist?"
-`module avail` shows only what's loadable *given what you've already loaded* — it lies by
-omission. **`module spider`** searches the entire tree and tells you both that something
-exists and what you must load first to reach it.
+## Use `module spider`, not `module avail`, to check whether something exists
+`module avail` shows only what's loadable given what you've already loaded. **`module
+spider`** searches the entire tree and tells you both that something exists and what to load
+first to reach it.
 
 ```bash
 module spider gdal            # yes it exists; here are the versions
@@ -69,17 +68,16 @@ Ask the machine for the current list with `module spider`, but roughly:
   `julia/{1.10.3, 1.11.6}`.
 
 ::: {.callout-warning}
-## The GPU compiler contradiction
-`gcc/13.2.0` prints a deprecation warning telling you to move to `gcc/14.2.0`. But
-`cuda-toolkit` is **only built against `gcc/13.2.0`**. So GPU users have to knowingly load
-the "deprecated" compiler:
+## CUDA needs the deprecated gcc/13.2.0
+`gcc/13.2.0` prints a deprecation warning pointing to `gcc/14.2.0`, but `cuda-toolkit` is
+**only built against `gcc/13.2.0`**. GPU users have to load it anyway:
 
 ```bash
-module load gcc/13.2.0        # yes, the one that warns you — CUDA needs it
+module load gcc/13.2.0        # the one that warns you — CUDA needs it
 module load cuda-toolkit/12.6.1
 ```
 
-Ignore the warning in this case; it's a packaging quirk, not a mistake on your part.
+Ignore the warning here; it's a packaging quirk.
 :::
 
 ## Making a set of modules load automatically
@@ -95,16 +93,15 @@ module save geostack          # remember this set as "geostack"
 module restore geostack
 ```
 
-Prefer `module restore` in your submit scripts over hand-loading a long list — it's
-reproducible and self-documents the environment your job needs.
+Prefer `module restore` in submit scripts over hand-loading a long list — it's reproducible
+and self-documents the environment your job needs.
 
 ::: {.callout-note}
-## Load modules *in your submit script*, not just interactively
-The modules you load on the login node don't automatically carry into a batch job the way
-you'd expect across a fresh environment. Put the `module load` / `module restore` lines
-**inside** your `sbatch` script so the job builds the same environment every time
-(@sec-anatomy).
+## Load modules in your submit script, not just interactively
+Modules loaded on the login node don't carry into a batch job. Put the `module load` /
+`module restore` lines **inside** your `sbatch` script so the job builds the same environment
+every time (@sec-anatomy).
 :::
 
-When a package isn't available as a module — or you need a pip/conda world — that's the next
+When a package isn't available as a module — or you need a pip/conda world — see the next
 chapter (@sec-conda).

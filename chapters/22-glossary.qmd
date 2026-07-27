@@ -92,7 +92,7 @@ Plain-language definitions of the terms this book uses.
 
 **QOS (Quality of Service)**
 : The service tier that sets your max walltime, resource cap, and priority (`debug`, `fast`,
-  `normal`, `long`, …). The most important scheduling choice you make. See @sec-partitions.
+  `normal`, `long`, …). See @sec-partitions.
 
 **Requeue**
 : Putting a killed (preempted/failed) job back in the pending queue to start over. Pair with
@@ -107,8 +107,7 @@ Plain-language definitions of the terms this book uses.
   @sec-monitoring.
 
 **Slurm**
-: The scheduler that manages all jobs on the cluster. The thing you're really learning to use.
-  See @sec-why-scheduler.
+: The scheduler that manages all jobs on the cluster. See @sec-why-scheduler.
 
 **Snapshot**
 : A point-in-time copy of a filesystem, on the *same array* as the live data. Protects against
