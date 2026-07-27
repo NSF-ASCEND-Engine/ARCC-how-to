@@ -200,19 +200,28 @@ Partition `mb` sets **`DefMemPerCPU=10000`** (10 GB), against a global default o
 silently requests **80 GB**. You then queue for a number you never typed. Always set `--mem`
 explicitly.
 
-### ⚠️ `--constraint=non-investor` DOES NOT WORK — docs are wrong
+### ⚠️ `--constraint=non-investor` DOES NOT WORK — but a `non-investor` *partition* does **[LIVE, 2026-07-27]**
 
 **[DOCS]** tells you to use `--constraint=non-investor` to avoid preemption. **[LIVE]** I
 checked every node's feature string on the cluster and **no node advertises a `non-investor`
 feature.** That constraint would match nothing. The docs are stale here.
 
-The underlying concern is real, though, and belongs in the book: MedicineBow is a **condo
-model**. If you land on investor hardware, **the investor can reclaim it at any moment and
-your job is automatically requeued.** Idle investor nodes are effectively a backfill queue.
-Anyone running long jobs needs to know this, and needs to checkpoint.
+**RESOLVED — the real mechanism is a partition, not a constraint.** Re-checking on
+2026-07-27, `sinfo`/`showpartitions` show two partitions the earlier pass missed:
 
-**Open question for ARCC:** what is the *actual* current mechanism to request non-investor
-nodes? Worth an email before the book asserts anything.
+- **`non-investor`** — 110 CPU nodes (`mbcpu-013-024`, plus curated teton/beartooth nodes),
+  `AllowQos=ALL`, MaxTime 7 d.
+- **`non-investor-gpu`** — 7 GPU nodes, `QoS=require-gpu`.
+
+So the correct advice is **`--partition=non-investor`** (or `non-investor-gpu`) for work you
+don't want preempted. This resolves open question #1. The `teton`, `beartooth`, `wildiris`,
+and `teton-gpu`/`beartooth-gpu` partitions also exist as first-class partitions (not just
+"absorbed clusters").
+
+The underlying concern is real and belongs in the book: MedicineBow is a **condo model**. If
+you land on investor hardware, **the investor can reclaim it at any moment and your job is
+automatically requeued.** Idle investor nodes are effectively a backfill queue. Anyone
+running long jobs needs to know this, and needs to checkpoint.
 
 ### ARCC's own commands **[LIVE]** — on `$PATH` by default, and undiscoverable
 
@@ -280,17 +289,48 @@ unmistakable Spack fingerprint.
 
 ---
 
-## 8. Open questions
+## 8. Queue-time data **[LIVE, 2026-07-27]** — the centerpiece the book needed
 
-1. **What actually replaces `--constraint=non-investor`?** The documented mechanism doesn't
-   exist on the machine. Ask ARCC.
+Measured from `sacct` over a 3-day window (~1.7M jobs), wait = Start − Eligible. Snapshot
+at capture time: **~2000 running, ~800 pending**, nearly all pending for reason `Priority`.
+
+| Partition | Median wait | p90 | Character |
+|---|---|---|---|
+| `teton` | ~0 s | ~13 m | huge pool; array/throughput starts fast (window included a big `fast` array) |
+| `mb` (CPU default) | <1 m | ~10 m | plentiful; short CPU jobs start quickly |
+| `beartooth` | ~4 m | ~11 m | steady CPU |
+| `mb-a30` (GPU) | ~2 m | ~1.5 h | smaller GPUs, usually gettable |
+| `mb-h100` (GPU) | s–hours | **~8–9 h** | bimodal: idle now or a long wait |
+| `mb-l40s` (GPU) | ~1 h | ~2–6 h | consistently contended |
+
+By QOS (most representative CPU signal is `normal`, n≈26k): `interactive` median ~11 s /
+p90 ~30 s · `normal` median ~19 s / p90 ~8 m · `fast` median ~0 s / p90 ~13 m.
+
+**Takeaway for the book:** CPU work starts fast; GPU (esp. L40S/H100) is where you wait.
+Short PoC → `debug`/`fast`/`interactive`; long sims → `long` on `non-investor`, and
+checkpoint. This is chapter 13 of the book.
+
+## 9. Open questions
+
+1. ~~What replaces `--constraint=non-investor`?~~ **RESOLVED** — the `non-investor` /
+   `non-investor-gpu` *partitions* (see §4).
 2. **Is Jupyter available in OnDemand?** Almost certainly (it's standard OnDemand), but no ARCC
    page documents it, and I couldn't check without portal access. Same for VS Code/code-server.
    RStudio *is* documented, launched inside the XFCE desktop session.
 3. **UW's specific role in ARID**, and whether `cowy-firesurro` is formally an ARID project.
    Ask the PI — this determines whether the book's examples should be fire-spread surrogates,
    fire-weather NWP, or remote sensing.
-4. **Per-partition default walltime** — not documented; would need to read off `scontrol`.
+4. **Per-partition default walltime** — **partly resolved [LIVE]:** all partitions checked
+   have `DefaultTime=NONE` (no partition default; effective default falls back to partition
+   `MaxTime` of 7 d, which a lower QOS will then reject — so always set `--time`).
+
+### Minor [LIVE] corrections to §5 module lists
+- `gcc` also has **11.5.0** (list was 11.4.0/13.2.0/14.2.0/15.2.0).
+- `julia` also has **1.11.6** (list had only 1.10.3).
+- ARCC `sqos` also shows QOS `asap` (prio 100), `test`, `require-gpu`, `gpu_limit_h100`
+  beyond the user-facing tiers. `cowy-firesurro` is granted: `debug, fast, interactive,
+  long, normal` (not `extended`). All other §4 claims (priority weights, `DefMemPerCPU=10000`
+  on `mb`, `arccq` absent, `/data` absent, `/lscratch` present) **confirmed**.
 
 ---
 
