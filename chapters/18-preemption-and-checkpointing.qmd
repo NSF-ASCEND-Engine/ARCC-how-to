@@ -1,0 +1,103 @@
+# Preemption, the condo model, and checkpointing {#sec-preemption}
+
+::: {.tldr}
+MedicineBow is a **condo**: research groups buy `inv-*` nodes, and the rest of us borrow them
+when idle. The catch — **the owner can reclaim their node at any moment, and your job is
+automatically requeued** (killed and put back in line). Long jobs must therefore either run on
+`non-investor` partitions *or* **checkpoint** so a requeue costs minutes, not days.
+:::
+
+## The condo model, plainly
+
+A lot of MedicineBow's hardware was purchased by individual research groups. Those `inv-*`
+partitions "belong" to their investors, who get top priority (QOS 110) on them. To keep the
+machine busy, everyone else's jobs can **backfill** onto idle investor nodes — free capacity,
+most of the time.
+
+The deal has a string attached:
+
+::: {.callout-warning}
+## An investor can reclaim their node and requeue your job
+If you land on investor hardware and the owner submits work, **your job is preempted** — Slurm
+kills it and (by default here) **requeues** it: it goes back into the pending queue to start
+over from the beginning when resources free up. Any progress not written to disk is lost.
+This can happen minutes into a job or days in. For a long, un-checkpointed simulation, that's
+potentially days of wasted compute.
+:::
+
+## Two ways to protect a long run
+
+**1. Run where you can't be preempted.** Submit long production jobs to the non-preemptible
+pool:
+
+```bash
+#SBATCH --partition=non-investor        # 110 CPU nodes, not reclaimable
+# or non-investor-gpu for GPU work
+```
+
+This is the correct home for anything long that you haven't checkpointed. (The
+`--constraint=non-investor` some docs mention **does not work** — it's a *partition*, not a
+constraint. See @sec-partitions.)
+
+**2. Checkpoint, so preemption is cheap.** If you *do* run on borrowable hardware (or list
+several partitions for faster starts), make preemption survivable by saving state
+periodically.
+
+## Checkpointing {#sec-checkpointing}
+
+A checkpoint is a periodic save of enough state to *resume* rather than *restart*. It protects
+you from three things at once: preemption, node failures, and hitting your walltime limit. Any
+job measured in days should checkpoint.
+
+**The pattern:**
+
+1. Every so often (every N iterations, or every ~30–60 min of wall time), write current state
+   to a checkpoint file in `/gscratch` or `/project` — not `/lscratch`, which is wiped when
+   the job ends (@sec-storage).
+2. On startup, check for a checkpoint and **resume from it if present**, otherwise start fresh.
+3. Write checkpoints atomically (write to a temp file, then rename) so a crash mid-write can't
+   corrupt your only checkpoint. Keep the last one or two.
+
+Many scientific codes have this built in — WRF has restart files, PyTorch has
+`torch.save`/`load` for model+optimizer state, PETSc and Sundials have checkpoint hooks. Turn
+these on and set the interval to your risk tolerance.
+
+**Auto-resubmit on requeue.** Combine checkpointing with a self-resubmitting job so a preempted
+or timed-out job comes back automatically:
+
+```bash
+#SBATCH --requeue                          # allow this job to be requeued
+#SBATCH --open-mode=append                 # don't clobber the log on requeue
+#SBATCH --signal=B:USR1@120                # send USR1 120s before the walltime kill
+
+# resume from checkpoint if one exists
+if [ -f state.ckpt ]; then
+    ./simulate --restart state.ckpt
+else
+    ./simulate --fresh
+fi
+```
+
+The `--signal` line asks Slurm to warn your script 120 seconds before it's killed for
+walltime; trap that signal to flush a final checkpoint before you go.
+
+## Requeue behavior worth knowing
+
+- A requeued job keeps its **job ID** but starts its command **from the beginning** — Slurm
+  doesn't magically resume your program; your *checkpoint* does.
+- `--open-mode=append` stops the requeued run from overwriting the previous log.
+- Check whether a job was requeued with `sacct -j <id> --format=JobID,State,Start,End` — you'll
+  see multiple rows.
+
+## The one-line policy
+
+::: {.callout-important}
+## If a job runs longer than a few hours, checkpoint it
+Short jobs (minutes to an hour or two) can just be rerun if something goes wrong — don't
+over-engineer them. But **any multi-hour or multi-day job should checkpoint**, and any long
+production run should also prefer `non-investor`. The combination — non-preemptible partition
+*and* checkpoints — is what lets big simulations finish reliably on a shared, condo-model
+machine.
+:::
+
+Next: reading the wreckage when a job fails outright.

@@ -1,0 +1,127 @@
+# The Linux you actually need {#sec-linux}
+
+::: {.tldr}
+You don't need to become a Linux wizard. You need to move around the filesystem, edit a
+file, find things, inspect what your jobs produced, and — crucially — keep work alive when
+your connection drops, using `tmux`. This chapter is the minimum, and no more.
+:::
+
+If you already live in a terminal, skim the `tmux` section and move on. Everything here is
+standard Linux; nothing is ARCC-specific except the paths.
+
+## Moving around
+
+```bash
+pwd                 # where am I?
+ls -lh              # list files, human-readable sizes
+cd /project/cowy-firesurro   # go somewhere
+cd                  # go home ($HOME)
+cd -                # go back to where you just were
+```
+
+Three shortcuts you'll use constantly: `~` is your home directory, `.` is "here", and `..`
+is "up one". Tab-completion (press <kbd>Tab</kbd> to finish a half-typed path) will save you
+more time than any other single habit.
+
+## Looking at files without opening them
+
+```bash
+cat file.txt          # dump a whole (small) file
+less big.log          # page through a big file; q to quit, / to search
+head -n 20 file       # first 20 lines
+tail -n 50 file       # last 50 lines
+tail -f slurm-123.out # follow a job's output live as it's written
+```
+
+`tail -f` on your job's output file is the classic "is my job doing anything?" move.
+
+## Editing files
+
+`nano` is the friendly choice — arrow keys work, and the shortcuts are listed at the bottom
+of the screen (`^O` = save, `^X` = exit).
+
+```bash
+nano submit.sh
+```
+
+`vim` is everywhere and powerful, but has a learning curve; if you don't already know it,
+`nano` is fine for editing a submit script. For anything bigger, edit on your laptop and use
+the portal's file browser, VS Code's Remote-SSH, or `rsync` (@sec-moving-data).
+
+## Finding things
+
+```bash
+grep -r "account" .          # search file contents recursively
+find . -name "*.nc"          # find files by name
+find . -size +1G             # find files bigger than 1 GB (great for quota hunts)
+du -sh *                     # how big is each thing in this directory?
+```
+
+`du -sh * | sort -h` to find what's eating your quota is a habit worth building, given the
+50 GB home limit (@sec-storage).
+
+## Environment variables and your shell
+
+Your shell remembers settings in variables. A few you'll meet:
+
+```bash
+echo $HOME        # /home/<username>
+echo $USER        # your username
+echo $SCRATCH     # /gscratch/<username> — your scratch space
+echo $PATH        # where the shell looks for commands
+```
+
+To make something permanent (say, a handy alias), add it to `~/.bashrc`:
+
+```bash
+alias q='squeue --me'          # see just my jobs
+alias proj='cd /project/cowy-firesurro'
+```
+
+Run `source ~/.bashrc` (or log out and back in) to apply changes.
+
+## `tmux`: don't let a dropped connection kill your work {#sec-tmux}
+
+This is the most important section in the chapter. When you SSH in and start something —
+even a legitimate interactive session — **closing your laptop or losing WiFi kills that
+shell and everything running in it.** `tmux` fixes this by keeping your session alive *on the
+login node* whether or not you're connected.
+
+```bash
+tmux new -s work     # start a named session "work"
+#   ... do things, launch an interactive job, watch output ...
+#   detach with:  Ctrl-b then d
+tmux ls              # list your sessions
+tmux attach -t work  # reattach later, even from a different computer
+```
+
+The workflow that saves people:
+
+1. SSH into the login node.
+2. `tmux new -s work`.
+3. Inside tmux, do your editing, submit jobs, launch an interactive session (@sec-interactive).
+4. Detach (<kbd>Ctrl-b</kbd> then <kbd>d</kbd>) and close your laptop. It all keeps running.
+5. Tomorrow, SSH back in and `tmux attach -t work` — exactly where you left off.
+
+::: {.callout-note}
+## tmux keeps *login-node* shells alive — batch jobs don't need it
+A submitted batch job (`sbatch`, @sec-anatomy) already runs independently of your
+connection — you can log out and it keeps going. `tmux` is for the things that live in *your
+shell*: interactive sessions, long-running monitoring, an editor you don't want to lose.
+:::
+
+## Permissions, briefly
+
+You'll occasionally see `chmod` and permission strings like `-rw-r-----`. The one you'll
+actually use is fixing your SSH keys (`chmod 0600 -R ~/.ssh`, from @sec-first-login) and
+occasionally making a script executable:
+
+```bash
+chmod +x run.sh
+```
+
+There is **no `sudo` on the cluster**, ever. You can't install system packages or change
+things outside your own directories — and you don't need to. Everything you install goes in
+your own space (@sec-conda) or as modules (@sec-modules).
+
+That's the survival kit. On to where your data actually lives.

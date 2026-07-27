@@ -1,0 +1,80 @@
+# How priority is actually computed here {#sec-priority}
+
+::: {.tldr}
+Your position in line is a weighted sum of factors. On MedicineBow the weights are **QOS ×
+200, fair-share × 100, job-size × 100, age × 10.** QOS dominates — it's weighted twice
+fair-share and twenty times age. Translation: **which QOS you pick matters more than anything
+else you do.** You cannot out-wait a better QOS by sitting in the queue.
+:::
+
+## The real formula (straight from the machine)
+
+Slurm computes a priority score for every pending job and runs the highest scores first
+(subject to backfill, below). The score is a weighted sum, and MedicineBow's actual weights
+are:
+
+```text
+PriorityWeightQOS       = 200     <- dominant
+PriorityWeightFairShare = 100
+PriorityWeightJobSize   = 100
+PriorityWeightAge       = 10
+PriorityWeightPartition = 0       (partition doesn't affect priority here)
+```
+
+Each factor is a number between 0 and 1, multiplied by its weight, and summed. So the biggest
+lever, by a wide margin, is **QOS**.
+
+## What each factor means for you
+
+**QOS (weight 200) — the big one.** Higher-priority QOS = dramatically better position. From
+@sec-partitions: `interactive` (90) > `fast` (80) > `normal` (70) > `long` (60). Choosing
+`fast` over `long` is worth more priority than any amount of waiting will earn you. This is
+*why* the short-vs-long decision in @sec-queue-times matters so much.
+
+**Fair-share (weight 100) — recent usage.** Slurm tracks how much your account has used
+lately, relative to its share. Burn a lot this week and your fair-share factor drops, lowering
+priority for a while; it recovers as usage decays (half-life ~7 days here). You can't game
+this — it's the mechanism that stops any one group from monopolizing the machine. It rewards
+*steady* use over *bursty* hogging.
+
+**Job size (weight 100).** A factor based on the resources requested. Combined with the
+`SMALL_RELATIVE_TO_TIME` flag this cluster sets, it interacts with your time request — another
+reason not to over-ask (@sec-resources).
+
+**Age (weight 10) — time spent waiting.** Your job slowly gains priority the longer it sits,
+maxing out after ~3 days. But at weight 10, age is a tie-breaker, **not** a strategy. You will
+not age your way past someone who chose a better QOS. Waiting is the weakest lever there is.
+
+## The one practical takeaway
+
+::: {.callout-important}
+## Pick the QOS, don't play the queue
+Because QOS is weighted 2× fair-share and 20× age, the highest-leverage thing you can do for
+start time is **choose the most appropriate high-priority QOS your job fits into** — the
+shortest walltime tier that still lets your job finish (@sec-queue-times). Everything else —
+waiting longer, resubmitting, submitting at 3am — is noise by comparison.
+:::
+
+## Backfill: why a small job can jump the line
+
+Priority decides the *order*, but Slurm also **backfills**: if the top job is waiting for,
+say, 40 nodes to free up, Slurm will slot in a smaller, shorter job that fits in the gap
+*right now* — as long as doing so won't delay that top job's reserved start time. This is why
+a tiny 20-minute test can start immediately even when the queue looks deep, and it's a big
+part of why short jobs feel so much snappier than long ones. Requesting **less time and fewer
+resources makes your job backfill-eligible in more gaps** — yet another payoff for
+right-sizing.
+
+## Seeing your own priority
+
+```bash
+sprio -j <jobid>            # the priority breakdown for a pending job
+sprio -l                    # all pending jobs, with factor columns
+showjobreasons <jobid>      # ARCC helper: plain-language "why am I waiting?"
+```
+
+If `sprio` shows your QOS factor is low because you're on `long`, and the job would actually
+finish in 10 hours, resubmitting under `fast` is the single most effective change you can make.
+
+With priority understood, let's watch jobs actually run — and diagnose them when they don't
+(@sec-monitoring).

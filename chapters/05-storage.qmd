@@ -1,0 +1,105 @@
+# Where your data lives (and why nothing is backed up) {#sec-storage}
+
+::: {.tldr}
+MedicineBow gives you three filesystems: **home** (50 GB, small and precious), **project**
+(5 TB, shared with your group, where real datasets and results live), and **scratch** (5 TB,
+fast, temporary, purged after 90 days of inactivity). **None of them is backed up.** Install
+software into `/project/<proj>/software`, not home — one conda env can fill your entire home
+directory.
+:::
+
+## The single most important sentence in this book
+
+> **Nothing on MedicineBow is backed up. Not home, not project, not scratch.**
+
+There *are* snapshots (point-in-time copies you can sometimes restore from), but snapshots
+live on the **same storage array** as your live data. If that array fails, the snapshots
+fail with it. Snapshots protect you from *"I accidentally deleted that file yesterday"* —
+they do **not** protect you from hardware loss. Anything you cannot afford to lose must have
+a copy somewhere else (your institution's storage, a cloud bucket, the separate **Alcova**
+service which *does* have real nightly backups, etc.).
+
+Internalize this before you generate a month of simulation output onto scratch and assume
+it's safe.
+
+## The three filesystems
+
+| Path | Quota | Snapshots | Backups | Purged |
+|---|---|---|---|---|
+| `/home/$USER` | **50 GB** | yes | **NO** | only when you leave UW |
+| `/project/<proj>` | **5 TB** | yes | **NO** | 6 months after project ends |
+| `/gscratch/$USER` (`$SCRATCH`) | **5 TB** | yes | **NO** | **after 90 days of inactivity** |
+| `/project/<proj>/software` | **+250 GB** on top of project | yes | **NO** | with the project |
+| `/lscratch` | node-local, varies | no | **NO** | **wiped at the end of every job** |
+
+Check where you stand at any time:
+
+```bash
+arccquota
+```
+
+which prints your usage and limits for home, scratch, and project side by side.
+
+### `/home` — small, personal, for config not data
+
+50 GB sounds like a lot until your first conda environment eats 15 GB of it. Home is for
+dotfiles, scripts, small configs — **not** datasets and **not** software installs. When home
+fills up, weird things break (jobs fail to write logs, logins misbehave), so keep an eye on
+it with `arccquota` and `du -sh ~/* | sort -h`.
+
+### `/project/<proj>` — the shared workhorse
+
+5 TB, shared by everyone on your project (e.g. `cowy-firesurro`). This is where shared
+datasets, inputs, and results belong. Because it's shared, agree on a directory convention
+with your group so you don't clobber each other. It persists for 6 months after the project
+formally ends — long enough to get your data out, not a permanent archive.
+
+### `/gscratch/$USER` — fast and disposable
+
+Also 5 TB, and this is the **fast** filesystem — use it as the working directory for running
+jobs that do heavy I/O. The catch is in the name: it's *scratch*. Files untouched for **90
+days** are purged automatically. Never keep the only copy of anything here.
+
+::: {.callout-note}
+## Is it 45 days or 90? It's 90.
+The legacy Confluence docs say scratch is purged after 45 days of inactivity. The current
+ARCC wiki says 90. Both pages are live on the web, which is confusing — but **90 is the
+current policy.** Either way: don't treat scratch as storage.
+:::
+
+### `/lscratch` — node-local, gone when the job ends
+
+Each compute node has its own local disk mounted at `/lscratch`. It's the fastest storage
+available to a job (no network in the way), which makes it ideal for scratch files a single
+job reads and rewrites constantly. But it is **wiped the instant your job ends**, so copy
+anything you want to keep back to `/project` or `/gscratch` *before* your job exits.
+
+(There is no `/data` filesystem, despite what some docs suggest — it doesn't exist on the
+machine.)
+
+## The #1 self-inflicted wound: installing software into home
+
+::: {.callout-important}
+## Install software into `/project/<proj>/software`, not `/home`
+Your project has an extra **250 GB** quota specifically at `/project/<proj>/software` for
+installing software — and ARCC wants you to use it. A single conda environment with a few
+scientific packages can be 10–20 GB. Put two of those in your 50 GB home directory and
+you're full, with mysterious failures everywhere.
+
+Point conda, pip, R libraries, and manual builds at project software space from the start.
+The conda chapter (@sec-conda) shows exactly how.
+:::
+
+## A sane layout to adopt on day one
+
+```text
+/home/<you>/                      # dotfiles, small scripts, SSH keys
+/project/cowy-firesurro/
+    software/                     # conda envs, container images, manual builds
+    data/                         # shared input datasets
+    <you>/                        # your working area within the project
+/gscratch/<you>/                  # active job working dirs, heavy I/O, big temp output
+```
+
+With storage sorted, the next question is how to get data *into* these filesystems — which
+is @sec-moving-data.

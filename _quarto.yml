@@ -1,0 +1,70 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Getting Started on ARCC MedicineBow"
+  subtitle: "A practical onboarding guide for ASCEND / ARID researchers"
+  author: "Rallypoint One"
+  date: last-modified
+  search: true
+  repo-url: https://github.com/RallypointOne/ARCC-how-to
+  repo-actions: [edit, issue]
+  sidebar:
+    style: docked
+    collapse-level: 1
+  page-footer:
+    left: "Built for ASCEND/ARID performers. Not an official ARCC document."
+    right: "Corrections → arcc-help@uwyo.edu"
+  chapters:
+    - index.qmd
+    - part: "Part I — Getting oriented"
+      chapters:
+        - chapters/01-what-is-a-cluster.qmd
+        - chapters/02-getting-an-account.qmd
+        - chapters/03-first-login.qmd
+    - part: "Part II — The Linux you actually need"
+      chapters:
+        - chapters/04-linux-survival.qmd
+    - part: "Part III — Where your data lives"
+      chapters:
+        - chapters/05-storage.qmd
+        - chapters/06-moving-data.qmd
+    - part: "Part IV — Software"
+      chapters:
+        - chapters/07-modules.qmd
+        - chapters/08-conda-containers.qmd
+    - part: "Part V — Slurm"
+      chapters:
+        - chapters/09-why-a-scheduler.qmd
+        - chapters/10-batch-job-anatomy.qmd
+        - chapters/11-asking-for-resources.qmd
+        - chapters/12-partitions-and-qos.qmd
+        - chapters/13-queue-times.qmd
+        - chapters/14-priority.qmd
+        - chapters/15-monitoring-jobs.qmd
+        - chapters/16-job-arrays.qmd
+        - chapters/17-interactive-and-gpu.qmd
+        - chapters/18-preemption-and-checkpointing.qmd
+        - chapters/19-when-jobs-fail.qmd
+    - part: "Part VI — Working well"
+      chapters:
+        - chapters/23-parallelism-ladder.qmd
+    - part: "Part VII — Reference"
+      chapters:
+        - chapters/20-cheat-sheet.qmd
+        - chapters/21-troubleshooting.qmd
+        - chapters/22-glossary.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    df-print: kable
+    callout-appearance: simple
+    link-external-newwindow: true

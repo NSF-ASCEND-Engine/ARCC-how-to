@@ -1,0 +1,93 @@
+# Conda and containers without wrecking your home directory {#sec-conda}
+
+::: {.tldr}
+Conda is supported, but its default is to dump gigabytes into your 50 GB home directory —
+which will fill it and break things. **Redirect conda's package cache and environments into
+`/project/<proj>/software` before you create anything.** For reproducible, portable software
+(especially things that are painful to build), use **Apptainer** containers instead.
+:::
+
+## Conda: great, but point it away from home first
+
+The `miniconda3` module gives you conda:
+
+```bash
+module load miniconda3/24.3.0
+```
+
+By default, conda writes environments and a package cache into `~/.conda` and
+`~/miniconda3` — i.e. straight into your **50 GB home quota**. A couple of scientific
+environments will fill it. Fix this **once, before creating any environments**, by telling
+conda to live in your project's 250 GB software space.
+
+Create `~/.condarc`:
+
+```yaml
+pkgs_dirs:
+  - /project/cowy-firesurro/software/<you>/conda/pkgs
+envs_dirs:
+  - /project/cowy-firesurro/software/<you>/conda/envs
+```
+
+Now new environments and the download cache land in project space:
+
+```bash
+conda create -n fire python=3.12 numpy xarray netcdf4
+conda activate fire
+```
+
+::: {.callout-important}
+## Do this before your first `conda create`
+If you create environments first and *then* set `.condarc`, the old ones are stranded in
+home and you'll wonder why home is still full. Set `.condarc` on day one. If you've already
+made the mess: `conda env list`, remove the home-based envs, and recreate them under project
+space.
+:::
+
+Other conda notes:
+
+- **No `mamba`** is installed anywhere on the cluster — use `conda` directly. (Recent conda
+  is much faster than it used to be, so this is less painful than it once was.)
+- Activate conda **inside your submit script**, not just interactively, so batch jobs get the
+  same environment (@sec-anatomy).
+- `conda clean -a` reclaims space from the package cache periodically.
+
+## Apptainer: containers for reproducibility and portability
+
+A **container** bundles an application with its entire operating-system environment into a
+single image file. On HPC the runtime is **Apptainer** (formerly Singularity) — it runs
+containers as *you*, with no root, which is why it's the HPC-safe alternative to Docker.
+
+```bash
+module load apptainer/1.4.1
+
+# Pull a Docker image and convert it to an Apptainer image (.sif):
+apptainer pull mytool.sif docker://ghcr.io/someorg/mytool:latest
+
+# Run something inside it:
+apptainer exec mytool.sif mytool --help
+
+# Bind your data into the container so it can see it:
+apptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc
+```
+
+Store `.sif` images in `/project/<proj>/software` — they can be large.
+
+### When to reach for a container vs. a module vs. conda
+
+| Situation | Best choice |
+|---|---|
+| The software is already an Lmod module | **module** (@sec-modules) — least effort |
+| Pure Python/R stack, you want to iterate | **conda** |
+| Complex native dependencies that fight the system | **Apptainer** |
+| You need bit-for-bit reproducibility across machines | **Apptainer** |
+| A published tool ships a Docker image | **Apptainer** (`apptainer pull docker://…`) |
+
+::: {.callout-note}
+## GPUs inside containers
+To use the node's GPUs from inside a container, add the `--nv` flag so Apptainer exposes the
+NVIDIA driver: `apptainer exec --nv mytool.sif ...`. Pair this with a GPU job (@sec-gpu).
+:::
+
+With software sorted, we reach the heart of the book: getting the scheduler to run your work
+(Part V, starting at @sec-why-scheduler).

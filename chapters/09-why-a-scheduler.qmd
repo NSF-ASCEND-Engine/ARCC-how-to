@@ -1,0 +1,71 @@
+# Why a scheduler exists {#sec-why-scheduler}
+
+::: {.tldr}
+Hundreds of people share the same few hundred nodes. A scheduler — **Slurm** — is the
+referee: you describe a job (how many cores, how much memory, how long, which kind of node),
+Slurm puts it in line, and runs it when the resources you asked for are free. You interact
+with the cluster almost entirely through Slurm.
+:::
+
+## The tragedy of the commons, made concrete
+
+Imagine 300 researchers and 300 nodes, and no referee. Everyone logs into whatever node
+looks idle and starts running. Two people land on the same node and thrash its memory until
+both jobs crash. Someone starts a two-week run on the node you need for a five-minute test.
+Nobody can tell whether a node is free or about to be. It's chaos, and nothing finishes.
+
+Slurm replaces "grab a node and hope" with a simple contract:
+
+1. You **describe** the work: resources and a time limit.
+2. Slurm **reserves** exactly that, on nodes that can provide it, and **accounts** for it.
+3. Your job runs with those resources guaranteed and isolated from everyone else's.
+4. When your time limit is up, the job ends — which is what keeps the line moving.
+
+Everything in the rest of this book is really about writing that description well.
+
+## The two ways to run work
+
+**Batch jobs** (`sbatch`) are the normal mode: you write a script that says what resources
+you need and what commands to run, submit it, and walk away. Slurm runs it whenever your turn
+comes — maybe now, maybe in an hour — and writes the output to a file. This is how you should
+run essentially all real computation. (@sec-anatomy)
+
+**Interactive jobs** (`salloc`) give you a live shell *on a compute node* for when you need
+to poke at things by hand — debugging, exploring data, developing a script. You're still
+going through the scheduler and still consuming your allocation, but you get a prompt instead
+of a script. (@sec-interactive)
+
+Both run on **compute nodes**. Neither runs on the login node — that's the whole point
+(@sec-cluster).
+
+## The three questions every job answers
+
+Whether batch or interactive, you're always telling Slurm three things:
+
+| Question | Directive | Covered in |
+|---|---|---|
+| **Who pays?** (which project) | `--account` | @sec-anatomy |
+| **How much, and how long?** | `--cpus-per-task`, `--mem`, `--time`, … | @sec-resources |
+| **What kind of node, and how urgent?** | `--partition`, `--qos` | @sec-partitions |
+
+Get those right and the cluster is smooth. Get them wrong and you either wait forever, get
+rejected at submit time, or watch your job die halfway through. The next chapters take them
+one at a time.
+
+## A first look at the tools
+
+You'll meet all of these properly later, but here's the vocabulary:
+
+```bash
+sbatch submit.sh        # submit a batch job
+salloc ...              # get an interactive session
+squeue --me             # what are my jobs doing?
+scancel <jobid>         # cancel a job
+sacct -j <jobid>        # after the fact: what happened, and how much did it use?
+```
+
+ARCC also ships its own friendlier wrappers — `showjobreasons` ("why isn't my job
+running?"), `showuserlimits` ("what am I even allowed to ask for?"), `showpartitions`,
+`sqos` — which we lean on in @sec-partitions and @sec-monitoring.
+
+Let's write an actual job.

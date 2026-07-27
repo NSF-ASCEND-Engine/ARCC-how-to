@@ -1,0 +1,112 @@
+# Asking for resources (and why over-asking punishes you) {#sec-resources}
+
+::: {.tldr}
+Ask for what your job actually needs — cores, memory, time — and no more. Every extra core,
+gigabyte, or hour makes your job **harder to schedule**, so it waits longer, and it burns more
+of your allocation. Over-asking hurts *you* first. Two rules: **always set `--mem`
+explicitly**, and **measure real usage with `seff` after your first run**, then right-size.
+:::
+
+## Cores, tasks, and the words Slurm uses
+
+Slurm's vocabulary is a little fussy, but for most jobs you only need two ideas:
+
+- A **task** is one instance of your program. Most jobs are a single task.
+- **CPUs per task** is how many cores that program can use (its threads).
+
+```bash
+#SBATCH --nodes=1                # keep a job on one node unless it's true MPI
+#SBATCH --ntasks=1               # one program instance
+#SBATCH --cpus-per-task=8        # that can use 8 cores
+```
+
+- **Single-threaded program?** `--ntasks=1 --cpus-per-task=1`.
+- **Multithreaded (OpenMP, most numpy/xarray work)?** `--ntasks=1 --cpus-per-task=N`, and
+  set `export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK`.
+- **MPI across many nodes?** Use `--nodes` and `--ntasks`, and launch with `srun` (@sec-ladder).
+
+Asking for 8 cores does **not** make a single-threaded program faster — it just reserves 7
+idle cores and makes you wait longer. Match the request to what your code can actually use.
+
+## Memory — the directive people forget, then regret
+
+Set memory explicitly, every time. Two ways:
+
+```bash
+#SBATCH --mem=32G              # total memory for the whole job (simplest)
+# or
+#SBATCH --mem-per-cpu=4G       # memory per core (scales with --cpus-per-task)
+```
+
+::: {.callout-warning}
+## Remember the 10 GB/core default on `mb`
+If you omit `--mem` on the default partition, you get **10 GB per core**, so
+`--cpus-per-task=8` silently becomes a 80 GB request. That queues slower and can be rejected
+outright if it exceeds a limit. Name your memory. (Full story in @sec-anatomy.)
+:::
+
+How much do you actually need? For a first run, estimate high-ish so it doesn't get killed,
+then **measure and right-size** (below). A job that exceeds its memory request is killed by
+the out-of-memory (OOM) killer (@sec-fail) — so memory is the one resource where running out
+is fatal rather than merely slow.
+
+## Time — long enough to finish, short enough to start
+
+```bash
+#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)
+```
+
+Your job is **killed the instant it hits this limit**, so the request must exceed the real
+runtime — pad by, say, 25%. But don't pad wildly: a shorter time limit means a **lower QOS
+ceiling and better odds of backfilling into gaps**, so it often *starts sooner*
+(@sec-queue-times). There's a real tension here, and picking the time limit thoughtfully is
+one of the highest-leverage things you do.
+
+::: {.callout-note}
+## There is no per-partition default time — so set `--time`
+Partitions on MedicineBow don't set a default wall time. If you don't specify `--time`, you
+inherit the partition maximum (7 days), which your QOS will then likely reject (the `normal`
+QOS caps at 3 days). Always set `--time` yourself so the job's request is coherent.
+:::
+
+## Over-asking punishes you first
+
+It's worth making this concrete, because it's counterintuitive to newcomers:
+
+- **More cores / memory** → fewer nodes can satisfy you → **longer wait**, and you're
+  charged for cores you didn't use.
+- **More time** → lower-priority QOS tier and fewer backfill opportunities → **longer wait**.
+- **A GPU you don't use** → you sit in the (busy) GPU queue for nothing (@sec-queue-times).
+
+The scheduler isn't punishing you on purpose; a bigger, longer request is simply a rarer set
+of free resources to find. The lesson: **right-size**.
+
+## Measure, then right-size, with `seff`
+
+After a job finishes, `seff` tells you what it actually used versus what you reserved:
+
+```bash
+seff 123456
+```
+
+```text
+Job ID: 123456
+State: COMPLETED
+Cores: 8
+CPU Efficiency: 24.13% of 04:16:00 core-walltime      <- you used ~2 of 8 cores
+Memory Utilized: 5.31 GB
+Memory Efficiency: 16.59% of 32.00 GB                 <- 32G reserved, 5G used
+```
+
+Read that as: *next time ask for ~2 cores and ~8 GB.* Low CPU efficiency means you reserved
+cores your code can't use; low memory efficiency means you can ask for far less and start
+sooner. One measured run is worth a dozen guesses.
+
+Check what you're even *allowed* to ask for with ARCC's helper:
+
+```bash
+showuserlimits
+```
+
+Now that you can size a job, the next decision is *where* to send it — partitions and QOS,
+and the queue-time consequences of each (@sec-partitions, @sec-queue-times).

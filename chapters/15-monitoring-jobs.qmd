@@ -1,0 +1,99 @@
+# Watching a job {#sec-monitoring}
+
+::: {.tldr}
+`squeue --me` shows what's pending/running now. `showjobreasons <jobid>` explains *why*
+something is still waiting in plain English. After a job ends, `sacct` and `seff` tell you
+what it did and whether you sized it right. ARCC ships extra helpers (`showjob`, `shownode`,
+`showuserjobs`) that answer common questions in one word.
+:::
+
+## While it's queued or running
+
+```bash
+squeue --me                       # all my jobs, with state and reason
+squeue --me -t PENDING            # just the ones still waiting
+squeue -j 123456                  # one specific job
+```
+
+The **state** column: `PD` pending, `R` running, `CG` completing. For pending jobs, the
+**reason** in parentheses is the important part:
+
+| Reason | Meaning | What to do |
+|---|---|---|
+| `Priority` | busy machine, you're in line | wait — or pick a better QOS (@sec-priority) |
+| `Resources` | your request is large; waiting for it to free | consider right-sizing (@sec-resources) |
+| `QOSMaxWallDurationPerJobLimit` | `--time` exceeds the QOS ceiling | lower `--time` or change QOS |
+| `AssocGrpCpuLimit` | your account's core cap is maxed | wait for your other jobs to finish |
+| `ReqNodeNotAvail` | requested node is down/reserved | drop over-specific constraints |
+| `Dependency` | waiting on another job | expected, if you set `--dependency` |
+
+ARCC's helper turns this into a sentence:
+
+```bash
+showjobreasons 123456       # "why isn't this running?" in plain language
+```
+
+Follow a running job's output live:
+
+```bash
+tail -f slurm-123456.out
+```
+
+## After it finishes: did it work, and was it sized right?
+
+```bash
+sacct -j 123456 --format=JobID,State,Elapsed,MaxRSS,ReqMem,TotalCPU,ExitCode
+```
+
+Key columns: **State** (`COMPLETED`, `FAILED`, `TIMEOUT`, `OUT_OF_MEMORY`, `CANCELLED`),
+**Elapsed** (wall time used vs. your `--time`), **MaxRSS** (peak memory actually used vs.
+your `--mem`), and **ExitCode**.
+
+`seff` is the friendlier summary and the one to build a habit around:
+
+```bash
+seff 123456
+```
+
+It prints CPU efficiency and memory efficiency as percentages. **Low numbers mean you
+over-asked** — reclaim the difference next time and start sooner (@sec-resources).
+
+## ARCC's own helpers
+
+These live on your `PATH` by default and each answers a question that would otherwise take
+several `squeue`/`scontrol` incantations:
+
+```bash
+showuserjobs                # everything you (and optionally others) have queued/running
+showjob 123456              # a rich, readable view of one job
+shownode mbcpu-001          # what's running on a given node, and how loaded it is
+showuserlimits              # what am I actually allowed to request?
+showq / joblist             # cluster-wide queue overviews
+pestat                      # per-node CPU/memory load across the cluster
+```
+
+::: {.callout-note}
+## `arccq` does not exist
+Some docs mention an `arccq` command as an alternative to `squeue`. It isn't installed on
+MedicineBow — use `squeue`, `showuserjobs`, or `joblist` instead.
+:::
+
+## Cancelling
+
+```bash
+scancel 123456              # cancel one job
+scancel --me                # cancel ALL my jobs (careful)
+scancel --me --state=PENDING   # cancel only my still-waiting jobs
+scancel 123456_7            # cancel one element of a job array (@sec-arrays)
+```
+
+## A tiny monitoring routine
+
+For a job you care about, this is enough:
+
+1. `sbatch submit.sh` → note the job ID.
+2. `squeue --me` → is it `PD` or `R`? If `PD` for a while, `showjobreasons <id>`.
+3. Running → `tail -f slurm-<id>.out`.
+4. Done → `seff <id>` to right-size the next one.
+
+Next: the one Slurm feature that changes how you work — job arrays.

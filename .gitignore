@@ -1,0 +1,4 @@
+/_book/
+/.quarto/
+*.rmarkdown
+.DS_Store

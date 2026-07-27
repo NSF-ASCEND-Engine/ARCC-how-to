@@ -1,0 +1,101 @@
+# The parallelism ladder {#sec-ladder}
+
+::: {.tldr}
+There's a ladder of ways to make work go faster, and you should climb it only as far as your
+problem needs: **serial → job array → multicore → MPI → GPU**. Each rung is more powerful and
+more complex. Most "make it faster" problems are solved one or two rungs up — usually by a job
+array — not at the top.
+:::
+
+## Climb only as high as you need
+
+Newcomers often reach straight for MPI or GPUs because they sound like "real HPC." Usually the
+right answer is much lower on the ladder and far simpler. Match the rung to the *shape* of your
+problem.
+
+### Rung 1 — Serial
+
+One core, one task. Perfectly fine for small jobs, and the right baseline: get it correct on
+one core first. If a serial job is fast enough, you're done — don't parallelize for sport.
+
+```bash
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+```
+
+### Rung 2 — Job array (many independent serial runs)
+
+If you need to run the *same* thing many times over different inputs — a parameter sweep, an
+ensemble, per-file processing — this is almost always the answer. It's the biggest bang for the
+least complexity, and it backfills beautifully (@sec-arrays).
+
+```bash
+#SBATCH --array=1-500%20
+python run.py --id ${SLURM_ARRAY_TASK_ID}
+```
+
+**Reach here first** whenever the phrase "I need to run it N times" applies.
+
+### Rung 3 — Multicore (one program, many threads, one node)
+
+If a *single* run is too slow and your code is multithreaded (OpenMP, or numpy/xarray/PyTorch
+using many cores), give it more cores on one node:
+
+```bash
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=16
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+./my_threaded_program
+```
+
+Only ask for as many cores as your code actually scales to — check with `seff` afterward
+(@sec-resources). Doubling cores rarely doubles speed.
+
+### Rung 4 — MPI (one program across many nodes)
+
+When a single problem is too big for one node — a domain-decomposed simulation like WRF, where
+pieces must exchange data every step — you need **MPI**. This is genuine distributed computing:
+one program, many processes across many nodes, communicating.
+
+```bash
+#SBATCH --nodes=4
+#SBATCH --ntasks=384                 # e.g. 96 tasks/node × 4 nodes
+#SBATCH --cpus-per-task=1
+
+module purge
+module load gcc/14.2.0 openmpi/5.0.10
+srun ./my_mpi_simulation             # srun launches the MPI ranks
+```
+
+Use `srun` (not `mpirun`) to launch — it's integrated with Slurm and gets the task layout
+right automatically. MPI is powerful but a real step up in complexity; only climb here when a
+problem genuinely won't fit on one node. For long MPI runs, prefer `non-investor` and
+checkpoint (@sec-preemption).
+
+### Rung 5 — GPU
+
+For workloads built for GPUs — deep learning, PINNs, some CFD/linear algebra — a GPU can beat
+dozens of CPU cores. But only if your code actually targets the GPU (@sec-gpu); a CPU program
+gains nothing from a GPU node except a longer queue. Develop on `mb-a30`, scale up to
+`mb-h100` for real training (@sec-queue-times).
+
+```bash
+#SBATCH --partition=mb-a30
+#SBATCH --gres=gpu:1
+module load gcc/13.2.0 cuda-toolkit/12.6.1
+python train.py
+```
+
+## Choosing a rung
+
+| Your situation | Rung |
+|---|---|
+| It's already fast enough | Serial |
+| "Run this many times over different inputs" | **Job array** (start here) |
+| One run is slow; code uses threads | Multicore |
+| One problem too big for a single node; parts must communicate | MPI |
+| Code is written for GPUs (ML/PINN) | GPU |
+
+You can combine rungs — e.g. an **array of multicore jobs** (a sweep where each run uses 8
+cores), which covers a huge fraction of real research computing. Start as low as you can; climb
+only when the machine tells you you need to.
