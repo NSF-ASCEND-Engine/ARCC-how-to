@@ -411,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="the-problem-it-solves" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="the-problem-it-solves"><span class="header-section-number">16.1</span> The problem it solves</h2>
-<p>You have 500 fire-weather scenarios to run, or 500 input tiles to process. The wrong way is a bash loop that runs them one after another in a single job (serial, slow, and one crash near the end wastes everything). The other wrong way is copy-pasting 500 submit scripts. The right way is <strong>one array job</strong>: one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.</p>
+<p>You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. The wrong way is a bash loop that runs them one after another in a single job (serial, slow, and one crash near the end wastes everything). The other wrong way is copy-pasting 500 submit scripts. The right way is <strong>one array job</strong>: one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.</p>
 </section>
 <section id="the-mechanics" class="level2" data-number="16.2">
 <h2 data-number="16.2" class="anchored" data-anchor-id="the-mechanics"><span class="header-section-number">16.2</span> The mechanics</h2>
@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the task index to select this task's work:</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_scenario.py <span class="at">--scenario-id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_case.py <span class="at">--case-id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Submit once:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> logs</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit_array.sh        <span class="co"># creates 500 tasks: 12345_1, 12345_2, ... 12345_500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -476,7 +476,7 @@ Arrays vs.&nbsp;one big MPI job
 <p>An array is for <strong>independent</strong> tasks that don’t talk to each other (embarrassingly parallel): sweeps, ensembles, per-file pipelines. If your tasks must communicate — a single domain-decomposed simulation — that’s an <strong>MPI</strong> job instead (<a href="23-parallelism-ladder.html" class="quarto-xref"><span>Chapter 20</span></a>), a different tool for a different shape of problem.</p>
 </div>
 </div>
-<p>Arrays are also the natural unit for <strong>ensembles</strong> in fire/atmospheric work: one array task per ensemble member, each writing to its own output, collected afterward. Reach for them early — most “I need to run this many times” problems are secretly array jobs.</p>
+<p>Arrays are also the natural unit for <strong>ensembles</strong> — fire-weather members, hydrologic scenarios, Monte-Carlo draws — one array task per member, each writing to its own output, collected afterward. Reach for them early — most “I need to run this many times” problems are secretly array jobs.</p>
 <p>Next: interactive sessions and GPUs.</p>
 
 

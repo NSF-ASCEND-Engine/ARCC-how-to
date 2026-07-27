@@ -545,10 +545,10 @@ The 10 GB-per-core memory trap
 <h2 data-number="10.5" class="anchored" data-anchor-id="making-the-environment-reproducible"><span class="header-section-number">10.5</span> Making the environment reproducible</h2>
 <p>A batch job starts in a clean-ish environment. Build the environment you need <em>inside the script</em> so it runs the same way every time and doesn’t depend on what you happened to have loaded when you hit submit:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore firestack        <span class="co"># a saved module set (see @sec-modules)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore geostack        <span class="co"># a saved module set (see @sec-modules)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or, for conda:</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniconda3/24.3.0</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate fire</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate geo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="useful-variables-inside-a-job" class="level2" data-number="10.6">
 <h2 data-number="10.6" class="anchored" data-anchor-id="useful-variables-inside-a-job"><span class="header-section-number">10.6</span> Useful variables inside a job</h2>
