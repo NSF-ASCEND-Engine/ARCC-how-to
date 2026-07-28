@@ -303,21 +303,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>consider right-sizing (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>)</td>
 </tr>
 <tr class="odd">
-<td><code>QOSMaxWallDurationPerJobLimit</code></td>
-<td><code>--time</code> exceeds the QOS ceiling</td>
-<td>lower <code>--time</code> or change QOS</td>
-</tr>
-<tr class="even">
 <td><code>AssocGrpCpuLimit</code></td>
 <td>your account’s core cap is maxed</td>
 <td>wait for your other jobs to finish</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>ReqNodeNotAvail</code></td>
 <td>requested node is down/reserved</td>
 <td>drop over-specific constraints</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>Dependency</code></td>
 <td>waiting on another job</td>
 <td>expected, if you set <code>--dependency</code></td>
@@ -373,7 +368,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">showjob</span> 123456              <span class="co"># a rich, readable view of one job</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">shownode</span> mbcpu-001          <span class="co"># what's running on a given node, and how loaded it is</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>              <span class="co"># what am I actually allowed to request?</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">showq</span> / joblist             <span class="co"># cluster-wide queue overviews</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">joblist</span>                     <span class="co"># cluster-wide queue overview</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pestat</span>                      <span class="co"># per-node CPU/memory load across the cluster</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -392,8 +387,8 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <section id="cancelling" class="level3" data-number="7.1.4">
 <h3 data-number="7.1.4" class="anchored" data-anchor-id="cancelling"><span class="header-section-number">7.1.4</span> Cancelling</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> 123456              <span class="co"># cancel one job</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="at">--me</span>                <span class="co"># cancel ALL my jobs (careful)</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="at">--me</span> <span class="at">--state</span><span class="op">=</span>PENDING   <span class="co"># cancel only my still-waiting jobs</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="at">-u</span> <span class="va">$USER</span>            <span class="co"># cancel ALL my jobs (careful)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="at">-u</span> <span class="va">$USER</span> <span class="at">--state</span><span class="op">=</span>PENDING   <span class="co"># cancel only my still-waiting jobs</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> 123456_7            <span class="co"># cancel one element of a job array (@sec-arrays)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="a-monitoring-routine" class="level3" data-number="7.1.5">
@@ -453,6 +448,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <p>Cap how many tasks run simultaneously with <code>%</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20        # at most 20 tasks running at a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This keeps you under your account’s core cap (and protects your <span class="gloss" data-def="A priority factor: heavy recent usage by your account temporarily lowers your priority." aria-label="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span>, <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
+<p>The largest index Slurm allows is <strong>10,000</strong> (<code>MaxArraySize</code>); split bigger sweeps into several arrays.</p>
 </section>
 <section id="managing-an-array" class="level3" data-number="7.2.5">
 <h3 data-number="7.2.5" class="anchored" data-anchor-id="managing-an-array"><span class="header-section-number">7.2.5</span> Managing an array</h3>

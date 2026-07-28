@@ -288,16 +288,15 @@ Use <code>module spider</code>, not <code>module avail</code>, to check whether 
 </div>
 <p>A typical geospatial stack, in order:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># 1. a compiler, first</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gdal/3.13.0       <span class="co"># 2. now GDAL is reachable</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load netcdf-c/4.9.2-ompi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 openmpi/5.0.5   <span class="co"># 1. compiler + MPI first</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gdal/3.7.3 netcdf-c/4.9.2-ompi   <span class="co"># 2. now these are reachable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="whats-installed-a-tour" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="whats-installed-a-tour"><span class="header-section-number">4.1.3</span> What’s installed (a tour)</h3>
 <p>Ask the machine for the current list with <code>module spider</code>, but roughly:</p>
 <ul>
 <li><strong>Compilers (core):</strong> <code>gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>, <code>openmpi/5.0.10</code>.</li>
-<li><strong>After loading a compiler:</strong> <code>python/{3.10.6, 3.12.0, 3.14.4}</code>, <code>r/{4.4.0, 4.5.3}</code>, <code>gdal/{3.7.3, 3.13.0}</code>, <code>netcdf-c/4.9.2-ompi</code>, <code>hdf5/1.14.3*</code>, <code>cuda-toolkit/{12.4.1, 12.6.1}</code>, <code>openmpi/4.1.6</code>, <code>rclone/1.63.1</code>.</li>
+<li><strong>After loading a compiler:</strong> <code>python/{3.10.6, 3.12.0, 3.14.4}</code>, <code>r/{4.4.0, 4.5.3}</code>, <code>gdal/{3.7.3, 3.13.0}</code>, <code>netcdf-c/4.9.2-ompi</code> (also needs an <code>openmpi</code> module), <code>hdf5/1.14.3*</code>, <code>cuda-toolkit/{11.7.1, 12.4.1, 12.6.1, 12.8.0}</code>, <code>openmpi/4.1.6</code>, <code>rclone/1.63.1</code>.</li>
 <li><strong>Standalone:</strong> <code>apptainer/{1.3.5, 1.4.1}</code>, <code>singularity/4.1.0</code>, <code>miniconda3/24.3.0</code>, <code>julia/{1.10.3, 1.11.6}</code>.</li>
 </ul>
 <div class="callout callout-style-simple callout-warning callout-titled">
@@ -310,10 +309,10 @@ CUDA needs the deprecated gcc/13.2.0
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>gcc/13.2.0</code> prints a deprecation warning pointing to <code>gcc/14.2.0</code>, but <code>cuda-toolkit</code> is <strong>only built against <code>gcc/13.2.0</code></strong>. GPU users have to load it anyway:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0        <span class="co"># the one that warns you — CUDA needs it</span></span>
+<p><code>gcc/13.2.0</code> prints a deprecation warning pointing to <code>gcc/14.2.0</code>, but <strong>CUDA 12.4.1 and 12.6.1 are built only against <code>gcc/13.2.0</code></strong> — for those versions you must load the deprecated compiler:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0        <span class="co"># the one that warns you — CUDA 12.4/12.6 need it</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda-toolkit/12.6.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ignore the warning here; it’s a packaging quirk.</p>
+<p>Ignore the warning here; it’s a packaging quirk. (The newest, <code>cuda-toolkit/12.8.0</code>, <em>is</em> built against <code>gcc/14.2.0</code>, so if you can use 12.8.0 you avoid the deprecated compiler.)</p>
 </div>
 </div>
 </section>
@@ -321,7 +320,7 @@ CUDA needs the deprecated gcc/13.2.0
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="making-a-set-of-modules-load-automatically"><span class="header-section-number">4.1.4</span> Making a set of modules load automatically</h3>
 <p>Once you know the stack a project needs, save it as a named collection so you don’t retype it:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 openmpi/5.0.5 gdal/3.7.3 netcdf-c/4.9.2-ompi</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save geostack          <span class="co"># remember this set as "geostack"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># next session:</span></span>
@@ -340,7 +339,7 @@ Load modules in your submit script, not just interactively
 <p>Modules loaded on the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> don’t carry into a <span class="gloss" data-def="A job submitted as a script with sbatch that runs unattended when scheduled." aria-label="A job submitted as a script with sbatch that runs unattended when scheduled.">batch job</span>. Put the <code>module load</code> / <code>module restore</code> lines <strong>inside</strong> your <code>sbatch</code> script so the job builds the same environment every time (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
 </div>
 </div>
-<p>When a package isn’t available as a module — or you need a pip/conda world — see the next chapter (<a href="#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</p>
+<p>When a package isn’t available as a module — or you need a pip/conda world — see the next section (<a href="#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</p>
 </section>
 </section>
 <section id="sec-conda" class="level2" data-number="4.2">

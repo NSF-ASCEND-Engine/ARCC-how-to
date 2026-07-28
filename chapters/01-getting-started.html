@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="login-nodes-vs.-compute-nodes"><span class="header-section-number">1.1.2</span> Login nodes vs.&nbsp;compute nodes</h3>
 <p>There are two kinds of machines, and confusing them is the most common beginner mistake.</p>
 <p><strong><span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">Login nodes</span></strong> (<code>mblog1</code>, <code>mblog2</code>) are the front door. When you <code>ssh</code> in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.</p>
-<p><strong><span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">Compute nodes</span></strong> are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default <code>mb</code> nodes have <strong>96 CPU cores and ~1 TB of RAM each</strong>, and the GPU nodes carry up to <strong>8 NVIDIA H100s</strong>.</p>
+<p><strong><span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">Compute nodes</span></strong> are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, dedicated access for a bounded time. The default <code>mb</code> nodes have <strong>96 CPU cores and ~1 TB of RAM each</strong>, and the GPU nodes carry up to <strong>8 NVIDIA H100s</strong>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-nodes" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -297,6 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     FS[("Shared filesystems&lt;br/&gt;home, project, scratch")]
     L --- FS
     C1 --- FS
+    C2 --- FS
     C3 --- FS
     style MB fill:#f3eefb,stroke:#7a4fb5,color:#3a2a5a
 </pre>
@@ -343,7 +344,7 @@ Don’t compute on login nodes
 <li><strong>Absorbed older clusters</strong>: the retired <em>Teton</em>, <em>Beartooth</em>, and <em>WildIris</em> clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.</li>
 <li><strong><span class="gloss" data-def="A research group, department, or PI that bought cluster nodes with their own funds. They get top priority on those inv-* partitions; jobs others backfill there can be preempted." aria-label="A research group, department, or PI that bought cluster nodes with their own funds. They get top priority on those inv-* partitions; jobs others backfill there can be preempted.">Investor</span> (“condo”) nodes</strong>: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see <a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</li>
 </ul>
-<p>The partition chapter (<a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>) covers which hardware to ask for, and the queue-times chapter (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>) covers which choices leave you waiting versus running now.</p>
+<p><a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a> covers which hardware to ask for, and <a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a> covers which choices leave you waiting versus running now.</p>
 </section>
 <section id="where-to-get-help" class="level3" data-number="1.1.5">
 <h3 data-number="1.1.5" class="anchored" data-anchor-id="where-to-get-help"><span class="header-section-number">1.1.5</span> Where to get help</h3>
@@ -495,7 +496,7 @@ Don’t use “Southpass”
 <li>Unpack it into your local <code>~/.ssh</code> and fix permissions:</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> ~/Downloads/<span class="op">&lt;</span>username<span class="op">&gt;</span>.zip <span class="at">-d</span> ~/.ssh</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 <span class="at">-R</span> ~/.ssh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 700 ~/.ssh <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> 600 ~/.ssh/<span class="pp">*</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now you can connect from your own terminal:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -521,7 +522,7 @@ SSH keys expire after one year
     User &lt;username&gt;
     ServerAliveInterval 60
     ServerAliveCountMax 5</code></pre>
-<p><code>ServerAliveInterval</code> sends a small keepalive every 60 seconds so campus/VPN firewalls don’t silently drop your connection while you’re reading output.</p>
+<p><code>ServerAliveInterval</code> sends a small keepalive every 60 seconds so campus or home firewalls don’t silently drop your connection while you’re reading output.</p>
 </section>
 <section id="which-door-should-i-use" class="level3" data-number="1.3.5">
 <h3 data-number="1.3.5" class="anchored" data-anchor-id="which-door-should-i-use"><span class="header-section-number">1.3.5</span> Which door should I use?</h3>

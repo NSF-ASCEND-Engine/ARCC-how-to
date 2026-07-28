@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> cowy-firesurro <span class="at">--qos</span><span class="op">=</span>interactive <span class="at">-t</span> 2:00:00 <span class="at">-c</span> 4 <span class="at">--mem</span><span class="op">=</span>16G   <span class="co"># interactive</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                <span class="co"># my jobs</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>        <span class="co"># why is it waiting? (plain English)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>               <span class="co"># cancel (scancel --me = all mine)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>               <span class="co"># cancel one job (scancel -u $USER = all mine)</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>                  <span class="co"># after the fact: was it sized right?</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>id<span class="op">&gt;</span> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
@@ -400,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p><strong><span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceilings &amp; <span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span>:</strong> <code>interactive</code> 8h/p90 · <code>fast</code> 12h/p80 · <code>normal</code> 3d/p70 · <code>long</code> 7d/p60 · <code>debug</code> 1h/p0. <strong>Priority is dominated by QOS</strong> (weight 200 vs age 10) — pick the shortest tier your job fits.</p>
+<p><strong><span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceilings &amp; <span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span>:</strong> <code>interactive</code> 8h, priority 90 · <code>fast</code> 12h, priority 80 · <code>normal</code> 3d, priority 70 · <code>long</code> 7d, priority 60 · <code>debug</code> 1h, priority 0. <strong>Priority is dominated by QOS</strong> (weight 200 vs age 10) — pick the shortest tier your job fits. (<code>debug</code> still starts fast because its 4 nodes are dedicated and usually idle, not because of priority.)</p>
 </section>
 <section id="gpus" class="level3" data-number="9.1.7">
 <h3 data-number="9.1.7" class="anchored" data-anchor-id="gpus"><span class="header-section-number">9.1.7</span> GPUs</h3>
@@ -442,9 +442,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A symptom-first index to the rest of the book.</p>
 <section id="login-and-access" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="login-and-access"><span class="header-section-number">9.2.1</span> Login and access</h3>
-<p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 0600 -R ~/.ssh</code> (<a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</p>
-<p><strong>“Permission denied” on a brand-new setup.</strong> Check permissions: <code>chmod 0600 -R ~/.ssh</code>, and make sure you unzipped the key into <code>~/.ssh</code>. Confirm you’re using <code>medicinebow.arcc.uwyo.edu</code>, not the dead <code>southpass</code> name.</p>
-<p><strong>I can’t get an account at all.</strong> Only a <strong>PI</strong> can request it, in writing, against a project. You cannot self-register (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>).</p>
+<p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code> (<a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</p>
+<p><strong>“Permission denied” on a brand-new setup.</strong> Check permissions: <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code>, and make sure you unzipped the key into <code>~/.ssh</code>. Confirm you’re using <code>medicinebow.arcc.uwyo.edu</code>, not the dead <code>southpass</code> name.</p>
+<p><strong>I can’t get an account at all.</strong> Account requests for ASCEND/ARID performers are coordinated through the program — email Virginia Iglesias (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>). See <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>.</p>
 <p><strong>Globus won’t let me add the collection.</strong> If you’re an external collaborator on an <strong>ARCC-Only account</strong>, you can’t use Globus. You need a UW-side guest collection (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>).</p>
 </section>
 <section id="jobs-wont-submit" class="level3" data-number="9.2.2">
@@ -527,6 +527,10 @@ A QOS flag meaning an over-limit request is <strong>rejected at submit time</str
 <dt><strong>Fair-share</strong></dt>
 <dd>
 A priority factor reflecting your account’s recent usage relative to its share; heavy recent use temporarily lowers your priority. See <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>.
+</dd>
+<dt><strong>Globus</strong></dt>
+<dd>
+A managed file-transfer service that moves data between “collections” (endpoints), with restart and checksums. Requires a full UW account — ARCC-Only accounts can’t use it. See <a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>.
 </dd>
 <dt><strong>GRES (Generic RESource)</strong></dt>
 <dd>

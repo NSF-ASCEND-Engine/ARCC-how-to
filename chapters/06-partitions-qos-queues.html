@@ -409,7 +409,7 @@ Avoiding preemption: use <code>non-investor</code>, not <code>--constraint</code
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code>--constraint=non-investor</code> matches nothing on the current machine and does nothing. Use a <strong>partition</strong> instead: <code>--partition=non-investor</code> (110 CPU nodes) or <code>--partition=non-investor-gpu</code> (7 GPU nodes) stays on hardware that won’t be reclaimed. This is the right home for long, un-checkpointed runs.</p>
+<p><code>--constraint=non-investor</code> matches nothing on the current machine and does nothing. Use a <strong>partition</strong> instead: <code>--partition=non-investor</code> (110 nodes) or <code>--partition=non-investor-gpu</code> (7 GPU nodes; you must also request a GPU with <code>--gres=gpu:N</code> there) stays on hardware that won’t be reclaimed. This is the right home for long, un-checkpointed runs.</p>
 </div>
 </div>
 <p>You can list several partitions and let <span class="gloss" data-def="The scheduler that manages all jobs on the cluster." aria-label="The scheduler that manages all jobs on the cluster.">Slurm</span> use whichever frees up first; <code>--partition=mb,teton,beartooth</code> is common for CPU throughput work.</p>
@@ -506,7 +506,7 @@ The walltime trade-off
 </section>
 <section id="denyonlimit-rejected-at-submit" class="level3" data-number="6.1.3">
 <h3 data-number="6.1.3" class="anchored" data-anchor-id="denyonlimit-rejected-at-submit"><span class="header-section-number">6.1.3</span> <code>DenyOnLimit</code>: rejected at submit</h3>
-<p>Every <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.</p>
+<p>Every user-facing <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.</p>
 </section>
 <section id="putting-both-knobs-in-a-script" class="level3" data-number="6.1.4">
 <h3 data-number="6.1.4" class="anchored" data-anchor-id="putting-both-knobs-in-a-script"><span class="header-section-number">6.1.4</span> Putting both knobs in a script</h3>

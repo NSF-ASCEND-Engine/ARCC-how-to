@@ -269,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-why-scheduler"><span class="header-section-number">5.1</span> Why a scheduler exists</h2>
 <section id="why-share-a-machine" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="why-share-a-machine"><span class="header-section-number">5.1.1</span> Why share a machine</h3>
-<p>With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
+<p>Imagine a few hundred researchers sharing a few hundred nodes with no scheduler: everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
 <p><span class="gloss" data-def="The scheduler that manages all jobs on the cluster." aria-label="The scheduler that manages all jobs on the cluster.">Slurm</span> replaces “grab a node and hope” with a contract:</p>
 <ol type="1">
 <li>You <strong>describe</strong> the work: resources and a time limit.</li>
@@ -499,7 +499,7 @@ The 10 GB-per-core default on <code>mb</code>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8        # that can use 8 cores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li><strong>Single-threaded program?</strong> <code>--ntasks=1 --cpus-per-task=1</code>.</li>
-<li><strong>Multithreaded (OpenMP, most numpy/xarray work)?</strong> <code>--ntasks=1 --cpus-per-task=N</code>, and set <code>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK</code>.</li>
+<li><strong>Multithreaded (OpenMP; NumPy/SciPy linear algebra via multithreaded BLAS; Dask/xarray)?</strong> <code>--ntasks=1 --cpus-per-task=N</code>, and set <code>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK</code>.</li>
 <li><strong><span class="gloss" data-def="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun." aria-label="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span> across many nodes?</strong> Use <code>--nodes</code> and <code>--ntasks</code>, and launch with <code>srun</code> (<a href="07-working-with-jobs.html#sec-ladder" class="quarto-xref"><span>Section 7.4</span></a>).</li>
 </ul>
 <p>Asking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores and makes you wait longer. Match the request to what your code can use.</p>
@@ -520,7 +520,7 @@ The 10 GB/core default on <code>mb</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you omit <code>--mem</code> on the default partition, you get 10 GB per core, so <code>--cpus-per-task=8</code> becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set your memory explicitly. (Full story in <a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>.)</p>
+<p>If you omit <code>--mem</code> on the default partition, you get 10 GB per core, so <code>--cpus-per-task=8</code> becomes an 80 GB request. That queues slower, and at high core counts the inflated request can hit your <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> CPU cap and be rejected at submit. Set your memory explicitly. (Full story in <a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>.)</p>
 </div>
 </div>
 <p>For a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (<span class="gloss" data-def="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem." aria-label="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem.">OOM</span>) killer (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>), so memory is the one resource where running out is fatal rather than slow.</p>
@@ -528,7 +528,7 @@ The 10 GB/core default on <code>mb</code>
 <section id="time" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="time"><span class="header-section-number">5.3.3</span> Time</h3>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
+<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower QOS ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
