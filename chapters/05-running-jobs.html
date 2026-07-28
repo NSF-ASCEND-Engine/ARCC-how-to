@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Running jobs with Slurm – Getting Started on ARCC MedicineBow</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/06-partitions-qos-queues.html" rel="next">
+<link href="../chapters/04-software.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-running-jobs.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Getting Started on ARCC MedicineBow</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/RallypointOne/ARCC-how-to" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-linux-essentials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-running-jobs.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-partitions-qos-queues.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Partitions, QOS, and queue times</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-working-with-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Monitoring, arrays, and interactive jobs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-preemption-and-failures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-why-scheduler" id="toc-sec-why-scheduler" class="nav-link active" data-scroll-target="#sec-why-scheduler"><span class="header-section-number">5.1</span> Why a scheduler exists</a>
+  <ul class="collapse">
+  <li><a href="#why-share-a-machine" id="toc-why-share-a-machine" class="nav-link" data-scroll-target="#why-share-a-machine"><span class="header-section-number">5.1.1</span> Why share a machine</a></li>
+  <li><a href="#the-two-ways-to-run-work" id="toc-the-two-ways-to-run-work" class="nav-link" data-scroll-target="#the-two-ways-to-run-work"><span class="header-section-number">5.1.2</span> The two ways to run work</a></li>
+  <li><a href="#the-three-questions-every-job-answers" id="toc-the-three-questions-every-job-answers" class="nav-link" data-scroll-target="#the-three-questions-every-job-answers"><span class="header-section-number">5.1.3</span> The three questions every job answers</a></li>
+  <li><a href="#a-first-look-at-the-tools" id="toc-a-first-look-at-the-tools" class="nav-link" data-scroll-target="#a-first-look-at-the-tools"><span class="header-section-number">5.1.4</span> A first look at the tools</a></li>
+  </ul></li>
+  <li><a href="#sec-anatomy" id="toc-sec-anatomy" class="nav-link" data-scroll-target="#sec-anatomy"><span class="header-section-number">5.2</span> Anatomy of a batch job</a>
+  <ul class="collapse">
+  <li><a href="#the-smallest-useful-job" id="toc-the-smallest-useful-job" class="nav-link" data-scroll-target="#the-smallest-useful-job"><span class="header-section-number">5.2.1</span> The smallest useful job</a></li>
+  <li><a href="#the-required-directive---account" id="toc-the-required-directive---account" class="nav-link" data-scroll-target="#the-required-directive---account"><span class="header-section-number">5.2.2</span> The required directive: <code>--account</code></a></li>
+  <li><a href="#anatomy-directive-by-directive" id="toc-anatomy-directive-by-directive" class="nav-link" data-scroll-target="#anatomy-directive-by-directive"><span class="header-section-number">5.2.3</span> Anatomy, directive by directive</a></li>
+  <li><a href="#set-memory-explicitly" id="toc-set-memory-explicitly" class="nav-link" data-scroll-target="#set-memory-explicitly"><span class="header-section-number">5.2.4</span> Set memory explicitly</a></li>
+  <li><a href="#making-the-environment-reproducible" id="toc-making-the-environment-reproducible" class="nav-link" data-scroll-target="#making-the-environment-reproducible"><span class="header-section-number">5.2.5</span> Making the environment reproducible</a></li>
+  <li><a href="#useful-variables-inside-a-job" id="toc-useful-variables-inside-a-job" class="nav-link" data-scroll-target="#useful-variables-inside-a-job"><span class="header-section-number">5.2.6</span> Useful variables inside a job</a></li>
+  </ul></li>
+  <li><a href="#sec-resources" id="toc-sec-resources" class="nav-link" data-scroll-target="#sec-resources"><span class="header-section-number">5.3</span> Asking for resources</a>
+  <ul class="collapse">
+  <li><a href="#cores-tasks-and-the-words-slurm-uses" id="toc-cores-tasks-and-the-words-slurm-uses" class="nav-link" data-scroll-target="#cores-tasks-and-the-words-slurm-uses"><span class="header-section-number">5.3.1</span> Cores, tasks, and the words Slurm uses</a></li>
+  <li><a href="#memory" id="toc-memory" class="nav-link" data-scroll-target="#memory"><span class="header-section-number">5.3.2</span> Memory</a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time"><span class="header-section-number">5.3.3</span> Time</a></li>
+  <li><a href="#over-asking-slows-you-down" id="toc-over-asking-slows-you-down" class="nav-link" data-scroll-target="#over-asking-slows-you-down"><span class="header-section-number">5.3.4</span> Over-asking slows you down</a></li>
+  <li><a href="#measure-then-right-size-with-seff" id="toc-measure-then-right-size-with-seff" class="nav-link" data-scroll-target="#measure-then-right-size-with-seff"><span class="header-section-number">5.3.5</span> Measure, then right-size, with <code>seff</code></a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/05-running-jobs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The scheduler, the anatomy of a batch job, and how to ask for the right resources.</p>
+<section id="sec-why-scheduler" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-why-scheduler"><span class="header-section-number">5.1</span> Why a scheduler exists</h2>
+<div class="tldr">
+<p>Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job (cores, memory, time, node type), it puts the job in line and runs it when those resources are free. You interact with the cluster almost entirely through Slurm.</p>
+</div>
+<section id="why-share-a-machine" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="why-share-a-machine"><span class="header-section-number">5.1.1</span> Why share a machine</h3>
+<p>With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
+<p>Slurm replaces “grab a node and hope” with a contract:</p>
+<ol type="1">
+<li>You <strong>describe</strong> the work: resources and a time limit.</li>
+<li>Slurm <strong>reserves</strong> exactly that, on nodes that can provide it, and <strong>accounts</strong> for it.</li>
+<li>Your job runs with those resources guaranteed and isolated from other jobs.</li>
+<li>When your time limit is up, the job ends, which keeps the line moving.</li>
+</ol>
+</section>
+<section id="the-two-ways-to-run-work" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="the-two-ways-to-run-work"><span class="header-section-number">5.1.2</span> The two ways to run work</h3>
+<p><strong>Batch jobs</strong> (<code>sbatch</code>) are the normal mode: you write a script that lists the resources you need and the commands to run, submit it, and walk away. Slurm runs it when your turn comes and writes the output to a file. Use this for essentially all real computation. (<a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>)</p>
+<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a compute node</em> for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (<a href="07-working-with-jobs.html#sec-interactive" class="quarto-xref"><span>Section 7.3</span></a>)</p>
+<p>Both run on <strong>compute nodes</strong>, not the login node (<a href="01-getting-started.html#sec-cluster" class="quarto-xref"><span>Section 1.1</span></a>).</p>
+</section>
+<section id="the-three-questions-every-job-answers" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="the-three-questions-every-job-answers"><span class="header-section-number">5.1.3</span> The three questions every job answers</h3>
+<p>Whether batch or interactive, you tell Slurm three things:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Directive</th>
+<th>Covered in</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Who pays?</strong> (which project)</td>
+<td><code>--account</code></td>
+<td><a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a></td>
+</tr>
+<tr class="even">
+<td><strong>How much, and how long?</strong></td>
+<td><code>--cpus-per-task</code>, <code>--mem</code>, <code>--time</code>, …</td>
+<td><a href="#sec-resources" class="quarto-xref"><span>Section 5.3</span></a></td>
+</tr>
+<tr class="odd">
+<td><strong>What kind of node, and how urgent?</strong></td>
+<td><code>--partition</code>, <code>--qos</code></td>
+<td><a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>Get these right and jobs run smoothly. Get them wrong and you wait a long time, get rejected at submit time, or watch the job die partway through. The sections that follow take them one at a time.</p>
+</section>
+<section id="a-first-look-at-the-tools" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="a-first-look-at-the-tools"><span class="header-section-number">5.1.4</span> A first look at the tools</h3>
+<p>You’ll meet these properly later; here’s the vocabulary:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh        <span class="co"># submit a batch job</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> ...              <span class="co"># get an interactive session</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>             <span class="co"># what are my jobs doing?</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>         <span class="co"># cancel a job</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>        <span class="co"># after the fact: what happened, and how much did it use?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ARCC also ships friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — used in <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a> and <a href="07-working-with-jobs.html#sec-monitoring" class="quarto-xref"><span>Section 7.1</span></a>.</p>
+</section>
+</section>
+<section id="sec-anatomy" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-anatomy"><span class="header-section-number">5.2</span> Anatomy of a batch job</h2>
+<div class="tldr">
+<p>A batch job is a shell script with <code>#SBATCH</code> directives at the top. The required directive is <code>--account=&lt;project&gt;</code> — your project name, not your username. Submit with <code>sbatch</code>; Slurm writes output to <code>slurm-&lt;jobid&gt;.out</code>.</p>
+</div>
+<section id="the-smallest-useful-job" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-smallest-useful-job"><span class="header-section-number">5.2.1</span> The smallest useful job</h3>
+<p>Here is a complete, working submit script. Save it as <code>submit.sh</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro     # WHO PAYS — the one you can't omit</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=hello</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:10:00              # 10 minutes; jobs are killed at the limit</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=1</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=4G                     # always set memory explicitly (see below)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=slurm-%j.out        # %j is replaced by the job ID</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Running on host: </span><span class="va">$(</span><span class="fu">hostname</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Job </span><span class="va">$SLURM_JOB_ID</span><span class="st"> started at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_analysis.py</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Finished at </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Submit it:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Submitted batch job 123456</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Watch it and read the output:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                 <span class="co"># is it pending / running?</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> slurm-123456.out    <span class="co"># follow output as it's written</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That’s the loop: write script, <code>sbatch</code>, watch, read output.</p>
+</section>
+<section id="the-required-directive---account" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="the-required-directive---account"><span class="header-section-number">5.2.2</span> The required directive: <code>--account</code></h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>--account</code> is your <em>project</em>, not your username
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every job on MedicineBow must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) and put it in every script, or set it once as a default:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add to ~/.bashrc so you never forget it</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SBATCH_ACCOUNT</span><span class="op">=</span>cowy-firesurro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Even so, keep <code>--account</code> in the script itself. It documents intent and survives being run by a collaborator whose default differs.</p>
+</div>
+</div>
+</section>
+<section id="anatomy-directive-by-directive" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="anatomy-directive-by-directive"><span class="header-section-number">5.2.3</span> Anatomy, directive by directive</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Directive</th>
+<th>What it does</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--account</code></td>
+<td>which project pays</td>
+<td><strong>required</strong></td>
+</tr>
+<tr class="even">
+<td><code>--job-name</code></td>
+<td>label in the queue</td>
+<td>makes <code>squeue</code> readable</td>
+</tr>
+<tr class="odd">
+<td><code>--time</code></td>
+<td>wall-clock limit</td>
+<td>job is <strong>killed</strong> at this limit — pad it a bit</td>
+</tr>
+<tr class="even">
+<td><code>--partition</code></td>
+<td>which hardware pool</td>
+<td>default is <code>mb</code>; see <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a></td>
+</tr>
+<tr class="odd">
+<td><code>--qos</code></td>
+<td>urgency/limits tier</td>
+<td>default is <code>normal</code>; see <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a></td>
+</tr>
+<tr class="even">
+<td><code>--cpus-per-task</code></td>
+<td>CPU cores</td>
+<td>see <a href="#sec-resources" class="quarto-xref"><span>Section 5.3</span></a></td>
+</tr>
+<tr class="odd">
+<td><code>--mem</code></td>
+<td>memory for the job</td>
+<td><strong>always set this</strong> — see below</td>
+</tr>
+<tr class="even">
+<td><code>--output</code></td>
+<td>where stdout/stderr go</td>
+<td><code>%j</code> = job ID, <code>%x</code> = job name</td>
+</tr>
+<tr class="odd">
+<td><code>--mail-type</code>, <code>--mail-user</code></td>
+<td>email on events</td>
+<td><code>END,FAIL</code> is a sane choice</td>
+</tr>
+</tbody>
+</table>
+<p><code>#SBATCH</code> lines must come before any real commands; the first non-comment, non-<code>#SBATCH</code> line ends the directive block. After that, it’s a bash script that runs on the compute node.</p>
+</section>
+<section id="set-memory-explicitly" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="set-memory-explicitly"><span class="header-section-number">5.2.4</span> Set memory explicitly</h3>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The 10 GB-per-core default on <code>mb</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On the default <code>mb</code> partition, if you don’t set <code>--mem</code>, Slurm gives you 10 GB per CPU core (<code>DefMemPerCPU=10000</code>). So this request:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8       # and no --mem line</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>asks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the job queues longer. Set <code>--mem</code> (whole-job) or <code>--mem-per-cpu</code> explicitly. Covered in depth in <a href="#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>.</p>
+</div>
+</div>
+</section>
+<section id="making-the-environment-reproducible" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="making-the-environment-reproducible"><span class="header-section-number">5.2.5</span> Making the environment reproducible</h3>
+<p>A batch job starts in a mostly clean environment. Build the environment you need <em>inside the script</em> so it runs the same way every time, independent of what you had loaded at submit time:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore geostack        <span class="co"># a saved module set (see @sec-modules)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or, for conda:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniconda3/24.3.0</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate geo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="useful-variables-inside-a-job" class="level3" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="useful-variables-inside-a-job"><span class="header-section-number">5.2.6</span> Useful variables inside a job</h3>
+<p>Slurm sets environment variables your script can use:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_JOB_ID</span>          <span class="co"># the job's ID</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_CPUS_PER_TASK</span>   <span class="co"># cores you were given — pass to your program's thread count</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_ARRAY_TASK_ID</span>   <span class="co"># which array element this is (see @sec-arrays)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">$SLURM_SUBMIT_DIR</span>      <span class="co"># the directory you ran sbatch from</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A common pattern matches your program’s threads to what Slurm gave you:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMP_NUM_THREADS</span><span class="op">=</span><span class="va">$SLURM_CPUS_PER_TASK</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The next section covers asking for the right resources (<a href="#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>); choosing the right queue comes after (<a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>).</p>
+</section>
+</section>
+<section id="sec-resources" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-resources"><span class="header-section-number">5.3</span> Asking for resources</h2>
+<div class="tldr">
+<p>Ask for what your job needs — cores, memory, time — and no more. Every extra core, gigabyte, or hour makes the job harder to schedule, so it waits longer and burns more of your allocation. Always set <code>--mem</code> explicitly, and measure real usage with <code>seff</code> after your first run, then right-size.</p>
+</div>
+<section id="cores-tasks-and-the-words-slurm-uses" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="cores-tasks-and-the-words-slurm-uses"><span class="header-section-number">5.3.1</span> Cores, tasks, and the words Slurm uses</h3>
+<p>For most jobs you need two ideas:</p>
+<ul>
+<li>A <strong>task</strong> is one instance of your program. Most jobs are a single task.</li>
+<li><strong>CPUs per task</strong> is how many cores that program can use (its threads).</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1                # keep a job on one node unless it's true MPI</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks=1               # one program instance</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8        # that can use 8 cores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><strong>Single-threaded program?</strong> <code>--ntasks=1 --cpus-per-task=1</code>.</li>
+<li><strong>Multithreaded (OpenMP, most numpy/xarray work)?</strong> <code>--ntasks=1 --cpus-per-task=N</code>, and set <code>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK</code>.</li>
+<li><strong>MPI across many nodes?</strong> Use <code>--nodes</code> and <code>--ntasks</code>, and launch with <code>srun</code> (<a href="07-working-with-jobs.html#sec-ladder" class="quarto-xref"><span>Section 7.4</span></a>).</li>
+</ul>
+<p>Asking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores and makes you wait longer. Match the request to what your code can use.</p>
+</section>
+<section id="memory" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="memory"><span class="header-section-number">5.3.2</span> Memory</h3>
+<p>Set memory explicitly, every time. Two ways:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G              # total memory for the whole job (simplest)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem-per-cpu=4G       # memory per core (scales with --cpus-per-task)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The 10 GB/core default on <code>mb</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you omit <code>--mem</code> on the default partition, you get 10 GB per core, so <code>--cpus-per-task=8</code> becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set your memory explicitly. (Full story in <a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>.)</p>
+</div>
+</div>
+<p>For a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>), so memory is the one resource where running out is fatal rather than slow.</p>
+</section>
+<section id="time" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="time"><span class="header-section-number">5.3.3</span> Time</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower QOS ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+No per-partition default time, so set <code>--time</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Partitions on MedicineBow don’t set a default wall time. Without <code>--time</code>, you inherit the partition maximum (7 days), which your QOS will likely reject (the <code>normal</code> QOS caps at 3 days). Always set <code>--time</code> yourself.</p>
+</div>
+</div>
+</section>
+<section id="over-asking-slows-you-down" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="over-asking-slows-you-down"><span class="header-section-number">5.3.4</span> Over-asking slows you down</h3>
+<p>A bigger request is a rarer set of free resources to find:</p>
+<ul>
+<li><strong>More cores / memory</strong> → fewer nodes can satisfy you → longer wait, and you’re charged for cores you didn’t use.</li>
+<li><strong>More time</strong> → lower-priority QOS tier and fewer backfill opportunities → longer wait.</li>
+<li><strong>A GPU you don’t use</strong> → you sit in the busy GPU queue for nothing (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</li>
+</ul>
+<p>The fix is to right-size.</p>
+</section>
+<section id="measure-then-right-size-with-seff" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="measure-then-right-size-with-seff"><span class="header-section-number">5.3.5</span> Measure, then right-size, with <code>seff</code></h3>
+<p>After a job finishes, <code>seff</code> tells you what it actually used versus what you reserved:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> 123456</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre class="text"><code>Job ID: 123456
+State: COMPLETED
+Cores: 8
+CPU Efficiency: 24.13% of 04:16:00 core-walltime      &lt;- you used ~2 of 8 cores
+Memory Utilized: 5.31 GB
+Memory Efficiency: 16.59% of 32.00 GB                 &lt;- 32G reserved, 5G used</code></pre>
+<p>Read that as: <em>next time ask for ~2 cores and ~8 GB.</em> Low CPU efficiency means you reserved cores your code can’t use; low memory efficiency means you can ask for far less and start sooner.</p>
+<p>Check what you’re allowed to ask for with ARCC’s helper:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next: where to send the job — partitions and QOS, and their queue-time consequences (<a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>, <a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-software.html" class="pagination-link" aria-label="Software: modules, conda, and containers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/06-partitions-qos-queues.html" class="pagination-link" aria-label="Partitions, QOS, and queue times">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Partitions, QOS, and queue times</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/05-running-jobs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Corrections → arcc-help@uwyo.edu</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

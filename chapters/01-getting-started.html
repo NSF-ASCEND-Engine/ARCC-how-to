@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; What a cluster is – Getting Started on ARCC MedicineBow</title>
+<title>1&nbsp; Getting started on the cluster – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/02-getting-an-account.html" rel="next">
+<link href="../chapters/02-linux-essentials.html" rel="next">
 <link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -85,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-what-is-a-cluster.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-getting-started.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -121,140 +156,56 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is</span></span></a>
+  <a href="../chapters/01-getting-started.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account</span></span></a>
+  <a href="../chapters/02-linux-essentials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
+  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
+  <a href="../chapters/04-software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives</span></span></a>
+  <a href="../chapters/05-running-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
+  <a href="../chapters/06-partitions-qos-queues.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Partitions, QOS, and queue times</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules</span></span></a>
+  <a href="../chapters/07-working-with-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Monitoring, arrays, and interactive jobs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers</span></span></a>
+  <a href="../chapters/08-preemption-and-failures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is computed</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
   </div>
 </li>
     </ul>
@@ -267,20 +218,39 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#mental-model" id="toc-mental-model" class="nav-link active" data-scroll-target="#mental-model"><span class="header-section-number">1.1</span> Mental model</a></li>
-  <li><a href="#login-nodes-vs.-compute-nodes" id="toc-login-nodes-vs.-compute-nodes" class="nav-link" data-scroll-target="#login-nodes-vs.-compute-nodes"><span class="header-section-number">1.2</span> Login nodes vs.&nbsp;compute nodes</a></li>
-  <li><a href="#why-share-a-machine-at-all" id="toc-why-share-a-machine-at-all" class="nav-link" data-scroll-target="#why-share-a-machine-at-all"><span class="header-section-number">1.3</span> Why share a machine at all?</a></li>
-  <li><a href="#what-medicinebow-is-concretely" id="toc-what-medicinebow-is-concretely" class="nav-link" data-scroll-target="#what-medicinebow-is-concretely"><span class="header-section-number">1.4</span> What MedicineBow is, concretely</a></li>
-  <li><a href="#where-to-get-help" id="toc-where-to-get-help" class="nav-link" data-scroll-target="#where-to-get-help"><span class="header-section-number">1.5</span> Where to get help</a></li>
+  <li><a href="#sec-cluster" id="toc-sec-cluster" class="nav-link active" data-scroll-target="#sec-cluster"><span class="header-section-number">1.1</span> What a cluster is</a>
+  <ul class="collapse">
+  <li><a href="#mental-model" id="toc-mental-model" class="nav-link" data-scroll-target="#mental-model"><span class="header-section-number">1.1.1</span> Mental model</a></li>
+  <li><a href="#login-nodes-vs.-compute-nodes" id="toc-login-nodes-vs.-compute-nodes" class="nav-link" data-scroll-target="#login-nodes-vs.-compute-nodes"><span class="header-section-number">1.1.2</span> Login nodes vs.&nbsp;compute nodes</a></li>
+  <li><a href="#why-share-a-machine-at-all" id="toc-why-share-a-machine-at-all" class="nav-link" data-scroll-target="#why-share-a-machine-at-all"><span class="header-section-number">1.1.3</span> Why share a machine at all?</a></li>
+  <li><a href="#what-medicinebow-is-concretely" id="toc-what-medicinebow-is-concretely" class="nav-link" data-scroll-target="#what-medicinebow-is-concretely"><span class="header-section-number">1.1.4</span> What MedicineBow is, concretely</a></li>
+  <li><a href="#where-to-get-help" id="toc-where-to-get-help" class="nav-link" data-scroll-target="#where-to-get-help"><span class="header-section-number">1.1.5</span> Where to get help</a></li>
+  </ul></li>
+  <li><a href="#sec-account" id="toc-sec-account" class="nav-link" data-scroll-target="#sec-account"><span class="header-section-number">1.2</span> Getting an account</a>
+  <ul class="collapse">
+  <li><a href="#how-accounts-work" id="toc-how-accounts-work" class="nav-link" data-scroll-target="#how-accounts-work"><span class="header-section-number">1.2.1</span> How accounts work</a></li>
+  <li><a href="#who-can-be-a-pi" id="toc-who-can-be-a-pi" class="nav-link" data-scroll-target="#who-can-be-a-pi"><span class="header-section-number">1.2.2</span> Who can be a PI</a></li>
+  <li><a href="#uw-accounts-vs.-arcc-only-accounts" id="toc-uw-accounts-vs.-arcc-only-accounts" class="nav-link" data-scroll-target="#uw-accounts-vs.-arcc-only-accounts"><span class="header-section-number">1.2.3</span> UW accounts vs.&nbsp;ARCC-Only accounts</a></li>
+  <li><a href="#the-free-tier" id="toc-the-free-tier" class="nav-link" data-scroll-target="#the-free-tier"><span class="header-section-number">1.2.4</span> The free tier</a></li>
+  <li><a href="#the-practical-checklist" id="toc-the-practical-checklist" class="nav-link" data-scroll-target="#the-practical-checklist"><span class="header-section-number">1.2.5</span> The practical checklist</a></li>
+  </ul></li>
+  <li><a href="#sec-first-login" id="toc-sec-first-login" class="nav-link" data-scroll-target="#sec-first-login"><span class="header-section-number">1.3</span> First login, the portal, and SSH keys</a>
+  <ul class="collapse">
+  <li><a href="#two-ways-in-portal-and-ssh" id="toc-two-ways-in-portal-and-ssh" class="nav-link" data-scroll-target="#two-ways-in-portal-and-ssh"><span class="header-section-number">1.3.1</span> Two ways in: portal and SSH</a></li>
+  <li><a href="#step-1-log-into-the-portal" id="toc-step-1-log-into-the-portal" class="nav-link" data-scroll-target="#step-1-log-into-the-portal"><span class="header-section-number">1.3.2</span> Step 1 — Log into the portal</a></li>
+  <li><a href="#step-2-generate-your-ssh-key-with-the-ssh-key-manager" id="toc-step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="nav-link" data-scroll-target="#step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">1.3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</a></li>
+  <li><a href="#step-3-a-comfortable-ssh-config-optional" id="toc-step-3-a-comfortable-ssh-config-optional" class="nav-link" data-scroll-target="#step-3-a-comfortable-ssh-config-optional"><span class="header-section-number">1.3.4</span> Step 3 — A comfortable SSH config (optional)</a></li>
+  <li><a href="#which-door-should-i-use" id="toc-which-door-should-i-use" class="nav-link" data-scroll-target="#which-door-should-i-use"><span class="header-section-number">1.3.5</span> Which door should I use?</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/01-what-is-a-cluster.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/01-getting-started.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cluster" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is</span></span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></h1>
 </div>
 
 
@@ -297,15 +267,18 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Getting from zero to a shell prompt: what the machine is, how to get an account, and how to log in.</p>
+<section id="sec-cluster" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-cluster"><span class="header-section-number">1.1</span> What a cluster is</h2>
 <div class="tldr">
 <p>A cluster is a few hundred computers that share storage and a waitlist. You don’t touch them directly — you log into a small <em>login node</em>, describe the work, and a scheduler runs it on a <em>compute node</em> when resources free up. Log in on the login node; do the computing on compute nodes.</p>
 </div>
-<section id="mental-model" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="mental-model"><span class="header-section-number">1.1</span> Mental model</h2>
+<section id="mental-model" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="mental-model"><span class="header-section-number">1.1.1</span> Mental model</h3>
 <p>MedicineBow is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the <strong>scheduler</strong> (here, <a href="https://slurm.schedmd.com/">Slurm</a>). Learning the cluster is mostly learning to work <em>with</em> the scheduler.</p>
 </section>
-<section id="login-nodes-vs.-compute-nodes" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="login-nodes-vs.-compute-nodes"><span class="header-section-number">1.2</span> Login nodes vs.&nbsp;compute nodes</h2>
+<section id="login-nodes-vs.-compute-nodes" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="login-nodes-vs.-compute-nodes"><span class="header-section-number">1.1.2</span> Login nodes vs.&nbsp;compute nodes</h3>
 <p>There are two kinds of machines, and confusing them is the most common beginner mistake.</p>
 <p><strong>Login nodes</strong> (<code>mblog1</code>, <code>mblog2</code>) are the front door. When you <code>ssh</code> in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.</p>
 <p><strong>Compute nodes</strong> are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default <code>mb</code> nodes have <strong>96 CPU cores and ~1 TB of RAM each</strong>, and the GPU nodes carry up to <strong>8 NVIDIA H100s</strong>.</p>
@@ -350,12 +323,12 @@ Don’t compute on login nodes
 </div>
 <div class="callout-body-container callout-body">
 <p>A heavy job on <code>mblog1</code>/<code>mblog2</code> — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills runaway login-node processes (and emails you).</p>
-<p>Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See <a href="09-why-a-scheduler.html" class="quarto-xref"><span>Chapter 9</span></a>.</p>
+<p>Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See <a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>.</p>
 </div>
 </div>
 </section>
-<section id="why-share-a-machine-at-all" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="why-share-a-machine-at-all"><span class="header-section-number">1.3</span> Why share a machine at all?</h2>
+<section id="why-share-a-machine-at-all" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="why-share-a-machine-at-all"><span class="header-section-number">1.1.3</span> Why share a machine at all?</h3>
 <p>If everyone had their own dedicated server, most servers would sit idle while a few people occasionally needed far more than one server could give. Pooling the hardware and scheduling access means:</p>
 <ul>
 <li>When you need 50 nodes for an ensemble, you can have them (briefly).</li>
@@ -364,19 +337,19 @@ Don’t compute on login nodes
 </ul>
 <p>In exchange, you sometimes <strong>wait in line</strong> and you have to <strong>describe your work up front</strong> (how many cores, how much memory, how long). Most of this book is about making those two things painless.</p>
 </section>
-<section id="what-medicinebow-is-concretely" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="what-medicinebow-is-concretely"><span class="header-section-number">1.4</span> What MedicineBow is, concretely</h2>
+<section id="what-medicinebow-is-concretely" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="what-medicinebow-is-concretely"><span class="header-section-number">1.1.4</span> What MedicineBow is, concretely</h3>
 <p>MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:</p>
 <ul>
 <li><strong>General CPU nodes</strong> (the <code>mb</code> partition): 25 nodes, 96 cores and ~1 TB RAM each.</li>
 <li><strong>GPU nodes</strong>: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything CUDA.</li>
 <li><strong>Absorbed older clusters</strong>: the retired <em>Teton</em>, <em>Beartooth</em>, and <em>WildIris</em> clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.</li>
-<li><strong>Investor (“condo”) nodes</strong>: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see <a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>).</li>
+<li><strong>Investor (“condo”) nodes</strong>: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see <a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</li>
 </ul>
-<p>The partition chapter (<a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a>) covers which hardware to ask for, and the queue-times chapter (<a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>) covers which choices leave you waiting versus running now.</p>
+<p>The partition chapter (<a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>) covers which hardware to ask for, and the queue-times chapter (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>) covers which choices leave you waiting versus running now.</p>
 </section>
-<section id="where-to-get-help" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="where-to-get-help"><span class="header-section-number">1.5</span> Where to get help</h2>
+<section id="where-to-get-help" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="where-to-get-help"><span class="header-section-number">1.1.5</span> Where to get help</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -399,8 +372,216 @@ Don’t compute on login nodes
 </tr>
 </tbody>
 </table>
+</section>
+</section>
+<section id="sec-account" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-account"><span class="header-section-number">1.2</span> Getting an account</h2>
+<div class="tldr">
+<p>You cannot request your own ARCC account. A <strong>PI</strong> (UW faculty or research scientist) must request it against a specific <strong>project</strong>, in writing. No project means no account. Non-UW collaborators get restricted “ARCC-Only” accounts with real limitations. Sort this out first — it commonly blocks new performers for weeks.</p>
+</div>
+<section id="how-accounts-work" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="how-accounts-work"><span class="header-section-number">1.2.1</span> How accounts work</h3>
+<p>ARCC will not create an account without written confirmation from a Principal Investigator who owns a project. Accounts are tied to funded projects for accounting and fair-share purposes.</p>
+<p>So the first step is a conversation, not a form:</p>
+<blockquote class="blockquote">
+<p>“Which project am I being added to, and can the PI email ARCC to add me?”</p>
+</blockquote>
+<p>For ASCEND/ARID performers the project is something like <code>cowy-firesurro</code> (the project this guide was written under). Confirm the exact project name with your PI — you type it into <strong>every job</strong> you run (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
+</section>
+<section id="who-can-be-a-pi" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="who-can-be-a-pi"><span class="header-section-number">1.2.2</span> Who can be a PI</h3>
+<ul>
+<li>UW <strong>faculty</strong> (extended-term / tenure-track) or a <strong>Research Scientist</strong>.</li>
+<li><strong>Not</strong> adjunct, <strong>not</strong> emeritus, <strong>not</strong> a postdoc or student.</li>
+</ul>
+<p>If your advisor doesn’t qualify, someone who does must sponsor the project. This matters for a multi-institution engine like ASCEND, where the leader of your sub-project might not be UW faculty.</p>
+</section>
+<section id="uw-accounts-vs.-arcc-only-accounts" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="uw-accounts-vs.-arcc-only-accounts"><span class="header-section-number">1.2.3</span> UW accounts vs.&nbsp;ARCC-Only accounts</h3>
+<p>ASCEND spans UW, CSU, CU Boulder, Mines, NCAR, and NEON, so this distinction affects collaborators:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Full UW account</th>
+<th>ARCC-Only account</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Who</td>
+<td>UW-affiliated people</td>
+<td>External collaborators without a UW identity</td>
+</tr>
+<tr class="even">
+<td>HPC (MedicineBow)</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr class="odd">
+<td>GitLab</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr class="even">
+<td><strong>Globus data transfer</strong></td>
+<td>✅</td>
+<td>❌ <strong>cannot use Globus</strong></td>
+</tr>
+<tr class="odd">
+<td>Other UW services</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ARCC-Only accounts and Globus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>External collaborators on ARCC-Only accounts <strong>cannot use Globus</strong>, the recommended way to move large datasets (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>). They’ll need a <em>guest collection</em> set up for them, or a UW person to broker transfers. Plan for this early if your data lives at CSU or NCAR.</p>
+</div>
+</div>
+</section>
+<section id="the-free-tier" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="the-free-tier"><span class="header-section-number">1.2.4</span> The free tier</h3>
+<p>Each researcher’s baseline allocation:</p>
+<ul>
+<li><strong>100,000 CPU core-hours per year</strong></li>
+<li><strong>20,000 GPU-hours per year</strong></li>
+</ul>
+<p>That is plenty for getting started — 100,000 core-hours is roughly one 96-core node running flat out for six weeks. Larger allocations and investor projects exist beyond this. Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>).</p>
+</section>
+<section id="the-practical-checklist" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="the-practical-checklist"><span class="header-section-number">1.2.5</span> The practical checklist</h3>
+<ol type="1">
+<li>Confirm with your PI <strong>which project</strong> you’re joining and its exact name.</li>
+<li>Have the <strong>PI email <code>arcc-help@uwyo.edu</code></strong> to request your account on that project. (You emailing them yourself won’t work — they need the PI’s confirmation.)</li>
+<li>Once ARCC provisions you, you’ll get a UW username. Your first login is <a href="#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>.</li>
+<li>If you’re an external collaborator, flag it now and ask how you’ll move data, since Globus won’t be available to you.</li>
+</ol>
+<p>No VPN is required to reach ARCC, on campus or off, so once your account exists you can log in from anywhere.</p>
+</section>
+</section>
+<section id="sec-first-login" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-first-login"><span class="header-section-number">1.3</span> First login, the portal, and SSH keys</h2>
+<div class="tldr">
+<p>Your entry point is the web portal at <strong><a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a></strong> (Open OnDemand). Log in with your UW credentials and Duo 2FA. SSH uses a key, not a password: generate one with the portal’s <strong>SSH Key Manager</strong>, download it, and drop it in <code>~/.ssh</code>. The keys <strong>expire after one year</strong> — that’s why a working login later stops working.</p>
+</div>
+<section id="two-ways-in-portal-and-ssh" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="two-ways-in-portal-and-ssh"><span class="header-section-number">1.3.1</span> Two ways in: portal and SSH</h3>
+<p>MedicineBow has a single hostname that serves both the web portal and SSH: <code>medicinebow.arcc.uwyo.edu</code>.</p>
+<ul>
+<li><strong>The web portal</strong> (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start here on day one.</li>
+<li><strong>SSH</strong> is the terminal way in, and how you’ll work day-to-day once set up. It requires a key you generate through the portal first.</li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Don’t use “Southpass”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Older notes may point you at <code>southpass.arcc.uwyo.edu</code>, the portal for the <em>retired Beartooth cluster</em>. The DNS name still resolves but has no live service behind it. The current portal is <code>medicinebow.arcc.uwyo.edu</code>.</p>
+</div>
+</div>
+</section>
+<section id="step-1-log-into-the-portal" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="step-1-log-into-the-portal"><span class="header-section-number">1.3.2</span> Step 1 — Log into the portal</h3>
+<p>Go to <a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a> and sign in with your UW username and password. You’ll be prompted for <strong>Duo</strong> two-factor authentication. If you’ve never set up Duo, do it at <a href="https://wyosecure.uwyo.edu" class="uri">https://wyosecure.uwyo.edu</a>. No VPN is needed.</p>
+<p>Once in, note the <strong>Files</strong> menu (browse <code>/home</code>, <code>/project</code>, <code>/gscratch</code>), the <strong>Clusters → Shell</strong> option (a terminal in your browser), and the <strong>Interactive Apps</strong> menu.</p>
+</section>
+<section id="step-2-generate-your-ssh-key-with-the-ssh-key-manager" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="step-2-generate-your-ssh-key-with-the-ssh-key-manager"><span class="header-section-number">1.3.3</span> Step 2 — Generate your SSH key with the SSH Key Manager</h3>
+<p>SSH on MedicineBow is <strong>key-and-certificate based, not password based</strong>. Generate a key pair through the portal:</p>
+<ol type="1">
+<li>In the portal, open the <strong>SSH Key Manager</strong>.</li>
+<li>Generate a key. It downloads as a zip named after your username.</li>
+<li>Unpack it into your local <code>~/.ssh</code> and fix permissions:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> ~/Downloads/<span class="op">&lt;</span>username<span class="op">&gt;</span>.zip <span class="at">-d</span> ~/.ssh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 <span class="at">-R</span> ~/.ssh</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-add</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now you can connect from your own terminal:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+SSH keys expire after one year
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Roughly a year after setup, your <code>ssh</code> stops working — permission denied, no obvious reason. The key expired. Go back to the portal’s SSH Key Manager, generate a fresh key, and unzip it into <code>~/.ssh</code> again. This is by design.</p>
+</div>
+</div>
+</section>
+<section id="step-3-a-comfortable-ssh-config-optional" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="step-3-a-comfortable-ssh-config-optional"><span class="header-section-number">1.3.4</span> Step 3 — A comfortable SSH config (optional)</h3>
+<p>Add this to <code>~/.ssh/config</code> on your laptop so you can just type <code>ssh medbow</code>:</p>
+<pre><code>Host medbow
+    HostName medicinebow.arcc.uwyo.edu
+    User &lt;username&gt;
+    ServerAliveInterval 60
+    ServerAliveCountMax 5</code></pre>
+<p><code>ServerAliveInterval</code> sends a small keepalive every 60 seconds so campus/VPN firewalls don’t silently drop your connection while you’re reading output.</p>
+</section>
+<section id="which-door-should-i-use" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="which-door-should-i-use"><span class="header-section-number">1.3.5</span> Which door should I use?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>You want to…</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>First-time setup, generate SSH keys</td>
+<td>Portal (required)</td>
+</tr>
+<tr class="even">
+<td>A quick browser terminal from any machine</td>
+<td>Portal → Clusters → Shell</td>
+</tr>
+<tr class="odd">
+<td>A graphical desktop, RStudio, Jupyter</td>
+<td>Portal → Interactive Apps</td>
+</tr>
+<tr class="even">
+<td>Everyday scripting, editing, job submission</td>
+<td>SSH from your terminal</td>
+</tr>
+<tr class="odd">
+<td>Drag-and-drop a few files</td>
+<td>Portal → Files (for big data, see <a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Once you can log in and get a shell prompt, continue to the Linux survival kit (<a href="02-linux-essentials.html" class="quarto-xref"><span>Chapter 2</span></a>), or skip ahead to storage (<a href="03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>) and Slurm (<a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>) if you already know a terminal.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -815,8 +996,8 @@ Don’t compute on login nodes
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/02-getting-an-account.html" class="pagination-link" aria-label="Getting an account">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/02-linux-essentials.html" class="pagination-link" aria-label="Linux essentials">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -828,7 +1009,7 @@ Don’t compute on login nodes
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/01-what-is-a-cluster.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/01-getting-started.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

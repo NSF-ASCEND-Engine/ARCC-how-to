@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Why a scheduler exists – Getting Started on ARCC MedicineBow</title>
+<title>3&nbsp; Storage and moving data – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/10-batch-job-anatomy.html" rel="next">
-<link href="../chapters/08-conda-containers.html" rel="prev">
+<link href="../chapters/04-software.html" rel="next">
+<link href="../chapters/02-linux-essentials.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-why-a-scheduler.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-storage-and-data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,140 +153,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is</span></span></a>
+  <a href="../chapters/01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account</span></span></a>
+  <a href="../chapters/02-linux-essentials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
+  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
+  <a href="../chapters/04-software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives</span></span></a>
+  <a href="../chapters/05-running-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
+  <a href="../chapters/06-partitions-qos-queues.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Partitions, QOS, and queue times</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules</span></span></a>
+  <a href="../chapters/07-working-with-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Monitoring, arrays, and interactive jobs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers</span></span></a>
+  <a href="../chapters/08-preemption-and-failures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is computed</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
   </div>
 </li>
     </ul>
@@ -299,19 +215,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-share-a-machine" id="toc-why-share-a-machine" class="nav-link active" data-scroll-target="#why-share-a-machine"><span class="header-section-number">9.1</span> Why share a machine</a></li>
-  <li><a href="#the-two-ways-to-run-work" id="toc-the-two-ways-to-run-work" class="nav-link" data-scroll-target="#the-two-ways-to-run-work"><span class="header-section-number">9.2</span> The two ways to run work</a></li>
-  <li><a href="#the-three-questions-every-job-answers" id="toc-the-three-questions-every-job-answers" class="nav-link" data-scroll-target="#the-three-questions-every-job-answers"><span class="header-section-number">9.3</span> The three questions every job answers</a></li>
-  <li><a href="#a-first-look-at-the-tools" id="toc-a-first-look-at-the-tools" class="nav-link" data-scroll-target="#a-first-look-at-the-tools"><span class="header-section-number">9.4</span> A first look at the tools</a></li>
+  <li><a href="#sec-storage" id="toc-sec-storage" class="nav-link active" data-scroll-target="#sec-storage"><span class="header-section-number">3.1</span> Where your data lives</a>
+  <ul class="collapse">
+  <li><a href="#nothing-is-backed-up" id="toc-nothing-is-backed-up" class="nav-link" data-scroll-target="#nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</a></li>
+  <li><a href="#the-three-filesystems" id="toc-the-three-filesystems" class="nav-link" data-scroll-target="#the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</a></li>
+  <li><a href="#install-software-in-project-space-not-home" id="toc-install-software-in-project-space-not-home" class="nav-link" data-scroll-target="#install-software-in-project-space-not-home"><span class="header-section-number">3.1.3</span> Install software in project space, not home</a></li>
+  <li><a href="#a-sane-layout-to-adopt-on-day-one" id="toc-a-sane-layout-to-adopt-on-day-one" class="nav-link" data-scroll-target="#a-sane-layout-to-adopt-on-day-one"><span class="header-section-number">3.1.4</span> A sane layout to adopt on day one</a></li>
+  </ul></li>
+  <li><a href="#sec-moving-data" id="toc-sec-moving-data" class="nav-link" data-scroll-target="#sec-moving-data"><span class="header-section-number">3.2</span> Moving data in and out</a>
+  <ul class="collapse">
+  <li><a href="#pick-the-right-tool-for-the-size-of-the-job" id="toc-pick-the-right-tool-for-the-size-of-the-job" class="nav-link" data-scroll-target="#pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">3.2.1</span> Pick the right tool for the size of the job</a></li>
+  <li><a href="#globus-the-recommended-path-for-real-data" id="toc-globus-the-recommended-path-for-real-data" class="nav-link" data-scroll-target="#globus-the-recommended-path-for-real-data"><span class="header-section-number">3.2.2</span> Globus — the recommended path for real data</a></li>
+  <li><a href="#scp-and-rsync-fine-for-small-everyday-transfers" id="toc-scp-and-rsync-fine-for-small-everyday-transfers" class="nav-link" data-scroll-target="#scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">3.2.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</a></li>
+  <li><a href="#rclone-cloud-storage-s3-google-drive-box" id="toc-rclone-cloud-storage-s3-google-drive-box" class="nav-link" data-scroll-target="#rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</a></li>
+  <li><a href="#a-quick-decision-guide" id="toc-a-quick-decision-guide" class="nav-link" data-scroll-target="#a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/09-why-a-scheduler.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/03-storage-and-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-why-scheduler" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></h1>
 </div>
 
 
@@ -328,74 +255,223 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>The three filesystems, what each one promises, and how to get data in and out.</p>
+<section id="sec-storage" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-storage"><span class="header-section-number">3.1</span> Where your data lives</h2>
 <div class="tldr">
-<p>Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job (cores, memory, time, node type), it puts the job in line and runs it when those resources are free. You interact with the cluster almost entirely through Slurm.</p>
+<p>MedicineBow has three filesystems: <strong>home</strong> (50 GB, small), <strong>project</strong> (5 TB, shared with your group, where datasets and results live), and <strong>scratch</strong> (5 TB, fast, purged after 90 days of inactivity). <strong>None is backed up.</strong> Install software into <code>/project/&lt;proj&gt;/software</code>, not home — one conda env can fill your home directory.</p>
 </div>
-<section id="why-share-a-machine" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="why-share-a-machine"><span class="header-section-number">9.1</span> Why share a machine</h2>
-<p>With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
-<p>Slurm replaces “grab a node and hope” with a contract:</p>
-<ol type="1">
-<li>You <strong>describe</strong> the work: resources and a time limit.</li>
-<li>Slurm <strong>reserves</strong> exactly that, on nodes that can provide it, and <strong>accounts</strong> for it.</li>
-<li>Your job runs with those resources guaranteed and isolated from other jobs.</li>
-<li>When your time limit is up, the job ends, which keeps the line moving.</li>
-</ol>
+<section id="nothing-is-backed-up" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</h3>
+<p><strong>Nothing on MedicineBow is backed up. Not home, not project, not scratch.</strong></p>
+<p>There <em>are</em> snapshots (point-in-time copies you can sometimes restore from), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
 </section>
-<section id="the-two-ways-to-run-work" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="the-two-ways-to-run-work"><span class="header-section-number">9.2</span> The two ways to run work</h2>
-<p><strong>Batch jobs</strong> (<code>sbatch</code>) are the normal mode: you write a script that lists the resources you need and the commands to run, submit it, and walk away. Slurm runs it when your turn comes and writes the output to a file. Use this for essentially all real computation. (<a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a>)</p>
-<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a compute node</em> for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (<a href="17-interactive-and-gpu.html" class="quarto-xref"><span>Chapter 17</span></a>)</p>
-<p>Both run on <strong>compute nodes</strong>, not the login node (<a href="01-what-is-a-cluster.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
-</section>
-<section id="the-three-questions-every-job-answers" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="the-three-questions-every-job-answers"><span class="header-section-number">9.3</span> The three questions every job answers</h2>
-<p>Whether batch or interactive, you tell Slurm three things:</p>
+<section id="the-three-filesystems" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Question</th>
-<th>Directive</th>
-<th>Covered in</th>
+<th>Path</th>
+<th>Quota</th>
+<th>Snapshots</th>
+<th>Backups</th>
+<th>Purged</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Who pays?</strong> (which project)</td>
-<td><code>--account</code></td>
-<td><a href="10-batch-job-anatomy.html" class="quarto-xref"><span>Chapter 10</span></a></td>
+<td><code>/home/$USER</code></td>
+<td><strong>50 GB</strong></td>
+<td>yes</td>
+<td><strong>NO</strong></td>
+<td>only when you leave UW</td>
 </tr>
 <tr class="even">
-<td><strong>How much, and how long?</strong></td>
-<td><code>--cpus-per-task</code>, <code>--mem</code>, <code>--time</code>, …</td>
-<td><a href="11-asking-for-resources.html" class="quarto-xref"><span>Chapter 11</span></a></td>
+<td><code>/project/&lt;proj&gt;</code></td>
+<td><strong>5 TB</strong></td>
+<td>yes</td>
+<td><strong>NO</strong></td>
+<td>6 months after project ends</td>
 </tr>
 <tr class="odd">
-<td><strong>What kind of node, and how urgent?</strong></td>
-<td><code>--partition</code>, <code>--qos</code></td>
-<td><a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a></td>
+<td><code>/gscratch/$USER</code> (<code>$SCRATCH</code>)</td>
+<td><strong>5 TB</strong></td>
+<td>yes</td>
+<td><strong>NO</strong></td>
+<td><strong>after 90 days of inactivity</strong></td>
+</tr>
+<tr class="even">
+<td><code>/project/&lt;proj&gt;/software</code></td>
+<td><strong>+250 GB</strong> on top of project</td>
+<td>yes</td>
+<td><strong>NO</strong></td>
+<td>with the project</td>
+</tr>
+<tr class="odd">
+<td><code>/lscratch</code></td>
+<td>node-local, varies</td>
+<td>no</td>
+<td><strong>NO</strong></td>
+<td><strong>wiped at the end of every job</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Get these right and jobs run smoothly. Get them wrong and you wait a long time, get rejected at submit time, or watch the job die partway through. The next chapters take them one at a time.</p>
+<p>Check your usage and limits for home, scratch, and project:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arccquota</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="home-small-personal-for-config-not-data" class="level4" data-number="3.1.2.1">
+<h4 data-number="3.1.2.1" class="anchored" data-anchor-id="home-small-personal-for-config-not-data"><span class="header-section-number">3.1.2.1</span> <code>/home</code> — small, personal, for config not data</h4>
+<p>50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts, and small configs — not datasets and not software installs. When home fills up, things break (jobs fail to write logs, logins misbehave), so watch it with <code>arccquota</code> and <code>du -sh ~/* | sort -h</code>.</p>
 </section>
-<section id="a-first-look-at-the-tools" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="a-first-look-at-the-tools"><span class="header-section-number">9.4</span> A first look at the tools</h2>
-<p>You’ll meet these properly later; here’s the vocabulary:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh        <span class="co"># submit a batch job</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> ...              <span class="co"># get an interactive session</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>             <span class="co"># what are my jobs doing?</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>         <span class="co"># cancel a job</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>        <span class="co"># after the fact: what happened, and how much did it use?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ARCC also ships friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — used in <a href="12-partitions-and-qos.html" class="quarto-xref"><span>Chapter 12</span></a> and <a href="15-monitoring-jobs.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
-<p>Next: writing an actual job.</p>
+<section id="projectproj-the-shared-workhorse" class="level4" data-number="3.1.2.2">
+<h4 data-number="3.1.2.2" class="anchored" data-anchor-id="projectproj-the-shared-workhorse"><span class="header-section-number">3.1.2.2</span> <code>/project/&lt;proj&gt;</code> — the shared workhorse</h4>
+<p>5 TB, shared by everyone on your project (e.g.&nbsp;<code>cowy-firesurro</code>). This is where shared datasets, inputs, and results belong. Agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project ends.</p>
+</section>
+<section id="gscratchuser-fast-and-disposable" class="level4" data-number="3.1.2.3">
+<h4 data-number="3.1.2.3" class="anchored" data-anchor-id="gscratchuser-fast-and-disposable"><span class="header-section-number">3.1.2.3</span> <code>/gscratch/$USER</code> — fast and disposable</h4>
+<p>Also 5 TB, and the <strong>fast</strong> filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for <strong>90 days</strong> are purged automatically. Never keep the only copy of anything here.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Scratch purge is 90 days, not 45
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Legacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
+</div>
+</div>
+</section>
+<section id="lscratch-node-local-gone-when-the-job-ends" class="level4" data-number="3.1.2.4">
+<h4 data-number="3.1.2.4" class="anchored" data-anchor-id="lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">3.1.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</h4>
+<p>Each compute node has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
+<p>(There is no <code>/data</code> filesystem, despite what some docs suggest.)</p>
+</section>
+</section>
+<section id="install-software-in-project-space-not-home" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="install-software-in-project-space-not-home"><span class="header-section-number">3.1.3</span> Install software in project space, not home</h3>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Install software into <code>/project/&lt;proj&gt;/software</code>, not <code>/home</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your project has an extra <strong>250 GB</strong> quota at <code>/project/&lt;proj&gt;/software</code> for installing software. A single conda environment with a few scientific packages can be 10–20 GB — two of those fills a 50 GB home directory.</p>
+<p>Point conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>) shows how.</p>
+</div>
+</div>
+</section>
+<section id="a-sane-layout-to-adopt-on-day-one" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="a-sane-layout-to-adopt-on-day-one"><span class="header-section-number">3.1.4</span> A sane layout to adopt on day one</h3>
+<pre class="text"><code>/home/&lt;you&gt;/                      # dotfiles, small scripts, SSH keys
+/project/cowy-firesurro/
+    software/                     # conda envs, container images, manual builds
+    data/                         # shared input datasets
+    &lt;you&gt;/                        # your working area within the project
+/gscratch/&lt;you&gt;/                  # active job working dirs, heavy I/O, big temp output</code></pre>
+</section>
+</section>
+<section id="sec-moving-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-moving-data"><span class="header-section-number">3.2</span> Moving data in and out</h2>
+<div class="tldr">
+<p>For big or important transfers, use <strong>Globus</strong> — restartable, verified, survives a sleeping laptop. For small stuff, <code>scp</code>/<code>rsync</code> over SSH to <code>medicinebow.arcc.uwyo.edu</code> works, and <code>rclone</code> (a module) is ARCC’s recommended CLI for cloud storage. Note: <strong>external collaborators on ARCC-Only accounts can’t use Globus.</strong></p>
+</div>
+<section id="pick-the-right-tool-for-the-size-of-the-job" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">3.2.1</span> Pick the right tool for the size of the job</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Transfer</th>
+<th>Best tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hundreds of GB / TB, or must-not-corrupt datasets</td>
+<td><strong>Globus</strong></td>
+</tr>
+<tr class="even">
+<td>A few files, a script, a config</td>
+<td><code>scp</code> or <code>rsync</code> over SSH</td>
+</tr>
+<tr class="odd">
+<td>To/from cloud storage (S3, Google Drive, etc.)</td>
+<td><code>rclone</code></td>
+</tr>
+<tr class="even">
+<td>Drag-and-drop a handful of files in a browser</td>
+<td>Portal → Files</td>
+</tr>
+</tbody>
+</table>
+<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the login nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
+</section>
+<section id="globus-the-recommended-path-for-real-data" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">3.2.2</span> Globus — the recommended path for real data</h3>
+<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side, so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
+<ol type="1">
+<li>Log in at <a href="https://app.globus.org" class="uri">https://app.globus.org</a> (choose “University of Wyoming” as your organization, or your own institution).</li>
+<li>Search collections for <strong><code>uwyo-ARCC</code></strong> and pick <strong>“Medicine Bow”</strong>.</li>
+<li>The Medicine Bow collection’s root is <strong><code>cluster</code></strong>, so your project shows up at a path like <code>/cluster/medbow/project/cowy-firesurro/...</code>.</li>
+<li>Set the other side to your institutional or personal collection (install <strong>Globus Connect Personal</strong> on your own machine to make it an endpoint), pick files, and hit <strong>Start</strong>.</li>
+</ol>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Globus needs a full UW account
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ARCC-Only accounts (external collaborators — <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you.</p>
+</div>
+</div>
+</section>
+<section id="scp-and-rsync-fine-for-small-everyday-transfers" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">3.2.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</h3>
+<p>From your laptop, push a file up:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> results.csv <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pull one down:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/gscratch/<span class="op">&lt;</span>you<span class="op">&gt;</span>/output.nc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>rsync</code> is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> ./localdir/ <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/dir/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
+</section>
+<section id="rclone-cloud-storage-s3-google-drive-box" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h3>
+<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a module:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load rclone/1.63.1</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s.</p>
+</section>
+<section id="a-quick-decision-guide" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</h3>
+<ul>
+<li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
+<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or edit in the portal).</li>
+<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
+<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection.</li>
+</ul>
+<p>Next: making software available, starting with the module system (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -805,13 +881,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/08-conda-containers.html" class="pagination-link" aria-label="Conda and containers">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers</span></span>
+      <a href="../chapters/02-linux-essentials.html" class="pagination-link" aria-label="Linux essentials">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/10-batch-job-anatomy.html" class="pagination-link" aria-label="Anatomy of a batch job">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/04-software.html" class="pagination-link" aria-label="Software: modules, conda, and containers">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -823,7 +899,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/09-why-a-scheduler.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/03-storage-and-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Moving data in and out – Getting Started on ARCC MedicineBow</title>
+<title>4&nbsp; Software: modules, conda, and containers – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/07-modules.html" rel="next">
-<link href="../chapters/05-storage.html" rel="prev">
+<link href="../chapters/05-running-jobs.html" rel="next">
+<link href="../chapters/03-storage-and-data.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/06-moving-data.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-software.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,140 +153,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/01-what-is-a-cluster.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What a cluster is</span></span></a>
+  <a href="../chapters/01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started on the cluster</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/02-getting-an-account.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Getting an account</span></span></a>
+  <a href="../chapters/02-linux-essentials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/03-first-login.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">First login, the portal, and SSH keys</span></span></a>
+  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/04-linux-survival.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Linux essentials</span></span></a>
+  <a href="../chapters/04-software.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/05-storage.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives</span></span></a>
+  <a href="../chapters/05-running-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/06-moving-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></a>
+  <a href="../chapters/06-partitions-qos-queues.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Partitions, QOS, and queue times</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/07-modules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules</span></span></a>
+  <a href="../chapters/07-working-with-jobs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Monitoring, arrays, and interactive jobs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/08-conda-containers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conda and containers</span></span></a>
+  <a href="../chapters/08-preemption-and-failures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-why-a-scheduler.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Why a scheduler exists</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/10-batch-job-anatomy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Anatomy of a batch job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/11-asking-for-resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Asking for resources</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/12-partitions-and-qos.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Partitions and QOS on MedicineBow</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/13-queue-times.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Queue times: which partition for what</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/14-priority.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">How priority is computed</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/15-monitoring-jobs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Watching a job</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/16-job-arrays.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Job arrays</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/17-interactive-and-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Interactive sessions and GPU jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/18-preemption-and-checkpointing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Preemption, the condo model, and checkpointing</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/19-when-jobs-fail.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">When jobs fail</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/23-parallelism-ladder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The parallelism ladder</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/20-cheat-sheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cheat sheet</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/21-troubleshooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Troubleshooting</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/22-glossary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
   </div>
 </li>
     </ul>
@@ -299,20 +215,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pick-the-right-tool-for-the-size-of-the-job" id="toc-pick-the-right-tool-for-the-size-of-the-job" class="nav-link active" data-scroll-target="#pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">6.1</span> Pick the right tool for the size of the job</a></li>
-  <li><a href="#globus-the-recommended-path-for-real-data" id="toc-globus-the-recommended-path-for-real-data" class="nav-link" data-scroll-target="#globus-the-recommended-path-for-real-data"><span class="header-section-number">6.2</span> Globus — the recommended path for real data</a></li>
-  <li><a href="#scp-and-rsync-fine-for-small-everyday-transfers" id="toc-scp-and-rsync-fine-for-small-everyday-transfers" class="nav-link" data-scroll-target="#scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">6.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</a></li>
-  <li><a href="#rclone-cloud-storage-s3-google-drive-box" id="toc-rclone-cloud-storage-s3-google-drive-box" class="nav-link" data-scroll-target="#rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">6.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</a></li>
-  <li><a href="#a-quick-decision-guide" id="toc-a-quick-decision-guide" class="nav-link" data-scroll-target="#a-quick-decision-guide"><span class="header-section-number">6.5</span> A quick decision guide</a></li>
+  <li><a href="#sec-modules" id="toc-sec-modules" class="nav-link active" data-scroll-target="#sec-modules"><span class="header-section-number">4.1</span> Software modules</a>
+  <ul class="collapse">
+  <li><a href="#why-modules-exist" id="toc-why-modules-exist" class="nav-link" data-scroll-target="#why-modules-exist"><span class="header-section-number">4.1.1</span> Why modules exist</a></li>
+  <li><a href="#the-hierarchy" id="toc-the-hierarchy" class="nav-link" data-scroll-target="#the-hierarchy"><span class="header-section-number">4.1.2</span> The hierarchy</a></li>
+  <li><a href="#whats-installed-a-tour" id="toc-whats-installed-a-tour" class="nav-link" data-scroll-target="#whats-installed-a-tour"><span class="header-section-number">4.1.3</span> What’s installed (a tour)</a></li>
+  <li><a href="#making-a-set-of-modules-load-automatically" id="toc-making-a-set-of-modules-load-automatically" class="nav-link" data-scroll-target="#making-a-set-of-modules-load-automatically"><span class="header-section-number">4.1.4</span> Making a set of modules load automatically</a></li>
+  </ul></li>
+  <li><a href="#sec-conda" id="toc-sec-conda" class="nav-link" data-scroll-target="#sec-conda"><span class="header-section-number">4.2</span> Conda and containers</a>
+  <ul class="collapse">
+  <li><a href="#point-conda-away-from-home-first" id="toc-point-conda-away-from-home-first" class="nav-link" data-scroll-target="#point-conda-away-from-home-first"><span class="header-section-number">4.2.1</span> Point conda away from home first</a></li>
+  <li><a href="#apptainer-containers-for-reproducibility-and-portability" id="toc-apptainer-containers-for-reproducibility-and-portability" class="nav-link" data-scroll-target="#apptainer-containers-for-reproducibility-and-portability"><span class="header-section-number">4.2.2</span> Apptainer: containers for reproducibility and portability</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/06-moving-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/04-software.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-moving-data" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Moving data in and out</span></span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></h1>
 </div>
 
 
@@ -329,92 +252,206 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>How software is provided on the cluster, and how to install your own without filling your home directory.</p>
+<section id="sec-modules" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-modules"><span class="header-section-number">4.1</span> Software modules</h2>
 <div class="tldr">
-<p>For big or important transfers, use <strong>Globus</strong> — restartable, verified, survives a sleeping laptop. For small stuff, <code>scp</code>/<code>rsync</code> over SSH to <code>medicinebow.arcc.uwyo.edu</code> works, and <code>rclone</code> (a module) is ARCC’s recommended CLI for cloud storage. Note: <strong>external collaborators on ARCC-Only accounts can’t use Globus.</strong></p>
+<p>Software comes from <strong>Lmod modules</strong> you <code>module load</code>. The system is <em>hierarchical</em>: many packages are invisible until you load a compiler, so <code>module avail</code> only shows what’s reachable right now. Use <strong><code>module spider &lt;name&gt;</code></strong> to find a package and learn what to load first.</p>
 </div>
-<section id="pick-the-right-tool-for-the-size-of-the-job" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">6.1</span> Pick the right tool for the size of the job</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Transfer</th>
-<th>Best tool</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Hundreds of GB / TB, or must-not-corrupt datasets</td>
-<td><strong>Globus</strong></td>
-</tr>
-<tr class="even">
-<td>A few files, a script, a config</td>
-<td><code>scp</code> or <code>rsync</code> over SSH</td>
-</tr>
-<tr class="odd">
-<td>To/from cloud storage (S3, Google Drive, etc.)</td>
-<td><code>rclone</code></td>
-</tr>
-<tr class="even">
-<td>Drag-and-drop a handful of files in a browser</td>
-<td>Portal → Files</td>
-</tr>
-</tbody>
-</table>
-<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the login nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
+<section id="why-modules-exist" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="why-modules-exist"><span class="header-section-number">4.1.1</span> Why modules exist</h3>
+<p>A cluster has hundreds of users who need incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. <strong>Modules</strong> let you load exactly the versions you want into your shell for this session, without affecting anyone else. Load a module and its programs appear on your <code>PATH</code>; unload it and they vanish.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># add gcc 14 to this shell</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> list                   <span class="co"># what do I currently have loaded?</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> unload gcc/14.2.0      <span class="co"># remove it</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge                  <span class="co"># clear everything and start clean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="globus-the-recommended-path-for-real-data" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">6.2</span> Globus — the recommended path for real data</h2>
-<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side, so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
-<ol type="1">
-<li>Log in at <a href="https://app.globus.org" class="uri">https://app.globus.org</a> (choose “University of Wyoming” as your organization, or your own institution).</li>
-<li>Search collections for <strong><code>uwyo-ARCC</code></strong> and pick <strong>“Medicine Bow”</strong>.</li>
-<li>The Medicine Bow collection’s root is <strong><code>cluster</code></strong>, so your project shows up at a path like <code>/cluster/medbow/project/cowy-firesurro/...</code>.</li>
-<li>Set the other side to your institutional or personal collection (install <strong>Globus Connect Personal</strong> on your own machine to make it an endpoint), pick files, and hit <strong>Start</strong>.</li>
-</ol>
+<section id="the-hierarchy" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="the-hierarchy"><span class="header-section-number">4.1.2</span> The hierarchy</h3>
+<p>MedicineBow uses <strong>Lmod</strong> in <em>hierarchical</em> mode. Modules are arranged in layers:</p>
+<ul>
+<li><strong>Core</strong> modules are always visible: the compilers (<code>gcc</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>), MPI, and standalone tools.</li>
+<li><strong>Compiler-dependent</strong> modules — Python, R, GDAL, NetCDF, HDF5, CUDA — are <strong>hidden until you load a compiler.</strong> They were built against a specific compiler, so Lmod won’t show them until you’ve picked one.</li>
+</ul>
+<p>So a new user runs <code>module avail</code>, doesn’t see <code>gdal</code>, and concludes it isn’t installed. It is — just one layer down.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Use <code>module spider</code>, not <code>module avail</code>, to check whether something exists
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>module avail</code> shows only what’s loadable given what you’ve already loaded. <strong><code>module spider</code></strong> searches the entire tree and tells you both that something exists and what to load first to reach it.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider gdal            <span class="co"># yes it exists; here are the versions</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider gdal/3.13.0     <span class="co"># ...and exactly what to load before it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>A typical geospatial stack, in order:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># 1. a compiler, first</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gdal/3.13.0       <span class="co"># 2. now GDAL is reachable</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load netcdf-c/4.9.2-ompi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="whats-installed-a-tour" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="whats-installed-a-tour"><span class="header-section-number">4.1.3</span> What’s installed (a tour)</h3>
+<p>Ask the machine for the current list with <code>module spider</code>, but roughly:</p>
+<ul>
+<li><strong>Compilers (core):</strong> <code>gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>, <code>openmpi/5.0.10</code>.</li>
+<li><strong>After loading a compiler:</strong> <code>python/{3.10.6, 3.12.0, 3.14.4}</code>, <code>r/{4.4.0, 4.5.3}</code>, <code>gdal/{3.7.3, 3.13.0}</code>, <code>netcdf-c/4.9.2-ompi</code>, <code>hdf5/1.14.3*</code>, <code>cuda-toolkit/{12.4.1, 12.6.1}</code>, <code>openmpi/4.1.6</code>, <code>rclone/1.63.1</code>.</li>
+<li><strong>Standalone:</strong> <code>apptainer/{1.3.5, 1.4.1}</code>, <code>singularity/4.1.0</code>, <code>miniconda3/24.3.0</code>, <code>julia/{1.10.3, 1.11.6}</code>.</li>
+</ul>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Globus needs a full UW account
+CUDA needs the deprecated gcc/13.2.0
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ARCC-Only accounts (external collaborators — <a href="02-getting-an-account.html" class="quarto-xref"><span>Chapter 2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you.</p>
+<p><code>gcc/13.2.0</code> prints a deprecation warning pointing to <code>gcc/14.2.0</code>, but <code>cuda-toolkit</code> is <strong>only built against <code>gcc/13.2.0</code></strong>. GPU users have to load it anyway:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0        <span class="co"># the one that warns you — CUDA needs it</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda-toolkit/12.6.1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ignore the warning here; it’s a packaging quirk.</p>
 </div>
 </div>
 </section>
-<section id="scp-and-rsync-fine-for-small-everyday-transfers" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">6.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</h2>
-<p>From your laptop, push a file up:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> results.csv <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Pull one down:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/gscratch/<span class="op">&lt;</span>you<span class="op">&gt;</span>/output.nc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rsync</code> is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> ./localdir/ <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<span class="op">&lt;</span>you<span class="op">&gt;</span>/dir/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
+<section id="making-a-set-of-modules-load-automatically" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="making-a-set-of-modules-load-automatically"><span class="header-section-number">4.1.4</span> Making a set of modules load automatically</h3>
+<p>Once you know the stack a project needs, save it as a named collection so you don’t retype it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save geostack          <span class="co"># remember this set as "geostack"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># next session:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> restore geostack</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Prefer <code>module restore</code> in submit scripts over hand-loading a long list — it’s reproducible and self-documents the environment your job needs.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Load modules in your submit script, not just interactively
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Modules loaded on the login node don’t carry into a batch job. Put the <code>module load</code> / <code>module restore</code> lines <strong>inside</strong> your <code>sbatch</code> script so the job builds the same environment every time (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
+</div>
+</div>
+<p>When a package isn’t available as a module — or you need a pip/conda world — see the next chapter (<a href="#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</p>
 </section>
-<section id="rclone-cloud-storage-s3-google-drive-box" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">6.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h2>
-<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a module:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load rclone/1.63.1</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s.</p>
 </section>
-<section id="a-quick-decision-guide" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">6.5</span> A quick decision guide</h2>
+<section id="sec-conda" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="sec-conda"><span class="header-section-number">4.2</span> Conda and containers</h2>
+<div class="tldr">
+<p>Conda writes gigabytes into your 50 GB home directory by default. Redirect its package cache and environments into <code>/project/&lt;proj&gt;/software</code> before creating anything. For reproducible, portable software, use Apptainer containers.</p>
+</div>
+<section id="point-conda-away-from-home-first" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="point-conda-away-from-home-first"><span class="header-section-number">4.2.1</span> Point conda away from home first</h3>
+<p>The <code>miniconda3</code> module gives you conda:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load miniconda3/24.3.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By default, conda writes environments and a package cache into <code>~/.conda</code> and <code>~/miniconda3</code>, inside your 50 GB home quota. A couple of scientific environments will fill it. Before creating any environments, point conda at your project’s 250 GB software space.</p>
+<p>Create <code>~/.condarc</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pkgs_dirs</span><span class="kw">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> /project/cowy-firesurro/software/&lt;you&gt;/conda/pkgs</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">envs_dirs</span><span class="kw">:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> /project/cowy-firesurro/software/&lt;you&gt;/conda/envs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now new environments and the download cache land in project space:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> geo python=3.12 numpy xarray netcdf4</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate geo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Set <code>.condarc</code> before your first <code>conda create</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Environments created before you set <code>.condarc</code> are stranded in home. If you’ve already made the mess: <code>conda env list</code>, remove the home-based envs, and recreate them under project space.</p>
+</div>
+</div>
+<p>Other conda notes:</p>
 <ul>
-<li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
-<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or edit in the portal).</li>
-<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
-<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection.</li>
+<li>No <code>mamba</code> is installed on the cluster; use <code>conda</code> directly.</li>
+<li>Activate conda inside your submit script, not just interactively, so batch jobs get the same environment (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</li>
+<li><code>conda clean -a</code> reclaims space from the package cache.</li>
 </ul>
-<p>Next: making software available, starting with the module system (<a href="07-modules.html" class="quarto-xref"><span>Chapter 7</span></a>).</p>
+</section>
+<section id="apptainer-containers-for-reproducibility-and-portability" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="apptainer-containers-for-reproducibility-and-portability"><span class="header-section-number">4.2.2</span> Apptainer: containers for reproducibility and portability</h3>
+<p>A container bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as <em>you</em>, with no root, which makes it the HPC-safe alternative to Docker.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer/1.4.1</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull a Docker image and convert it to an Apptainer image (.sif):</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> pull mytool.sif docker://ghcr.io/someorg/mytool:latest</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Run something inside it:</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec mytool.sif mytool <span class="at">--help</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Bind your data into the container so it can see it:</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--bind</span> /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Store <code>.sif</code> images in <code>/project/&lt;proj&gt;/software</code> — they can be large.</p>
+<section id="container-vs.-module-vs.-conda" class="level4" data-number="4.2.2.1">
+<h4 data-number="4.2.2.1" class="anchored" data-anchor-id="container-vs.-module-vs.-conda"><span class="header-section-number">4.2.2.1</span> Container vs.&nbsp;module vs.&nbsp;conda</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Best choice</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The software is already an Lmod module</td>
+<td><strong>module</strong> (<a href="#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>) — least effort</td>
+</tr>
+<tr class="even">
+<td>Pure Python/R stack, you want to iterate</td>
+<td><strong>conda</strong></td>
+</tr>
+<tr class="odd">
+<td>Complex native dependencies that fight the system</td>
+<td><strong>Apptainer</strong></td>
+</tr>
+<tr class="even">
+<td>You need bit-for-bit reproducibility across machines</td>
+<td><strong>Apptainer</strong></td>
+</tr>
+<tr class="odd">
+<td>A published tool ships a Docker image</td>
+<td><strong>Apptainer</strong> (<code>apptainer pull docker://…</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GPUs inside containers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To use the node’s GPUs from inside a container, add the <code>--nv</code> flag so Apptainer exposes the NVIDIA driver: <code>apptainer exec --nv mytool.sif ...</code>. Pair this with a GPU job (<a href="07-working-with-jobs.html#sec-gpu" class="quarto-xref"><span>Section 7.3.2</span></a>).</p>
+</div>
+</div>
+<p>Next: running your work through the scheduler (<a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>).</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -824,13 +861,13 @@ Globus needs a full UW account
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/05-storage.html" class="pagination-link" aria-label="Where your data lives">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Where your data lives</span></span>
+      <a href="../chapters/03-storage-and-data.html" class="pagination-link" aria-label="Storage and moving data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/07-modules.html" class="pagination-link" aria-label="Software modules">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Software modules</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/05-running-jobs.html" class="pagination-link" aria-label="Running jobs with Slurm">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Running jobs with Slurm</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -842,7 +879,7 @@ Globus needs a full UW account
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/06-moving-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/04-software.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Corrections → arcc-help@uwyo.edu</p>
 </div>
