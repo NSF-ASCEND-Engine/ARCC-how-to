@@ -189,6 +189,81 @@ A common pattern matches your program's threads to what Slurm gave you:
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 ```
 
+### Copy-paste starters: Python, R, and Julia {#sec-hello-jobs}
+
+Three complete, runnable "hello world" jobs. Save one to a file, set `--account` to your
+project, and submit with `sbatch <file>`. The output lands in `hello-*-<jobid>.out`. Each
+uses the `fast` QOS and a 5-minute limit so it starts quickly (@sec-queue-times). The module
+lines are verified against the machine — note that R needs `gcc/15.2.0` and Julia needs no
+compiler module.
+
+**Python** — save as `hello_python.sh`:
+
+```bash
+#!/bin/bash
+#SBATCH --account=cowy-firesurro
+#SBATCH --job-name=hello-python
+#SBATCH --partition=mb
+#SBATCH --qos=fast
+#SBATCH --time=00:05:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2G
+#SBATCH --output=hello-python-%j.out
+
+module purge
+module load gcc/14.2.0 python/3.12.0
+
+python3 -c "import platform, socket; print('Hello from Python', platform.python_version(), 'on', socket.gethostname())"
+```
+
+**R** — save as `hello_r.sh`:
+
+```bash
+#!/bin/bash
+#SBATCH --account=cowy-firesurro
+#SBATCH --job-name=hello-r
+#SBATCH --partition=mb
+#SBATCH --qos=fast
+#SBATCH --time=00:05:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2G
+#SBATCH --output=hello-r-%j.out
+
+module purge
+module load gcc/15.2.0 r/4.5.3          # R is built against gcc/15.2.0
+
+Rscript -e 'cat("Hello from R", as.character(getRversion()), "on", Sys.info()[["nodename"]], "\n")'
+```
+
+**Julia** — save as `hello_julia.sh`:
+
+```bash
+#!/bin/bash
+#SBATCH --account=cowy-firesurro
+#SBATCH --job-name=hello-julia
+#SBATCH --partition=mb
+#SBATCH --qos=fast
+#SBATCH --time=00:05:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=2G
+#SBATCH --output=hello-julia-%j.out
+
+module purge
+module load julia/1.11.6                 # Julia is standalone — no compiler needed
+
+julia -e 'println("Hello from Julia ", VERSION, " on ", gethostname())'
+```
+
+Submit and check any of them:
+
+```bash
+sbatch hello_python.sh          # -> Submitted batch job 123456
+cat hello-python-123456.out     # -> Hello from Python 3.12.0 on mbcpu-001
+```
+
+Swap the one-liner for `python3 my_script.py` (or `Rscript my_script.R`, `julia my_script.jl`)
+to run a real program the same way.
+
 The next section covers asking for the right resources (@sec-resources); choosing the right
 queue comes after (@sec-partitions).
 
