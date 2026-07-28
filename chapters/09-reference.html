@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Nothing is backed up.</strong> Keep a copy off-cluster.</li>
 <li>Install software in <code>/project/&lt;proj&gt;/software</code>, not <code>/home</code> (50 GB).</li>
 <li><code>module spider</code>, not <code>module avail</code>.</li>
-<li>Long jobs → <code>non-investor</code> <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> <strong>and</strong> <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpoint</span> (investors <span class="gloss" data-def="An investor reclaiming a borrowed node, killing your job and (here) requeuing it." aria-label="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preempt</span>).</li>
+<li>Long jobs → <code>non-investor</code> <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> <strong>and</strong> <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpoint</span> (<span class="gloss" data-def="A research group, department, or PI that bought cluster nodes with their own funds. They get top priority on those inv-* partitions; jobs others backfill there can be preempted." aria-label="A research group, department, or PI that bought cluster nodes with their own funds. They get top priority on those inv-* partitions; jobs others backfill there can be preempted.">investors</span> <span class="gloss" data-def="An investor reclaiming a borrowed node, killing your job and (here) requeuing it." aria-label="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preempt</span>).</li>
 <li>Never compute on the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>. Use <code>sbatch</code>/<code>salloc</code>.</li>
 <li>Use <code>tmux</code> so a dropped connection doesn’t kill interactive work.</li>
 </ul>
@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 0600 -R ~/.ssh</code> (<a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</p>
 <p><strong>“Permission denied” on a brand-new setup.</strong> Check permissions: <code>chmod 0600 -R ~/.ssh</code>, and make sure you unzipped the key into <code>~/.ssh</code>. Confirm you’re using <code>medicinebow.arcc.uwyo.edu</code>, not the dead <code>southpass</code> name.</p>
 <p><strong>I can’t get an account at all.</strong> Only a <strong>PI</strong> can request it, in writing, against a project. You cannot self-register (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>).</p>
-<p><strong>Globus won’t let me add the collection.</strong> If you’re an external collaborator on an <strong><span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>-Only account</strong>, you can’t use Globus. You need a UW-side guest collection (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>).</p>
+<p><strong>Globus won’t let me add the collection.</strong> If you’re an external collaborator on an <strong>ARCC-Only account</strong>, you can’t use Globus. You need a UW-side guest collection (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>).</p>
 </section>
 <section id="jobs-wont-submit" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="jobs-wont-submit"><span class="header-section-number">9.2.2</span> Jobs won’t submit</h3>
@@ -534,7 +534,7 @@ How you request GPUs: <code>--gres=gpu:1</code> or <code>--gres=gpu:h100:2</code
 </dd>
 <dt><strong>Investor / <code>inv-*</code></strong></dt>
 <dd>
-Nodes/partitions owned by a specific group, who get top priority; others can be preempted off them. See <a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>.
+A research group, department, or PI that bought cluster nodes with their own funds. Their <code>inv-*</code> partitions give them top priority; jobs others backfill there can be preempted. See <a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>.
 </dd>
 <dt><strong>Job array</strong></dt>
 <dd>
@@ -1027,7 +1027,7 @@ Real elapsed clock time a job is allowed (<code>--time</code>). The job is kille
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
+<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

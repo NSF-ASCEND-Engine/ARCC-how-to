@@ -548,7 +548,7 @@ No per-partition default time, so set <code>--time</code>
 <p>A bigger request is a rarer set of free resources to find:</p>
 <ul>
 <li><strong>More cores / memory</strong> → fewer nodes can satisfy you → longer wait, and you’re charged for cores you didn’t use.</li>
-<li><strong>More time</strong> → lower-<span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span> QOS tier and fewer <span class="gloss" data-def="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs." aria-label="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> opportunities → longer wait.</li>
+<li><strong>More time</strong> → lower-priority QOS tier and fewer <span class="gloss" data-def="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs." aria-label="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> opportunities → longer wait.</li>
 <li><strong>A GPU you don’t use</strong> → you sit in the busy GPU queue for nothing (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</li>
 </ul>
 <p>The fix is to right-size.</p>
