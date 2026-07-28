@@ -6,7 +6,7 @@ The scheduler, the anatomy of a batch job, and how to ask for the right resource
 
 ### Why share a machine
 
-With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks
+Imagine a few hundred researchers sharing a few hundred nodes with no scheduler: everyone logs into whatever node looks
 idle and starts running. Two jobs land on the same node and thrash its memory until both
 crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell
 whether a node is free.
@@ -208,7 +208,7 @@ For most jobs you need two ideas:
 ```
 
 - **Single-threaded program?** `--ntasks=1 --cpus-per-task=1`.
-- **Multithreaded (OpenMP, most numpy/xarray work)?** `--ntasks=1 --cpus-per-task=N`, and
+- **Multithreaded (OpenMP; NumPy/SciPy linear algebra via multithreaded BLAS; Dask/xarray)?** `--ntasks=1 --cpus-per-task=N`, and
   set `export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK`.
 - **MPI across many nodes?** Use `--nodes` and `--ntasks`, and launch with `srun` (@sec-ladder).
 
@@ -228,7 +228,7 @@ Set memory explicitly, every time. Two ways:
 ::: {.callout-warning}
 ## The 10 GB/core default on `mb`
 If you omit `--mem` on the default partition, you get 10 GB per core, so `--cpus-per-task=8`
-becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set
+becomes an 80 GB request. That queues slower, and at high core counts the inflated request can hit your QOS CPU cap and be rejected at submit. Set
 your memory explicitly. (Full story in @sec-anatomy.)
 :::
 

@@ -47,9 +47,8 @@ A typical geospatial stack, in order:
 
 ```bash
 module purge
-module load gcc/14.2.0        # 1. a compiler, first
-module load gdal/3.13.0       # 2. now GDAL is reachable
-module load netcdf-c/4.9.2-ompi
+module load gcc/14.2.0 openmpi/5.0.5   # 1. compiler + MPI first
+module load gdal/3.7.3 netcdf-c/4.9.2-ompi   # 2. now these are reachable
 ```
 
 ### What's installed (a tour)
@@ -59,22 +58,25 @@ Ask the machine for the current list with `module spider`, but roughly:
 - **Compilers (core):** `gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}`, `nvhpc-sdk`,
   `oneapi`, `openmpi/5.0.10`.
 - **After loading a compiler:** `python/{3.10.6, 3.12.0, 3.14.4}`, `r/{4.4.0, 4.5.3}`,
-  `gdal/{3.7.3, 3.13.0}`, `netcdf-c/4.9.2-ompi`, `hdf5/1.14.3*`,
-  `cuda-toolkit/{12.4.1, 12.6.1}`, `openmpi/4.1.6`, `rclone/1.63.1`.
+  `gdal/{3.7.3, 3.13.0}`, `netcdf-c/4.9.2-ompi` (also needs an `openmpi` module),
+  `hdf5/1.14.3*`, `cuda-toolkit/{11.7.1, 12.4.1, 12.6.1, 12.8.0}`, `openmpi/4.1.6`,
+  `rclone/1.63.1`.
 - **Standalone:** `apptainer/{1.3.5, 1.4.1}`, `singularity/4.1.0`, `miniconda3/24.3.0`,
   `julia/{1.10.3, 1.11.6}`.
 
 ::: {.callout-warning}
 ## CUDA needs the deprecated gcc/13.2.0
-`gcc/13.2.0` prints a deprecation warning pointing to `gcc/14.2.0`, but `cuda-toolkit` is
-**only built against `gcc/13.2.0`**. GPU users have to load it anyway:
+`gcc/13.2.0` prints a deprecation warning pointing to `gcc/14.2.0`, but **CUDA 12.4.1 and
+12.6.1 are built only against `gcc/13.2.0`** — for those versions you must load the deprecated
+compiler:
 
 ```bash
-module load gcc/13.2.0        # the one that warns you — CUDA needs it
+module load gcc/13.2.0        # the one that warns you — CUDA 12.4/12.6 need it
 module load cuda-toolkit/12.6.1
 ```
 
-Ignore the warning here; it's a packaging quirk.
+Ignore the warning here; it's a packaging quirk. (The newest, `cuda-toolkit/12.8.0`, *is*
+built against `gcc/14.2.0`, so if you can use 12.8.0 you avoid the deprecated compiler.)
 :::
 
 ### Making a set of modules load automatically
@@ -83,7 +85,7 @@ Once you know the stack a project needs, save it as a named collection so you do
 
 ```bash
 module purge
-module load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi
+module load gcc/14.2.0 openmpi/5.0.5 gdal/3.7.3 netcdf-c/4.9.2-ompi
 module save geostack          # remember this set as "geostack"
 
 # next session:
@@ -101,7 +103,7 @@ every time (@sec-anatomy).
 :::
 
 When a package isn't available as a module — or you need a pip/conda world — see the next
-chapter (@sec-conda).
+section (@sec-conda).
 
 ## Conda and containers {#sec-conda}
 

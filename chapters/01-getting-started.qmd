@@ -22,7 +22,7 @@ people editing files, submitting jobs, and moving data. Use them for lightweight
 editing scripts, managing files, compiling small things, submitting and checking jobs.
 
 **Compute nodes** are where computation happens. You never SSH to them directly; you ask
-the scheduler for one (or many), and it gives you exclusive, accounted-for access for a
+the scheduler for one (or many), and it gives you exclusive, dedicated access for a
 bounded time. The default `mb` nodes have **96 CPU cores and ~1 TB of RAM each**, and the
 GPU nodes carry up to **8 NVIDIA H100s**.
 
@@ -42,6 +42,7 @@ flowchart LR
     FS[("Shared filesystems<br/>home, project, scratch")]
     L --- FS
     C1 --- FS
+    C2 --- FS
     C3 --- FS
     style MB fill:#f3eefb,stroke:#7a4fb5,color:#3a2a5a
 ```
@@ -83,8 +84,7 @@ MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:
   can borrow when it's idle — but the owner can reclaim it and bump your job (see
   @sec-preemption).
 
-The partition chapter (@sec-partitions) covers which
-hardware to ask for, and the queue-times chapter (@sec-queue-times) covers which choices
+@sec-partitions covers which hardware to ask for, and @sec-queue-times covers which choices
 leave you waiting versus running now.
 
 ### Where to get help
@@ -192,7 +192,7 @@ through the portal:
 
 ```bash
 unzip ~/Downloads/<username>.zip -d ~/.ssh
-chmod 0600 -R ~/.ssh
+chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
 ssh-add
 ```
 
@@ -221,7 +221,7 @@ Host medbow
     ServerAliveCountMax 5
 ```
 
-`ServerAliveInterval` sends a small keepalive every 60 seconds so campus/VPN firewalls
+`ServerAliveInterval` sends a small keepalive every 60 seconds so campus or home firewalls
 don't silently drop your connection while you're reading output.
 
 ### Which door should I use?

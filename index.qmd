@@ -34,7 +34,7 @@ policy at any time. When in doubt, the
    scheduler (Slurm) or grab an interactive session. (See @sec-why-scheduler.)
 4. **Every job must name your project account** with `--account=<project>`. (See
    @sec-anatomy.)
-5. **The partition and QOS you choose decide how long you wait and how big you can go.**
+5. **The partition (hardware pool) and QOS (quality-of-service tier) you choose decide how long you wait and how big you can go.**
    Short test runs and long simulations belong in different queues (@sec-partitions,
    @sec-queue-times).
 
@@ -56,7 +56,7 @@ The chapters run in the order you'll need them:
    wait times, and how job priority is actually computed here.
 7. **Monitoring, arrays, and interactive jobs** — watching and diagnosing jobs, job arrays,
    interactive and GPU sessions, and the parallelism ladder.
-8. **Preemption, checkpointing, and failures** — surviving the condo model and walltime limits,
+8. **Preemption, checkpointing, and failures** — surviving the condo model (shared, investor-owned hardware that can reclaim your job) and walltime limits,
    and reading the wreckage when a job fails.
 9. **Reference** — a command cheat sheet, a symptom-to-fix troubleshooting index, and a
    glossary.

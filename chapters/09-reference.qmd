@@ -45,7 +45,7 @@ sbatch submit.sh           # submit batch job
 salloc -A cowy-firesurro --qos=interactive -t 2:00:00 -c 4 --mem=16G   # interactive
 squeue --me                # my jobs
 showjobreasons <id>        # why is it waiting? (plain English)
-scancel <id>               # cancel (scancel --me = all mine)
+scancel <id>               # cancel one job (scancel -u $USER = all mine)
 seff <id>                  # after the fact: was it sized right?
 sacct -j <id> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode
 ```
@@ -81,9 +81,10 @@ python my_script.py
 | GPU dev / proof-of-concept | `mb-a30` | `normal` |
 | GPU production run | `mb-h100` / `mb-l40s` | `normal`/`long` |
 
-**QOS ceilings & priority:** `interactive` 8h/p90 · `fast` 12h/p80 · `normal` 3d/p70 ·
-`long` 7d/p60 · `debug` 1h/p0. **Priority is dominated by QOS** (weight 200 vs age 10) —
-pick the shortest tier your job fits.
+**QOS ceilings & priority:** `interactive` 8h, priority 90 · `fast` 12h, priority 80 ·
+`normal` 3d, priority 70 · `long` 7d, priority 60 · `debug` 1h, priority 0. **Priority is
+dominated by QOS** (weight 200 vs age 10) — pick the shortest tier your job fits. (`debug`
+still starts fast because its 4 nodes are dedicated and usually idle, not because of priority.)
 
 ### GPUs
 
@@ -131,15 +132,15 @@ A symptom-first index to the rest of the book.
 
 **"Permission denied (publickey)" when I `ssh` — it worked before.**
 Your SSH key almost certainly **expired** (they last one year). Regenerate it in the portal's
-SSH Key Manager, unzip into `~/.ssh`, `chmod 0600 -R ~/.ssh` (@sec-first-login).
+SSH Key Manager, unzip into `~/.ssh`, `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*` (@sec-first-login).
 
 **"Permission denied" on a brand-new setup.**
-Check permissions: `chmod 0600 -R ~/.ssh`, and make sure you unzipped the key into `~/.ssh`.
+Check permissions: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`, and make sure you unzipped the key into `~/.ssh`.
 Confirm you're using `medicinebow.arcc.uwyo.edu`, not the dead `southpass` name.
 
 **I can't get an account at all.**
-Only a **PI** can request it, in writing, against a project. You cannot self-register
-(@sec-account).
+Account requests for ASCEND/ARID performers are coordinated through the program — email
+Virginia Iglesias (<virginia@innosphere.org>). See @sec-account.
 
 **Globus won't let me add the collection.**
 If you're an external collaborator on an **ARCC-Only account**, you can't use Globus. You need
@@ -270,6 +271,11 @@ Plain-language definitions of the terms this book uses.
 **Fair-share**
 : A priority factor reflecting your account's recent usage relative to its share; heavy recent
   use temporarily lowers your priority. See @sec-priority.
+
+**Globus**
+: A managed file-transfer service that moves data between "collections" (endpoints), with
+  restart and checksums. Requires a full UW account — ARCC-Only accounts can't use it. See
+  @sec-moving-data.
 
 **GRES (Generic RESource)**
 : How you request GPUs: `--gres=gpu:1` or `--gres=gpu:h100:2`. See @sec-gpu.

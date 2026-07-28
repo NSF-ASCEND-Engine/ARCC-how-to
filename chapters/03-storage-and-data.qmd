@@ -8,7 +8,8 @@ The three filesystems, what each one promises, and how to get data in and out.
 
 **Nothing on MedicineBow is backed up. Not home, not project, not scratch.**
 
-There *are* snapshots (point-in-time copies you can sometimes restore from), but they live on
+There *are* snapshots (point-in-time copies; within about 20 days you can ask
+`arcc-help@uwyo.edu` to restore from one), but they live on
 the **same storage array** as your live data — if the array fails, the snapshots fail with
 it. Snapshots protect against accidental deletion, not hardware loss. Anything you can't
 afford to lose needs a copy elsewhere: your institution's storage, a cloud bucket, or the
@@ -154,7 +155,7 @@ everyone else's login-node activity and will be slow.
 `rclone` is ARCC's recommended CLI for moving data to and from cloud services. It's a module:
 
 ```bash
-module load rclone/1.63.1
+module load gcc/14.2.0 rclone/1.63.1   # rclone needs a compiler module first
 rclone config          # one-time: set up a "remote" (S3 bucket, Drive, etc.)
 rclone copy mydata/ myremote:bucket/path/    # copy up
 rclone copy myremote:bucket/path/ ./mydata/  # copy down

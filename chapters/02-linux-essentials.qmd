@@ -50,7 +50,8 @@ find . -size +1G             # find files bigger than 1 GB (great for quota hunt
 du -sh *                     # how big is each thing in this directory?
 ```
 
-`du -sh * | sort -h` finds what's eating your quota — useful given the 50 GB home limit
+`du -h --max-depth=1 ~ | sort -h` finds what's eating your quota — it includes hidden dirs
+like `~/.conda` and `~/.cache`, the usual culprits on the 50 GB home limit
 (@sec-storage).
 
 ## Environment variables and your shell
@@ -95,6 +96,15 @@ The workflow:
 4. Detach (<kbd>Ctrl-b</kbd> then <kbd>d</kbd>) and close your laptop. It all keeps running.
 5. Tomorrow, SSH back in and `tmux attach -t work` — exactly where you left off.
 
+::: {.callout-warning}
+## tmux sessions live on one specific login node
+MedicineBow has two login nodes (`mblog1`, `mblog2`), and `ssh medicinebow.arcc.uwyo.edu`
+sends you to whichever is less busy — so you may land on the *other* one and `tmux ls` will
+show nothing. A session lives only on the node where you created it. Note your node from the
+shell prompt (or run `hostname`), and reconnect to that exact node — e.g.
+`ssh <username>@mblog1.arcc.uwyo.edu` — to find your session again.
+:::
+
 ::: {.callout-note}
 ## tmux is for login-node shells, not batch jobs
 A batch job (`sbatch`, @sec-anatomy) already runs independently of your connection — log out
@@ -105,13 +115,13 @@ monitoring, an editor you don't want to lose.
 ## Permissions, briefly
 
 You'll occasionally see `chmod` and permission strings like `-rw-r-----`. The main uses are
-fixing your SSH keys (`chmod 0600 -R ~/.ssh`, from @sec-first-login) and making a script
+fixing your SSH keys (`chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`, from @sec-first-login) and making a script
 executable:
 
 ```bash
 chmod +x run.sh
 ```
 
-There is **no `sudo` on the cluster**. You can't install system packages or change things
+You have **no root / `sudo` privileges** on the cluster. You can't install system packages or change things
 outside your own directories, and you don't need to — everything you install goes in your
 own space (@sec-conda) or as modules (@sec-modules).

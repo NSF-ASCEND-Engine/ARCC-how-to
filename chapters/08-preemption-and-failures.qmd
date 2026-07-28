@@ -8,8 +8,9 @@ How long jobs survive preemption and walltime limits, and how to diagnose jobs t
 
 Much of MedicineBow's hardware was bought by individual research groups, departments, or PIs
 using their own grant or startup funds. Those buyers are the **investors**, and the nodes they
-paid for make up the `inv-*` partitions, where they get top priority (QOS 110). Everyone else
-can **backfill** onto idle investor nodes — free capacity most of the time, with one condition.
+paid for make up the `inv-*` partitions, where they get top priority (priority 110). Everyone
+else can **backfill** — run on idle investor nodes that would otherwise sit empty — for free
+capacity most of the time, with one condition.
 
 ::: {.callout-warning}
 ## An investor can reclaim a node and requeue your job
@@ -167,8 +168,8 @@ If node failures recur on the same node, report it to `arcc-help@uwyo.edu` with 
 
 1. `sacct -j <id> ...` → get the **State**, narrowing it to one of the four families above.
 2. Resource-related (OOM/timeout) → adjust `--mem`/`--time`, resubmit.
-3. `FAILED` → read `slurm-<id>.out`, fix the code/env, and reproduce it fast in a `debug`-QOS
-   job (near-instant start, @sec-queue-times) rather than waiting in a long queue each
+3. `FAILED` → read `slurm-<id>.out`, fix the code/env, and reproduce it fast on the `debug`
+   partition (near-instant start, @sec-queue-times) rather than waiting in a long queue each
    iteration.
 4. Once it works, `seff <id>` → right-size → promote to the real partition/QOS.
 

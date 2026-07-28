@@ -33,8 +33,9 @@ preempt your job (@sec-preemption).
 ::: {.callout-note}
 ## Avoiding preemption: use `non-investor`, not `--constraint`
 `--constraint=non-investor` matches nothing on the current machine and does nothing. Use a
-**partition** instead: `--partition=non-investor` (110 CPU nodes) or
-`--partition=non-investor-gpu` (7 GPU nodes) stays on hardware that won't be reclaimed. This
+**partition** instead: `--partition=non-investor` (110 nodes) or
+`--partition=non-investor-gpu` (7 GPU nodes; you must also request a GPU with `--gres=gpu:N`
+there) stays on hardware that won't be reclaimed. This
 is the right home for long, un-checkpointed runs.
 :::
 
@@ -73,7 +74,7 @@ gives priority 80 and the full 4746-core cap; `long` (7 d) drops to priority 60 
 
 ### `DenyOnLimit`: rejected at submit
 
-Every QOS is flagged **`DenyOnLimit`**. If you ask for more than a QOS allows — say a 5-day
+Every user-facing QOS is flagged **`DenyOnLimit`**. If you ask for more than a QOS allows — say a 5-day
 run under `normal` (max 3 d), or more cores than the cap — Slurm rejects the job at submit
 time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.
 
