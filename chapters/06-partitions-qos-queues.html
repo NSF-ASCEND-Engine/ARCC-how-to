@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-partitions"><span class="header-section-number">6.1</span> Partitions and QOS on MedicineBow</h2>
 <section id="partition-which-hardware" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="partition-which-hardware"><span class="header-section-number">6.1.1</span> Partition = which hardware</h3>
-<p>A <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>).</p>
+<p>A <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>). The <code>mb</code> prefix stands for <strong><span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span></strong> — <code>mb</code> is the general-purpose CPU pool, and the <code>mb-*</code> partitions are the GPU pools, each named for the NVIDIA GPU it holds. (<code>teton</code>, <code>beartooth</code>, and <code>wildiris</code> are older clusters absorbed into MedicineBow, which is why they lack the prefix.)</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 16%">
@@ -532,7 +532,7 @@ The walltime trade-off
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-queue-times"><span class="header-section-number">6.2</span> Queue times: which partition for what</h2>
 <section id="what-the-queue-looks-like" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="what-the-queue-looks-like"><span class="header-section-number">6.2.1</span> What the queue looks like</h3>
-<p>At a representative midday moment on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> there were roughly <strong>2,000 jobs running and 800 pending</strong>. Almost every pending job’s reason was <code>Priority</code> — the machine is busy and you’re in line, not that you asked for something impossible.</p>
+<p>At a representative midday moment on MedicineBow there were roughly <strong>2,000 jobs running and 800 pending</strong>. Almost every pending job’s reason was <code>Priority</code> — the machine is busy and you’re in line, not that you asked for something impossible.</p>
 </section>
 <section id="measured-wait-times-start-minus-eligible" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="measured-wait-times-start-minus-eligible"><span class="header-section-number">6.2.2</span> Measured wait times (start minus eligible)</h3>
