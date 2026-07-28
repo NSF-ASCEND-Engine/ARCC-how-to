@@ -1,4 +1,4 @@
-# How priority is actually computed here {#sec-priority}
+# How priority is computed {#sec-priority}
 
 ::: {.tldr}
 Your position in line is a weighted sum of factors. On MedicineBow the weights are **QOS ×

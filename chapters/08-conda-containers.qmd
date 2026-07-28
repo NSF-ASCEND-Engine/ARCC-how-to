@@ -1,4 +1,4 @@
-# Conda and containers without wrecking your home directory {#sec-conda}
+# Conda and containers {#sec-conda}
 
 ::: {.tldr}
 Conda writes gigabytes into your 50 GB home directory by default. Redirect its package cache

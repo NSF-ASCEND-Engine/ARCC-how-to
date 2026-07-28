@@ -1,4 +1,4 @@
-# The Linux you actually need {#sec-linux}
+# Linux essentials {#sec-linux}
 
 ::: {.tldr}
 The minimum Linux for cluster work: move around the filesystem, edit files, find things,

@@ -1,4 +1,4 @@
-# What a cluster is (and why your laptop isn't one) {#sec-cluster}
+# What a Cluster is {#sec-cluster}
 
 ::: {.tldr}
 A cluster is a few hundred computers that share storage and a waitlist. You don't touch

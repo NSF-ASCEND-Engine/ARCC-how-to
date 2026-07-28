@@ -23,7 +23,7 @@ book:
         - chapters/01-what-is-a-cluster.qmd
         - chapters/02-getting-an-account.qmd
         - chapters/03-first-login.qmd
-    - part: "Part II — The Linux you actually need"
+    - part: "Part II — Linux essentials"
       chapters:
         - chapters/04-linux-survival.qmd
     - part: "Part III — Where your data lives"

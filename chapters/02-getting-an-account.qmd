@@ -1,4 +1,4 @@
-# Getting an account (your PI must do this) {#sec-account}
+# Getting an account {#sec-account}
 
 ::: {.tldr}
 You cannot request your own ARCC account. A **PI** (UW faculty or research scientist) must

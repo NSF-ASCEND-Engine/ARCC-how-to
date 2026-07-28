@@ -1,4 +1,4 @@
-# Where your data lives (and why nothing is backed up) {#sec-storage}
+# Where your data lives {#sec-storage}
 
 ::: {.tldr}
 MedicineBow has three filesystems: **home** (50 GB, small), **project** (5 TB, shared with
