@@ -652,6 +652,21 @@ Figure&nbsp;6.1: Wait time (start − eligible) by month, June 2024 – July 202
 </div>
 <p>Two things stand out. Wait times <strong>vary a lot month to month</strong>: median waits range from about a second in quiet, array-dominated months to tens of minutes when the machine is busy, and the busiest months push the 90th percentile into hours. And the very low medians in the high-volume recent months are the signature of large <code>fast</code>-QOS job arrays (<a href="07-working-with-jobs.html#sec-arrays" class="quarto-xref"><span>Section 7.2</span></a>) that start almost instantly — one well-behaved sweep can move the whole month’s median. The planning takeaway is unchanged: a normal CPU job usually starts within minutes, but <em>how busy the machine is this month</em> matters, so check the live queue before a big campaign (end of chapter).</p>
 </section>
+<section id="the-same-picture-split-by-partition" class="level4" data-number="6.2.2.2">
+<h4 data-number="6.2.2.2" class="anchored" data-anchor-id="the-same-picture-split-by-partition"><span class="header-section-number">6.2.2.2</span> The same picture, split by partition</h4>
+<p>The heatmap below is those same 26 months broken out by partition — median wait on top, 90th percentile below. It’s the visual form of the partition table: the CPU pools (<code>mb</code>, <code>teton</code>, <code>beartooth</code>, <code>non-investor</code>) stay cool most months, while the GPU partitions — especially <code>mb-l40s</code> and <code>mb-h100</code> — run hot, sometimes for months at a stretch.</p>
+<div id="fig-partition-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-partition-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/wait-times-by-month-partition.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-partition-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Wait time by month and partition: median (top) and 90th percentile (bottom). Warmer = longer wait; grey = fewer than 30 jobs that month. Log color scale.
+</figcaption>
+</figure>
+</div>
+<p>(When you submit — hour of day or day of week — barely moves the needle by comparison: across these 26 months the median wait is flat around a few seconds whenever you submit. Spend your effort on the partition and QOS, not on timing.)</p>
+</section>
 </section>
 </section>
 <section id="short-proof-of-concept-vs.-long-simulation" class="level2" data-number="6.3">
@@ -679,7 +694,7 @@ Figure&nbsp;6.1: Wait time (start − eligible) by month, June 2024 – July 202
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-choose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.2: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpointing</span>.
+Figure&nbsp;6.3: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpointing</span>.
 </figcaption>
 </figure>
 </div>

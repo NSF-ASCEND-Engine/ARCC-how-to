@@ -623,6 +623,18 @@ No per-partition default time, so set <code>--time</code>
 <li><strong>A GPU you don’t use</strong> → you sit in the busy GPU queue for nothing (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</li>
 </ul>
 <p>The fix is to right-size.</p>
+<p>Twenty-six months of accounting data (~70 million jobs) show this, with a twist worth understanding:</p>
+<div id="fig-resources" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/wait-vs-resources.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Wait time by request size. The <strong>median</strong> (solid) barely moves — most jobs are tiny and start almost instantly regardless — but the <strong>90th percentile</strong> (faded), your bad-day wait, climbs steeply along every axis, and GPU jobs wait far longer than CPU throughout. Log axis; 0 s at the 1 s floor.
+</figcaption>
+</figure>
+</div>
+<p>The median stays near a few seconds because the machine is dominated by tiny one-core jobs that always start fast. The lesson is in the 90th percentile — your <em>unlucky</em> wait: a job asking for many cores, lots of memory, or a long <span class="gloss" data-def="The real elapsed clock time a job is allowed (--time); the job is killed at the limit." aria-label="The real elapsed clock time a job is allowed (--time); the job is killed at the limit.">walltime</span> can sit for <strong>hours</strong> where a small one waits seconds, and a GPU job waits far longer than a comparable CPU job (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>). Right-sizing doesn’t just save your allocation; it protects you from the long tail.</p>
 </section>
 <section id="measure-then-right-size-with-seff" class="level3" data-number="5.3.5">
 <h3 data-number="5.3.5" class="anchored" data-anchor-id="measure-then-right-size-with-seff"><span class="header-section-number">5.3.5</span> Measure, then right-size, with <code>seff</code></h3>
