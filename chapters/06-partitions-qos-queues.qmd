@@ -153,6 +153,19 @@ start almost instantly — one well-behaved sweep can move the whole month's med
 takeaway is unchanged: a normal CPU job usually starts within minutes, but *how busy the
 machine is this month* matters, so check the live queue before a big campaign (end of chapter).
 
+#### The same picture, split by partition
+
+The heatmap below is those same 26 months broken out by partition — median wait on top,
+90th percentile below. It's the visual form of the partition table: the CPU pools (`mb`,
+`teton`, `beartooth`, `non-investor`) stay cool most months, while the GPU partitions —
+especially `mb-l40s` and `mb-h100` — run hot, sometimes for months at a stretch.
+
+![Wait time by month and partition: median (top) and 90th percentile (bottom). Warmer = longer wait; grey = fewer than 30 jobs that month. Log color scale.](img/wait-times-by-month-partition.svg){#fig-partition-heatmap}
+
+(When you submit — hour of day or day of week — barely moves the needle by comparison: across
+these 26 months the median wait is flat around a few seconds whenever you submit. Spend your
+effort on the partition and QOS, not on timing.)
+
 ## Short proof-of-concept vs. long simulation
 
 ```{mermaid}

@@ -350,6 +350,17 @@ A bigger request is a rarer set of free resources to find:
 
 The fix is to right-size.
 
+Twenty-six months of accounting data (~70 million jobs) show this, with a twist worth
+understanding:
+
+![Wait time by request size. The **median** (solid) barely moves — most jobs are tiny and start almost instantly regardless — but the **90th percentile** (faded), your bad-day wait, climbs steeply along every axis, and GPU jobs wait far longer than CPU throughout. Log axis; 0 s at the 1 s floor.](img/wait-vs-resources.svg){#fig-resources}
+
+The median stays near a few seconds because the machine is dominated by tiny one-core jobs
+that always start fast. The lesson is in the 90th percentile — your *unlucky* wait: a job
+asking for many cores, lots of memory, or a long walltime can sit for **hours** where a small
+one waits seconds, and a GPU job waits far longer than a comparable CPU job (@sec-queue-times).
+Right-sizing doesn't just save your allocation; it protects you from the long tail.
+
 ### Measure, then right-size, with `seff`
 
 After a job finishes, `seff` tells you what it actually used versus what you reserved:
