@@ -7,6 +7,10 @@ Where to send a job and how long you'll wait — the highest-leverage choices yo
 ### Partition = which hardware
 
 A partition is a named pool of nodes. Submit with `--partition=<name>` (the default is `mb`).
+The `mb` prefix stands for **MedicineBow** — `mb` is the general-purpose CPU pool, and the
+`mb-*` partitions are the GPU pools, each named for the NVIDIA GPU it holds. (`teton`,
+`beartooth`, and `wildiris` are older clusters absorbed into MedicineBow, which is why they
+lack the prefix.)
 
 | Partition | Nodes | Cores/node | Mem/node | GPUs/node | Good for |
 |---|---|---|---|---|---|
