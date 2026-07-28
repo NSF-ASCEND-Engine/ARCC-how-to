@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>If you already live in a terminal, skim the <code>tmux</code> section. Everything here is standard Linux; nothing is <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>-specific except the paths.</p>
+<p>If you already live in a terminal, skim the <code>tmux</code> section. Everything here is standard Linux; nothing is <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>-specific except the paths.</p>
 <section id="moving-around" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="moving-around"><span class="header-section-number">2.1</span> Moving around</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span>                 <span class="co"># where am I?</span></span>
@@ -294,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sec-tmux" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="sec-tmux"><span class="header-section-number">2.6</span> <code>tmux</code>: keep work alive across a dropped connection</h2>
-<p>When you SSH in and start something, <strong>closing your laptop or losing WiFi kills that shell and everything running in it.</strong> <code>tmux</code> keeps your session alive on the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> whether or not you’re connected.</p>
+<p>When you SSH in and start something, <strong>closing your laptop or losing WiFi kills that shell and everything running in it.</strong> <code>tmux</code> keeps your session alive on the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> whether or not you’re connected.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> new <span class="at">-s</span> work     <span class="co"># start a named session "work"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   ... do things, launch an interactive job, watch output ...</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   detach with:  Ctrl-b then d</span></span>
@@ -314,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-tmux is for login-node shells, not <span class="gloss" title="A job submitted as a script with sbatch that runs unattended when scheduled.">batch jobs</span>
+tmux is for login-node shells, not <span class="gloss" data-def="A job submitted as a script with sbatch that runs unattended when scheduled." aria-label="A job submitted as a script with sbatch that runs unattended when scheduled.">batch jobs</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -326,7 +326,7 @@ tmux is for login-node shells, not <span class="gloss" title="A job submitted as
 <h2 data-number="2.7" class="anchored" data-anchor-id="permissions-briefly"><span class="header-section-number">2.7</span> Permissions, briefly</h2>
 <p>You’ll occasionally see <code>chmod</code> and permission strings like <code>-rw-r-----</code>. The main uses are fixing your SSH keys (<code>chmod 0600 -R ~/.ssh</code>, from <a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>) and making a script executable:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x run.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>There is <strong>no <code>sudo</code> on the cluster</strong>. You can’t install system packages or change things outside your own directories, and you don’t need to — everything you install goes in your own space (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>) or as <span class="gloss" title="The module system that loads specific software versions into your shell on demand.">modules</span> (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
+<p>There is <strong>no <code>sudo</code> on the cluster</strong>. You can’t install system packages or change things outside your own directories, and you don’t need to — everything you install goes in your own space (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>) or as <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">modules</span> (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 
 
 </section>

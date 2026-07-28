@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-modules"><span class="header-section-number">4.1</span> Software modules</h2>
 <section id="why-modules-exist" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="why-modules-exist"><span class="header-section-number">4.1.1</span> Why modules exist</h3>
-<p>A cluster has hundreds of users who need incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. <strong><span class="gloss" title="The module system that loads specific software versions into your shell on demand.">Modules</span></strong> let you load exactly the versions you want into your shell for this session, without affecting anyone else. Load a module and its programs appear on your <code>PATH</code>; unload it and they vanish.</p>
+<p>A cluster has hundreds of users who need incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. <strong><span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">Modules</span></strong> let you load exactly the versions you want into your shell for this session, without affecting anyone else. Load a module and its programs appear on your <code>PATH</code>; unload it and they vanish.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0        <span class="co"># add gcc 14 to this shell</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> list                   <span class="co"># what do I currently have loaded?</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> unload gcc/14.2.0      <span class="co"># remove it</span></span>
@@ -265,9 +265,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-hierarchy" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="the-hierarchy"><span class="header-section-number">4.1.2</span> The hierarchy</h3>
-<p><span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> uses <strong>Lmod</strong> in <em>hierarchical</em> mode. Modules are arranged in layers:</p>
+<p><span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> uses <strong>Lmod</strong> in <em>hierarchical</em> mode. Modules are arranged in layers:</p>
 <ul>
-<li><strong>Core</strong> modules are always visible: the compilers (<code>gcc</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>), <span class="gloss" title="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span>, and standalone tools.</li>
+<li><strong>Core</strong> modules are always visible: the compilers (<code>gcc</code>, <code>nvhpc-sdk</code>, <code>oneapi</code>), <span class="gloss" data-def="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun." aria-label="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span>, and standalone tools.</li>
 <li><strong>Compiler-dependent</strong> modules — Python, R, GDAL, NetCDF, HDF5, CUDA — are <strong>hidden until you load a compiler.</strong> They were built against a specific compiler, so Lmod won’t show them until you’ve picked one.</li>
 </ul>
 <p>So a new user runs <code>module avail</code>, doesn’t see <code>gdal</code>, and concludes it isn’t installed. It is — just one layer down.</p>
@@ -337,7 +337,7 @@ Load modules in your submit script, not just interactively
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Modules loaded on the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> don’t carry into a <span class="gloss" title="A job submitted as a script with sbatch that runs unattended when scheduled.">batch job</span>. Put the <code>module load</code> / <code>module restore</code> lines <strong>inside</strong> your <code>sbatch</code> script so the job builds the same environment every time (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
+<p>Modules loaded on the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> don’t carry into a <span class="gloss" data-def="A job submitted as a script with sbatch that runs unattended when scheduled." aria-label="A job submitted as a script with sbatch that runs unattended when scheduled.">batch job</span>. Put the <code>module load</code> / <code>module restore</code> lines <strong>inside</strong> your <code>sbatch</code> script so the job builds the same environment every time (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
 </div>
 </div>
 <p>When a package isn’t available as a module — or you need a pip/conda world — see the next chapter (<a href="#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</p>
@@ -869,7 +869,7 @@ GPUs inside containers
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
+<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -324,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p><span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s helper turns this into a sentence:</p>
+<p><span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s helper turns this into a sentence:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> 123456       <span class="co"># "why isn't this running?" in plain language</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Follow a running job’s output live:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-f</span> slurm-123456.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -351,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. TIMEOUT and OUT_OF_MEMORY mean you under-requested; <span class="gloss" title="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preemption</span> sends the job back to PENDING.
+Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. TIMEOUT and OUT_OF_MEMORY mean you under-requested; <span class="gloss" data-def="An investor reclaiming a borrowed node, killing your job and (here) requeuing it." aria-label="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preemption</span> sends the job back to PENDING.
 </figcaption>
 </figure>
 </div>
@@ -385,7 +385,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Some docs mention an <code>arccq</code> command as an alternative to <code>squeue</code>. It isn’t installed on <span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> — use <code>squeue</code>, <code>showuserjobs</code>, or <code>joblist</code> instead.</p>
+<p>Some docs mention an <code>arccq</code> command as an alternative to <code>squeue</code>. It isn’t installed on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> — use <code>squeue</code>, <code>showuserjobs</code>, or <code>joblist</code> instead.</p>
 </div>
 </div>
 </section>
@@ -411,7 +411,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <h2 data-number="7.2" class="anchored" data-anchor-id="sec-arrays"><span class="header-section-number">7.2</span> Job arrays</h2>
 <section id="the-problem-it-solves" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="the-problem-it-solves"><span class="header-section-number">7.2.1</span> The problem it solves</h3>
-<p>You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. A bash loop runs them serially in one job, so one crash near the end wastes everything. Copy-pasting 500 submit scripts is no better. An <strong><span class="gloss" title="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">array job</span></strong> is one script, submitted once, that <span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span> turns into 500 independent tasks it can run in parallel and <span class="gloss" title="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> wherever there’s room.</p>
+<p>You have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. A bash loop runs them serially in one job, so one crash near the end wastes everything. Copy-pasting 500 submit scripts is no better. An <strong><span class="gloss" data-def="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles." aria-label="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">array job</span></strong> is one script, submitted once, that <span class="gloss" data-def="The scheduler that manages all jobs on the cluster." aria-label="The scheduler that manages all jobs on the cluster.">Slurm</span> turns into 500 independent tasks it can run in parallel and <span class="gloss" data-def="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs." aria-label="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> wherever there’s room.</p>
 </section>
 <section id="the-mechanics" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="the-mechanics"><span class="header-section-number">7.2.2</span> The mechanics</h3>
@@ -452,7 +452,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <h3 data-number="7.2.4" class="anchored" data-anchor-id="throttling"><span class="header-section-number">7.2.4</span> Throttling</h3>
 <p>Cap how many tasks run simultaneously with <code>%</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20        # at most 20 tasks running at a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This keeps you under your account’s core cap (and protects your <span class="gloss" title="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span>, <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
+<p>This keeps you under your account’s core cap (and protects your <span class="gloss" data-def="A priority factor: heavy recent usage by your account temporarily lowers your priority." aria-label="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span>, <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
 </section>
 <section id="managing-an-array" class="level3" data-number="7.2.5">
 <h3 data-number="7.2.5" class="anchored" data-anchor-id="managing-an-array"><span class="header-section-number">7.2.5</span> Managing an array</h3>
@@ -469,7 +469,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Arrays vs.&nbsp;<span class="gloss" title="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span> jobs
+Arrays vs.&nbsp;<span class="gloss" data-def="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun." aria-label="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span> jobs
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -486,7 +486,7 @@ Arrays vs.&nbsp;<span class="gloss" title="Message Passing Interface — a singl
 <p>For hands-on work — debugging a crash, exploring a dataset, building a model interactively — request an interactive allocation:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">--account</span><span class="op">=</span>cowy-firesurro <span class="at">--qos</span><span class="op">=</span>interactive <span class="dt">\</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">--time</span><span class="op">=</span>02:00:00 <span class="at">--cpus-per-task</span><span class="op">=</span>4 <span class="at">--mem</span><span class="op">=</span>16G</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>salloc</code> requires at least <code>--account</code> and <code>--time</code>. It grants a shell <strong>on a <span class="gloss" title="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span></strong>, where you can run heavy work off the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>. The <code>interactive</code> <span class="gloss" title="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> starts in ~10–30 seconds (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>) with an 8-hour ceiling.</p>
+<p><code>salloc</code> requires at least <code>--account</code> and <code>--time</code>. It grants a shell <strong>on a <span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span></strong>, where you can run heavy work off the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>. The <code>interactive</code> <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> starts in ~10–30 seconds (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>) with an 8-hour ceiling.</p>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -508,7 +508,7 @@ Launch <code>salloc</code> from inside <code>tmux</code>
 </section>
 <section id="sec-gpu" class="level3" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="sec-gpu"><span class="header-section-number">7.3.2</span> GPU jobs</h3>
-<p>Request GPUs with <code>--gres=gpu:&lt;count&gt;</code> and target a GPU <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span>:</p>
+<p>Request GPUs with <code>--gres=gpu:&lt;count&gt;</code> and target a GPU <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span>:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb-l40s          # or mb-h100, mb-a30, ...</span></span>
@@ -663,7 +663,7 @@ Figure&nbsp;7.2: The parallelism ladder. Climb only as high as the problem needs
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 openmpi/5.0.10</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> ./my_mpi_simulation             <span class="co"># srun launches the MPI ranks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Use <code>srun</code> (not <code>mpirun</code>) to launch — it’s integrated with Slurm and gets the task layout right automatically. MPI is a step up in complexity; use it only when a problem won’t fit on one node. For long MPI runs, prefer <code>non-investor</code> and <span class="gloss" title="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpoint</span> (<a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</p>
+<p>Use <code>srun</code> (not <code>mpirun</code>) to launch — it’s integrated with Slurm and gets the task layout right automatically. MPI is a step up in complexity; use it only when a problem won’t fit on one node. For long MPI runs, prefer <code>non-investor</code> and <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpoint</span> (<a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</p>
 </section>
 <section id="rung-5-gpu" class="level4" data-number="7.4.1.5">
 <h4 data-number="7.4.1.5" class="anchored" data-anchor-id="rung-5-gpu"><span class="header-section-number">7.4.1.5</span> Rung 5 — GPU</h4>

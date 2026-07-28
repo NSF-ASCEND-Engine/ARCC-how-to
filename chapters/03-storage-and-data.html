@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -260,8 +260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-storage"><span class="header-section-number">3.1</span> Where your data lives</h2>
 <section id="nothing-is-backed-up" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</h3>
-<p><strong>Nothing on <span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is backed up. Not home, not project, not <span class="gloss" title="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>.</strong></p>
-<p>There <em>are</em> <span class="gloss" title="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies you can sometimes restore from), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
+<p><strong>Nothing on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is backed up. Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>.</strong></p>
+<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies you can sometimes restore from), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
 </section>
 <section id="the-three-filesystems" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</h3>
@@ -343,13 +343,13 @@ Scratch purge is 90 days, not 45
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Legacy Confluence docs say 45 days; the current <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
+<p>Legacy Confluence docs say 45 days; the current <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
 </div>
 </div>
 </section>
 <section id="lscratch-node-local-gone-when-the-job-ends" class="level4" data-number="3.1.2.4">
 <h4 data-number="3.1.2.4" class="anchored" data-anchor-id="lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">3.1.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</h4>
-<p>Each <span class="gloss" title="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span> has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
+<p>Each <span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span> has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
 <p>(There is no <code>/data</code> filesystem, despite what some docs suggest.)</p>
 </section>
 </section>
@@ -410,7 +410,7 @@ Install software into <code>/project/&lt;proj&gt;/software</code>, not <code>/ho
 </tr>
 </tbody>
 </table>
-<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login nodes</span>, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
+<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login nodes</span>, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
 </section>
 <section id="globus-the-recommended-path-for-real-data" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">3.2.2</span> Globus — the recommended path for real data</h3>
@@ -447,7 +447,7 @@ Globus needs a full UW account
 </section>
 <section id="rclone-cloud-storage-s3-google-drive-box" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h3>
-<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" title="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
+<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load rclone/1.63.1</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
