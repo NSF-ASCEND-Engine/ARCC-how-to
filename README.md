@@ -12,8 +12,7 @@ This book was written in tandem with **Claude** — Anthropic's **Claude Opus 4.
 human author. Claude harvested the live cluster, cross-checked every load-bearing claim
 against the running machine, drafted and revised the prose, generated the diagrams and the
 queue-time analysis, and a panel of Claude review agents audited the content for correctness
-and clarity. A human directed the work and made the final calls. Fittingly, the book includes
-a chapter on using agentic coding tools like Claude for cluster work.
+and clarity. A human directed the work and made the final calls.
 
 ## What's inside
 
