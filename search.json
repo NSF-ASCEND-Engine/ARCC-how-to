@@ -42,56 +42,56 @@
   {
     "objectID": "chapters/01-what-is-a-cluster.html",
     "href": "chapters/01-what-is-a-cluster.html",
-    "title": "1  What a Cluster is",
+    "title": "1  What a cluster is",
     "section": "",
     "text": "1.1 Mental model\nMedicineBow is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the scheduler (here, Slurm). Learning the cluster is mostly learning to work with the scheduler.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#login-nodes-vs.-compute-nodes",
     "href": "chapters/01-what-is-a-cluster.html#login-nodes-vs.-compute-nodes",
-    "title": "1  What a Cluster is",
+    "title": "1  What a cluster is",
     "section": "1.2 Login nodes vs. compute nodes",
     "text": "1.2 Login nodes vs. compute nodes\nThere are two kinds of machines, and confusing them is the most common beginner mistake.\nLogin nodes (mblog1, mblog2) are the front door. When you ssh in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.\nCompute nodes are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default mb nodes have 96 CPU cores and ~1 TB of RAM each, and the GPU nodes carry up to 8 NVIDIA H100s.\n\n\n\n\n\n\nflowchart LR\n    U[\"Your laptop\"] --&gt;|\"ssh / web portal\"| L\n    subgraph MB [\"MedicineBow\"]\n        L[\"Login nodes&lt;br/&gt;mblog1 / mblog2&lt;br/&gt;shared, lightweight only\"]\n        S{{\"Slurm scheduler\"}}\n        L --&gt;|\"sbatch / salloc\"| S\n        S --&gt; C1[\"Compute node\"]\n        S --&gt; C2[\"Compute node\"]\n        S --&gt; C3[\"GPU node\"]\n    end\n    FS[(\"Shared filesystems&lt;br/&gt;home, project, scratch\")]\n    L --- FS\n    C1 --- FS\n    C3 --- FS\n\n\n\n\nFigure 1.1: You reach a shared login node from your laptop; the scheduler runs your jobs on dedicated compute nodes. All nodes see the same filesystems.\n\n\n\n\n\n\n\n\n\n\n\nDon’t compute on login nodes\n\n\n\nA heavy job on mblog1/mblog2 — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills runaway login-node processes (and emails you).\nRule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See Chapter 9.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#why-share-a-machine-at-all",
     "href": "chapters/01-what-is-a-cluster.html#why-share-a-machine-at-all",
-    "title": "1  What a Cluster is",
+    "title": "1  What a cluster is",
     "section": "1.3 Why share a machine at all?",
     "text": "1.3 Why share a machine at all?\nIf everyone had their own dedicated server, most servers would sit idle while a few people occasionally needed far more than one server could give. Pooling the hardware and scheduling access means:\n\nWhen you need 50 nodes for an ensemble, you can have them (briefly).\nWhen you need nothing, someone else uses the hardware you’re not using.\nA fair-share accounting system stops any one person from hogging everything.\n\nIn exchange, you sometimes wait in line and you have to describe your work up front (how many cores, how much memory, how long). Most of this book is about making those two things painless.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#what-medicinebow-is-concretely",
     "href": "chapters/01-what-is-a-cluster.html#what-medicinebow-is-concretely",
-    "title": "1  What a Cluster is",
+    "title": "1  What a cluster is",
     "section": "1.4 What MedicineBow is, concretely",
     "text": "1.4 What MedicineBow is, concretely\nMedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:\n\nGeneral CPU nodes (the mb partition): 25 nodes, 96 cores and ~1 TB RAM each.\nGPU nodes: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything CUDA.\nAbsorbed older clusters: the retired Teton, Beartooth, and WildIris clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.\nInvestor (“condo”) nodes: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see Chapter 18).\n\nYou don’t need to memorize this. The partition chapter (Chapter 12) covers which hardware to ask for, and the queue-times chapter (Chapter 13) covers which choices leave you waiting versus running now.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#where-to-get-help",
     "href": "chapters/01-what-is-a-cluster.html#where-to-get-help",
-    "title": "1  What a Cluster is",
+    "title": "1  What a cluster is",
     "section": "1.5 Where to get help",
     "text": "1.5 Where to get help\n\n\n\nChannel\nUse it for\n\n\n\n\narcc-help@uwyo.edu\nAnything. Real humans, ticketed via Jira Service Management.\n\n\nOffice hours (Zoom)\nTuesdays, 11am–1pm — bring your actual problem.\n\n\nARCC wiki\nThe official reference docs.\n\n\n\nNote the help address is arcc-help@uwyo.edu (with a hyphen). You may occasionally see arcchelp@uwyo.edu in a stray module message — that’s a typo; use the hyphenated one.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
   {
