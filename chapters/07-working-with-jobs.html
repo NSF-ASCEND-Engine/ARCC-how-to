@@ -301,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>Priority</code></td>
 <td>busy machine, you’re in line</td>
-<td>wait — or pick a better QOS (<a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>)</td>
+<td>wait — or pick a better QOS (<a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.4</span></a>)</td>
 </tr>
 <tr class="even">
 <td><code>Resources</code></td>
@@ -376,19 +376,6 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>              <span class="co"># what am I actually allowed to request?</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">joblist</span>                     <span class="co"># cluster-wide queue overview</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pestat</span>                      <span class="co"># per-node CPU/memory load across the cluster</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<code>arccq</code> does not exist
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Some docs mention an <code>arccq</code> command as an alternative to <code>squeue</code>. It isn’t installed on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> — use <code>squeue</code>, <code>showuserjobs</code>, or <code>joblist</code> instead.</p>
-</div>
-</div>
 </section>
 <section id="cancelling" class="level3" data-number="7.1.4">
 <h3 data-number="7.1.4" class="anchored" data-anchor-id="cancelling"><span class="header-section-number">7.1.4</span> Cancelling</h3>
@@ -435,7 +422,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <p>Submit once:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> logs</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit_array.sh        <span class="co"># creates 500 tasks: 12345_1, 12345_2, ... 12345_500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Each task is scheduled independently. Because they’re small and short, they backfill well (<a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>) and the whole sweep finishes faster than running them in series.</p>
+<p>Each task is scheduled independently. Because they’re small and short, they backfill well (<a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.4</span></a>) and the whole sweep finishes faster than running them in series.</p>
 </section>
 <section id="driving-work-from-the-index" class="level3" data-number="7.2.3">
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="driving-work-from-the-index"><span class="header-section-number">7.2.3</span> Driving work from the index</h3>
@@ -453,7 +440,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <h3 data-number="7.2.4" class="anchored" data-anchor-id="throttling"><span class="header-section-number">7.2.4</span> Throttling</h3>
 <p>Cap how many tasks run simultaneously with <code>%</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20        # at most 20 tasks running at a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This keeps you under your account’s core cap (and protects your <span class="gloss" data-def="A priority factor: heavy recent usage by your account temporarily lowers your priority." aria-label="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span>, <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.3</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
+<p>This keeps you under your account’s core cap (and protects your <span class="gloss" data-def="A priority factor: heavy recent usage by your account temporarily lowers your priority." aria-label="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span>, <a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.4</span></a>) while still processing all 500. A modest <code>%</code> limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.</p>
 <p>The largest index Slurm allows is <strong>10,000</strong> (<code>MaxArraySize</code>); split bigger sweeps into several arrays.</p>
 </section>
 <section id="managing-an-array" class="level3" data-number="7.2.5">

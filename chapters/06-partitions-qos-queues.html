@@ -235,16 +235,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#what-the-queue-looks-like" id="toc-what-the-queue-looks-like" class="nav-link" data-scroll-target="#what-the-queue-looks-like"><span class="header-section-number">6.2.1</span> What the queue looks like</a></li>
   <li><a href="#measured-wait-times-start-minus-eligible" id="toc-measured-wait-times-start-minus-eligible" class="nav-link" data-scroll-target="#measured-wait-times-start-minus-eligible"><span class="header-section-number">6.2.2</span> Measured wait times (start minus eligible)</a></li>
-  <li><a href="#short-proof-of-concept-vs.-long-simulation" id="toc-short-proof-of-concept-vs.-long-simulation" class="nav-link" data-scroll-target="#short-proof-of-concept-vs.-long-simulation"><span class="header-section-number">6.2.3</span> Short proof-of-concept vs.&nbsp;long simulation</a></li>
-  <li><a href="#check-the-live-queue-before-you-commit" id="toc-check-the-live-queue-before-you-commit" class="nav-link" data-scroll-target="#check-the-live-queue-before-you-commit"><span class="header-section-number">6.2.4</span> Check the live queue before you commit</a></li>
   </ul></li>
-  <li><a href="#sec-priority" id="toc-sec-priority" class="nav-link" data-scroll-target="#sec-priority"><span class="header-section-number">6.3</span> How priority is computed</a>
+  <li><a href="#short-proof-of-concept-vs.-long-simulation" id="toc-short-proof-of-concept-vs.-long-simulation" class="nav-link" data-scroll-target="#short-proof-of-concept-vs.-long-simulation"><span class="header-section-number">6.3</span> Short proof-of-concept vs.&nbsp;long simulation</a>
   <ul class="collapse">
-  <li><a href="#the-formula" id="toc-the-formula" class="nav-link" data-scroll-target="#the-formula"><span class="header-section-number">6.3.1</span> The formula</a></li>
-  <li><a href="#what-each-factor-means" id="toc-what-each-factor-means" class="nav-link" data-scroll-target="#what-each-factor-means"><span class="header-section-number">6.3.2</span> What each factor means</a></li>
-  <li><a href="#practical-takeaway" id="toc-practical-takeaway" class="nav-link" data-scroll-target="#practical-takeaway"><span class="header-section-number">6.3.3</span> Practical takeaway</a></li>
-  <li><a href="#backfill-why-a-small-job-can-jump-the-line" id="toc-backfill-why-a-small-job-can-jump-the-line" class="nav-link" data-scroll-target="#backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">6.3.4</span> Backfill: why a small job can jump the line</a></li>
-  <li><a href="#seeing-your-own-priority" id="toc-seeing-your-own-priority" class="nav-link" data-scroll-target="#seeing-your-own-priority"><span class="header-section-number">6.3.5</span> Seeing your own priority</a></li>
+  <li><a href="#check-the-live-queue-before-you-commit" id="toc-check-the-live-queue-before-you-commit" class="nav-link" data-scroll-target="#check-the-live-queue-before-you-commit"><span class="header-section-number">6.3.1</span> Check the live queue before you commit</a></li>
+  </ul></li>
+  <li><a href="#sec-priority" id="toc-sec-priority" class="nav-link" data-scroll-target="#sec-priority"><span class="header-section-number">6.4</span> How priority is computed</a>
+  <ul class="collapse">
+  <li><a href="#the-formula" id="toc-the-formula" class="nav-link" data-scroll-target="#the-formula"><span class="header-section-number">6.4.1</span> The formula</a></li>
+  <li><a href="#what-each-factor-means" id="toc-what-each-factor-means" class="nav-link" data-scroll-target="#what-each-factor-means"><span class="header-section-number">6.4.2</span> What each factor means</a></li>
+  <li><a href="#practical-takeaway" id="toc-practical-takeaway" class="nav-link" data-scroll-target="#practical-takeaway"><span class="header-section-number">6.4.3</span> Practical takeaway</a></li>
+  <li><a href="#backfill-why-a-small-job-can-jump-the-line" id="toc-backfill-why-a-small-job-can-jump-the-line" class="nav-link" data-scroll-target="#backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">6.4.4</span> Backfill: why a small job can jump the line</a></li>
+  <li><a href="#seeing-your-own-priority" id="toc-seeing-your-own-priority" class="nav-link" data-scroll-target="#seeing-your-own-priority"><span class="header-section-number">6.4.5</span> Seeing your own priority</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/06-partitions-qos-queues.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -635,9 +637,25 @@ How to read these numbers
 <p>This window included a large <code>fast</code>-QOS <span class="gloss" data-def="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles." aria-label="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">job array</span> on <code>teton</code>, which pulls the <code>teton</code>/<code>fast</code> medians toward zero. The <strong><code>normal</code>-QOS row (tens of thousands of ordinary jobs: median ~19 s, 90th percentile ~8 min)</strong> is the most representative figure for a normal CPU job. The pattern holds either way: CPU work starts fast; GPU work, especially L40S/H100, is where you wait. Measure the live picture before a big campaign — see the commands at the end of this chapter.</p>
 </div>
 </div>
+<section id="the-longer-view-wait-times-month-by-month" class="level4" data-number="6.2.2.1">
+<h4 data-number="6.2.2.1" class="anchored" data-anchor-id="the-longer-view-wait-times-month-by-month"><span class="header-section-number">6.2.2.1</span> The longer view: wait times month by month</h4>
+<p>The tables above are a short <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshot</span>. The figure below is the full history — every finished job from June 2024 to July 2026, about <strong>70 million</strong> of them — as a box plot of wait time per month, with the monthly job count underneath.</p>
+<div id="fig-monthly" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-monthly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/wait-times-by-month.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monthly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Wait time (start − eligible) by month, June 2024 – July 2026. Boxes span the 25th–75th percentile with the median line; whiskers the 5th–95th. The lower panel is monthly job volume. Both axes that can be are log-scaled; 0-second waits sit at the 1-second floor.
+</figcaption>
+</figure>
+</div>
+<p>Two things stand out. Wait times <strong>vary a lot month to month</strong>: median waits range from about a second in quiet, array-dominated months to tens of minutes when the machine is busy, and the busiest months push the 90th percentile into hours. And the very low medians in the high-volume recent months are the signature of large <code>fast</code>-QOS job arrays (<a href="07-working-with-jobs.html#sec-arrays" class="quarto-xref"><span>Section 7.2</span></a>) that start almost instantly — one well-behaved sweep can move the whole month’s median. The planning takeaway is unchanged: a normal CPU job usually starts within minutes, but <em>how busy the machine is this month</em> matters, so check the live queue before a big campaign (end of chapter).</p>
 </section>
-<section id="short-proof-of-concept-vs.-long-simulation" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="short-proof-of-concept-vs.-long-simulation"><span class="header-section-number">6.2.3</span> Short proof-of-concept vs.&nbsp;long simulation</h3>
+</section>
+</section>
+<section id="short-proof-of-concept-vs.-long-simulation" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="short-proof-of-concept-vs.-long-simulation"><span class="header-section-number">6.3</span> Short proof-of-concept vs.&nbsp;long simulation</h2>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-choose" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -661,14 +679,14 @@ How to read these numbers
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-choose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpointing</span>.
+Figure&nbsp;6.2: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and <span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpointing</span>.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<section id="short-proof-of-concept-debugging-does-it-even-run" class="level4" data-number="6.2.3.1">
-<h4 data-number="6.2.3.1" class="anchored" data-anchor-id="short-proof-of-concept-debugging-does-it-even-run"><span class="header-section-number">6.2.3.1</span> Short proof-of-concept / debugging / “does it even run?”</h4>
+<section id="short-proof-of-concept-debugging-does-it-even-run" class="level4" data-number="6.3.0.1">
+<h4 data-number="6.3.0.1" class="anchored" data-anchor-id="short-proof-of-concept-debugging-does-it-even-run"><span class="header-section-number">6.3.0.1</span> Short proof-of-concept / debugging / “does it even run?”</h4>
 <p>You want to start now, run briefly, and iterate. Priority and low wait matter; walltime and footprint don’t.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=debug        # 4 dedicated test nodes, usually idle</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=debug              # 1 h max, but starts almost instantly</span></span>
@@ -682,8 +700,8 @@ Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/inter
 <li>For GPU proof-of-concept, develop on <strong><code>mb-a30</code></strong> (starts in minutes), <em>not</em> H100.</li>
 </ul>
 </section>
-<section id="long-production-simulation-big-ensemble-final-runs" class="level4" data-number="6.2.3.2">
-<h4 data-number="6.2.3.2" class="anchored" data-anchor-id="long-production-simulation-big-ensemble-final-runs"><span class="header-section-number">6.2.3.2</span> Long production simulation / big ensemble / final runs</h4>
+<section id="long-production-simulation-big-ensemble-final-runs" class="level4" data-number="6.3.0.2">
+<h4 data-number="6.3.0.2" class="anchored" data-anchor-id="long-production-simulation-big-ensemble-final-runs"><span class="header-section-number">6.3.0.2</span> Long production simulation / big ensemble / final runs</h4>
 <p>You need days of walltime and want to avoid preemption, accepting a longer initial wait in exchange for a long, stable run.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=non-investor   # big pool that won't be reclaimed</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=long                 # up to 7 days</span></span>
@@ -697,8 +715,8 @@ Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/inter
 <li>Right-size first (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>): a leaner request under <code>long</code> starts sooner than a bloated one.</li>
 </ul>
 </section>
-<section id="the-quick-decision-table" class="level4" data-number="6.2.3.3">
-<h4 data-number="6.2.3.3" class="anchored" data-anchor-id="the-quick-decision-table"><span class="header-section-number">6.2.3.3</span> The quick decision table</h4>
+<section id="the-quick-decision-table" class="level4" data-number="6.3.0.3">
+<h4 data-number="6.3.0.3" class="anchored" data-anchor-id="the-quick-decision-table"><span class="header-section-number">6.3.0.3</span> The quick decision table</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -760,9 +778,8 @@ Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/inter
 </tbody>
 </table>
 </section>
-</section>
-<section id="check-the-live-queue-before-you-commit" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="check-the-live-queue-before-you-commit"><span class="header-section-number">6.2.4</span> Check the live queue before you commit</h3>
+<section id="check-the-live-queue-before-you-commit" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="check-the-live-queue-before-you-commit"><span class="header-section-number">6.3.1</span> Check the live queue before you commit</h3>
 <p>Historical medians are a guide; the live machine is what matters. Before a big submission:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showpartitions</span>               <span class="co"># idle vs busy nodes, per partition, right now</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sinfo</span> <span class="at">-p</span> mb-h100 <span class="at">-o</span> <span class="st">"%P %t %D"</span>   <span class="co"># how many H100 nodes are idle this second?</span></span>
@@ -771,13 +788,13 @@ Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/inter
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>               <span class="co"># what am I allowed to ask for?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If <code>showpartitions</code> shows idle H100 nodes, submit now. If the GPU partitions are full and the line is long, either develop on <code>mb-a30</code> or submit and walk away.</p>
 <p>Once a job is queued, <code>showjobreasons &lt;jobid&gt;</code> explains why it’s still pending (<a href="07-working-with-jobs.html#sec-monitoring" class="quarto-xref"><span>Section 7.1</span></a>) — usually <code>Priority</code> (wait) or <code>Resources</code> (large request).</p>
-<p><a href="#sec-priority" class="quarto-xref"><span>Section 6.3</span></a> explains why QOS dominates your position in that line.</p>
+<p><a href="#sec-priority" class="quarto-xref"><span>Section 6.4</span></a> explains why QOS dominates your position in that line.</p>
 </section>
 </section>
-<section id="sec-priority" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-priority"><span class="header-section-number">6.3</span> How priority is computed</h2>
-<section id="the-formula" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="the-formula"><span class="header-section-number">6.3.1</span> The formula</h3>
+<section id="sec-priority" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-priority"><span class="header-section-number">6.4</span> How priority is computed</h2>
+<section id="the-formula" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="the-formula"><span class="header-section-number">6.4.1</span> The formula</h3>
 <p>Slurm computes a priority score for every pending job and runs the highest scores first (subject to <span class="gloss" data-def="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs." aria-label="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span>, below). The score is a weighted sum; MedicineBow’s weights are:</p>
 <pre class="text"><code>PriorityWeightQOS       = 200     &lt;- dominant
 PriorityWeightFairShare = 100
@@ -786,15 +803,15 @@ PriorityWeightAge       = 10
 PriorityWeightPartition = 0       (partition doesn't affect priority here)</code></pre>
 <p>Each factor is a number between 0 and 1, multiplied by its weight, and summed. The biggest lever, by a wide margin, is <strong>QOS</strong>.</p>
 </section>
-<section id="what-each-factor-means" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="what-each-factor-means"><span class="header-section-number">6.3.2</span> What each factor means</h3>
+<section id="what-each-factor-means" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="what-each-factor-means"><span class="header-section-number">6.4.2</span> What each factor means</h3>
 <p><strong>QOS (weight 200).</strong> Higher-priority QOS means a better position. From <a href="#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>: <code>interactive</code> (90) &gt; <code>fast</code> (80) &gt; <code>normal</code> (70) &gt; <code>long</code> (60). Choosing <code>fast</code> over <code>long</code> is worth more priority than any amount of waiting, which is why the short-vs-long decision in <a href="#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a> matters.</p>
 <p><strong><span class="gloss" data-def="A priority factor: heavy recent usage by your account temporarily lowers your priority." aria-label="A priority factor: heavy recent usage by your account temporarily lowers your priority.">Fair-share</span> (weight 100) — recent usage.</strong> Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.</p>
 <p><strong>Job size (weight 100).</strong> A factor based on the resources requested. With the <code>SMALL_RELATIVE_TO_TIME</code> flag this cluster sets, it interacts with your time request — another reason not to over-ask (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>).</p>
 <p><strong>Age (weight 10) — time spent waiting.</strong> A job gains priority the longer it sits, maxing out after ~3 days. At weight 10, age is a tie-breaker, not a strategy; you won’t age past someone who chose a better QOS.</p>
 </section>
-<section id="practical-takeaway" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="practical-takeaway"><span class="header-section-number">6.3.3</span> Practical takeaway</h3>
+<section id="practical-takeaway" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="practical-takeaway"><span class="header-section-number">6.4.3</span> Practical takeaway</h3>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -809,12 +826,12 @@ QOS dominates priority
 </div>
 </div>
 </section>
-<section id="backfill-why-a-small-job-can-jump-the-line" class="level3" data-number="6.3.4">
-<h3 data-number="6.3.4" class="anchored" data-anchor-id="backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">6.3.4</span> Backfill: why a small job can jump the line</h3>
+<section id="backfill-why-a-small-job-can-jump-the-line" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="backfill-why-a-small-job-can-jump-the-line"><span class="header-section-number">6.4.4</span> Backfill: why a small job can jump the line</h3>
 <p>Priority sets the order, but Slurm also <strong>backfills</strong>: if the top job is waiting for, say, 40 nodes to free up, Slurm slots a smaller, shorter job into the gap now, as long as that doesn’t delay the top job’s reserved start time. This is why a 20-minute test can start immediately even when the queue looks deep, and why short jobs start sooner than long ones. Requesting less time and fewer resources makes your job backfill-eligible in more gaps — another payoff for right-sizing.</p>
 </section>
-<section id="seeing-your-own-priority" class="level3" data-number="6.3.5">
-<h3 data-number="6.3.5" class="anchored" data-anchor-id="seeing-your-own-priority"><span class="header-section-number">6.3.5</span> Seeing your own priority</h3>
+<section id="seeing-your-own-priority" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="seeing-your-own-priority"><span class="header-section-number">6.4.5</span> Seeing your own priority</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sprio</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>            <span class="co"># the priority breakdown for a pending job</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sprio</span> <span class="at">-l</span>                    <span class="co"># all pending jobs, with factor columns</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>      <span class="co"># ARCC helper: plain-language "why am I waiting?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

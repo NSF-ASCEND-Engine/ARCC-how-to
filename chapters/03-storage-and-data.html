@@ -339,24 +339,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="gscratchuser-fast-and-disposable" class="level4" data-number="3.1.2.3">
 <h4 data-number="3.1.2.3" class="anchored" data-anchor-id="gscratchuser-fast-and-disposable"><span class="header-section-number">3.1.2.3</span> <code>/gscratch/$USER</code> — fast and disposable</h4>
 <p>Also 5 TB, and the <strong>fast</strong> filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for <strong>90 days</strong> are purged automatically. Never keep the only copy of anything here.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Scratch purge is 90 days, not 45
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Legacy Confluence docs say 45 days; the current <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
-</div>
-</div>
 </section>
 <section id="lscratch-node-local-gone-when-the-job-ends" class="level4" data-number="3.1.2.4">
 <h4 data-number="3.1.2.4" class="anchored" data-anchor-id="lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">3.1.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</h4>
 <p>Each <span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span> has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
-<p>(There is no <code>/data</code> filesystem, despite what some docs suggest.)</p>
 </section>
 </section>
 <section id="install-software-in-project-space-not-home" class="level3" data-number="3.1.3">
@@ -453,7 +439,7 @@ Globus needs a full UW account
 </section>
 <section id="rclone-cloud-storage-s3-google-drive-box" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h3>
-<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
+<p><code>rclone</code> is <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1   <span class="co"># rclone needs a compiler module first</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>

@@ -233,6 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#point-conda-away-from-home-first" id="toc-point-conda-away-from-home-first" class="nav-link" data-scroll-target="#point-conda-away-from-home-first"><span class="header-section-number">4.2.1</span> Point conda away from home first</a></li>
   <li><a href="#apptainer-containers-for-reproducibility-and-portability" id="toc-apptainer-containers-for-reproducibility-and-portability" class="nav-link" data-scroll-target="#apptainer-containers-for-reproducibility-and-portability"><span class="header-section-number">4.2.2</span> Apptainer: containers for reproducibility and portability</a></li>
   </ul></li>
+  <li><a href="#sec-pkgdirs" id="toc-sec-pkgdirs" class="nav-link" data-scroll-target="#sec-pkgdirs"><span class="header-section-number">4.3</span> Keep package installs out of home</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/04-software.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -446,11 +447,46 @@ GPUs inside containers
 <p>To use the node’s GPUs from inside a container, add the <code>--nv</code> flag so Apptainer exposes the NVIDIA driver: <code>apptainer exec --nv mytool.sif ...</code>. Pair this with a GPU job (<a href="07-working-with-jobs.html#sec-gpu" class="quarto-xref"><span>Section 7.3.2</span></a>).</p>
 </div>
 </div>
+</section>
+</section>
+</section>
+<section id="sec-pkgdirs" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sec-pkgdirs"><span class="header-section-number">4.3</span> Keep package installs out of home</h2>
+<p>Home is only 50 GB (<a href="03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>), and every language’s package manager dumps its downloads, compiled caches, and installed libraries into a hidden directory in home by default — a few environments and it’s full, at which point jobs and logins start failing in confusing ways. The fix is the same for all three languages: <strong>point the package directory at your project’s 250 GB software space, set it once in <code>~/.bashrc</code>, and create it before you install anything.</strong> (Large regenerable caches could live on <code>/gscratch</code> instead, but it’s purged after 90 days — project space is the safer home for software.)</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>For <strong>conda</strong>, redirect environments and the package cache via <code>~/.condarc</code> — see the conda section above (<a href="#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>). For plain <strong>pip</strong>, redirect the cache and build virtual environments in project space rather than <code>~/.local</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in ~/.bashrc</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PIP_CACHE_DIR</span><span class="op">=</span>/project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/software/<span class="va">$USER</span>/pip-cache</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># make a venv in project space (load a python module first)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv /project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/software/<span class="va">$USER</span>/venvs/myenv</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/software/<span class="va">$USER</span>/venvs/myenv/bin/activate</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install numpy xarray        <span class="co"># installs into the venv, not home</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Avoid <code>pip install --user</code> — it writes to <code>~/.local</code> and fills home.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>R installs user packages into <code>~/R/...</code> by default (confirmed on the machine). Point <code>R_LIBS_USER</code> at project space and create the directory:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in ~/.bashrc</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">R_LIBS_USER</span><span class="op">=</span>/project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/software/<span class="va">$USER</span>/Rlibs</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$R_LIBS_USER</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now <code>install.packages("data.table")</code> — after <code>module load gcc/15.2.0 r/4.5.3</code> — installs there. For per-project, reproducible libraries, the <code>renv</code> package works well and keeps each project’s packages inside the project directory.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Julia’s <strong>depot</strong> (<code>~/.julia</code> — downloaded packages, registries, artifacts, and the precompiled cache) is the biggest offender; it routinely grows to many gigabytes. Move it with <code>JULIA_DEPOT_PATH</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in ~/.bashrc</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">JULIA_DEPOT_PATH</span><span class="op">=</span>/project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/software/<span class="va">$USER</span>/julia_depot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then <code>module load julia/1.11.6</code> and <code>] add DataFrames</code> populates the project-space depot instead of home. Set this before your first <code>julia</code> run; if you already have a large <code>~/.julia</code>, move it (<code>mv ~/.julia "$JULIA_DEPOT_PATH"</code>) and set the variable.</p>
+</div>
+</div>
+</div>
+<p>After editing <code>~/.bashrc</code>, run <code>source ~/.bashrc</code> (or reconnect) to apply it, and put the same <code>export</code> and <code>module load</code> lines in your submit scripts so batch jobs use the same locations (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
 <p>Next: running your work through the scheduler (<a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>).</p>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
