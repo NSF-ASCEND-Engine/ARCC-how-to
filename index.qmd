@@ -40,13 +40,11 @@ policy at any time. When in doubt, the
 
 ## How the book is organized
 
-- **Part I** gets you an account and logged in.
-- **Part II** is a minimal Linux survival kit.
-- **Part III** covers the filesystems and moving data in and out.
-- **Part IV** covers software: modules, conda, and containers.
-- **Part V** covers **Slurm**, the batch scheduler — how to ask for resources, pick a
-  queue, watch your jobs, run arrays, use GPUs, and handle preemption and failures.
-- **Part VI** is quick reference: a cheat sheet, troubleshooting, and a glossary.
+The chapters run roughly in the order you'll need them: getting an account and logging in, a
+minimal Linux survival kit, the filesystems and moving data, software (modules, conda,
+containers), then the bulk of the book on **Slurm** — asking for resources, picking a queue,
+watching jobs, arrays, GPUs, and handling preemption and failures. The last few chapters are
+quick reference: a cheat sheet, troubleshooting, and a glossary.
 
 Conventions: shell commands you type are shown in `code blocks`. Boxes marked
 **Gotcha** or **Important** mark places people reliably get burned.

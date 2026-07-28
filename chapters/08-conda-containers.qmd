@@ -84,4 +84,4 @@ To use the node's GPUs from inside a container, add the `--nv` flag so Apptainer
 NVIDIA driver: `apptainer exec --nv mytool.sif ...`. Pair this with a GPU job (@sec-gpu).
 :::
 
-Next: running your work through the scheduler (Part V, starting at @sec-why-scheduler).
+Next: running your work through the scheduler (@sec-why-scheduler).

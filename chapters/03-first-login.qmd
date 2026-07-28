@@ -88,4 +88,4 @@ don't silently drop your connection while you're reading output.
 | Drag-and-drop a few files | Portal → Files (for big data, see @sec-moving-data) |
 
 Once you can log in and get a shell prompt, continue to the Linux survival kit (@sec-linux),
-or skip ahead to storage (@sec-storage) and Slurm (Part V) if you already know a terminal.
+or skip ahead to storage (@sec-storage) and Slurm (@sec-why-scheduler) if you already know a terminal.
