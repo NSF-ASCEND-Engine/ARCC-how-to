@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Getting Started on ARCC MedicineBow",
     "section": "",
-    "text": "Preface\nA practical guide to getting work done on MedicineBow, the University of Wyoming’s high-performance computing (HPC) cluster, run by the Advanced Research Computing Center (ARCC).\nIt is written for people joining the ASCEND engine and its ARID program, whose work spans wildfire-risk and fire-weather modeling, hydrology and post-fire water-quality analysis, remote sensing, and machine learning. The examples come from that space but are deliberately generic: almost everything here applies to any new MedicineBow user. It assumes you are comfortable on a computer but have never used a shared supercomputer. Each chapter explains why before how.",
+    "text": "Preface\nA practical guide to getting work done on MedicineBow, the University of Wyoming’s high-performance computing (HPC) cluster, run by the Advanced Research Computing Center (ARCC).\nIt is written for people joining the ASCEND engine and its ARID program, and assumes you are comfortable on a computer but have never used a shared supercomputer. Each chapter explains why before how.",
     "crumbs": [
       "Preface"
     ]
@@ -24,7 +24,7 @@
     "href": "index.html#quick-orientation",
     "title": "Getting Started on ARCC MedicineBow",
     "section": "Quick orientation",
-    "text": "Quick orientation\n\nYou cannot request your own account — your PI must. No project, no account. (See 2  Getting an account (your PI must do this).)\nNothing on the cluster is backed up. Not home, not project, not scratch. There are snapshots, but they live on the same array. (See 5  Where your data lives (and why nothing is backed up).)\nNever run real computation on a login node. Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See 9  Why a scheduler exists.)\nEvery job must name your project account with --account=&lt;project&gt;. (See 10  Anatomy of a batch job.)\nThe partition and QOS you choose decide how long you wait and how big you can go. Short test runs and long simulations belong in different queues (12  Partitions and QOS on MedicineBow, 13  Queue times: which partition for what).",
+    "text": "Quick orientation\n\nYou cannot request your own account — your PI must. No project, no account. (See 2  Getting an account.)\nNothing on the cluster is backed up. Not home, not project, not scratch. There are snapshots, but they live on the same array. (See 5  Where your data lives.)\nNever run real computation on a login node. Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See 9  Why a scheduler exists.)\nEvery job must name your project account with --account=&lt;project&gt;. (See 10  Anatomy of a batch job.)\nThe partition and QOS you choose decide how long you wait and how big you can go. Short test runs and long simulations belong in different queues (12  Partitions and QOS on MedicineBow, 13  Queue times: which partition for what).",
     "crumbs": [
       "Preface"
     ]
@@ -34,7 +34,7 @@
     "href": "index.html#how-the-book-is-organized",
     "title": "Getting Started on ARCC MedicineBow",
     "section": "How the book is organized",
-    "text": "How the book is organized\n\nPart I gets you an account and logged in.\nPart II is a minimal Linux survival kit.\nPart III covers the filesystems and moving data in and out.\nPart IV covers software: modules, conda, and containers.\nPart V covers Slurm, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and handle preemption and failures.\nPart VI is quick reference: a cheat sheet, troubleshooting, and a glossary.\n\nConventions: shell commands you type are shown in code blocks. Boxes marked Gotcha or Important mark places people reliably get burned.",
+    "text": "How the book is organized\n\nPart I .\nPart II is a minimal Linux survival kit.\nPart III covers the filesystems and moving data in and out.\nPart IV covers software: modules, conda, and containers.\nPart V covers Slurm, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and handle preemption and failures.\nPart VI is quick reference: a cheat sheet, troubleshooting, and a glossary.\n\nConventions: shell commands you type are shown in code blocks. Boxes marked Gotcha or Important mark places people reliably get burned.",
     "crumbs": [
       "Preface"
     ]
@@ -42,122 +42,122 @@
   {
     "objectID": "chapters/01-what-is-a-cluster.html",
     "href": "chapters/01-what-is-a-cluster.html",
-    "title": "1  What a cluster is (and why your laptop isn’t one)",
+    "title": "1  What a Cluster is",
     "section": "",
     "text": "1.1 Mental model\nMedicineBow is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the scheduler (here, Slurm). Learning the cluster is mostly learning to work with the scheduler.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is (and why your laptop isn't one)</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#login-nodes-vs.-compute-nodes",
     "href": "chapters/01-what-is-a-cluster.html#login-nodes-vs.-compute-nodes",
-    "title": "1  What a cluster is (and why your laptop isn’t one)",
+    "title": "1  What a Cluster is",
     "section": "1.2 Login nodes vs. compute nodes",
     "text": "1.2 Login nodes vs. compute nodes\nThere are two kinds of machines, and confusing them is the most common beginner mistake.\nLogin nodes (mblog1, mblog2) are the front door. When you ssh in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.\nCompute nodes are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default mb nodes have 96 CPU cores and ~1 TB of RAM each, and the GPU nodes carry up to 8 NVIDIA H100s.\n\n\n\n\n\n\nflowchart LR\n    U[\"Your laptop\"] --&gt;|\"ssh / web portal\"| L\n    subgraph MB [\"MedicineBow\"]\n        L[\"Login nodes&lt;br/&gt;mblog1 / mblog2&lt;br/&gt;shared, lightweight only\"]\n        S{{\"Slurm scheduler\"}}\n        L --&gt;|\"sbatch / salloc\"| S\n        S --&gt; C1[\"Compute node\"]\n        S --&gt; C2[\"Compute node\"]\n        S --&gt; C3[\"GPU node\"]\n    end\n    FS[(\"Shared filesystems&lt;br/&gt;home, project, scratch\")]\n    L --- FS\n    C1 --- FS\n    C3 --- FS\n\n\n\n\nFigure 1.1: You reach a shared login node from your laptop; the scheduler runs your jobs on dedicated compute nodes. All nodes see the same filesystems.\n\n\n\n\n\n\n\n\n\n\n\nDon’t compute on login nodes\n\n\n\nA heavy job on mblog1/mblog2 — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills runaway login-node processes (and emails you).\nRule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See Chapter 9.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is (and why your laptop isn't one)</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#why-share-a-machine-at-all",
     "href": "chapters/01-what-is-a-cluster.html#why-share-a-machine-at-all",
-    "title": "1  What a cluster is (and why your laptop isn’t one)",
+    "title": "1  What a Cluster is",
     "section": "1.3 Why share a machine at all?",
     "text": "1.3 Why share a machine at all?\nIf everyone had their own dedicated server, most servers would sit idle while a few people occasionally needed far more than one server could give. Pooling the hardware and scheduling access means:\n\nWhen you need 50 nodes for an ensemble, you can have them (briefly).\nWhen you need nothing, someone else uses the hardware you’re not using.\nA fair-share accounting system stops any one person from hogging everything.\n\nIn exchange, you sometimes wait in line and you have to describe your work up front (how many cores, how much memory, how long). Most of this book is about making those two things painless.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is (and why your laptop isn't one)</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#what-medicinebow-is-concretely",
     "href": "chapters/01-what-is-a-cluster.html#what-medicinebow-is-concretely",
-    "title": "1  What a cluster is (and why your laptop isn’t one)",
+    "title": "1  What a Cluster is",
     "section": "1.4 What MedicineBow is, concretely",
     "text": "1.4 What MedicineBow is, concretely\nMedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:\n\nGeneral CPU nodes (the mb partition): 25 nodes, 96 cores and ~1 TB RAM each.\nGPU nodes: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything CUDA.\nAbsorbed older clusters: the retired Teton, Beartooth, and WildIris clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.\nInvestor (“condo”) nodes: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see Chapter 18).\n\nYou don’t need to memorize this. The partition chapter (Chapter 12) covers which hardware to ask for, and the queue-times chapter (Chapter 13) covers which choices leave you waiting versus running now.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is (and why your laptop isn't one)</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/01-what-is-a-cluster.html#where-to-get-help",
     "href": "chapters/01-what-is-a-cluster.html#where-to-get-help",
-    "title": "1  What a cluster is (and why your laptop isn’t one)",
+    "title": "1  What a Cluster is",
     "section": "1.5 Where to get help",
     "text": "1.5 Where to get help\n\n\n\nChannel\nUse it for\n\n\n\n\narcc-help@uwyo.edu\nAnything. Real humans, ticketed via Jira Service Management.\n\n\nOffice hours (Zoom)\nTuesdays, 11am–1pm — bring your actual problem.\n\n\nARCC wiki\nThe official reference docs.\n\n\n\nNote the help address is arcc-help@uwyo.edu (with a hyphen). You may occasionally see arcchelp@uwyo.edu in a stray module message — that’s a typo; use the hyphenated one.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is (and why your laptop isn't one)</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a Cluster is</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html",
     "href": "chapters/02-getting-an-account.html",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "",
     "text": "2.1 How accounts work\nARCC will not create an account without written confirmation from a Principal Investigator who owns a project. Accounts are tied to funded projects for accounting and fair-share purposes.\nSo the first step is a conversation, not a form:\nFor ASCEND/ARID performers the project is something like cowy-firesurro (the project this guide was written under). Confirm the exact project name with your PI — you type it into every job you run (Chapter 10).",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html#how-accounts-work",
     "href": "chapters/02-getting-an-account.html#how-accounts-work",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "",
     "text": "“Which project am I being added to, and can the PI email ARCC to add me?”",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html#who-can-be-a-pi",
     "href": "chapters/02-getting-an-account.html#who-can-be-a-pi",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "2.2 Who can be a PI",
     "text": "2.2 Who can be a PI\n\nUW faculty (extended-term / tenure-track) or a Research Scientist.\nNot adjunct, not emeritus, not a postdoc or student.\n\nIf your advisor doesn’t qualify, someone who does must sponsor the project. This matters for a multi-institution engine like ASCEND, where the leader of your sub-project might not be UW faculty.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html#uw-accounts-vs.-arcc-only-accounts",
     "href": "chapters/02-getting-an-account.html#uw-accounts-vs.-arcc-only-accounts",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "2.3 UW accounts vs. ARCC-Only accounts",
     "text": "2.3 UW accounts vs. ARCC-Only accounts\nASCEND spans UW, CSU, CU Boulder, Mines, NCAR, and NEON, so this distinction affects collaborators:\n\n\n\n\n\n\n\n\n\nFull UW account\nARCC-Only account\n\n\n\n\nWho\nUW-affiliated people\nExternal collaborators without a UW identity\n\n\nHPC (MedicineBow)\n✅\n✅\n\n\nGitLab\n✅\n✅\n\n\nGlobus data transfer\n✅\n❌ cannot use Globus\n\n\nOther UW services\n✅\n❌\n\n\n\n\n\n\n\n\n\nARCC-Only accounts and Globus\n\n\n\nExternal collaborators on ARCC-Only accounts cannot use Globus, the recommended way to move large datasets (Chapter 6). They’ll need a guest collection set up for them, or a UW person to broker transfers. Plan for this early if your data lives at CSU or NCAR.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html#the-free-tier",
     "href": "chapters/02-getting-an-account.html#the-free-tier",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "2.4 The free tier",
     "text": "2.4 The free tier\nEach researcher’s baseline allocation:\n\n100,000 CPU core-hours per year\n20,000 GPU-hours per year\n\nThat is plenty for getting started — 100,000 core-hours is roughly one 96-core node running flat out for six weeks. Larger allocations and investor projects exist beyond this. Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources (Chapter 11).",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
     "objectID": "chapters/02-getting-an-account.html#the-practical-checklist",
     "href": "chapters/02-getting-an-account.html#the-practical-checklist",
-    "title": "2  Getting an account (your PI must do this)",
+    "title": "2  Getting an account",
     "section": "2.5 The practical checklist",
     "text": "2.5 The practical checklist\n\nConfirm with your PI which project you’re joining and its exact name.\nHave the PI email arcc-help@uwyo.edu to request your account on that project. (You emailing them yourself won’t work — they need the PI’s confirmation.)\nOnce ARCC provisions you, you’ll get a UW username. Your first login is Chapter 3.\nIf you’re an external collaborator, flag it now and ask how you’ll move data, since Globus won’t be available to you.\n\nNo VPN is required to reach ARCC, on campus or off, so once your account exists you can log in from anywhere.",
     "crumbs": [
       "Part I — Getting oriented",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account (your PI must do this)</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
   {
@@ -229,133 +229,133 @@
   {
     "objectID": "chapters/04-linux-survival.html",
     "href": "chapters/04-linux-survival.html",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "",
     "text": "4.1 Moving around\nIf you already live in a terminal, skim the tmux section. Everything here is standard Linux; nothing is ARCC-specific except the paths.\nThree shortcuts you’ll use constantly: ~ is your home directory, . is “here”, and .. is “up one”. Press Tab to complete a half-typed path.",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#moving-around",
     "href": "chapters/04-linux-survival.html#moving-around",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "",
     "text": "pwd                 # where am I?\nls -lh              # list files, human-readable sizes\ncd /project/cowy-firesurro   # go somewhere\ncd                  # go home ($HOME)\ncd -                # go back to where you just were",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#looking-at-files-without-opening-them",
     "href": "chapters/04-linux-survival.html#looking-at-files-without-opening-them",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.2 Looking at files without opening them",
     "text": "4.2 Looking at files without opening them\ncat file.txt          # dump a whole (small) file\nless big.log          # page through a big file; q to quit, / to search\nhead -n 20 file       # first 20 lines\ntail -n 50 file       # last 50 lines\ntail -f slurm-123.out # follow a job's output live as it's written\ntail -f on a job’s output file shows whether it’s doing anything.",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#editing-files",
     "href": "chapters/04-linux-survival.html#editing-files",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.3 Editing files",
     "text": "4.3 Editing files\nnano is the easy choice — arrow keys work, and shortcuts are listed at the bottom of the screen (^O = save, ^X = exit).\nnano submit.sh\nvim is powerful but has a learning curve; if you don’t know it, nano is fine for a submit script. For anything bigger, edit on your laptop and use the portal’s file browser, VS Code’s Remote-SSH, or rsync (Chapter 6).",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#finding-things",
     "href": "chapters/04-linux-survival.html#finding-things",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.4 Finding things",
     "text": "4.4 Finding things\ngrep -r \"account\" .          # search file contents recursively\nfind . -name \"*.nc\"          # find files by name\nfind . -size +1G             # find files bigger than 1 GB (great for quota hunts)\ndu -sh *                     # how big is each thing in this directory?\ndu -sh * | sort -h finds what’s eating your quota — useful given the 50 GB home limit (Chapter 5).",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#environment-variables-and-your-shell",
     "href": "chapters/04-linux-survival.html#environment-variables-and-your-shell",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.5 Environment variables and your shell",
     "text": "4.5 Environment variables and your shell\nYour shell remembers settings in variables. A few you’ll meet:\necho $HOME        # /home/&lt;username&gt;\necho $USER        # your username\necho $SCRATCH     # /gscratch/&lt;username&gt; — your scratch space\necho $PATH        # where the shell looks for commands\nTo make something permanent (say, a handy alias), add it to ~/.bashrc:\nalias q='squeue --me'          # see just my jobs\nalias proj='cd /project/cowy-firesurro'\nRun source ~/.bashrc (or log out and back in) to apply changes.",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#sec-tmux",
     "href": "chapters/04-linux-survival.html#sec-tmux",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.6 tmux: keep work alive across a dropped connection",
     "text": "4.6 tmux: keep work alive across a dropped connection\nWhen you SSH in and start something, closing your laptop or losing WiFi kills that shell and everything running in it. tmux keeps your session alive on the login node whether or not you’re connected.\ntmux new -s work     # start a named session \"work\"\n#   ... do things, launch an interactive job, watch output ...\n#   detach with:  Ctrl-b then d\ntmux ls              # list your sessions\ntmux attach -t work  # reattach later, even from a different computer\nThe workflow:\n\nSSH into the login node.\ntmux new -s work.\nInside tmux, do your editing, submit jobs, launch an interactive session (Chapter 17).\nDetach (Ctrl-b then d) and close your laptop. It all keeps running.\nTomorrow, SSH back in and tmux attach -t work — exactly where you left off.\n\n\n\n\n\n\n\ntmux is for login-node shells, not batch jobs\n\n\n\nA batch job (sbatch, Chapter 10) already runs independently of your connection — log out and it keeps going. tmux is for things that live in your shell: interactive sessions, monitoring, an editor you don’t want to lose.",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/04-linux-survival.html#permissions-briefly",
     "href": "chapters/04-linux-survival.html#permissions-briefly",
-    "title": "4  The Linux you actually need",
+    "title": "4  Linux essentials",
     "section": "4.7 Permissions, briefly",
     "text": "4.7 Permissions, briefly\nYou’ll occasionally see chmod and permission strings like -rw-r-----. The main uses are fixing your SSH keys (chmod 0600 -R ~/.ssh, from Chapter 3) and making a script executable:\nchmod +x run.sh\nThere is no sudo on the cluster. You can’t install system packages or change things outside your own directories, and you don’t need to — everything you install goes in your own space (Chapter 8) or as modules (Chapter 7).",
     "crumbs": [
-      "Part II — The Linux you actually need",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The Linux you actually need</span>"
+      "Part II — Linux essentials",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
   {
     "objectID": "chapters/05-storage.html",
     "href": "chapters/05-storage.html",
-    "title": "5  Where your data lives (and why nothing is backed up)",
+    "title": "5  Where your data lives",
     "section": "",
     "text": "5.1 Nothing is backed up\nNothing on MedicineBow is backed up. Not home, not project, not scratch.\nThere are snapshots (point-in-time copies you can sometimes restore from), but they live on the same storage array as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate Alcova service, which does have real nightly backups.",
     "crumbs": [
       "Part III — Where your data lives",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives (and why nothing is backed up)</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
   {
     "objectID": "chapters/05-storage.html#the-three-filesystems",
     "href": "chapters/05-storage.html#the-three-filesystems",
-    "title": "5  Where your data lives (and why nothing is backed up)",
+    "title": "5  Where your data lives",
     "section": "5.2 The three filesystems",
     "text": "5.2 The three filesystems\n\n\n\n\n\n\n\n\n\n\nPath\nQuota\nSnapshots\nBackups\nPurged\n\n\n\n\n/home/$USER\n50 GB\nyes\nNO\nonly when you leave UW\n\n\n/project/&lt;proj&gt;\n5 TB\nyes\nNO\n6 months after project ends\n\n\n/gscratch/$USER ($SCRATCH)\n5 TB\nyes\nNO\nafter 90 days of inactivity\n\n\n/project/&lt;proj&gt;/software\n+250 GB on top of project\nyes\nNO\nwith the project\n\n\n/lscratch\nnode-local, varies\nno\nNO\nwiped at the end of every job\n\n\n\nCheck your usage and limits for home, scratch, and project:\narccquota\n\n5.2.1 /home — small, personal, for config not data\n50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts, and small configs — not datasets and not software installs. When home fills up, things break (jobs fail to write logs, logins misbehave), so watch it with arccquota and du -sh ~/* | sort -h.\n\n\n5.2.2 /project/&lt;proj&gt; — the shared workhorse\n5 TB, shared by everyone on your project (e.g. cowy-firesurro). This is where shared datasets, inputs, and results belong. Agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project ends.\n\n\n5.2.3 /gscratch/$USER — fast and disposable\nAlso 5 TB, and the fast filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for 90 days are purged automatically. Never keep the only copy of anything here.\n\n\n\n\n\n\nScratch purge is 90 days, not 45\n\n\n\nLegacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but 90 is the current policy. Either way, don’t treat scratch as storage.\n\n\n\n\n5.2.4 /lscratch — node-local, gone when the job ends\nEach compute node has its own local disk at /lscratch. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s wiped when your job ends, so copy anything you want to keep back to /project or /gscratch before the job exits.\n(There is no /data filesystem, despite what some docs suggest.)",
     "crumbs": [
       "Part III — Where your data lives",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives (and why nothing is backed up)</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
   {
     "objectID": "chapters/05-storage.html#install-software-in-project-space-not-home",
     "href": "chapters/05-storage.html#install-software-in-project-space-not-home",
-    "title": "5  Where your data lives (and why nothing is backed up)",
+    "title": "5  Where your data lives",
     "section": "5.3 Install software in project space, not home",
     "text": "5.3 Install software in project space, not home\n\n\n\n\n\n\nInstall software into /project/&lt;proj&gt;/software, not /home\n\n\n\nYour project has an extra 250 GB quota at /project/&lt;proj&gt;/software for installing software. A single conda environment with a few scientific packages can be 10–20 GB — two of those fills a 50 GB home directory.\nPoint conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (Chapter 8) shows how.",
     "crumbs": [
       "Part III — Where your data lives",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives (and why nothing is backed up)</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
   {
     "objectID": "chapters/05-storage.html#a-sane-layout-to-adopt-on-day-one",
     "href": "chapters/05-storage.html#a-sane-layout-to-adopt-on-day-one",
-    "title": "5  Where your data lives (and why nothing is backed up)",
+    "title": "5  Where your data lives",
     "section": "5.4 A sane layout to adopt on day one",
     "text": "5.4 A sane layout to adopt on day one\n/home/&lt;you&gt;/                      # dotfiles, small scripts, SSH keys\n/project/cowy-firesurro/\n    software/                     # conda envs, container images, manual builds\n    data/                         # shared input datasets\n    &lt;you&gt;/                        # your working area within the project\n/gscratch/&lt;you&gt;/                  # active job working dirs, heavy I/O, big temp output\nNext: getting data into these filesystems (Chapter 6).",
     "crumbs": [
       "Part III — Where your data lives",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives (and why nothing is backed up)</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
   {
@@ -427,89 +427,89 @@
   {
     "objectID": "chapters/07-modules.html",
     "href": "chapters/07-modules.html",
-    "title": "7  Software modules (and why module avail misleads)",
+    "title": "7  Software modules",
     "section": "",
     "text": "7.1 Why modules exist\nA cluster has hundreds of users who need incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. Modules let you load exactly the versions you want into your shell for this session, without affecting anyone else. Load a module and its programs appear on your PATH; unload it and they vanish.",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules (and why `module avail` misleads)</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
   {
     "objectID": "chapters/07-modules.html#why-modules-exist",
     "href": "chapters/07-modules.html#why-modules-exist",
-    "title": "7  Software modules (and why module avail misleads)",
+    "title": "7  Software modules",
     "section": "",
     "text": "module load gcc/14.2.0        # add gcc 14 to this shell\nmodule list                   # what do I currently have loaded?\nmodule unload gcc/14.2.0      # remove it\nmodule purge                  # clear everything and start clean",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules (and why `module avail` misleads)</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
   {
     "objectID": "chapters/07-modules.html#the-hierarchy",
     "href": "chapters/07-modules.html#the-hierarchy",
-    "title": "7  Software modules (and why module avail misleads)",
+    "title": "7  Software modules",
     "section": "7.2 The hierarchy",
     "text": "7.2 The hierarchy\nMedicineBow uses Lmod in hierarchical mode. Modules are arranged in layers:\n\nCore modules are always visible: the compilers (gcc, nvhpc-sdk, oneapi), MPI, and standalone tools.\nCompiler-dependent modules — Python, R, GDAL, NetCDF, HDF5, CUDA — are hidden until you load a compiler. They were built against a specific compiler, so Lmod won’t show them until you’ve picked one.\n\nSo a new user runs module avail, doesn’t see gdal, and concludes it isn’t installed. It is — just one layer down.\n\n\n\n\n\n\nUse module spider, not module avail, to check whether something exists\n\n\n\nmodule avail shows only what’s loadable given what you’ve already loaded. module spider searches the entire tree and tells you both that something exists and what to load first to reach it.\nmodule spider gdal            # yes it exists; here are the versions\nmodule spider gdal/3.13.0     # ...and exactly what to load before it\n\n\nA typical geospatial stack, in order:\nmodule purge\nmodule load gcc/14.2.0        # 1. a compiler, first\nmodule load gdal/3.13.0       # 2. now GDAL is reachable\nmodule load netcdf-c/4.9.2-ompi",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules (and why `module avail` misleads)</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
   {
     "objectID": "chapters/07-modules.html#whats-installed-a-tour",
     "href": "chapters/07-modules.html#whats-installed-a-tour",
-    "title": "7  Software modules (and why module avail misleads)",
+    "title": "7  Software modules",
     "section": "7.3 What’s installed (a tour)",
     "text": "7.3 What’s installed (a tour)\nAsk the machine for the current list with module spider, but roughly:\n\nCompilers (core): gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}, nvhpc-sdk, oneapi, openmpi/5.0.10.\nAfter loading a compiler: python/{3.10.6, 3.12.0, 3.14.4}, r/{4.4.0, 4.5.3}, gdal/{3.7.3, 3.13.0}, netcdf-c/4.9.2-ompi, hdf5/1.14.3*, cuda-toolkit/{12.4.1, 12.6.1}, openmpi/4.1.6, rclone/1.63.1.\nStandalone: apptainer/{1.3.5, 1.4.1}, singularity/4.1.0, miniconda3/24.3.0, julia/{1.10.3, 1.11.6}.\n\n\n\n\n\n\n\nCUDA needs the deprecated gcc/13.2.0\n\n\n\ngcc/13.2.0 prints a deprecation warning pointing to gcc/14.2.0, but cuda-toolkit is only built against gcc/13.2.0. GPU users have to load it anyway:\nmodule load gcc/13.2.0        # the one that warns you — CUDA needs it\nmodule load cuda-toolkit/12.6.1\nIgnore the warning here; it’s a packaging quirk.",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules (and why `module avail` misleads)</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
   {
     "objectID": "chapters/07-modules.html#making-a-set-of-modules-load-automatically",
     "href": "chapters/07-modules.html#making-a-set-of-modules-load-automatically",
-    "title": "7  Software modules (and why module avail misleads)",
+    "title": "7  Software modules",
     "section": "7.4 Making a set of modules load automatically",
     "text": "7.4 Making a set of modules load automatically\nOnce you know the stack a project needs, save it as a named collection so you don’t retype it:\nmodule purge\nmodule load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi\nmodule save geostack          # remember this set as \"geostack\"\n\n# next session:\nmodule restore geostack\nPrefer module restore in submit scripts over hand-loading a long list — it’s reproducible and self-documents the environment your job needs.\n\n\n\n\n\n\nLoad modules in your submit script, not just interactively\n\n\n\nModules loaded on the login node don’t carry into a batch job. Put the module load / module restore lines inside your sbatch script so the job builds the same environment every time (Chapter 10).\n\n\nWhen a package isn’t available as a module — or you need a pip/conda world — see the next chapter (Chapter 8).",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules (and why `module avail` misleads)</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
   {
     "objectID": "chapters/08-conda-containers.html",
     "href": "chapters/08-conda-containers.html",
-    "title": "8  Conda and containers without wrecking your home directory",
+    "title": "8  Conda and containers",
     "section": "",
     "text": "8.1 Point conda away from home first\nThe miniconda3 module gives you conda:\nBy default, conda writes environments and a package cache into ~/.conda and ~/miniconda3, inside your 50 GB home quota. A couple of scientific environments will fill it. Before creating any environments, point conda at your project’s 250 GB software space.\nCreate ~/.condarc:\nNow new environments and the download cache land in project space:\nOther conda notes:",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers without wrecking your home directory</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
   {
     "objectID": "chapters/08-conda-containers.html#point-conda-away-from-home-first",
     "href": "chapters/08-conda-containers.html#point-conda-away-from-home-first",
-    "title": "8  Conda and containers without wrecking your home directory",
+    "title": "8  Conda and containers",
     "section": "",
     "text": "module load miniconda3/24.3.0\n\n\npkgs_dirs:\n  - /project/cowy-firesurro/software/&lt;you&gt;/conda/pkgs\nenvs_dirs:\n  - /project/cowy-firesurro/software/&lt;you&gt;/conda/envs\n\nconda create -n geo python=3.12 numpy xarray netcdf4\nconda activate geo\n\n\n\n\n\n\nSet .condarc before your first conda create\n\n\n\nEnvironments created before you set .condarc are stranded in home. If you’ve already made the mess: conda env list, remove the home-based envs, and recreate them under project space.\n\n\n\n\nNo mamba is installed on the cluster; use conda directly. Recent conda is much faster than it used to be.\nActivate conda inside your submit script, not just interactively, so batch jobs get the same environment (Chapter 10).\nconda clean -a reclaims space from the package cache.",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers without wrecking your home directory</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
   {
     "objectID": "chapters/08-conda-containers.html#apptainer-containers-for-reproducibility-and-portability",
     "href": "chapters/08-conda-containers.html#apptainer-containers-for-reproducibility-and-portability",
-    "title": "8  Conda and containers without wrecking your home directory",
+    "title": "8  Conda and containers",
     "section": "8.2 Apptainer: containers for reproducibility and portability",
     "text": "8.2 Apptainer: containers for reproducibility and portability\nA container bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as you, with no root, which makes it the HPC-safe alternative to Docker.\nmodule load apptainer/1.4.1\n\n# Pull a Docker image and convert it to an Apptainer image (.sif):\napptainer pull mytool.sif docker://ghcr.io/someorg/mytool:latest\n\n# Run something inside it:\napptainer exec mytool.sif mytool --help\n\n# Bind your data into the container so it can see it:\napptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc\nStore .sif images in /project/&lt;proj&gt;/software — they can be large.\n\n8.2.1 Container vs. module vs. conda\n\n\n\n\n\n\n\nSituation\nBest choice\n\n\n\n\nThe software is already an Lmod module\nmodule (Chapter 7) — least effort\n\n\nPure Python/R stack, you want to iterate\nconda\n\n\nComplex native dependencies that fight the system\nApptainer\n\n\nYou need bit-for-bit reproducibility across machines\nApptainer\n\n\nA published tool ships a Docker image\nApptainer (apptainer pull docker://…)\n\n\n\n\n\n\n\n\n\nGPUs inside containers\n\n\n\nTo use the node’s GPUs from inside a container, add the --nv flag so Apptainer exposes the NVIDIA driver: apptainer exec --nv mytool.sif .... Pair this with a GPU job (Section 17.2).\n\n\nNext: running your work through the scheduler (Part V, starting at Chapter 9).",
     "crumbs": [
       "Part IV — Software",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers without wrecking your home directory</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
   {
@@ -812,67 +812,67 @@
   {
     "objectID": "chapters/14-priority.html",
     "href": "chapters/14-priority.html",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "",
     "text": "14.1 The formula\nSlurm computes a priority score for every pending job and runs the highest scores first (subject to backfill, below). The score is a weighted sum; MedicineBow’s weights are:\nEach factor is a number between 0 and 1, multiplied by its weight, and summed. The biggest lever, by a wide margin, is QOS.",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
     "objectID": "chapters/14-priority.html#the-formula",
     "href": "chapters/14-priority.html#the-formula",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "",
     "text": "PriorityWeightQOS       = 200     &lt;- dominant\nPriorityWeightFairShare = 100\nPriorityWeightJobSize   = 100\nPriorityWeightAge       = 10\nPriorityWeightPartition = 0       (partition doesn't affect priority here)",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
     "objectID": "chapters/14-priority.html#what-each-factor-means",
     "href": "chapters/14-priority.html#what-each-factor-means",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "14.2 What each factor means",
     "text": "14.2 What each factor means\nQOS (weight 200). Higher-priority QOS means a better position. From Chapter 12: interactive (90) &gt; fast (80) &gt; normal (70) &gt; long (60). Choosing fast over long is worth more priority than any amount of waiting, which is why the short-vs-long decision in Chapter 13 matters.\nFair-share (weight 100) — recent usage. Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.\nJob size (weight 100). A factor based on the resources requested. With the SMALL_RELATIVE_TO_TIME flag this cluster sets, it interacts with your time request — another reason not to over-ask (Chapter 11).\nAge (weight 10) — time spent waiting. A job gains priority the longer it sits, maxing out after ~3 days. At weight 10, age is a tie-breaker, not a strategy; you won’t age past someone who chose a better QOS.",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
     "objectID": "chapters/14-priority.html#practical-takeaway",
     "href": "chapters/14-priority.html#practical-takeaway",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "14.3 Practical takeaway",
     "text": "14.3 Practical takeaway\n\n\n\n\n\n\nQOS dominates priority\n\n\n\nBecause QOS is weighted 2× fair-share and 20× age, the highest-leverage choice for start time is the most appropriate high-priority QOS your job fits — the shortest walltime tier that still lets it finish (Chapter 13). Waiting longer, resubmitting, or submitting at 3am have little effect by comparison.",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
     "objectID": "chapters/14-priority.html#backfill-why-a-small-job-can-jump-the-line",
     "href": "chapters/14-priority.html#backfill-why-a-small-job-can-jump-the-line",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "14.4 Backfill: why a small job can jump the line",
     "text": "14.4 Backfill: why a small job can jump the line\nPriority sets the order, but Slurm also backfills: if the top job is waiting for, say, 40 nodes to free up, Slurm slots a smaller, shorter job into the gap now, as long as that doesn’t delay the top job’s reserved start time. This is why a 20-minute test can start immediately even when the queue looks deep, and why short jobs start sooner than long ones. Requesting less time and fewer resources makes your job backfill-eligible in more gaps — another payoff for right-sizing.",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
     "objectID": "chapters/14-priority.html#seeing-your-own-priority",
     "href": "chapters/14-priority.html#seeing-your-own-priority",
-    "title": "14  How priority is actually computed here",
+    "title": "14  How priority is computed",
     "section": "14.5 Seeing your own priority",
     "text": "14.5 Seeing your own priority\nsprio -j &lt;jobid&gt;            # the priority breakdown for a pending job\nsprio -l                    # all pending jobs, with factor columns\nshowjobreasons &lt;jobid&gt;      # ARCC helper: plain-language \"why am I waiting?\"\nIf sprio shows a low QOS factor because you’re on long but the job would finish in 10 hours, resubmitting under fast is the most effective change you can make.\nNext: watching jobs run and diagnosing them when they don’t (Chapter 15).",
     "crumbs": [
       "Part V — Slurm",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is actually computed here</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
   {
