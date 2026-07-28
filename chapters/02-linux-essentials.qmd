@@ -8,7 +8,7 @@ Linux; nothing is ARCC-specific except the paths.
 ```bash
 pwd                 # where am I?
 ls -lh              # list files, human-readable sizes
-cd /project/cowy-firesurro   # go somewhere
+cd /project/<project>   # go somewhere
 cd                  # go home ($HOME)
 cd -                # go back to where you just were
 ```
@@ -69,7 +69,7 @@ To make something permanent (say, a handy alias), add it to `~/.bashrc`:
 
 ```bash
 alias q='squeue --me'          # see just my jobs
-alias proj='cd /project/cowy-firesurro'
+alias proj='cd /project/<project>'
 ```
 
 Run `source ~/.bashrc` (or log out and back in) to apply changes.

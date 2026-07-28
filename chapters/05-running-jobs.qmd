@@ -69,7 +69,7 @@ Here is a complete, working submit script. Save it as `submit.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro     # WHO PAYS — the one you can't omit
+#SBATCH --account=<project>     # WHO PAYS — the one you can't omit
 #SBATCH --job-name=hello
 #SBATCH --time=00:10:00              # 10 minutes; jobs are killed at the limit
 #SBATCH --cpus-per-task=1
@@ -106,19 +106,19 @@ That's the loop: write script, `sbatch`, watch, read output.
 ### The required directive: `--account`
 
 ```bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 ```
 
 ::: {.callout-important}
 ## `--account` is your *project*, not your username
 Every job on MedicineBow must specify an account, and it's the *project* name
-(`cowy-firesurro`), not your login name. Leave it out and the job is rejected immediately.
+(`<project>`), not your login name. Leave it out and the job is rejected immediately.
 This is the most common first error. Confirm your exact project name when you get your
 account (@sec-account) and put it in every script, or set it once as a default:
 
 ```bash
 # add to ~/.bashrc so you never forget it
-export SBATCH_ACCOUNT=cowy-firesurro
+export SBATCH_ACCOUNT=<project>
 ```
 
 Even so, keep `--account` in the script itself. It documents intent and survives being run by
@@ -197,11 +197,15 @@ uses the `fast` QOS and a 5-minute limit so it starts quickly (@sec-queue-times)
 lines are verified against the machine — note that R needs `gcc/15.2.0` and Julia needs no
 compiler module.
 
-**Python** — save as `hello_python.sh`:
+::: {.panel-tabset}
+
+## Python
+
+Save as `hello_python.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 #SBATCH --job-name=hello-python
 #SBATCH --partition=mb
 #SBATCH --qos=fast
@@ -216,11 +220,13 @@ module load gcc/14.2.0 python/3.12.0
 python3 -c "import platform, socket; print('Hello from Python', platform.python_version(), 'on', socket.gethostname())"
 ```
 
-**R** — save as `hello_r.sh`:
+## R
+
+Save as `hello_r.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 #SBATCH --job-name=hello-r
 #SBATCH --partition=mb
 #SBATCH --qos=fast
@@ -235,11 +241,13 @@ module load gcc/15.2.0 r/4.5.3          # R is built against gcc/15.2.0
 Rscript -e 'cat("Hello from R", as.character(getRversion()), "on", Sys.info()[["nodename"]], "\n")'
 ```
 
-**Julia** — save as `hello_julia.sh`:
+## Julia
+
+Save as `hello_julia.sh`:
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 #SBATCH --job-name=hello-julia
 #SBATCH --partition=mb
 #SBATCH --qos=fast
@@ -253,6 +261,8 @@ module load julia/1.11.6                 # Julia is standalone — no compiler n
 
 julia -e 'println("Hello from Julia ", VERSION, " on ", gethostname())'
 ```
+
+:::
 
 Submit and check any of them:
 

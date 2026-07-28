@@ -104,9 +104,9 @@ request an account, email **Virginia Iglesias** (<virginia@innosphere.org>) and 
 you're an ASCEND/ARID performer who needs MedicineBow access. She'll arrange for you to be
 added to the project.
 
-Accounts are tied to a project — for this work that's `cowy-firesurro` (the project this
-guide was written under), which is also the name you type into **every job** you run
-(@sec-anatomy).
+Accounts are tied to a project — your ASCEND/ARID project — which is also the name you type
+into **every job** you run (@sec-anatomy). Confirm your exact project name with Virginia or
+your team; this book writes it as `<project>` in examples, and you substitute your own.
 
 ### UW accounts vs. ARCC-Only accounts
 
@@ -144,8 +144,8 @@ Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask 
 
 1. Email **Virginia Iglesias** (<virginia@innosphere.org>) to request a MedicineBow account,
    mentioning that you're an ASCEND/ARID performer.
-2. You'll be added to the project and issued a UW username. Your first login is
-   @sec-first-login.
+2. You'll be added to the project and issued a UW username. Then log in for the first time —
+   see @sec-first-login.
 3. If you're an external (non-UW) collaborator, say so — you'll get an **ARCC-Only** account,
    which can't use Globus (@sec-moving-data), so ask how you'll move data.
 

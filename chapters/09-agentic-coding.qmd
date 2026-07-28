@@ -1,0 +1,120 @@
+# Agentic coding with Claude {#sec-agentic}
+
+An AI coding *agent* can read your files, run commands, look at the output, and iterate —
+which makes it genuinely useful for the fiddly, cluster-specific work this book is about:
+writing submit scripts, turning a loop into a job array, debugging an OOM kill, or making
+sense of an unfamiliar codebase. This chapter is a practical guide to using one — Claude, in
+particular — on MedicineBow, including where it helps, where it doesn't, and the two things
+you must always do: **verify its output, and mind what data you send.**
+
+## What "agentic" means
+
+Older AI coding tools autocomplete the next line. An **agent** works at the level of a task:
+you describe what you want, and it reads the relevant files, proposes changes, runs commands
+(compile, test, submit a small job), reads the results, and adjusts — a loop, not a
+single suggestion. That loop is what makes it fit HPC work, where the answer usually depends
+on what a command *actually* prints (a `module spider`, a failed `sbatch`, a `seff` report),
+not on what looks plausible in the abstract.
+
+## Claude and Claude Code
+
+**Claude** is Anthropic's family of models. The current ones are **Opus 4.8** (`claude-opus-4-8`)
+and **Sonnet 5** (`claude-sonnet-5`) — Opus is the most capable for hard, multi-step work,
+Sonnet is faster and cheaper for routine tasks — plus **Haiku 4.5** for the simplest, fastest
+jobs and **Fable 5** (`claude-fable-5`) for the most demanding long-horizon work.
+
+You reach Claude a few ways:
+
+- **Claude Code** — Anthropic's coding agent. It runs in your terminal (and as a desktop app,
+  in the browser at <https://claude.ai/code>, and as VS Code / JetBrains extensions), reads and
+  edits files in your project, and runs commands. This is the one that fits cluster work.
+- **The Claude API** — for building Claude into your own pipelines (e.g. an LLM step in a data
+  workflow). Out of scope here, but worth knowing it exists.
+
+## Using it with the cluster
+
+Two workable setups:
+
+1. **On your laptop, against a synced copy of your code.** Edit and iterate locally with the
+   agent, then push or `rsync` (@sec-moving-data) to the cluster to run. Simplest, and keeps
+   heavy work off shared machines entirely.
+2. **On a login node.** Claude Code needs internet egress, which the login nodes have. The
+   agent itself is lightweight, but remember the cardinal rule (@sec-cluster): **anything it
+   runs, runs where you run it.** If you let it execute a real computation on the login node,
+   that's the same violation as doing it yourself. Tell it to *submit jobs* and inspect
+   results, not to run simulations in place — and do heavy interactive iteration inside an
+   `salloc` session or a `debug`-partition job (@sec-interactive, @sec-queue-times).
+
+::: {.callout-important}
+## The agent doesn't know it's on a shared machine
+It will happily run `python train.py` on the login node if you ask it to "run the training,"
+because it can't see the etiquette you can. Be explicit: *"write and submit an sbatch job for
+this; don't run it directly."* Treat the agent like a capable collaborator who has never used
+a cluster before — which is exactly this book's audience.
+:::
+
+## What it's good for here
+
+The cluster-specific tasks where an agent earns its keep:
+
+- **Submit scripts.** "Write an sbatch script that runs `run.py` on one `mb` node with 8 cores
+  and 16 GB, `fast` QOS, 2-hour limit." It knows the `#SBATCH` anatomy (@sec-anatomy); you
+  check the account and the numbers.
+- **Turning loops into job arrays.** Hand it a bash loop over 500 inputs and ask for an array
+  version (@sec-arrays) — including the `sed -n`/0-index gotcha, which it will usually get
+  right and you will verify.
+- **Debugging failures.** Paste a `sacct` state and the `slurm-*.out` tail and ask *why*. It's
+  good at recognizing OOM, timeouts, and "module not loaded in the script" (@sec-fail).
+- **Checkpointing.** Adding save/resume and `--signal=B:USR1@120` handling to a long job
+  (@sec-checkpointing).
+- **Translating and explaining.** Converting a serial Python prototype to something that scales,
+  reading an unfamiliar WRF or GDAL pipeline, or porting an analysis between Python, R, and
+  Julia (@sec-hello-jobs).
+- **Parsing cluster output.** One-off scripts to summarize `sacct` history, or to extract which
+  array tasks failed.
+
+## Verify everything it produces
+
+This is the load-bearing rule. An agent is confident whether or not it's right, and it does
+not know *your* cluster's specifics — the exact module versions, which partitions exist, what
+your account may use. It will sometimes invent a plausible-but-wrong module name or flag.
+
+::: {.callout-warning}
+## Check generated commands against the machine before you trust them
+The module hierarchy is a common trap: an agent may write `module load gdal/3.13.0` after
+`gcc/14.2.0`, which *fails* — that version needs `gcc/15.2.0` (@sec-modules). The fix is the
+same habit the rest of this book preaches: run `module spider`, `sqos`, `showpartitions`,
+`sacctmgr show assoc` and confirm. **Never submit an agent-written `sbatch` script, and never
+run an agent-written `rm`/`mv`/`chmod`, without reading it first.** For destructive or
+long/expensive jobs, test on the `debug` partition first (@sec-queue-times).
+:::
+
+A good workflow: let the agent draft, you read the diff, run it in a cheap `debug` job, and
+only promote it to the real queue once it's known-good — exactly the edit-run-debug loop from
+@sec-fail, with the agent doing the typing.
+
+## Mind what data you send
+
+Using Claude sends the code and any data you share to Anthropic's servers. For most
+*code* — submit scripts, analysis, boilerplate — that's fine. Be careful with **data**:
+
+- **Unpublished results, sensitive datasets, or anything export-controlled.** ARID touches
+  power- and water-utility infrastructure; some of that may carry sharing restrictions. When in
+  doubt, don't paste the data — share the *code* and describe the data's shape instead, and
+  check your project's data-use policy and with your PI first.
+- **Credentials.** Never paste API keys, passwords, or private SSH keys into a prompt. If you
+  do by accident, rotate them (regenerate your SSH key via the portal, @sec-first-login).
+- **Other people's data.** The `/project` filesystem is shared (@sec-storage); don't send a
+  collaborator's data without their okay.
+
+The rule of thumb: the agent is great at reasoning about *your code and the cluster*; keep
+sensitive *inputs* out of it unless you've confirmed that's allowed.
+
+## Getting access
+
+Claude Code and the API are Anthropic products, separate from your ARCC account — see
+<https://claude.ai/code> and <https://docs.claude.com> to get started. Usage is metered
+(there are paid plans and API pricing); check whether your project or department already has
+access before signing up individually. None of this runs through ARCC, so there's nothing to
+request from `arcc-help@uwyo.edu` — but the code it helps you write still has to play by every
+rule in this book.

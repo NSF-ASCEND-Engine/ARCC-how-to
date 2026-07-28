@@ -5,6 +5,16 @@ performers) to the University of Wyoming's **ARCC MedicineBow** HPC cluster.
 
 📖 **Published site:** https://nsf-ascend-engine.github.io/ARCC-how-to/
 
+## How this book was written
+
+This book was written in tandem with **Claude** — Anthropic's **Claude Opus 4.8** model
+(`claude-opus-4-8`, 1M-token context), driven through **Claude Code** — working alongside a
+human author. Claude harvested the live cluster, cross-checked every load-bearing claim
+against the running machine, drafted and revised the prose, generated the diagrams and the
+queue-time analysis, and a panel of Claude review agents audited the content for correctness
+and clarity. A human directed the work and made the final calls. Fittingly, the book includes
+a chapter on using agentic coding tools like Claude for cluster work.
+
 ## What's inside
 
 Getting an account, first login and SSH keys, the three (unbacked-up) filesystems,

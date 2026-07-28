@@ -123,9 +123,9 @@ Create `~/.condarc`:
 
 ```yaml
 pkgs_dirs:
-  - /project/cowy-firesurro/software/<you>/conda/pkgs
+  - /project/<project>/software/<you>/conda/pkgs
 envs_dirs:
-  - /project/cowy-firesurro/software/<you>/conda/envs
+  - /project/<project>/software/<you>/conda/envs
 ```
 
 Now new environments and the download cache land in project space:
@@ -164,10 +164,10 @@ apptainer pull mytool.sif docker://ghcr.io/someorg/mytool:latest
 apptainer exec mytool.sif mytool --help
 
 # Bind your data into the container so it can see it:
-apptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc
+apptainer exec --bind /project/<project>:/data mytool.sif mytool /data/input.nc
 ```
 
-Store `.sif` images in `/project/<proj>/software` — they can be large.
+Store `.sif` images in `/project/<project>/software` — they can be large.
 
 #### Container vs. module vs. conda
 

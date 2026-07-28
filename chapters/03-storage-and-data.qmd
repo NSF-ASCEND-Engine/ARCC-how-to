@@ -20,9 +20,9 @@ separate **Alcova** service, which does have real nightly backups.
 | Path | Quota | Snapshots | Backups | Purged |
 |---|---|---|---|---|
 | `/home/$USER` | **50 GB** | yes | **NO** | only when you leave UW |
-| `/project/<proj>` | **5 TB** | yes | **NO** | 6 months after project ends |
+| `/project/<project>` | **5 TB** | yes | **NO** | 6 months after project ends |
 | `/gscratch/$USER` (`$SCRATCH`) | **5 TB** | yes | **NO** | **after 90 days of inactivity** |
-| `/project/<proj>/software` | **+250 GB** on top of project | yes | **NO** | with the project |
+| `/project/<project>/software` | **+250 GB** on top of project | yes | **NO** | with the project |
 | `/lscratch` | node-local, varies | no | **NO** | **wiped at the end of every job** |
 
 Check your usage and limits for home, scratch, and project:
@@ -38,9 +38,9 @@ and small configs — not datasets and not software installs. When home fills up
 (jobs fail to write logs, logins misbehave), so watch it with `arccquota` and
 `du -sh ~/* | sort -h`.
 
-#### `/project/<proj>` — the shared workhorse
+#### `/project/<project>` — the shared workhorse
 
-5 TB, shared by everyone on your project (e.g. `cowy-firesurro`). This is where shared
+5 TB, shared by everyone on your project. This is where shared
 datasets, inputs, and results belong. Agree on a directory convention with your group so you
 don't clobber each other. It persists for 6 months after the project ends.
 
@@ -68,8 +68,8 @@ constantly. It's **wiped when your job ends**, so copy anything you want to keep
 ### Install software in project space, not home
 
 ::: {.callout-important}
-## Install software into `/project/<proj>/software`, not `/home`
-Your project has an extra **250 GB** quota at `/project/<proj>/software` for installing
+## Install software into `/project/<project>/software`, not `/home`
+Your project has an extra **250 GB** quota at `/project/<project>/software` for installing
 software. A single conda environment with a few scientific packages can be 10–20 GB — two of
 those fills a 50 GB home directory.
 
@@ -81,7 +81,7 @@ The conda chapter (@sec-conda) shows how.
 
 ```text
 /home/<you>/                      # dotfiles, small scripts, SSH keys
-/project/cowy-firesurro/
+/project/<project>/
     software/                     # conda envs, container images, manual builds
     data/                         # shared input datasets
     <you>/                        # your working area within the project
@@ -113,7 +113,7 @@ start a multi-hundred-GB transfer, close your laptop, and get an email when it's
    or your own institution).
 2. Search collections for **`uwyo-ARCC`** and pick **"Medicine Bow"**.
 3. The Medicine Bow collection's root is **`cluster`**, so your project shows up at a path
-   like `/cluster/medbow/project/cowy-firesurro/...`.
+   like `/cluster/medbow/project/<project>/...`.
 4. Set the other side to your institutional or personal collection (install **Globus
    Connect Personal** on your own machine to make it an endpoint), pick files, and hit
    **Start**.
@@ -130,7 +130,7 @@ person to broker the transfer, or a **guest collection** set up for you.
 From your laptop, push a file up:
 
 ```bash
-scp results.csv <username>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<you>/
+scp results.csv <username>@medicinebow.arcc.uwyo.edu:/project/<project>/<you>/
 ```
 
 Pull one down:
@@ -143,7 +143,7 @@ scp <username>@medicinebow.arcc.uwyo.edu:/gscratch/<you>/output.nc .
 interrupted transfer picks up where it left off:
 
 ```bash
-rsync -avP ./localdir/ <username>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<you>/dir/
+rsync -avP ./localdir/ <username>@medicinebow.arcc.uwyo.edu:/project/<project>/<you>/dir/
 ```
 
 The `-P` flag shows progress and enables resume; `-a` preserves timestamps and permissions.

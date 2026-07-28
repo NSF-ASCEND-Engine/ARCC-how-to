@@ -58,5 +58,7 @@ The chapters run in the order you'll need them:
    interactive and GPU sessions, and the parallelism ladder.
 8. **Preemption, checkpointing, and failures** — surviving the condo model (shared, investor-owned hardware that can reclaim your job) and walltime limits,
    and reading the wreckage when a job fails.
-9. **Reference** — a command cheat sheet, a symptom-to-fix troubleshooting index, and a
-   glossary.
+9. **Agentic coding with Claude** — using an AI coding agent for cluster work, and the two
+   rules that matter: verify its output, and mind what data you send.
+10. **Reference** — a command cheat sheet, a symptom-to-fix troubleshooting index, and a
+    glossary.

@@ -61,7 +61,7 @@ Confirm your own list any time:
 
 ```bash
 sacctmgr -n show assoc user=$USER format=qos
-# cowy-firesurro:  debug, fast, interactive, long, normal
+# <project>:  debug, fast, interactive, long, normal
 sqos                         # full QOS table with limits
 ```
 

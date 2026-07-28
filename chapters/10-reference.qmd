@@ -24,9 +24,9 @@ du -sh * | sort -h         # what's eating my quota here?
 | Path | Quota | Note |
 |---|---|---|
 | `/home/$USER` | 50 GB | small; config only |
-| `/project/cowy-firesurro` | 5 TB | shared group data |
+| `/project/<project>` | 5 TB | shared group data |
 | `/gscratch/$USER` (`$SCRATCH`) | 5 TB | fast, purged after 90 days idle |
-| `/project/<proj>/software` | +250 GB | put conda/containers here |
+| `/project/<project>/software` | +250 GB | put conda/containers here |
 | `/lscratch` | node-local | **wiped at job end** |
 
 ### Modules
@@ -42,7 +42,7 @@ module save <name> / module restore <name>
 
 ```bash
 sbatch submit.sh           # submit batch job
-salloc -A cowy-firesurro --qos=interactive -t 2:00:00 -c 4 --mem=16G   # interactive
+salloc -A <project> --qos=interactive -t 2:00:00 -c 4 --mem=16G   # interactive
 squeue --me                # my jobs
 showjobreasons <id>        # why is it waiting? (plain English)
 scancel <id>               # cancel one job (scancel -u $USER = all mine)
@@ -54,7 +54,7 @@ sacct -j <id> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro     # REQUIRED — project, not username
+#SBATCH --account=<project>     # REQUIRED — project, not username
 #SBATCH --job-name=myjob
 #SBATCH --partition=mb               # default CPU pool
 #SBATCH --qos=fast                   # 12h, high priority
@@ -118,7 +118,7 @@ showuserlimits             # what am I allowed to ask for?
 - `--account=<project>` is **required** on every job.
 - On `mb`, no `--mem` → **10 GB per core** silently. Always set `--mem`.
 - **Nothing is backed up.** Keep a copy off-cluster.
-- Install software in `/project/<proj>/software`, not `/home` (50 GB).
+- Install software in `/project/<project>/software`, not `/home` (50 GB).
 - `module spider`, not `module avail`.
 - Long jobs → `non-investor` partition **and** checkpoint (investors preempt).
 - Never compute on the login node. Use `sbatch`/`salloc`.
@@ -149,7 +149,7 @@ a UW-side guest collection (@sec-moving-data).
 ### Jobs won't submit
 
 **`sbatch: error: ... You have to specify an account.`**
-Add `--account=cowy-firesurro` (@sec-anatomy).
+Add `--account=<project>` (@sec-anatomy).
 
 **`Job violates accounting/QOS policy (...)` at submit time.**
 Your request exceeds a QOS limit (every QOS is `DenyOnLimit`). Usually `--time` exceeds the
@@ -212,7 +212,7 @@ Load `gcc/13.2.0` (not 14) — `cuda-toolkit` is built against 13.2 despite its 
 warning (@sec-modules).
 
 **Home directory full, everything breaking.**
-Conda in `/home`. Move envs to `/project/<proj>/software` via `~/.condarc`, and clean up
+Conda in `/home`. Move envs to `/project/<project>/software` via `~/.condarc`, and clean up
 (@sec-conda). Check with `du -sh ~/* | sort -h`.
 
 **GPU job runs but is slow / `nvidia-smi` shows 0%.**
@@ -230,8 +230,9 @@ gets you a faster answer.
 Plain-language definitions of the terms this book uses.
 
 **Account (Slurm)**
-: The *project* that a job is charged to (e.g. `cowy-firesurro`). Required on every job via
-  `--account`. Not your username. See @sec-anatomy.
+: The *project* that a job is charged to (written `<project>` in this book's examples —
+  substitute your own). Required on every job via `--account`. Not your username. See
+  @sec-anatomy.
 
 **ARCC**
 : Advanced Research Computing Center — the UW group that runs MedicineBow.

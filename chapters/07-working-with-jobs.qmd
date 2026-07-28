@@ -126,7 +126,7 @@ Add `--array` and use `$SLURM_ARRAY_TASK_ID` to pick which piece of work this ta
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 #SBATCH --job-name=sweep
 #SBATCH --array=1-500                 # 500 tasks, indices 1..500
 #SBATCH --qos=fast                    # short independent tasks → high-priority QOS
@@ -166,7 +166,7 @@ python run.py $PARAM
 **The Nth input file:**
 
 ```bash
-FILES=(/project/cowy-firesurro/data/tiles/*.tif)
+FILES=(/project/<project>/data/tiles/*.tif)
 THIS=${FILES[$SLURM_ARRAY_TASK_ID]}      # note: arrays are 0-indexed in bash
 python process.py "$THIS"
 ```
@@ -225,7 +225,7 @@ For hands-on work — debugging a crash, exploring a dataset, building a model i
 request an interactive allocation:
 
 ```bash
-salloc --account=cowy-firesurro --qos=interactive \
+salloc --account=<project> --qos=interactive \
        --time=02:00:00 --cpus-per-task=4 --mem=16G
 ```
 
@@ -255,7 +255,7 @@ Request GPUs with `--gres=gpu:<count>` and target a GPU partition:
 
 ```bash
 #!/bin/bash
-#SBATCH --account=cowy-firesurro
+#SBATCH --account=<project>
 #SBATCH --partition=mb-l40s          # or mb-h100, mb-a30, ...
 #SBATCH --qos=normal
 #SBATCH --gres=gpu:1                 # one GPU on the node

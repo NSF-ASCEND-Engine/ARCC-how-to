@@ -25,7 +25,8 @@ book:
     - chapters/06-partitions-qos-queues.qmd
     - chapters/07-working-with-jobs.qmd
     - chapters/08-preemption-and-failures.qmd
-    - chapters/09-reference.qmd
+    - chapters/09-agentic-coding.qmd
+    - chapters/10-reference.qmd
 
 filters:
   - glossary-tooltips.lua
