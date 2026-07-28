@@ -185,4 +185,71 @@ To use the node's GPUs from inside a container, add the `--nv` flag so Apptainer
 NVIDIA driver: `apptainer exec --nv mytool.sif ...`. Pair this with a GPU job (@sec-gpu).
 :::
 
+## Keep package installs out of home {#sec-pkgdirs}
+
+Home is only 50 GB (@sec-storage), and every language's package manager dumps its downloads,
+compiled caches, and installed libraries into a hidden directory in home by default — a few
+environments and it's full, at which point jobs and logins start failing in confusing ways.
+The fix is the same for all three languages: **point the package directory at your project's
+250 GB software space, set it once in `~/.bashrc`, and create it before you install anything.**
+(Large regenerable caches could live on `/gscratch` instead, but it's purged after 90 days —
+project space is the safer home for software.)
+
+::: {.panel-tabset}
+
+### Python
+
+For **conda**, redirect environments and the package cache via `~/.condarc` — see the conda
+section above (@sec-conda). For plain **pip**, redirect the cache and build virtual environments
+in project space rather than `~/.local`:
+
+```bash
+# in ~/.bashrc
+export PIP_CACHE_DIR=/project/<project>/software/$USER/pip-cache
+
+# make a venv in project space (load a python module first)
+module load gcc/14.2.0 python/3.12.0
+python3 -m venv /project/<project>/software/$USER/venvs/myenv
+source /project/<project>/software/$USER/venvs/myenv/bin/activate
+pip install numpy xarray        # installs into the venv, not home
+```
+
+Avoid `pip install --user` — it writes to `~/.local` and fills home.
+
+### R
+
+R installs user packages into `~/R/...` by default (confirmed on the machine). Point
+`R_LIBS_USER` at project space and create the directory:
+
+```bash
+# in ~/.bashrc
+export R_LIBS_USER=/project/<project>/software/$USER/Rlibs
+mkdir -p "$R_LIBS_USER"
+```
+
+Now `install.packages("data.table")` — after `module load gcc/15.2.0 r/4.5.3` — installs there.
+For per-project, reproducible libraries, the `renv` package works well and keeps each project's
+packages inside the project directory.
+
+### Julia
+
+Julia's **depot** (`~/.julia` — downloaded packages, registries, artifacts, and the precompiled
+cache) is the biggest offender; it routinely grows to many gigabytes. Move it with
+`JULIA_DEPOT_PATH`:
+
+```bash
+# in ~/.bashrc
+export JULIA_DEPOT_PATH=/project/<project>/software/$USER/julia_depot
+```
+
+Then `module load julia/1.11.6` and `] add DataFrames` populates the project-space depot instead
+of home. Set this before your first `julia` run; if you already have a large `~/.julia`, move it
+(`mv ~/.julia "$JULIA_DEPOT_PATH"`) and set the variable.
+
+:::
+
+After editing `~/.bashrc`, run `source ~/.bashrc` (or reconnect) to apply it, and put the same
+`export` and `module load` lines in your submit scripts so batch jobs use the same locations
+(@sec-anatomy).
+
 Next: running your work through the scheduler (@sec-why-scheduler).

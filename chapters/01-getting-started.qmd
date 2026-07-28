@@ -165,13 +165,6 @@ MedicineBow has a single hostname that serves both the web portal and SSH:
 - **SSH** is the terminal way in, and how you'll work day-to-day once set up. It requires a
   key you generate through the portal first.
 
-::: {.callout-note}
-## Don't use "Southpass"
-Older notes may point you at `southpass.arcc.uwyo.edu`, the portal for the *retired
-Beartooth cluster*. The DNS name still resolves but has no live service behind it. The
-current portal is `medicinebow.arcc.uwyo.edu`.
-:::
-
 ### Step 1 — Log into the portal
 
 Go to <https://medicinebow.arcc.uwyo.edu> and sign in with your UW username and password.

@@ -137,7 +137,23 @@ wait. Measure the live picture before a big campaign — see the commands at the
 chapter.
 :::
 
-### Short proof-of-concept vs. long simulation
+#### The longer view: wait times month by month
+
+The tables above are a short snapshot. The figure below is the full history — every finished
+job from June 2024 to July 2026, about **70 million** of them — as a box plot of wait time per
+month, with the monthly job count underneath.
+
+![Wait time (start − eligible) by month, June 2024 – July 2026. Boxes span the 25th–75th percentile with the median line; whiskers the 5th–95th. The lower panel is monthly job volume. Both axes that can be are log-scaled; 0-second waits sit at the 1-second floor.](img/wait-times-by-month.svg){#fig-monthly}
+
+Two things stand out. Wait times **vary a lot month to month**: median waits range from about a
+second in quiet, array-dominated months to tens of minutes when the machine is busy, and the
+busiest months push the 90th percentile into hours. And the very low medians in the
+high-volume recent months are the signature of large `fast`-QOS job arrays (@sec-arrays) that
+start almost instantly — one well-behaved sweep can move the whole month's median. The planning
+takeaway is unchanged: a normal CPU job usually starts within minutes, but *how busy the
+machine is this month* matters, so check the live queue before a big campaign (end of chapter).
+
+## Short proof-of-concept vs. long simulation
 
 ```{mermaid}
 %%| label: fig-choose

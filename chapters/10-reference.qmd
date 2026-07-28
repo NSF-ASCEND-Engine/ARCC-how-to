@@ -136,7 +136,7 @@ SSH Key Manager, unzip into `~/.ssh`, `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*` (
 
 **"Permission denied" on a brand-new setup.**
 Check permissions: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`, and make sure you unzipped the key into `~/.ssh`.
-Confirm you're using `medicinebow.arcc.uwyo.edu`, not the dead `southpass` name.
+Confirm you're using `medicinebow.arcc.uwyo.edu` and your SSH key hasn't expired.
 
 **I can't get an account at all.**
 Account requests for ASCEND/ARID performers are coordinated through the program — email

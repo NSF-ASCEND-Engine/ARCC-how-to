@@ -86,12 +86,6 @@ joblist                     # cluster-wide queue overview
 pestat                      # per-node CPU/memory load across the cluster
 ```
 
-::: {.callout-note}
-## `arccq` does not exist
-Some docs mention an `arccq` command as an alternative to `squeue`. It isn't installed on
-MedicineBow — use `squeue`, `showuserjobs`, or `joblist` instead.
-:::
-
 ### Cancelling
 
 ```bash

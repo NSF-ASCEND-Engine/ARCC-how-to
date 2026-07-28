@@ -50,20 +50,12 @@ Also 5 TB, and the **fast** filesystem — use it as the working directory for j
 I/O. Files untouched for **90 days** are purged automatically. Never keep the only copy of
 anything here.
 
-::: {.callout-note}
-## Scratch purge is 90 days, not 45
-Legacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but
-**90 is the current policy.** Either way, don't treat scratch as storage.
-:::
-
 #### `/lscratch` — node-local, gone when the job ends
 
 Each compute node has its own local disk at `/lscratch`. It's the fastest storage available
 to a job (no network in the way), ideal for scratch files a single job reads and rewrites
 constantly. It's **wiped when your job ends**, so copy anything you want to keep back to
 `/project` or `/gscratch` before the job exits.
-
-(There is no `/data` filesystem, despite what some docs suggest.)
 
 ### Install software in project space, not home
 
