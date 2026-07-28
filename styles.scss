@@ -15,8 +15,37 @@ div.callout-warning   { border-left-color: #d98c00; }
 table { font-size: 0.95rem; }
 th { background: rgba(74, 44, 130, 0.07); }
 
-// Glossary hover terms: subtle dotted underline + help cursor
+// Glossary hover terms: dotted underline + instant CSS tooltip on hover
 .gloss {
-  border-bottom: 1px dotted rgba(74, 44, 130, 0.6);
+  position: relative;
+  border-bottom: 1px dotted rgba(74, 44, 130, 0.75);
   cursor: help;
+}
+.gloss::after {
+  content: attr(data-def);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+  width: max-content;
+  max-width: 300px;
+  background: #2d2a34;
+  color: #fff;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  font-weight: 400;
+  font-style: normal;
+  white-space: normal;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+.gloss:hover::after,
+.gloss:focus::after {
+  opacity: 1;
+  visibility: visible;
 }

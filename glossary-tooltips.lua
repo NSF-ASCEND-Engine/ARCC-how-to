@@ -121,7 +121,7 @@ local function handle_text(text)
     append_text(out, text:sub(pos, bs - 1))
     seen[bkey] = true
     out[#out+1] = pandoc.Span(pandoc.Str(text:sub(bs, be)),
-                              pandoc.Attr("", {"gloss"}, {{"title", bdef}}))
+                              pandoc.Attr("", {"gloss"}, {{"data-def", bdef}, {"aria-label", bdef}}))
     pos = be + 1
   end
   return out
