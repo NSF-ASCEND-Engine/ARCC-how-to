@@ -1,17 +1,8 @@
 # Preemption, checkpointing, and failures
 
-
 How long jobs survive preemption and walltime limits, and how to diagnose jobs that fail.
 
-
 ## Preemption, the condo model, and checkpointing {#sec-preemption}
-
-::: {.tldr}
-MedicineBow is a **condo**: research groups buy `inv-*` nodes, and others borrow them when
-idle. The owner can reclaim a node at any time, and your job is **requeued** (killed and put
-back in line). Long jobs should therefore run on `non-investor` partitions *or* **checkpoint**
-so a requeue costs minutes, not days.
-:::
 
 ### The condo model
 
@@ -99,15 +90,7 @@ multi-hour or multi-day job should checkpoint, and any long production run shoul
 finish reliably on a shared machine.
 :::
 
-
 ## When jobs fail {#sec-fail}
-
-::: {.tldr}
-Most failures are one of four things: **out of memory** (raise `--mem`), **timeout** (raise
-`--time` or checkpoint), **a bug in your code** (read the `.out` file), or **preemption/node
-failure** (requeue + checkpoint). `sacct` tells you which one it was; the `slurm-*.out` file
-tells you why.
-:::
 
 ### Step one: what state did it end in?
 

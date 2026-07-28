@@ -15,12 +15,8 @@ div.callout-warning   { border-left-color: #d98c00; }
 table { font-size: 0.95rem; }
 th { background: rgba(74, 44, 130, 0.07); }
 
-// "TL;DR" boxes at the top of chapters
-.tldr {
-  background: rgba(74, 44, 130, 0.06);
-  border: 1px solid rgba(74, 44, 130, 0.25);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-  margin: 1rem 0 1.5rem 0;
+// Glossary hover terms: subtle dotted underline + help cursor
+.gloss {
+  border-bottom: 1px dotted rgba(74, 44, 130, 0.6);
+  cursor: help;
 }
-.tldr::before { content: "In one paragraph"; font-weight: 700; display:block; margin-bottom: 0.3rem; color: $primary; font-size: 0.85rem; letter-spacing: 0.03em; text-transform: uppercase; }

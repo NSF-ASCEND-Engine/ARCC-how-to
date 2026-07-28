@@ -1,17 +1,8 @@
 # Software: modules, conda, and containers
 
-
 How software is provided on the cluster, and how to install your own without filling your home directory.
 
-
 ## Software modules {#sec-modules}
-
-::: {.tldr}
-Software comes from **Lmod modules** you `module load`. The system is *hierarchical*: many
-packages are invisible until you load a compiler, so `module avail` only shows what's
-reachable right now. Use **`module spider <name>`** to find a package and learn what to load
-first.
-:::
 
 ### Why modules exist
 
@@ -112,14 +103,7 @@ every time (@sec-anatomy).
 When a package isn't available as a module — or you need a pip/conda world — see the next
 chapter (@sec-conda).
 
-
 ## Conda and containers {#sec-conda}
-
-::: {.tldr}
-Conda writes gigabytes into your 50 GB home directory by default. Redirect its package cache
-and environments into `/project/<proj>/software` before creating anything. For reproducible,
-portable software, use Apptainer containers.
-:::
 
 ### Point conda away from home first
 

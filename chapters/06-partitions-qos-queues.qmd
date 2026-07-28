@@ -1,16 +1,8 @@
 # Partitions, QOS, and queue times
 
-
 Where to send a job and how long you'll wait — the highest-leverage choices you make.
 
-
 ## Partitions and QOS on MedicineBow {#sec-partitions}
-
-::: {.tldr}
-A **partition** picks the hardware; a **QOS** picks the service tier (walltime, footprint cap,
-priority). Longer requested walltime means lower priority and a smaller footprint cap. See
-@sec-queue-times for how to choose.
-:::
 
 ### Partition = which hardware
 
@@ -102,17 +94,7 @@ For a GPU job:
 #SBATCH --time=08:00:00
 ```
 
-
 ## Queue times: which partition for what {#sec-queue-times}
-
-::: {.tldr}
-For short proof-of-concept work, use the `debug` partition/QOS (1 h, near-instant) or
-`fast`/`interactive` QOS on `mb`; CPU test jobs typically start in seconds to a few minutes.
-For long production runs, use `long` QOS on `--partition=non-investor` (or list `mb,teton`)
-for a large non-preemptible pool, and checkpoint. GPU queues are the bottleneck: L40S and
-H100 waits run into hours, so develop on cheaper GPUs and reserve H100s for jobs that need
-them.
-:::
 
 ### What the queue looks like
 
@@ -249,15 +231,7 @@ Once a job is queued, `showjobreasons <jobid>` explains why it's still pending
 
 @sec-priority explains why QOS dominates your position in that line.
 
-
 ## How priority is computed {#sec-priority}
-
-::: {.tldr}
-Your position in line is a weighted sum of factors. On MedicineBow the weights are **QOS ×
-200, fair-share × 100, job-size × 100, age × 10.** QOS dominates — twice the weight of
-fair-share and twenty times age — so which QOS you pick matters more than anything else, and
-you cannot out-wait a better QOS by sitting in the queue.
-:::
 
 ### The formula
 

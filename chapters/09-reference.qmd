@@ -1,8 +1,6 @@
 # Reference
 
-
 Quick reference: a command cheat sheet, a symptom-to-fix troubleshooting index, and a glossary.
-
 
 ## Cheat sheet {#sec-cheatsheet}
 
@@ -125,7 +123,6 @@ showuserlimits             # what am I allowed to ask for?
 - Never compute on the login node. Use `sbatch`/`salloc`.
 - Use `tmux` so a dropped connection doesn't kill interactive work.
 
-
 ## Troubleshooting {#sec-troubleshooting}
 
 A symptom-first index to the rest of the book.
@@ -226,7 +223,6 @@ Your code isn't actually on the GPU. Verify the framework sees CUDA; in a contai
 Email **`arcc-help@uwyo.edu`** with your **job ID**, the submit script, and the error. Or
 bring it to **office hours, Tuesdays 11am–1pm** on Zoom. Include what you already tried — it
 gets you a faster answer.
-
 
 ## Glossary {#sec-glossary}
 

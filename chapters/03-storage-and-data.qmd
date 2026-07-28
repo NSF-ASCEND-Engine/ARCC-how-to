@@ -1,17 +1,8 @@
 # Storage and moving data
 
-
 The three filesystems, what each one promises, and how to get data in and out.
 
-
 ## Where your data lives {#sec-storage}
-
-::: {.tldr}
-MedicineBow has three filesystems: **home** (50 GB, small), **project** (5 TB, shared with
-your group, where datasets and results live), and **scratch** (5 TB, fast, purged after 90
-days of inactivity). **None is backed up.** Install software into `/project/<proj>/software`,
-not home — one conda env can fill your home directory.
-:::
 
 ### Nothing is backed up
 
@@ -96,15 +87,7 @@ The conda chapter (@sec-conda) shows how.
 /gscratch/<you>/                  # active job working dirs, heavy I/O, big temp output
 ```
 
-
 ## Moving data in and out {#sec-moving-data}
-
-::: {.tldr}
-For big or important transfers, use **Globus** — restartable, verified, survives a sleeping
-laptop. For small stuff, `scp`/`rsync` over SSH to `medicinebow.arcc.uwyo.edu` works, and
-`rclone` (a module) is ARCC's recommended CLI for cloud storage. Note: **external
-collaborators on ARCC-Only accounts can't use Globus.**
-:::
 
 ### Pick the right tool for the size of the job
 

@@ -28,6 +28,9 @@ book:
     - chapters/08-preemption-and-failures.qmd
     - chapters/09-reference.qmd
 
+filters:
+  - glossary-tooltips.lua
+
 format:
   html:
     theme:

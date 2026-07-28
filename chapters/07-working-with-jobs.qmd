@@ -1,16 +1,8 @@
 # Monitoring, arrays, and interactive jobs
 
-
 Watching jobs, running many at once, working interactively and on GPUs, and scaling up the right way.
 
-
 ## Watching a job {#sec-monitoring}
-
-::: {.tldr}
-`squeue --me` shows what's pending or running; `showjobreasons <jobid>` explains why a job is
-waiting. After a job ends, `sacct` and `seff` show what it did and whether you sized it right.
-ARCC also ships helpers like `showjob`, `shownode`, and `showuserjobs`.
-:::
 
 ### While it's queued or running
 
@@ -119,14 +111,7 @@ For a job you care about:
 3. Running → `tail -f slurm-<id>.out`.
 4. Done → `seff <id>` to right-size the next one.
 
-
 ## Job arrays {#sec-arrays}
-
-::: {.tldr}
-A job array runs the *same script* many times, each with a different index
-(`$SLURM_ARRAY_TASK_ID`). One `sbatch`, one script, N independent tasks the scheduler spreads
-across the cluster and backfills into gaps. MedicineBow allows arrays up to **10,000** tasks.
-:::
 
 ### The problem it solves
 
@@ -230,15 +215,7 @@ Arrays are also the natural unit for **ensembles** — fire-weather members, hyd
 scenarios, Monte-Carlo draws — one array task per member, each writing to its own output,
 collected afterward.
 
-
 ## Interactive sessions and GPU jobs {#sec-interactive}
-
-::: {.tldr}
-`salloc` gives you a live shell on a compute node; start it inside `tmux` so a dropped
-connection doesn't kill it. For GPUs, add `--gres=gpu:N` and pick a GPU partition — develop on
-**A30s** (start in minutes), reserve **H100s** for jobs that need them (start in hours). GPU
-CUDA work needs the deprecated `gcc/13.2.0`.
-:::
 
 ### Interactive sessions with `salloc` {#sec-salloc}
 
@@ -330,14 +307,7 @@ nvtop                       # inside a GPU job: live GPU usage, like htop for GP
 If `nvidia-smi` shows 0% utilization while your job runs, your code isn't actually on the GPU.
 Verify early.
 
-
 ## The parallelism ladder {#sec-ladder}
-
-::: {.tldr}
-Climb the ladder only as far as your problem needs: **serial → job array → multicore → MPI →
-GPU**. Each rung is more powerful and more complex. Most "make it faster" problems are solved
-one or two rungs up — usually by a job array.
-:::
 
 ### Climb only as high as you need
 

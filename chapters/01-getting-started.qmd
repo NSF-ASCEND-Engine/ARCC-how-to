@@ -1,17 +1,8 @@
 # Getting started on the cluster
 
-
 Getting from zero to a shell prompt: what the machine is, how to get an account, and how to log in.
 
-
 ## What a cluster is {#sec-cluster}
-
-::: {.tldr}
-A cluster is a few hundred computers that share storage and a waitlist. You don't touch
-them directly — you log into a small *login node*, describe the work, and a scheduler runs
-it on a *compute node* when resources free up. Log in on the login node; do the computing
-on compute nodes.
-:::
 
 ### Mental model
 
@@ -52,6 +43,7 @@ flowchart LR
     L --- FS
     C1 --- FS
     C3 --- FS
+    style MB fill:#f3eefb,stroke:#7a4fb5,color:#3a2a5a
 ```
 
 ::: {.callout-important}
@@ -103,15 +95,7 @@ leave you waiting versus running now.
 | Office hours (Zoom) | Tuesdays, 11am–1pm — bring your actual problem. |
 | [ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) | The official reference docs. |
 
-
 ## Getting an account {#sec-account}
-
-::: {.tldr}
-You cannot request your own ARCC account. A **PI** (UW faculty or research scientist) must
-request it against a specific **project**, in writing. No project means no account. Non-UW
-collaborators get restricted "ARCC-Only" accounts with real limitations. Sort this out
-first — it commonly blocks new performers for weeks.
-:::
 
 ### How accounts work
 
@@ -180,15 +164,7 @@ Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask 
 No VPN is required to reach ARCC, on campus or off, so once your account exists you can log
 in from anywhere.
 
-
 ## First login, the portal, and SSH keys {#sec-first-login}
-
-::: {.tldr}
-Your entry point is the web portal at **<https://medicinebow.arcc.uwyo.edu>** (Open
-OnDemand). Log in with your UW credentials and Duo 2FA. SSH uses a key, not a password:
-generate one with the portal's **SSH Key Manager**, download it, and drop it in `~/.ssh`.
-The keys **expire after one year** — that's why a working login later stops working.
-:::
 
 ### Two ways in: portal and SSH
 

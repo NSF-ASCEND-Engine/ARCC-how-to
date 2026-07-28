@@ -1,10 +1,5 @@
 # Linux essentials {#sec-linux}
 
-::: {.tldr}
-The minimum Linux for cluster work: move around the filesystem, edit files, find things,
-inspect job output, and keep work alive when your connection drops with `tmux`.
-:::
-
 If you already live in a terminal, skim the `tmux` section. Everything here is standard
 Linux; nothing is ARCC-specific except the paths.
 

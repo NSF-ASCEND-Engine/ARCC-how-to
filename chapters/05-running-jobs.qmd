@@ -1,16 +1,8 @@
 # Running jobs with Slurm
 
-
 The scheduler, the anatomy of a batch job, and how to ask for the right resources.
 
-
 ## Why a scheduler exists {#sec-why-scheduler}
-
-::: {.tldr}
-Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job
-(cores, memory, time, node type), it puts the job in line and runs it when those resources
-are free. You interact with the cluster almost entirely through Slurm.
-:::
 
 ### Why share a machine
 
@@ -69,14 +61,7 @@ ARCC also ships friendlier wrappers — `showjobreasons` ("why isn't my job runn
 `showuserlimits` ("what am I allowed to ask for?"), `showpartitions`, `sqos` — used in
 @sec-partitions and @sec-monitoring.
 
-
 ## Anatomy of a batch job {#sec-anatomy}
-
-::: {.tldr}
-A batch job is a shell script with `#SBATCH` directives at the top. The required directive is
-`--account=<project>` — your project name, not your username. Submit with `sbatch`; Slurm
-writes output to `slurm-<jobid>.out`.
-:::
 
 ### The smallest useful job
 
@@ -207,15 +192,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 The next section covers asking for the right resources (@sec-resources); choosing the right
 queue comes after (@sec-partitions).
 
-
 ## Asking for resources {#sec-resources}
-
-::: {.tldr}
-Ask for what your job needs — cores, memory, time — and no more. Every extra core, gigabyte,
-or hour makes the job harder to schedule, so it waits longer and burns more of your
-allocation. Always set `--mem` explicitly, and measure real usage with `seff` after your first
-run, then right-size.
-:::
 
 ### Cores, tasks, and the words Slurm uses
 
