@@ -374,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Every job on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) and put it in every script, or set it once as a default:</p>
+<p>Every job on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name when you get your account (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) and put it in every script, or set it once as a default:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add to ~/.bashrc so you never forget it</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SBATCH_ACCOUNT</span><span class="op">=</span>cowy-firesurro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Even so, keep <code>--account</code> in the script itself. It documents intent and survives being run by a collaborator whose default differs.</p>
@@ -993,14 +993,14 @@ Memory Efficiency: 16.59% of 32.00 GB                 &lt;- 32G reserved, 5G use
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
-</div>   
-    <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/05-running-jobs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    </div>   
+    <div class="nav-footer-center">
+<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RallypointOne/ARCC-how-to/edit/main/chapters/05-running-jobs.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RallypointOne/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p>Corrections → arcc-help@uwyo.edu</p>
-</div>
+      &nbsp;
+    </div>
   </div>
 </footer>
 
