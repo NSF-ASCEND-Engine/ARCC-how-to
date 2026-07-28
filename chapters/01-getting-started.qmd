@@ -97,28 +97,16 @@ leave you waiting versus running now.
 
 ## Getting an account {#sec-account}
 
-### How accounts work
+### How to request an account
 
-ARCC will not create an account without written confirmation from a Principal Investigator
-who owns a project. Accounts are tied to funded projects for accounting and fair-share
-purposes.
+Access to MedicineBow for ASCEND/ARID performers is coordinated through the program. To
+request an account, email **Virginia Iglesias** (<virginia@innosphere.org>) and mention that
+you're an ASCEND/ARID performer who needs MedicineBow access. She'll arrange for you to be
+added to the project.
 
-So the first step is a conversation, not a form:
-
-> "Which project am I being added to, and can the PI email ARCC to add me?"
-
-For ASCEND/ARID performers the project is something like `cowy-firesurro` (the project this
-guide was written under). Confirm the exact project name with your PI — you type it into
-**every job** you run (@sec-anatomy).
-
-### Who can be a PI
-
-- UW **faculty** (extended-term / tenure-track) or a **Research Scientist**.
-- **Not** adjunct, **not** emeritus, **not** a postdoc or student.
-
-If your advisor doesn't qualify, someone who does must sponsor the project. This matters for
-a multi-institution engine like ASCEND, where the leader of your sub-project might not be UW
-faculty.
+Accounts are tied to a project — for this work that's `cowy-firesurro` (the project this
+guide was written under), which is also the name you type into **every job** you run
+(@sec-anatomy).
 
 ### UW accounts vs. ARCC-Only accounts
 
@@ -154,12 +142,12 @@ Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask 
 
 ### The practical checklist
 
-1. Confirm with your PI **which project** you're joining and its exact name.
-2. Have the **PI email `arcc-help@uwyo.edu`** to request your account on that project.
-   (You emailing them yourself won't work — they need the PI's confirmation.)
-3. Once ARCC provisions you, you'll get a UW username. Your first login is @sec-first-login.
-4. If you're an external collaborator, flag it now and ask how you'll move data, since
-   Globus won't be available to you.
+1. Email **Virginia Iglesias** (<virginia@innosphere.org>) to request a MedicineBow account,
+   mentioning that you're an ASCEND/ARID performer.
+2. You'll be added to the project and issued a UW username. Your first login is
+   @sec-first-login.
+3. If you're an external (non-UW) collaborator, say so — you'll get an **ARCC-Only** account,
+   which can't use Globus (@sec-moving-data), so ask how you'll move data.
 
 No VPN is required to reach ARCC, on campus or off, so once your account exists you can log
 in from anywhere.

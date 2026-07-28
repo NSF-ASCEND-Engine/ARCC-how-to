@@ -26,8 +26,8 @@ policy at any time. When in doubt, the
 
 ## Quick orientation
 
-1. **You cannot request your own account — your PI must.** No project, no account.
-   (See @sec-account.)
+1. **Request your account by emailing Virginia Iglesias** (<virginia@innosphere.org>), who
+   coordinates ASCEND/ARID access. (See @sec-account.)
 2. **Nothing on the cluster is backed up.** Not home, not project, not scratch. There
    are snapshots, but they live on the same array. (See @sec-storage.)
 3. **Never run real computation on a login node.** Log in, then hand work to the

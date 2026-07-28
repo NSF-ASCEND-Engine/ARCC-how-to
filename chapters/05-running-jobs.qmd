@@ -113,8 +113,8 @@ That's the loop: write script, `sbatch`, watch, read output.
 ## `--account` is your *project*, not your username
 Every job on MedicineBow must specify an account, and it's the *project* name
 (`cowy-firesurro`), not your login name. Leave it out and the job is rejected immediately.
-This is the most common first error. Confirm your exact project name with your PI
-(@sec-account) and put it in every script, or set it once as a default:
+This is the most common first error. Confirm your exact project name when you get your
+account (@sec-account) and put it in every script, or set it once as a default:
 
 ```bash
 # add to ~/.bashrc so you never forget it

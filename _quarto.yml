@@ -5,7 +5,7 @@ project:
 book:
   title: "Getting Started on ARCC MedicineBow"
   subtitle: "A practical onboarding guide for ASCEND / ARID researchers"
-  author: "Rallypoint One"
+  author: "Josh Day (Rallypoint One)"
   date: last-modified
   search: true
   repo-url: https://github.com/RallypointOne/ARCC-how-to
@@ -14,8 +14,7 @@ book:
     style: docked
     collapse-level: 1
   page-footer:
-    left: "Built for ASCEND/ARID performers. Not an official ARCC document."
-    right: "Corrections → arcc-help@uwyo.edu"
+    center: "Built for ASCEND/ARID performers. Not an official ARCC document."
   chapters:
     - index.qmd
     - chapters/01-getting-started.qmd
