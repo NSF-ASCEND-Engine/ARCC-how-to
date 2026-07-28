@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -227,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>A practical guide to getting work done on <strong>MedicineBow</strong>, the University of Wyoming’s high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (ARCC)</strong>.</p>
+<p>A practical guide to getting work done on <strong><span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span></strong>, the University of Wyoming’s high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (<span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>)</strong>.</p>
 <p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program, and assumes you are comfortable on a computer but have never used a shared supercomputer. Each chapter explains <em>why</em> before <em>how</em>.</p>
 <section id="why-this-book-exists" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
@@ -250,15 +250,15 @@ This is not an official ARCC document
 <h2 class="anchored" data-anchor-id="quick-orientation">Quick orientation</h2>
 <ol type="1">
 <li><strong>You cannot request your own account — your PI must.</strong> No project, no account. (See <a href="chapters/01-getting-started.html#sec-account" class="quarto-xref"><span>Getting an account</span></a>.)</li>
-<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not scratch. There are snapshots, but they live on the same array. (See <a href="chapters/03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Where your data lives</span></a>.)</li>
-<li><strong>Never run real computation on a login node.</strong> Log in, then hand work to the scheduler (Slurm) or grab an interactive session. (See <a href="chapters/05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Why a scheduler exists</span></a>.)</li>
+<li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not <span class="gloss" title="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>. There are <span class="gloss" title="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span>, but they live on the same array. (See <a href="chapters/03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Where your data lives</span></a>.)</li>
+<li><strong>Never run real computation on a <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>.</strong> Log in, then hand work to the scheduler (<span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span>) or grab an interactive session. (See <a href="chapters/05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Why a scheduler exists</span></a>.)</li>
 <li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code>. (See <a href="chapters/05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Anatomy of a batch job</span></a>.)</li>
-<li><strong>The partition and QOS you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues (<a href="chapters/06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Partitions and QOS on MedicineBow</span></a>, <a href="chapters/06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Queue times: which partition for what</span></a>).</li>
+<li><strong>The <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> and <span class="gloss" title="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> you choose decide how long you wait and how big you can go.</strong> Short test runs and long simulations belong in different queues (<a href="chapters/06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Partitions and QOS on MedicineBow</span></a>, <a href="chapters/06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Queue times: which partition for what</span></a>).</li>
 </ol>
 </section>
 <section id="how-the-book-is-organized" class="level2">
 <h2 class="anchored" data-anchor-id="how-the-book-is-organized">How the book is organized</h2>
-<p>The chapters run roughly in the order you’ll need them: getting an account and logging in, a minimal Linux survival kit, the filesystems and moving data, software (modules, conda, containers), then the bulk of the book on <strong>Slurm</strong> — asking for resources, picking a queue, watching jobs, arrays, GPUs, and handling preemption and failures. The last few chapters are quick reference: a cheat sheet, troubleshooting, and a glossary.</p>
+<p>The chapters run roughly in the order you’ll need them: getting an account and logging in, a minimal Linux survival kit, the filesystems and moving data, software (<span class="gloss" title="The module system that loads specific software versions into your shell on demand.">modules</span>, conda, containers), then the bulk of the book on <strong>Slurm</strong> — asking for resources, picking a queue, watching jobs, arrays, GPUs, and handling <span class="gloss" title="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preemption</span> and failures. The last few chapters are quick reference: a cheat sheet, troubleshooting, and a glossary.</p>
 <p>Conventions: shell commands you type are shown in <code>code blocks</code>. Boxes marked <strong>Gotcha</strong> or <strong>Important</strong> mark places people reliably get burned.</p>
 
 

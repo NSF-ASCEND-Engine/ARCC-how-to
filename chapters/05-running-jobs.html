@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -264,16 +264,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The scheduler, the anatomy of a batch job, and how to ask for the right resources.</p>
+<p>The scheduler, the anatomy of a <span class="gloss" title="A job submitted as a script with sbatch that runs unattended when scheduled.">batch job</span>, and how to ask for the right resources.</p>
 <section id="sec-why-scheduler" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-why-scheduler"><span class="header-section-number">5.1</span> Why a scheduler exists</h2>
-<div class="tldr">
-<p>Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job (cores, memory, time, node type), it puts the job in line and runs it when those resources are free. You interact with the cluster almost entirely through Slurm.</p>
-</div>
 <section id="why-share-a-machine" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="why-share-a-machine"><span class="header-section-number">5.1.1</span> Why share a machine</h3>
 <p>With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.</p>
-<p>Slurm replaces “grab a node and hope” with a contract:</p>
+<p><span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span> replaces “grab a node and hope” with a contract:</p>
 <ol type="1">
 <li>You <strong>describe</strong> the work: resources and a time limit.</li>
 <li>Slurm <strong>reserves</strong> exactly that, on nodes that can provide it, and <strong>accounts</strong> for it.</li>
@@ -284,8 +281,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-two-ways-to-run-work" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="the-two-ways-to-run-work"><span class="header-section-number">5.1.2</span> The two ways to run work</h3>
 <p><strong>Batch jobs</strong> (<code>sbatch</code>) are the normal mode: you write a script that lists the resources you need and the commands to run, submit it, and walk away. Slurm runs it when your turn comes and writes the output to a file. Use this for essentially all real computation. (<a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>)</p>
-<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a compute node</em> for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (<a href="07-working-with-jobs.html#sec-interactive" class="quarto-xref"><span>Section 7.3</span></a>)</p>
-<p>Both run on <strong>compute nodes</strong>, not the login node (<a href="01-getting-started.html#sec-cluster" class="quarto-xref"><span>Section 1.1</span></a>).</p>
+<p><strong>Interactive jobs</strong> (<code>salloc</code>) give you a live shell <em>on a <span class="gloss" title="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span></em> for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (<a href="07-working-with-jobs.html#sec-interactive" class="quarto-xref"><span>Section 7.3</span></a>)</p>
+<p>Both run on <strong>compute nodes</strong>, not the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> (<a href="01-getting-started.html#sec-cluster" class="quarto-xref"><span>Section 1.1</span></a>).</p>
 </section>
 <section id="the-three-questions-every-job-answers" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="the-three-questions-every-job-answers"><span class="header-section-number">5.1.3</span> The three questions every job answers</h3>
@@ -331,14 +328,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>             <span class="co"># what are my jobs doing?</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>         <span class="co"># cancel a job</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>jobid<span class="op">&gt;</span>        <span class="co"># after the fact: what happened, and how much did it use?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ARCC also ships friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — used in <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a> and <a href="07-working-with-jobs.html#sec-monitoring" class="quarto-xref"><span>Section 7.1</span></a>.</p>
+<p><span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> also ships friendlier wrappers — <code>showjobreasons</code> (“why isn’t my job running?”), <code>showuserlimits</code> (“what am I allowed to ask for?”), <code>showpartitions</code>, <code>sqos</code> — used in <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a> and <a href="07-working-with-jobs.html#sec-monitoring" class="quarto-xref"><span>Section 7.1</span></a>.</p>
 </section>
 </section>
 <section id="sec-anatomy" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="sec-anatomy"><span class="header-section-number">5.2</span> Anatomy of a batch job</h2>
-<div class="tldr">
-<p>A batch job is a shell script with <code>#SBATCH</code> directives at the top. The required directive is <code>--account=&lt;project&gt;</code> — your project name, not your username. Submit with <code>sbatch</code>; Slurm writes output to <code>slurm-&lt;jobid&gt;.out</code>.</p>
-</div>
 <section id="the-smallest-useful-job" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="the-smallest-useful-job"><span class="header-section-number">5.2.1</span> The smallest useful job</h3>
 <p>Here is a complete, working submit script. Save it as <code>submit.sh</code>:</p>
@@ -380,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Every job on MedicineBow must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) and put it in every script, or set it once as a default:</p>
+<p>Every job on <span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> must specify an account, and it’s the <em>project</em> name (<code>cowy-firesurro</code>), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) and put it in every script, or set it once as a default:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add to ~/.bashrc so you never forget it</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SBATCH_ACCOUNT</span><span class="op">=</span>cowy-firesurro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Even so, keep <code>--account</code> in the script itself. It documents intent and survives being run by a collaborator whose default differs.</p>
@@ -464,7 +458,7 @@ The 10 GB-per-core default on <code>mb</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>On the default <code>mb</code> partition, if you don’t set <code>--mem</code>, Slurm gives you 10 GB per CPU core (<code>DefMemPerCPU=10000</code>). So this request:</p>
+<p>On the default <code>mb</code> <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span>, if you don’t set <code>--mem</code>, Slurm gives you 10 GB per CPU core (<code>DefMemPerCPU=10000</code>). So this request:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8       # and no --mem line</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>asks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the job queues longer. Set <code>--mem</code> (whole-job) or <code>--mem-per-cpu</code> explicitly. Covered in depth in <a href="#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>.</p>
 </div>
@@ -493,9 +487,6 @@ The 10 GB-per-core default on <code>mb</code>
 </section>
 <section id="sec-resources" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="sec-resources"><span class="header-section-number">5.3</span> Asking for resources</h2>
-<div class="tldr">
-<p>Ask for what your job needs — cores, memory, time — and no more. Every extra core, gigabyte, or hour makes the job harder to schedule, so it waits longer and burns more of your allocation. Always set <code>--mem</code> explicitly, and measure real usage with <code>seff</code> after your first run, then right-size.</p>
-</div>
 <section id="cores-tasks-and-the-words-slurm-uses" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="cores-tasks-and-the-words-slurm-uses"><span class="header-section-number">5.3.1</span> Cores, tasks, and the words Slurm uses</h3>
 <p>For most jobs you need two ideas:</p>
@@ -509,7 +500,7 @@ The 10 GB-per-core default on <code>mb</code>
 <ul>
 <li><strong>Single-threaded program?</strong> <code>--ntasks=1 --cpus-per-task=1</code>.</li>
 <li><strong>Multithreaded (OpenMP, most numpy/xarray work)?</strong> <code>--ntasks=1 --cpus-per-task=N</code>, and set <code>export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK</code>.</li>
-<li><strong>MPI across many nodes?</strong> Use <code>--nodes</code> and <code>--ntasks</code>, and launch with <code>srun</code> (<a href="07-working-with-jobs.html#sec-ladder" class="quarto-xref"><span>Section 7.4</span></a>).</li>
+<li><strong><span class="gloss" title="Message Passing Interface — a single parallel program spanning many cores/nodes that communicate; launched with srun.">MPI</span> across many nodes?</strong> Use <code>--nodes</code> and <code>--ntasks</code>, and launch with <code>srun</code> (<a href="07-working-with-jobs.html#sec-ladder" class="quarto-xref"><span>Section 7.4</span></a>).</li>
 </ul>
 <p>Asking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores and makes you wait longer. Match the request to what your code can use.</p>
 </section>
@@ -532,12 +523,12 @@ The 10 GB/core default on <code>mb</code>
 <p>If you omit <code>--mem</code> on the default partition, you get 10 GB per core, so <code>--cpus-per-task=8</code> becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set your memory explicitly. (Full story in <a href="#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>.)</p>
 </div>
 </div>
-<p>For a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>), so memory is the one resource where running out is fatal rather than slow.</p>
+<p>For a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (<span class="gloss" title="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem.">OOM</span>) killer (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>), so memory is the one resource where running out is fatal rather than slow.</p>
 </section>
 <section id="time" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="time"><span class="header-section-number">5.3.3</span> Time</h3>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower QOS ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
+<p>Your job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower <span class="gloss" title="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceiling and better odds of backfilling into gaps, so it often starts sooner (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -557,7 +548,7 @@ No per-partition default time, so set <code>--time</code>
 <p>A bigger request is a rarer set of free resources to find:</p>
 <ul>
 <li><strong>More cores / memory</strong> → fewer nodes can satisfy you → longer wait, and you’re charged for cores you didn’t use.</li>
-<li><strong>More time</strong> → lower-priority QOS tier and fewer backfill opportunities → longer wait.</li>
+<li><strong>More time</strong> → lower-<span class="gloss" title="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span> QOS tier and fewer <span class="gloss" title="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> opportunities → longer wait.</li>
 <li><strong>A GPU you don’t use</strong> → you sit in the busy GPU queue for nothing (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</li>
 </ul>
 <p>The fix is to right-size.</p>

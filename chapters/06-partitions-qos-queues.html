@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -268,12 +268,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Where to send a job and how long you’ll wait — the highest-leverage choices you make.</p>
 <section id="sec-partitions" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-partitions"><span class="header-section-number">6.1</span> Partitions and QOS on MedicineBow</h2>
-<div class="tldr">
-<p>A <strong>partition</strong> picks the hardware; a <strong>QOS</strong> picks the service tier (walltime, footprint cap, priority). Longer requested walltime means lower priority and a smaller footprint cap. See <a href="#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a> for how to choose.</p>
-</div>
 <section id="partition-which-hardware" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="partition-which-hardware"><span class="header-section-number">6.1.1</span> Partition = which hardware</h3>
-<p>A partition is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>).</p>
+<p>A <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span> is a named pool of nodes. Submit with <code>--partition=&lt;name&gt;</code> (the default is <code>mb</code>).</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 16%">
@@ -401,7 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><small>¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with <code>showpartitions</code> and <code>sinfo</code>.</small></p>
-<p>The <code>inv-*</code> partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and preempt your job (<a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</p>
+<p>The <code>inv-*</code> partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and <span class="gloss" title="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preempt</span> your job (<a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -415,11 +412,11 @@ Avoiding preemption: use <code>non-investor</code>, not <code>--constraint</code
 <p><code>--constraint=non-investor</code> matches nothing on the current machine and does nothing. Use a <strong>partition</strong> instead: <code>--partition=non-investor</code> (110 CPU nodes) or <code>--partition=non-investor-gpu</code> (7 GPU nodes) stays on hardware that won’t be reclaimed. This is the right home for long, un-checkpointed runs.</p>
 </div>
 </div>
-<p>You can list several partitions and let Slurm use whichever frees up first; <code>--partition=mb,teton,beartooth</code> is common for CPU throughput work.</p>
+<p>You can list several partitions and let <span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span> use whichever frees up first; <code>--partition=mb,teton,beartooth</code> is common for CPU throughput work.</p>
 </section>
 <section id="qos-which-service-tier" class="level3" data-number="6.1.2">
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="qos-which-service-tier"><span class="header-section-number">6.1.2</span> QOS = which service tier</h3>
-<p>A <strong>Quality of Service</strong> sets three things at once: your <strong>maximum walltime</strong>, your <strong>CPU footprint cap</strong>, and your <strong>priority</strong>. Submit with <code>--qos=&lt;name&gt;</code> (the default is <code>normal</code>).</p>
+<p>A <strong>Quality of Service</strong> sets three things at once: your <strong>maximum <span class="gloss" title="The real elapsed clock time a job is allowed (--time); the job is killed at the limit.">walltime</span></strong>, your <strong>CPU footprint cap</strong>, and your <strong><span class="gloss" title="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span></strong>. Submit with <code>--qos=&lt;name&gt;</code> (the default is <code>normal</code>).</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 15%">
@@ -509,7 +506,7 @@ The walltime trade-off
 </section>
 <section id="denyonlimit-rejected-at-submit" class="level3" data-number="6.1.3">
 <h3 data-number="6.1.3" class="anchored" data-anchor-id="denyonlimit-rejected-at-submit"><span class="header-section-number">6.1.3</span> <code>DenyOnLimit</code>: rejected at submit</h3>
-<p>Every QOS is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.</p>
+<p>Every <span class="gloss" title="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> is flagged <strong><code>DenyOnLimit</code></strong>. If you ask for more than a QOS allows — say a 5-day run under <code>normal</code> (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.</p>
 </section>
 <section id="putting-both-knobs-in-a-script" class="level3" data-number="6.1.4">
 <h3 data-number="6.1.4" class="anchored" data-anchor-id="putting-both-knobs-in-a-script"><span class="header-section-number">6.1.4</span> Putting both knobs in a script</h3>
@@ -525,12 +522,9 @@ The walltime trade-off
 </section>
 <section id="sec-queue-times" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-queue-times"><span class="header-section-number">6.2</span> Queue times: which partition for what</h2>
-<div class="tldr">
-<p>For short proof-of-concept work, use the <code>debug</code> partition/QOS (1 h, near-instant) or <code>fast</code>/<code>interactive</code> QOS on <code>mb</code>; CPU test jobs typically start in seconds to a few minutes. For long production runs, use <code>long</code> QOS on <code>--partition=non-investor</code> (or list <code>mb,teton</code>) for a large non-preemptible pool, and checkpoint. GPU queues are the bottleneck: L40S and H100 waits run into hours, so develop on cheaper GPUs and reserve H100s for jobs that need them.</p>
-</div>
 <section id="what-the-queue-looks-like" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="what-the-queue-looks-like"><span class="header-section-number">6.2.1</span> What the queue looks like</h3>
-<p>At a representative midday moment on MedicineBow there were roughly <strong>2,000 jobs running and 800 pending</strong>. Almost every pending job’s reason was <code>Priority</code> — the machine is busy and you’re in line, not that you asked for something impossible.</p>
+<p>At a representative midday moment on <span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> there were roughly <strong>2,000 jobs running and 800 pending</strong>. Almost every pending job’s reason was <code>Priority</code> — the machine is busy and you’re in line, not that you asked for something impossible.</p>
 </section>
 <section id="measured-wait-times-start-minus-eligible" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="measured-wait-times-start-minus-eligible"><span class="header-section-number">6.2.2</span> Measured wait times (start minus eligible)</h3>
@@ -632,7 +626,7 @@ How to read these numbers
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This window included a large <code>fast</code>-QOS job array on <code>teton</code>, which pulls the <code>teton</code>/<code>fast</code> medians toward zero. The <strong><code>normal</code>-QOS row (tens of thousands of ordinary jobs: median ~19 s, 90th percentile ~8 min)</strong> is the most representative figure for a normal CPU job. The pattern holds either way: CPU work starts fast; GPU work, especially L40S/H100, is where you wait. Measure the live picture before a big campaign — see the commands at the end of this chapter.</p>
+<p>This window included a large <code>fast</code>-QOS <span class="gloss" title="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">job array</span> on <code>teton</code>, which pulls the <code>teton</code>/<code>fast</code> medians toward zero. The <strong><code>normal</code>-QOS row (tens of thousands of ordinary jobs: median ~19 s, 90th percentile ~8 min)</strong> is the most representative figure for a normal CPU job. The pattern holds either way: CPU work starts fast; GPU work, especially L40S/H100, is where you wait. Measure the live picture before a big campaign — see the commands at the end of this chapter.</p>
 </div>
 </div>
 </section>
@@ -661,7 +655,7 @@ How to read these numbers
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-choose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and checkpointing.
+Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and <span class="gloss" title="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">checkpointing</span>.
 </figcaption>
 </figure>
 </div>
@@ -776,12 +770,9 @@ Figure&nbsp;6.1: Where to send a job. Short work wants a fast start (debug/inter
 </section>
 <section id="sec-priority" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="sec-priority"><span class="header-section-number">6.3</span> How priority is computed</h2>
-<div class="tldr">
-<p>Your position in line is a weighted sum of factors. On MedicineBow the weights are <strong>QOS × 200, fair-share × 100, job-size × 100, age × 10.</strong> QOS dominates — twice the weight of fair-share and twenty times age — so which QOS you pick matters more than anything else, and you cannot out-wait a better QOS by sitting in the queue.</p>
-</div>
 <section id="the-formula" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="the-formula"><span class="header-section-number">6.3.1</span> The formula</h3>
-<p>Slurm computes a priority score for every pending job and runs the highest scores first (subject to backfill, below). The score is a weighted sum; MedicineBow’s weights are:</p>
+<p>Slurm computes a priority score for every pending job and runs the highest scores first (subject to <span class="gloss" title="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span>, below). The score is a weighted sum; MedicineBow’s weights are:</p>
 <pre class="text"><code>PriorityWeightQOS       = 200     &lt;- dominant
 PriorityWeightFairShare = 100
 PriorityWeightJobSize   = 100
@@ -792,7 +783,7 @@ PriorityWeightPartition = 0       (partition doesn't affect priority here)</code
 <section id="what-each-factor-means" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="what-each-factor-means"><span class="header-section-number">6.3.2</span> What each factor means</h3>
 <p><strong>QOS (weight 200).</strong> Higher-priority QOS means a better position. From <a href="#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>: <code>interactive</code> (90) &gt; <code>fast</code> (80) &gt; <code>normal</code> (70) &gt; <code>long</code> (60). Choosing <code>fast</code> over <code>long</code> is worth more priority than any amount of waiting, which is why the short-vs-long decision in <a href="#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a> matters.</p>
-<p><strong>Fair-share (weight 100) — recent usage.</strong> Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.</p>
+<p><strong><span class="gloss" title="A priority factor: heavy recent usage by your account temporarily lowers your priority.">Fair-share</span> (weight 100) — recent usage.</strong> Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.</p>
 <p><strong>Job size (weight 100).</strong> A factor based on the resources requested. With the <code>SMALL_RELATIVE_TO_TIME</code> flag this cluster sets, it interacts with your time request — another reason not to over-ask (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>).</p>
 <p><strong>Age (weight 10) — time spent waiting.</strong> A job gains priority the longer it sits, maxing out after ~3 days. At weight 10, age is a tie-breaker, not a strategy; you won’t age past someone who chose a better QOS.</p>
 </section>
@@ -1249,7 +1240,7 @@ QOS dominates priority
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
+<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

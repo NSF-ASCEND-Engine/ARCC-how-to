@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -256,26 +256,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>How long jobs survive preemption and walltime limits, and how to diagnose jobs that fail.</p>
+<p>How long jobs survive <span class="gloss" title="An investor reclaiming a borrowed node, killing your job and (here) requeuing it.">preemption</span> and <span class="gloss" title="The real elapsed clock time a job is allowed (--time); the job is killed at the limit.">walltime</span> limits, and how to diagnose jobs that fail.</p>
 <section id="sec-preemption" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="sec-preemption"><span class="header-section-number">8.1</span> Preemption, the condo model, and checkpointing</h2>
-<div class="tldr">
-<p>MedicineBow is a <strong>condo</strong>: research groups buy <code>inv-*</code> nodes, and others borrow them when idle. The owner can reclaim a node at any time, and your job is <strong>requeued</strong> (killed and put back in line). Long jobs should therefore run on <code>non-investor</code> partitions <em>or</em> <strong>checkpoint</strong> so a requeue costs minutes, not days.</p>
-</div>
 <section id="the-condo-model" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="the-condo-model"><span class="header-section-number">8.1.1</span> The condo model</h3>
-<p>Much of MedicineBow’s hardware was purchased by individual research groups. Those <code>inv-*</code> partitions belong to their investors, who get top priority (QOS 110) on them. Everyone else’s jobs can <strong>backfill</strong> onto idle investor nodes — free capacity most of the time, with one condition.</p>
+<p>Much of <span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span>’s hardware was purchased by individual research groups. Those <code>inv-*</code> <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partitions</span> belong to their investors, who get top <span class="gloss" title="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span> (<span class="gloss" title="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> 110) on them. Everyone else’s jobs can <strong><span class="gloss" title="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span></strong> onto idle investor nodes — free capacity most of the time, with one condition.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-An investor can reclaim a node and requeue your job
+An investor can reclaim a node and <span class="gloss" title="Putting a killed (preempted or failed) job back in the pending queue to start over.">requeue</span> your job
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you land on investor hardware and the owner submits work, your job is <strong>preempted</strong> — Slurm kills it and, by default here, <strong>requeues</strong> it: it returns to the pending queue and starts over from the beginning when resources free up. Any progress not written to disk is lost. This can happen minutes into a job or days in.</p>
+<p>If you land on investor hardware and the owner submits work, your job is <strong>preempted</strong> — <span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span> kills it and, by default here, <strong>requeues</strong> it: it returns to the pending queue and starts over from the beginning when resources free up. Any progress not written to disk is lost. This can happen minutes into a job or days in.</p>
 </div>
 </div>
 </section>
@@ -285,7 +282,7 @@ An investor can reclaim a node and requeue your job
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=non-investor        # 110 CPU nodes, not reclaimable</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or non-investor-gpu for GPU work</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is the right home for anything long that you haven’t checkpointed. (The <code>--constraint=non-investor</code> some docs mention <strong>does not work</strong> — it’s a <em>partition</em>, not a constraint. See <a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>.)</p>
-<p><strong>2. Checkpoint, so preemption is cheap.</strong> If you run on borrowable hardware (or list several partitions for faster starts), save state periodically so a requeue is survivable.</p>
+<p><strong>2. <span class="gloss" title="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">Checkpoint</span>, so preemption is cheap.</strong> If you run on borrowable hardware (or list several partitions for faster starts), save state periodically so a requeue is survivable.</p>
 </section>
 <section id="sec-checkpointing" class="level3" data-number="8.1.3">
 <h3 data-number="8.1.3" class="anchored" data-anchor-id="sec-checkpointing"><span class="header-section-number">8.1.3</span> Checkpointing</h3>
@@ -334,9 +331,6 @@ Checkpoint jobs that run longer than a few hours
 </section>
 <section id="sec-fail" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="sec-fail"><span class="header-section-number">8.2</span> When jobs fail</h2>
-<div class="tldr">
-<p>Most failures are one of four things: <strong>out of memory</strong> (raise <code>--mem</code>), <strong>timeout</strong> (raise <code>--time</code> or checkpoint), <strong>a bug in your code</strong> (read the <code>.out</code> file), or <strong>preemption/node failure</strong> (requeue + checkpoint). <code>sacct</code> tells you which one it was; the <code>slurm-*.out</code> file tells you why.</p>
-</div>
 <section id="step-one-what-state-did-it-end-in" class="level3" data-number="8.2.1">
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="step-one-what-state-did-it-end-in"><span class="header-section-number">8.2.1</span> Step one: what state did it end in?</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,ExitCode,Elapsed,MaxRSS,ReqMem,DerivedExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -395,7 +389,7 @@ Checkpoint jobs that run longer than a few hours
 </section>
 <section id="out-of-memory" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="out-of-memory"><span class="header-section-number">8.2.2</span> Out of memory</h3>
-<p>A job that exceeds its memory reservation is killed by the Linux OOM killer — you’ll see <code>OUT_OF_MEMORY</code> in <code>sacct</code>, and often a truncated or empty output file.</p>
+<p>A job that exceeds its memory reservation is killed by the Linux <span class="gloss" title="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem.">OOM</span> killer — you’ll see <code>OUT_OF_MEMORY</code> in <code>sacct</code>, and often a truncated or empty output file.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> 123456 <span class="at">--format</span><span class="op">=</span>JobID,State,MaxRSS,ReqMem</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># MaxRSS is peak memory actually used; compare to ReqMem</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If <code>MaxRSS</code> is near or above <code>ReqMem</code>, raise <code>--mem</code> and resubmit. Then use <code>seff</code> (<a href="07-working-with-jobs.html#sec-monitoring" class="quarto-xref"><span>Section 7.1</span></a>) on the successful run to right-size going forward. Note the 10 GB/core default on <code>mb</code> (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>) — sometimes you already had enough memory and something else was wrong.</p>
@@ -415,7 +409,7 @@ Checkpoint jobs that run longer than a few hours
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> slurm-123456.out          <span class="co"># stdout+stderr (or separate --error file)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Common cluster-specific culprits:</p>
 <ul>
-<li><strong>Module not loaded in the script.</strong> Interactive worked, batch didn’t — because you loaded modules on the login node but not <em>inside</em> the submit script. Put <code>module load</code> in the script (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</li>
+<li><strong><span class="gloss" title="The module system that loads specific software versions into your shell on demand.">Module</span> not loaded in the script.</strong> Interactive worked, batch didn’t — because you loaded modules on the <span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span> but not <em>inside</em> the submit script. Put <code>module load</code> in the script (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</li>
 <li><strong>Wrong paths.</strong> A relative path that existed where you ran <code>sbatch</code> but not where the job ran. Use absolute paths or <code>$SLURM_SUBMIT_DIR</code>.</li>
 <li><strong>conda env not activated</strong> in the script (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</li>
 <li><strong>Wrote to <code>/lscratch</code> and it vanished</strong> — that’s node-local and wiped at job end (<a href="03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>).</li>
@@ -860,7 +854,7 @@ Checkpoint jobs that run longer than a few hours
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
+<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0ba825beef56c0d119f9502a9ef95300.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-df4e68063e06c27b25206c0d69be275c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -270,18 +270,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Getting from zero to a shell prompt: what the machine is, how to get an account, and how to log in.</p>
 <section id="sec-cluster" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-cluster"><span class="header-section-number">1.1</span> What a cluster is</h2>
-<div class="tldr">
-<p>A cluster is a few hundred computers that share storage and a waitlist. You don’t touch them directly — you log into a small <em>login node</em>, describe the work, and a scheduler runs it on a <em>compute node</em> when resources free up. Log in on the login node; do the computing on compute nodes.</p>
-</div>
 <section id="mental-model" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="mental-model"><span class="header-section-number">1.1.1</span> Mental model</h3>
-<p>MedicineBow is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the <strong>scheduler</strong> (here, <a href="https://slurm.schedmd.com/">Slurm</a>). Learning the cluster is mostly learning to work <em>with</em> the scheduler.</p>
+<p><span class="gloss" title="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the <strong>scheduler</strong> (here, <a href="https://slurm.schedmd.com/">Slurm</a>). Learning the cluster is mostly learning to work <em>with</em> the scheduler.</p>
 </section>
 <section id="login-nodes-vs.-compute-nodes" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="login-nodes-vs.-compute-nodes"><span class="header-section-number">1.1.2</span> Login nodes vs.&nbsp;compute nodes</h3>
 <p>There are two kinds of machines, and confusing them is the most common beginner mistake.</p>
-<p><strong>Login nodes</strong> (<code>mblog1</code>, <code>mblog2</code>) are the front door. When you <code>ssh</code> in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.</p>
-<p><strong>Compute nodes</strong> are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default <code>mb</code> nodes have <strong>96 CPU cores and ~1 TB of RAM each</strong>, and the GPU nodes carry up to <strong>8 NVIDIA H100s</strong>.</p>
+<p><strong><span class="gloss" title="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">Login nodes</span></strong> (<code>mblog1</code>, <code>mblog2</code>) are the front door. When you <code>ssh</code> in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.</p>
+<p><strong><span class="gloss" title="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">Compute nodes</span></strong> are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default <code>mb</code> nodes have <strong>96 CPU cores and ~1 TB of RAM each</strong>, and the GPU nodes carry up to <strong>8 NVIDIA H100s</strong>.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-nodes" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -302,6 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     L --- FS
     C1 --- FS
     C3 --- FS
+    style MB fill:#f3eefb,stroke:#7a4fb5,color:#3a2a5a
 </pre>
 </div>
 </div>
@@ -322,8 +320,8 @@ Don’t compute on login nodes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A heavy job on <code>mblog1</code>/<code>mblog2</code> — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills runaway login-node processes (and emails you).</p>
-<p>Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See <a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>.</p>
+<p>A heavy job on <code>mblog1</code>/<code>mblog2</code> — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. <span class="gloss" title="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> monitors this and kills runaway login-node processes (and emails you).</p>
+<p>Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a <span class="gloss" title="The scheduler that manages all jobs on the cluster.">Slurm</span> job or an interactive session. See <a href="05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Section 5.1</span></a>.</p>
 </div>
 </div>
 </section>
@@ -333,7 +331,7 @@ Don’t compute on login nodes
 <ul>
 <li>When you need 50 nodes for an ensemble, you can have them (briefly).</li>
 <li>When you need nothing, someone else uses the hardware you’re not using.</li>
-<li>A fair-share accounting system stops any one person from hogging everything.</li>
+<li>A <span class="gloss" title="A priority factor: heavy recent usage by your account temporarily lowers your priority.">fair-share</span> accounting system stops any one person from hogging everything.</li>
 </ul>
 <p>In exchange, you sometimes <strong>wait in line</strong> and you have to <strong>describe your work up front</strong> (how many cores, how much memory, how long). Most of this book is about making those two things painless.</p>
 </section>
@@ -341,7 +339,7 @@ Don’t compute on login nodes
 <h3 data-number="1.1.4" class="anchored" data-anchor-id="what-medicinebow-is-concretely"><span class="header-section-number">1.1.4</span> What MedicineBow is, concretely</h3>
 <p>MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:</p>
 <ul>
-<li><strong>General CPU nodes</strong> (the <code>mb</code> partition): 25 nodes, 96 cores and ~1 TB RAM each.</li>
+<li><strong>General CPU nodes</strong> (the <code>mb</code> <span class="gloss" title="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span>): 25 nodes, 96 cores and ~1 TB RAM each.</li>
 <li><strong>GPU nodes</strong>: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything CUDA.</li>
 <li><strong>Absorbed older clusters</strong>: the retired <em>Teton</em>, <em>Beartooth</em>, and <em>WildIris</em> clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.</li>
 <li><strong>Investor (“condo”) nodes</strong>: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see <a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</li>
@@ -376,9 +374,6 @@ Don’t compute on login nodes
 </section>
 <section id="sec-account" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="sec-account"><span class="header-section-number">1.2</span> Getting an account</h2>
-<div class="tldr">
-<p>You cannot request your own ARCC account. A <strong>PI</strong> (UW faculty or research scientist) must request it against a specific <strong>project</strong>, in writing. No project means no account. Non-UW collaborators get restricted “ARCC-Only” accounts with real limitations. Sort this out first — it commonly blocks new performers for weeks.</p>
-</div>
 <section id="how-accounts-work" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="how-accounts-work"><span class="header-section-number">1.2.1</span> How accounts work</h3>
 <p>ARCC will not create an account without written confirmation from a Principal Investigator who owns a project. Accounts are tied to funded projects for accounting and fair-share purposes.</p>
@@ -458,7 +453,7 @@ ARCC-Only accounts and Globus
 <h3 data-number="1.2.4" class="anchored" data-anchor-id="the-free-tier"><span class="header-section-number">1.2.4</span> The free tier</h3>
 <p>Each researcher’s baseline allocation:</p>
 <ul>
-<li><strong>100,000 CPU core-hours per year</strong></li>
+<li><strong>100,000 CPU <span class="gloss" title="One CPU core used for one hour — the unit your allocation is measured in.">core-hours</span> per year</strong></li>
 <li><strong>20,000 GPU-hours per year</strong></li>
 </ul>
 <p>That is plenty for getting started — 100,000 core-hours is roughly one 96-core node running flat out for six weeks. Larger allocations and investor projects exist beyond this. Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>).</p>
@@ -476,14 +471,11 @@ ARCC-Only accounts and Globus
 </section>
 <section id="sec-first-login" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="sec-first-login"><span class="header-section-number">1.3</span> First login, the portal, and SSH keys</h2>
-<div class="tldr">
-<p>Your entry point is the web portal at <strong><a href="https://medicinebow.arcc.uwyo.edu" class="uri">https://medicinebow.arcc.uwyo.edu</a></strong> (Open OnDemand). Log in with your UW credentials and Duo 2FA. SSH uses a key, not a password: generate one with the portal’s <strong>SSH Key Manager</strong>, download it, and drop it in <code>~/.ssh</code>. The keys <strong>expire after one year</strong> — that’s why a working login later stops working.</p>
-</div>
 <section id="two-ways-in-portal-and-ssh" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="two-ways-in-portal-and-ssh"><span class="header-section-number">1.3.1</span> Two ways in: portal and SSH</h3>
 <p>MedicineBow has a single hostname that serves both the web portal and SSH: <code>medicinebow.arcc.uwyo.edu</code>.</p>
 <ul>
-<li><strong>The web portal</strong> (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start here on day one.</li>
+<li><strong>The web portal</strong> (<span class="gloss" title="The web portal at medicinebow.arcc.uwyo.edu — file browser, terminal, and interactive apps.">Open OnDemand</span>) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start here on day one.</li>
 <li><strong>SSH</strong> is the terminal way in, and how you’ll work day-to-day once set up. It requires a key you generate through the portal first.</li>
 </ul>
 <div class="callout callout-style-simple callout-note callout-titled">
