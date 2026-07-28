@@ -42,8 +42,7 @@ the mess: `conda env list`, remove the home-based envs, and recreate them under 
 
 Other conda notes:
 
-- No `mamba` is installed on the cluster; use `conda` directly. Recent conda is much faster
-  than it used to be.
+- No `mamba` is installed on the cluster; use `conda` directly.
 - Activate conda inside your submit script, not just interactively, so batch jobs get the
   same environment (@sec-anatomy).
 - `conda clean -a` reclaims space from the package cache.

@@ -42,9 +42,6 @@ backfills well (@sec-arrays).
 #SBATCH --array=1-500%20
 python run.py --id ${SLURM_ARRAY_TASK_ID}
 ```
-
-Use this whenever "I need to run it N times" applies.
-
 ### Rung 3 — Multicore (one program, many threads, one node)
 
 If a *single* run is too slow and your code is multithreaded (OpenMP, or numpy/xarray/PyTorch

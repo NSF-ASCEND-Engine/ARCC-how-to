@@ -85,7 +85,7 @@ MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:
   can borrow when it's idle — but the owner can reclaim it and bump your job (see
   @sec-preemption).
 
-You don't need to memorize this. The partition chapter (@sec-partitions) covers which
+The partition chapter (@sec-partitions) covers which
 hardware to ask for, and the queue-times chapter (@sec-queue-times) covers which choices
 leave you waiting versus running now.
 
@@ -96,6 +96,3 @@ leave you waiting versus running now.
 | `arcc-help@uwyo.edu` | Anything. Real humans, ticketed via Jira Service Management. |
 | Office hours (Zoom) | Tuesdays, 11am–1pm — bring your actual problem. |
 | [ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) | The official reference docs. |
-
-Note the help address is `arcc-help@uwyo.edu` (with a hyphen). You may occasionally see
-`arcchelp@uwyo.edu` in a stray module message — that's a typo; use the hyphenated one.

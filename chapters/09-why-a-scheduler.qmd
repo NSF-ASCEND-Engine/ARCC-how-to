@@ -20,8 +20,6 @@ Slurm replaces "grab a node and hope" with a contract:
 3. Your job runs with those resources guaranteed and isolated from other jobs.
 4. When your time limit is up, the job ends, which keeps the line moving.
 
-The rest of this book is about writing that description well.
-
 ## The two ways to run work
 
 **Batch jobs** (`sbatch`) are the normal mode: you write a script that lists the resources

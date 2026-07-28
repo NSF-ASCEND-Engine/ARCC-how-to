@@ -13,8 +13,7 @@ them.
 
 At a representative midday moment on MedicineBow there were roughly **2,000 jobs running and
 800 pending**. Almost every pending job's reason was `Priority` — the machine is busy and
-you're in line, not that you asked for something impossible. This is the normal state of a
-busy cluster.
+you're in line, not that you asked for something impossible.
 
 ## Measured wait times (start minus eligible)
 

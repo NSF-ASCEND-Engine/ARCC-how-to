@@ -40,7 +40,7 @@ policy at any time. When in doubt, the
 
 ## How the book is organized
 
-- **Part I** .
+- **Part I** gets you an account and logged in.
 - **Part II** is a minimal Linux survival kit.
 - **Part III** covers the filesystems and moving data in and out.
 - **Part IV** covers software: modules, conda, and containers.

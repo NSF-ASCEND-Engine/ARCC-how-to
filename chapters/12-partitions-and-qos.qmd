@@ -28,8 +28,7 @@ A partition is a named pool of nodes. Submit with `--partition=<name>` (the defa
 
 <small>¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with `showpartitions` and `sinfo`.</small>
 
-Teton, Beartooth, and WildIris are retired clusters now folded into MedicineBow as large
-partitions; Teton alone is ~250 nodes. The `inv-*` partitions are investor ("condo")
+The `inv-*` partitions are investor ("condo")
 hardware: you can run on them when they're idle, but the owner can reclaim the node and
 preempt your job (@sec-preemption).
 
@@ -96,6 +95,3 @@ For a GPU job:
 #SBATCH --gres=gpu:1            # ask for 1 GPU (see @sec-gpu)
 #SBATCH --time=08:00:00
 ```
-
-Which combination to pick depends on whether you're doing a quick proof-of-concept or a long
-production run, and on how busy each queue is. That's @sec-queue-times.

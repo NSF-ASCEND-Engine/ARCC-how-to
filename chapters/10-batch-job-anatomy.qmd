@@ -44,7 +44,7 @@ squeue --me                 # is it pending / running?
 tail -f slurm-123456.out    # follow output as it's written
 ```
 
-That's the loop: write script, `sbatch`, watch, read output. Everything else is refinement.
+That's the loop: write script, `sbatch`, watch, read output.
 
 ## The required directive: `--account`
 
