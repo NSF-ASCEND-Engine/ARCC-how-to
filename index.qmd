@@ -40,11 +40,23 @@ policy at any time. When in doubt, the
 
 ## How the book is organized
 
-The chapters run roughly in the order you'll need them: getting an account and logging in, a
-minimal Linux survival kit, the filesystems and moving data, software (modules, conda,
-containers), then the bulk of the book on **Slurm** — asking for resources, picking a queue,
-watching jobs, arrays, GPUs, and handling preemption and failures. The last few chapters are
-quick reference: a cheat sheet, troubleshooting, and a glossary.
+The chapters run in the order you'll need them:
 
-Conventions: shell commands you type are shown in `code blocks`. Boxes marked
-**Gotcha** or **Important** mark places people reliably get burned.
+1. **Getting started on the cluster** — what an HPC cluster is, how to request an account, and
+   first login through the portal and SSH keys.
+2. **Linux essentials** — the minimum shell you need: moving around, editing files, and keeping
+   work alive across a dropped connection with `tmux`.
+3. **Storage and moving data** — the three filesystems (and the fact that nothing is backed
+   up), plus Globus, `rsync`, and `rclone` for transfers.
+4. **Software: modules, conda, and containers** — loading software with Lmod, using conda
+   without filling your home directory, and running containers with Apptainer.
+5. **Running jobs with Slurm** — why a scheduler exists, the anatomy of a batch job, and asking
+   for the right resources.
+6. **Partitions, QOS, and queue times** — which hardware and service tier to choose, measured
+   wait times, and how job priority is actually computed here.
+7. **Monitoring, arrays, and interactive jobs** — watching and diagnosing jobs, job arrays,
+   interactive and GPU sessions, and the parallelism ladder.
+8. **Preemption, checkpointing, and failures** — surviving the condo model and walltime limits,
+   and reading the wreckage when a job fails.
+9. **Reference** — a command cheat sheet, a symptom-to-fix troubleshooting index, and a
+   glossary.
