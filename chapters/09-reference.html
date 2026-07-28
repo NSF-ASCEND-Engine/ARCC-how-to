@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Reference – Getting Started on ARCC MedicineBow</title>
+<title>9&nbsp; Reference – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/09-agentic-coding.html" rel="prev">
+<link href="../chapters/08-preemption-and-failures.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/10-reference.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-reference.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -200,14 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-agentic-coding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/10-reference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
   </div>
 </li>
     </ul>
@@ -220,38 +214,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-cheatsheet" id="toc-sec-cheatsheet" class="nav-link active" data-scroll-target="#sec-cheatsheet"><span class="header-section-number">10.1</span> Cheat sheet</a>
+  <li><a href="#sec-cheatsheet" id="toc-sec-cheatsheet" class="nav-link active" data-scroll-target="#sec-cheatsheet"><span class="header-section-number">9.1</span> Cheat sheet</a>
   <ul class="collapse">
-  <li><a href="#connect" id="toc-connect" class="nav-link" data-scroll-target="#connect"><span class="header-section-number">10.1.1</span> Connect</a></li>
-  <li><a href="#storage-nothing-is-backed-up" id="toc-storage-nothing-is-backed-up" class="nav-link" data-scroll-target="#storage-nothing-is-backed-up"><span class="header-section-number">10.1.2</span> Storage (nothing is backed up)</a></li>
-  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules"><span class="header-section-number">10.1.3</span> Modules</a></li>
-  <li><a href="#submit-and-manage-jobs" id="toc-submit-and-manage-jobs" class="nav-link" data-scroll-target="#submit-and-manage-jobs"><span class="header-section-number">10.1.4</span> Submit and manage jobs</a></li>
-  <li><a href="#minimal-submit-script" id="toc-minimal-submit-script" class="nav-link" data-scroll-target="#minimal-submit-script"><span class="header-section-number">10.1.5</span> Minimal submit script</a></li>
-  <li><a href="#choosing-partition-qos" id="toc-choosing-partition-qos" class="nav-link" data-scroll-target="#choosing-partition-qos"><span class="header-section-number">10.1.6</span> Choosing partition + QOS</a></li>
-  <li><a href="#gpus" id="toc-gpus" class="nav-link" data-scroll-target="#gpus"><span class="header-section-number">10.1.7</span> GPUs</a></li>
-  <li><a href="#job-arrays" id="toc-job-arrays" class="nav-link" data-scroll-target="#job-arrays"><span class="header-section-number">10.1.8</span> Job arrays</a></li>
-  <li><a href="#check-the-live-queue-before-a-big-submit" id="toc-check-the-live-queue-before-a-big-submit" class="nav-link" data-scroll-target="#check-the-live-queue-before-a-big-submit"><span class="header-section-number">10.1.9</span> Check the live queue before a big submit</a></li>
-  <li><a href="#common-mistakes-to-avoid" id="toc-common-mistakes-to-avoid" class="nav-link" data-scroll-target="#common-mistakes-to-avoid"><span class="header-section-number">10.1.10</span> Common mistakes to avoid</a></li>
+  <li><a href="#connect" id="toc-connect" class="nav-link" data-scroll-target="#connect"><span class="header-section-number">9.1.1</span> Connect</a></li>
+  <li><a href="#storage-nothing-is-backed-up" id="toc-storage-nothing-is-backed-up" class="nav-link" data-scroll-target="#storage-nothing-is-backed-up"><span class="header-section-number">9.1.2</span> Storage (nothing is backed up)</a></li>
+  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules"><span class="header-section-number">9.1.3</span> Modules</a></li>
+  <li><a href="#submit-and-manage-jobs" id="toc-submit-and-manage-jobs" class="nav-link" data-scroll-target="#submit-and-manage-jobs"><span class="header-section-number">9.1.4</span> Submit and manage jobs</a></li>
+  <li><a href="#minimal-submit-script" id="toc-minimal-submit-script" class="nav-link" data-scroll-target="#minimal-submit-script"><span class="header-section-number">9.1.5</span> Minimal submit script</a></li>
+  <li><a href="#choosing-partition-qos" id="toc-choosing-partition-qos" class="nav-link" data-scroll-target="#choosing-partition-qos"><span class="header-section-number">9.1.6</span> Choosing partition + QOS</a></li>
+  <li><a href="#gpus" id="toc-gpus" class="nav-link" data-scroll-target="#gpus"><span class="header-section-number">9.1.7</span> GPUs</a></li>
+  <li><a href="#job-arrays" id="toc-job-arrays" class="nav-link" data-scroll-target="#job-arrays"><span class="header-section-number">9.1.8</span> Job arrays</a></li>
+  <li><a href="#check-the-live-queue-before-a-big-submit" id="toc-check-the-live-queue-before-a-big-submit" class="nav-link" data-scroll-target="#check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.9</span> Check the live queue before a big submit</a></li>
+  <li><a href="#common-mistakes-to-avoid" id="toc-common-mistakes-to-avoid" class="nav-link" data-scroll-target="#common-mistakes-to-avoid"><span class="header-section-number">9.1.10</span> Common mistakes to avoid</a></li>
   </ul></li>
-  <li><a href="#sec-troubleshooting" id="toc-sec-troubleshooting" class="nav-link" data-scroll-target="#sec-troubleshooting"><span class="header-section-number">10.2</span> Troubleshooting</a>
+  <li><a href="#sec-troubleshooting" id="toc-sec-troubleshooting" class="nav-link" data-scroll-target="#sec-troubleshooting"><span class="header-section-number">9.2</span> Troubleshooting</a>
   <ul class="collapse">
-  <li><a href="#login-and-access" id="toc-login-and-access" class="nav-link" data-scroll-target="#login-and-access"><span class="header-section-number">10.2.1</span> Login and access</a></li>
-  <li><a href="#jobs-wont-submit" id="toc-jobs-wont-submit" class="nav-link" data-scroll-target="#jobs-wont-submit"><span class="header-section-number">10.2.2</span> Jobs won’t submit</a></li>
-  <li><a href="#jobs-wont-start" id="toc-jobs-wont-start" class="nav-link" data-scroll-target="#jobs-wont-start"><span class="header-section-number">10.2.3</span> Jobs won’t start</a></li>
-  <li><a href="#jobs-fail" id="toc-jobs-fail" class="nav-link" data-scroll-target="#jobs-fail"><span class="header-section-number">10.2.4</span> Jobs fail</a></li>
-  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software"><span class="header-section-number">10.2.5</span> Software</a></li>
-  <li><a href="#still-stuck" id="toc-still-stuck" class="nav-link" data-scroll-target="#still-stuck"><span class="header-section-number">10.2.6</span> Still stuck?</a></li>
+  <li><a href="#login-and-access" id="toc-login-and-access" class="nav-link" data-scroll-target="#login-and-access"><span class="header-section-number">9.2.1</span> Login and access</a></li>
+  <li><a href="#jobs-wont-submit" id="toc-jobs-wont-submit" class="nav-link" data-scroll-target="#jobs-wont-submit"><span class="header-section-number">9.2.2</span> Jobs won’t submit</a></li>
+  <li><a href="#jobs-wont-start" id="toc-jobs-wont-start" class="nav-link" data-scroll-target="#jobs-wont-start"><span class="header-section-number">9.2.3</span> Jobs won’t start</a></li>
+  <li><a href="#jobs-fail" id="toc-jobs-fail" class="nav-link" data-scroll-target="#jobs-fail"><span class="header-section-number">9.2.4</span> Jobs fail</a></li>
+  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software"><span class="header-section-number">9.2.5</span> Software</a></li>
+  <li><a href="#still-stuck" id="toc-still-stuck" class="nav-link" data-scroll-target="#still-stuck"><span class="header-section-number">9.2.6</span> Still stuck?</a></li>
   </ul></li>
-  <li><a href="#sec-glossary" id="toc-sec-glossary" class="nav-link" data-scroll-target="#sec-glossary"><span class="header-section-number">10.3</span> Glossary</a></li>
+  <li><a href="#sec-glossary" id="toc-sec-glossary" class="nav-link" data-scroll-target="#sec-glossary"><span class="header-section-number">9.3</span> Glossary</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/10-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/09-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reference</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></h1>
 </div>
 
 
@@ -269,17 +263,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Quick reference: a command cheat sheet, a symptom-to-fix troubleshooting index, and a glossary.</p>
-<section id="sec-cheatsheet" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="sec-cheatsheet"><span class="header-section-number">10.1</span> Cheat sheet</h2>
+<section id="sec-cheatsheet" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-cheatsheet"><span class="header-section-number">9.1</span> Cheat sheet</h2>
 <p>Everything you’ll reach for, on one page.</p>
-<section id="connect" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="connect"><span class="header-section-number">10.1.1</span> Connect</h3>
+<section id="connect" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="connect"><span class="header-section-number">9.1.1</span> Connect</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu     <span class="co"># after SSH Key Manager setup</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Portal: https://medicinebow.arcc.uwyo.edu   (Open OnDemand)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Keys expire yearly → regenerate in the portal's SSH Key Manager</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="storage-nothing-is-backed-up" class="level3" data-number="10.1.2">
-<h3 data-number="10.1.2" class="anchored" data-anchor-id="storage-nothing-is-backed-up"><span class="header-section-number">10.1.2</span> Storage (nothing is backed up)</h3>
+<section id="storage-nothing-is-backed-up" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="storage-nothing-is-backed-up"><span class="header-section-number">9.1.2</span> Storage (nothing is backed up)</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arccquota</span>                  <span class="co"># usage vs. limits for home / scratch / project</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">du</span> <span class="at">-sh</span> <span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span>         <span class="co"># what's eating my quota here?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <table class="caption-top table">
@@ -324,15 +318,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="modules" class="level3" data-number="10.1.3">
-<h3 data-number="10.1.3" class="anchored" data-anchor-id="modules"><span class="header-section-number">10.1.3</span> Modules</h3>
+<section id="modules" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="modules"><span class="header-section-number">9.1.3</span> Modules</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider <span class="op">&lt;</span>name<span class="op">&gt;</span>       <span class="co"># does it exist? what to load first? (use THIS, not avail)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 <span class="op">&lt;</span>pkg<span class="op">&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge               <span class="co"># clean slate</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save <span class="op">&lt;</span>name<span class="op">&gt;</span> / module restore <span class="op">&lt;</span>name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="submit-and-manage-jobs" class="level3" data-number="10.1.4">
-<h3 data-number="10.1.4" class="anchored" data-anchor-id="submit-and-manage-jobs"><span class="header-section-number">10.1.4</span> Submit and manage jobs</h3>
+<section id="submit-and-manage-jobs" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="submit-and-manage-jobs"><span class="header-section-number">9.1.4</span> Submit and manage jobs</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh           <span class="co"># submit batch job</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> <span class="op">&lt;</span>project<span class="op">&gt;</span> --qos=interactive <span class="at">-t</span> 2:00:00 <span class="at">-c</span> 4 <span class="at">--mem</span><span class="op">=</span>16G   <span class="co"># interactive</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                <span class="co"># my jobs</span></span>
@@ -341,8 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>                  <span class="co"># after the fact: was it sized right?</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>id<span class="op">&gt;</span> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="minimal-submit-script" class="level3" data-number="10.1.5">
-<h3 data-number="10.1.5" class="anchored" data-anchor-id="minimal-submit-script"><span class="header-section-number">10.1.5</span> Minimal submit script</h3>
+<section id="minimal-submit-script" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="minimal-submit-script"><span class="header-section-number">9.1.5</span> Minimal submit script</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;     # REQUIRED — project, not username</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=myjob</span></span>
@@ -358,8 +352,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMP_NUM_THREADS</span><span class="op">=</span><span class="va">$SLURM_CPUS_PER_TASK</span></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="choosing-partition-qos" class="level3" data-number="10.1.6">
-<h3 data-number="10.1.6" class="anchored" data-anchor-id="choosing-partition-qos"><span class="header-section-number">10.1.6</span> Choosing partition + QOS</h3>
+<section id="choosing-partition-qos" class="level3" data-number="9.1.6">
+<h3 data-number="9.1.6" class="anchored" data-anchor-id="choosing-partition-qos"><span class="header-section-number">9.1.6</span> Choosing partition + QOS</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -408,29 +402,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p><strong><span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceilings &amp; <span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span>:</strong> <code>interactive</code> 8h, priority 90 · <code>fast</code> 12h, priority 80 · <code>normal</code> 3d, priority 70 · <code>long</code> 7d, priority 60 · <code>debug</code> 1h, priority 0. <strong>Priority is dominated by QOS</strong> (weight 200 vs age 10) — pick the shortest tier your job fits. (<code>debug</code> still starts fast because its 4 nodes are dedicated and usually idle, not because of priority.)</p>
 </section>
-<section id="gpus" class="level3" data-number="10.1.7">
-<h3 data-number="10.1.7" class="anchored" data-anchor-id="gpus"><span class="header-section-number">10.1.7</span> GPUs</h3>
+<section id="gpus" class="level3" data-number="9.1.7">
+<h3 data-number="9.1.7" class="anchored" data-anchor-id="gpus"><span class="header-section-number">9.1.7</span> GPUs</h3>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb-l40s</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1                 # or gpu:h100:2 for a specific type/count</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0 cuda-toolkit/12.6.1   <span class="co"># CUDA needs gcc 13.2 (deprecated but required)</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                             <span class="co"># free GPUs by type, right now</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span> / nvtop                   <span class="co"># is my code actually using the GPU?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="job-arrays" class="level3" data-number="10.1.8">
-<h3 data-number="10.1.8" class="anchored" data-anchor-id="job-arrays"><span class="header-section-number">10.1.8</span> Job arrays</h3>
+<section id="job-arrays" class="level3" data-number="9.1.8">
+<h3 data-number="9.1.8" class="anchored" data-anchor-id="job-arrays"><span class="header-section-number">9.1.8</span> Job arrays</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20             # 500 tasks, ≤20 at once (max array size 10000)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=logs/%A_%a.out</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="at">--id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="check-the-live-queue-before-a-big-submit" class="level3" data-number="10.1.9">
-<h3 data-number="10.1.9" class="anchored" data-anchor-id="check-the-live-queue-before-a-big-submit"><span class="header-section-number">10.1.9</span> Check the live queue before a big submit</h3>
+<section id="check-the-live-queue-before-a-big-submit" class="level3" data-number="9.1.9">
+<h3 data-number="9.1.9" class="anchored" data-anchor-id="check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.9</span> Check the live queue before a big submit</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showpartitions</span>             <span class="co"># idle vs busy nodes per partition</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                   <span class="co"># free GPUs now</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sinfo</span> <span class="at">-p</span> mb-h100 <span class="at">-o</span> <span class="st">"%P %t %D"</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>             <span class="co"># what am I allowed to ask for?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="common-mistakes-to-avoid" class="level3" data-number="10.1.10">
-<h3 data-number="10.1.10" class="anchored" data-anchor-id="common-mistakes-to-avoid"><span class="header-section-number">10.1.10</span> Common mistakes to avoid</h3>
+<section id="common-mistakes-to-avoid" class="level3" data-number="9.1.10">
+<h3 data-number="9.1.10" class="anchored" data-anchor-id="common-mistakes-to-avoid"><span class="header-section-number">9.1.10</span> Common mistakes to avoid</h3>
 <ul>
 <li><code>--account=&lt;project&gt;</code> is <strong>required</strong> on every job.</li>
 <li>On <code>mb</code>, no <code>--mem</code> → <strong>10 GB per core</strong> silently. Always set <code>--mem</code>.</li>
@@ -443,51 +437,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="sec-troubleshooting" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="sec-troubleshooting"><span class="header-section-number">10.2</span> Troubleshooting</h2>
+<section id="sec-troubleshooting" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-troubleshooting"><span class="header-section-number">9.2</span> Troubleshooting</h2>
 <p>A symptom-first index to the rest of the book.</p>
-<section id="login-and-access" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="login-and-access"><span class="header-section-number">10.2.1</span> Login and access</h3>
+<section id="login-and-access" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="login-and-access"><span class="header-section-number">9.2.1</span> Login and access</h3>
 <p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code> (<a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</p>
 <p><strong>“Permission denied” on a brand-new setup.</strong> Check permissions: <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code>, and make sure you unzipped the key into <code>~/.ssh</code>. Confirm you’re using <code>medicinebow.arcc.uwyo.edu</code> and your SSH key hasn’t expired.</p>
 <p><strong>I can’t get an account at all.</strong> Account requests for ASCEND/ARID performers are coordinated through the program — email Virginia Iglesias (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>). See <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>.</p>
 <p><strong>Globus won’t let me add the collection.</strong> If you’re an external collaborator on an <strong>ARCC-Only account</strong>, you can’t use Globus. You need a UW-side guest collection (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>).</p>
 </section>
-<section id="jobs-wont-submit" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="jobs-wont-submit"><span class="header-section-number">10.2.2</span> Jobs won’t submit</h3>
+<section id="jobs-wont-submit" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="jobs-wont-submit"><span class="header-section-number">9.2.2</span> Jobs won’t submit</h3>
 <p><strong><code>sbatch: error: ... You have to specify an account.</code></strong> Add <code>--account=&lt;project&gt;</code> (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>).</p>
 <p><strong><code>Job violates accounting/QOS policy (...)</code> at submit time.</strong> Your request exceeds a QOS limit (every QOS is <code>DenyOnLimit</code>). Usually <code>--time</code> exceeds the QOS ceiling — e.g.&nbsp;5 days under <code>normal</code> (max 3 d). Lower <code>--time</code> or switch QOS (<a href="06-partitions-qos-queues.html#sec-partitions" class="quarto-xref"><span>Section 6.1</span></a>). Check ceilings with <code>sqos</code> and <code>showuserlimits</code>.</p>
 <p><strong><code>Invalid qos specification</code>.</strong> Your account can’t use that QOS. Yours are <code>debug, fast, interactive, long, normal</code> (<code>sacctmgr -n show assoc user=$USER format=qos</code>).</p>
 </section>
-<section id="jobs-wont-start" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="jobs-wont-start"><span class="header-section-number">10.2.3</span> Jobs won’t start</h3>
+<section id="jobs-wont-start" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="jobs-wont-start"><span class="header-section-number">9.2.3</span> Jobs won’t start</h3>
 <p><strong>Stuck in <code>PENDING</code> with reason <code>Priority</code>.</strong> The machine is just busy and you’re in line. Either wait, or pick a higher-priority (shorter) QOS — QOS dominates priority here (<a href="06-partitions-qos-queues.html#sec-priority" class="quarto-xref"><span>Section 6.4</span></a>). Small/short jobs <span class="gloss" data-def="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs." aria-label="Slurm slotting a small, short job into a schedule gap without delaying higher-priority jobs.">backfill</span> sooner.</p>
 <p><strong>Stuck with reason <code>Resources</code>.</strong> You asked for a lot (many cores, much memory, a scarce GPU). Right-size (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>), or accept the wait. <code>showjobreasons &lt;id&gt;</code> explains in plain language.</p>
 <p><strong>GPU job pending for hours.</strong> H100/L40S are heavily contended (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>). Develop on <code>mb-a30</code> instead, and check <code>gpuavail</code>/<code>showpartitions</code> for what’s actually free before submitting.</p>
 <p><strong>Pending with <code>QOSMax...</code> or <code>AssocGrpCpuLimit</code>.</strong> You (or your account) hit a cap — e.g.&nbsp;too many cores in flight at once. Wait for your other jobs to finish, or throttle an array with <code>%</code> (<a href="07-working-with-jobs.html#sec-arrays" class="quarto-xref"><span>Section 7.2</span></a>).</p>
 </section>
-<section id="jobs-fail" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="jobs-fail"><span class="header-section-number">10.2.4</span> Jobs fail</h3>
+<section id="jobs-fail" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="jobs-fail"><span class="header-section-number">9.2.4</span> Jobs fail</h3>
 <p><strong><code>OUT_OF_MEMORY</code>.</strong> Raise <code>--mem</code>. Compare <code>MaxRSS</code> to <code>ReqMem</code> in <code>sacct</code> (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>). Watch the 10 GB/core default trap (<a href="05-running-jobs.html#sec-resources" class="quarto-xref"><span>Section 5.3</span></a>).</p>
 <p><strong><code>TIMEOUT</code>.</strong> Job outran <code>--time</code>. Checkpoint (<a href="08-preemption-and-failures.html#sec-checkpointing" class="quarto-xref"><span>Section 8.1.3</span></a>), raise <code>--time</code> within the QOS ceiling, or split the work into an array.</p>
 <p><strong><code>FAILED</code>, worked interactively but not in batch.</strong> You loaded <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">modules</span> / activated conda on the login node but not <strong>inside the submit script</strong>. Put them in the script (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>, <a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>).</p>
 <p><strong>Output file references files that “don’t exist.”</strong> Relative paths from the wrong directory, or you wrote to <code>/lscratch</code> (wiped at job end). Use absolute paths or <code>$SLURM_SUBMIT_DIR</code>; copy <code>/lscratch</code> output out before the job ends (<a href="03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>).</p>
 <p><strong><code>PREEMPTED</code> / <code>REQUEUED</code> on a long job.</strong> You were on investor hardware and got reclaimed. Move to <code>--partition=non-investor</code> and checkpoint (<a href="08-preemption-and-failures.html#sec-preemption" class="quarto-xref"><span>Section 8.1</span></a>).</p>
 </section>
-<section id="software" class="level3" data-number="10.2.5">
-<h3 data-number="10.2.5" class="anchored" data-anchor-id="software"><span class="header-section-number">10.2.5</span> Software</h3>
+<section id="software" class="level3" data-number="9.2.5">
+<h3 data-number="9.2.5" class="anchored" data-anchor-id="software"><span class="header-section-number">9.2.5</span> Software</h3>
 <p><strong>“That module doesn’t exist” but I’m sure it does.</strong> <code>module avail</code> only shows what’s reachable now. Use <code>module spider &lt;name&gt;</code> — you probably need to load a compiler first (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 <p><strong>CUDA won’t build / link.</strong> Load <code>gcc/13.2.0</code> (not 14) — <code>cuda-toolkit</code> is built against 13.2 despite its deprecation warning (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 <p><strong>Home directory full, everything breaking.</strong> Conda in <code>/home</code>. Move envs to <code>/project/&lt;project&gt;/software</code> via <code>~/.condarc</code>, and clean up (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>). Check with <code>du -sh ~/* | sort -h</code>.</p>
 <p><strong>GPU job runs but is slow / <code>nvidia-smi</code> shows 0%.</strong> Your code isn’t actually on the GPU. Verify the framework sees CUDA; in a container, you need <code>--nv</code> (<a href="07-working-with-jobs.html#sec-gpu" class="quarto-xref"><span>Section 7.3.2</span></a>).</p>
 </section>
-<section id="still-stuck" class="level3" data-number="10.2.6">
-<h3 data-number="10.2.6" class="anchored" data-anchor-id="still-stuck"><span class="header-section-number">10.2.6</span> Still stuck?</h3>
+<section id="still-stuck" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="still-stuck"><span class="header-section-number">9.2.6</span> Still stuck?</h3>
 <p>Email <strong><code>arcc-help@uwyo.edu</code></strong> with your <strong>job ID</strong>, the submit script, and the error. Or bring it to <strong>office hours, Tuesdays 11am–1pm</strong> on Zoom. Include what you already tried — it gets you a faster answer.</p>
 </section>
 </section>
-<section id="sec-glossary" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="sec-glossary"><span class="header-section-number">10.3</span> Glossary</h2>
+<section id="sec-glossary" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-glossary"><span class="header-section-number">9.3</span> Glossary</h2>
 <p>Plain-language definitions of the terms this book uses.</p>
 <dl>
 <dt><strong>Account (Slurm)</strong></dt>
@@ -1026,8 +1020,8 @@ Real elapsed clock time a job is allowed (<code>--time</code>). The job is kille
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/09-agentic-coding.html" class="pagination-link" aria-label="Agentic coding with Claude">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></span>
+      <a href="../chapters/08-preemption-and-failures.html" class="pagination-link" aria-label="Preemption, checkpointing, and failures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1041,7 +1035,7 @@ Real elapsed clock time a job is allowed (<code>--time</code>). The job is kille
     </div>   
     <div class="nav-footer-center">
 <p>Built for ASCEND/ARID performers. Not an official <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/10-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/09-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
