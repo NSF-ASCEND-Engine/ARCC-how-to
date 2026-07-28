@@ -204,8 +204,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  <a href="../chapters/09-agentic-coding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
   </div>
 </li>
     </ul>
@@ -412,7 +418,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="the-mechanics"><span class="header-section-number">7.2.2</span> The mechanics</h3>
 <p>Add <code>--array</code> and use <code>$SLURM_ARRAY_TASK_ID</code> to pick which piece of work this task does:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=sweep</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500                 # 500 tasks, indices 1..500</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast                    # short independent tasks → high-priority QOS</span></span>
@@ -438,7 +444,7 @@ Figure&nbsp;7.1: A job waits (PENDING), runs, then reaches one terminal state. T
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">PARAM</span><span class="op">=</span><span class="va">$(</span><span class="fu">sed</span> <span class="at">-n</span> <span class="st">"</span><span class="va">${SLURM_ARRAY_TASK_ID}</span><span class="st">p"</span> params.txt<span class="va">)</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="va">$PARAM</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>The Nth input file:</strong></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">FILES</span><span class="op">=</span><span class="va">(</span>/project/cowy-firesurro/data/tiles/<span class="pp">*</span>.tif<span class="va">)</span></span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">FILES</span><span class="op">=</span><span class="va">(</span>/project/<span class="er">&lt;</span>project<span class="er">&gt;</span>/data/tiles/<span class="pp">*</span>.tif<span class="va">)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="va">THIS</span><span class="op">=</span><span class="va">${FILES</span><span class="op">[</span><span class="va">$SLURM_ARRAY_TASK_ID</span><span class="op">]</span><span class="va">}</span>      <span class="co"># note: arrays are 0-indexed in bash</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> process.py <span class="st">"</span><span class="va">$THIS</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(If you index files from a bash array, start <code>--array=0</code>; if you use <code>sed -n Np</code>, start <code>--array=1</code>. Off-by-one here is the classic array bug.)</p>
@@ -480,7 +486,7 @@ Arrays vs.&nbsp;<span class="gloss" data-def="Message Passing Interface — a si
 <section id="sec-salloc" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="sec-salloc"><span class="header-section-number">7.3.1</span> Interactive sessions with <code>salloc</code></h3>
 <p>For hands-on work — debugging a crash, exploring a dataset, building a model interactively — request an interactive allocation:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">--account</span><span class="op">=</span>cowy-firesurro <span class="at">--qos</span><span class="op">=</span>interactive <span class="dt">\</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">--account</span><span class="op">=&lt;</span>project<span class="op">&gt;</span> --qos=interactive <span class="dt">\</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">--time</span><span class="op">=</span>02:00:00 <span class="at">--cpus-per-task</span><span class="op">=</span>4 <span class="at">--mem</span><span class="op">=</span>16G</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>salloc</code> requires at least <code>--account</code> and <code>--time</code>. It grants a shell <strong>on a <span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span></strong>, where you can run heavy work off the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>. The <code>interactive</code> <span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> starts in ~10–30 seconds (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>) with an 8-hour ceiling.</p>
 <div class="callout callout-style-simple callout-important callout-titled">
@@ -506,7 +512,7 @@ Launch <code>salloc</code> from inside <code>tmux</code>
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="sec-gpu"><span class="header-section-number">7.3.2</span> GPU jobs</h3>
 <p>Request GPUs with <code>--gres=gpu:&lt;count&gt;</code> and target a GPU <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partition</span>:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=cowy-firesurro</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb-l40s          # or mb-h100, mb-a30, ...</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=normal</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1                 # one GPU on the node</span></span>

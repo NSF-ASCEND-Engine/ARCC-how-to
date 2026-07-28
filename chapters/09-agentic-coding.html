@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Storage and moving data – Getting Started on ARCC MedicineBow</title>
+<title>9&nbsp; Agentic coding with Claude – Getting Started on ARCC MedicineBow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/04-software.html" rel="next">
-<link href="../chapters/02-linux-essentials.html" rel="prev">
+<link href="../chapters/10-reference.html" rel="next">
+<link href="../chapters/08-preemption-and-failures.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-storage-and-data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/09-agentic-coding.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -165,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/03-storage-and-data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></span></a>
   </div>
 </li>
@@ -201,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/09-agentic-coding.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/09-agentic-coding.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></span></a>
   </div>
 </li>
@@ -221,30 +186,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-storage" id="toc-sec-storage" class="nav-link active" data-scroll-target="#sec-storage"><span class="header-section-number">3.1</span> Where your data lives</a>
-  <ul class="collapse">
-  <li><a href="#nothing-is-backed-up" id="toc-nothing-is-backed-up" class="nav-link" data-scroll-target="#nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</a></li>
-  <li><a href="#the-three-filesystems" id="toc-the-three-filesystems" class="nav-link" data-scroll-target="#the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</a></li>
-  <li><a href="#install-software-in-project-space-not-home" id="toc-install-software-in-project-space-not-home" class="nav-link" data-scroll-target="#install-software-in-project-space-not-home"><span class="header-section-number">3.1.3</span> Install software in project space, not home</a></li>
-  <li><a href="#a-sane-layout-to-adopt-on-day-one" id="toc-a-sane-layout-to-adopt-on-day-one" class="nav-link" data-scroll-target="#a-sane-layout-to-adopt-on-day-one"><span class="header-section-number">3.1.4</span> A sane layout to adopt on day one</a></li>
-  </ul></li>
-  <li><a href="#sec-moving-data" id="toc-sec-moving-data" class="nav-link" data-scroll-target="#sec-moving-data"><span class="header-section-number">3.2</span> Moving data in and out</a>
-  <ul class="collapse">
-  <li><a href="#pick-the-right-tool-for-the-size-of-the-job" id="toc-pick-the-right-tool-for-the-size-of-the-job" class="nav-link" data-scroll-target="#pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">3.2.1</span> Pick the right tool for the size of the job</a></li>
-  <li><a href="#globus-the-recommended-path-for-real-data" id="toc-globus-the-recommended-path-for-real-data" class="nav-link" data-scroll-target="#globus-the-recommended-path-for-real-data"><span class="header-section-number">3.2.2</span> Globus — the recommended path for real data</a></li>
-  <li><a href="#scp-and-rsync-fine-for-small-everyday-transfers" id="toc-scp-and-rsync-fine-for-small-everyday-transfers" class="nav-link" data-scroll-target="#scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">3.2.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</a></li>
-  <li><a href="#rclone-cloud-storage-s3-google-drive-box" id="toc-rclone-cloud-storage-s3-google-drive-box" class="nav-link" data-scroll-target="#rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</a></li>
-  <li><a href="#a-quick-decision-guide" id="toc-a-quick-decision-guide" class="nav-link" data-scroll-target="#a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</a></li>
-  </ul></li>
+  <li><a href="#what-agentic-means" id="toc-what-agentic-means" class="nav-link active" data-scroll-target="#what-agentic-means"><span class="header-section-number">9.1</span> What “agentic” means</a></li>
+  <li><a href="#claude-and-claude-code" id="toc-claude-and-claude-code" class="nav-link" data-scroll-target="#claude-and-claude-code"><span class="header-section-number">9.2</span> Claude and Claude Code</a></li>
+  <li><a href="#using-it-with-the-cluster" id="toc-using-it-with-the-cluster" class="nav-link" data-scroll-target="#using-it-with-the-cluster"><span class="header-section-number">9.3</span> Using it with the cluster</a></li>
+  <li><a href="#what-its-good-for-here" id="toc-what-its-good-for-here" class="nav-link" data-scroll-target="#what-its-good-for-here"><span class="header-section-number">9.4</span> What it’s good for here</a></li>
+  <li><a href="#verify-everything-it-produces" id="toc-verify-everything-it-produces" class="nav-link" data-scroll-target="#verify-everything-it-produces"><span class="header-section-number">9.5</span> Verify everything it produces</a></li>
+  <li><a href="#mind-what-data-you-send" id="toc-mind-what-data-you-send" class="nav-link" data-scroll-target="#mind-what-data-you-send"><span class="header-section-number">9.6</span> Mind what data you send</a></li>
+  <li><a href="#getting-access" id="toc-getting-access" class="nav-link" data-scroll-target="#getting-access"><span class="header-section-number">9.7</span> Getting access</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/03-storage-and-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/09-agentic-coding.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Storage and moving data</span></h1>
+<h1 class="title"><span id="sec-agentic" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Agentic coding with Claude</span></span></h1>
 </div>
 
 
@@ -261,217 +218,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The three filesystems, what each one promises, and how to get data in and out.</p>
-<section id="sec-storage" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-storage"><span class="header-section-number">3.1</span> Where your data lives</h2>
-<section id="nothing-is-backed-up" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</h3>
-<p><strong>Nothing on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is backed up. Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>.</strong></p>
-<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies; within about 20 days you can ask <code>arcc-help@uwyo.edu</code> to restore from one), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
+<p>An AI coding <em>agent</em> can read your files, run commands, look at the output, and iterate — which makes it genuinely useful for the fiddly, cluster-specific work this book is about: writing submit scripts, turning a loop into a <span class="gloss" data-def="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles." aria-label="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">job array</span>, debugging an <span class="gloss" data-def="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem." aria-label="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem.">OOM</span> kill, or making sense of an unfamiliar codebase. This chapter is a practical guide to using one — Claude, in particular — on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span>, including where it helps, where it doesn’t, and the two things you must always do: <strong>verify its output, and mind what data you send.</strong></p>
+<section id="what-agentic-means" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="what-agentic-means"><span class="header-section-number">9.1</span> What “agentic” means</h2>
+<p>Older AI coding tools autocomplete the next line. An <strong>agent</strong> works at the level of a task: you describe what you want, and it reads the relevant files, proposes changes, runs commands (compile, test, submit a small job), reads the results, and adjusts — a loop, not a single suggestion. That loop is what makes it fit HPC work, where the answer usually depends on what a command <em>actually</em> prints (a <code>module spider</code>, a failed <code>sbatch</code>, a <code>seff</code> report), not on what looks plausible in the abstract.</p>
 </section>
-<section id="the-three-filesystems" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Path</th>
-<th>Quota</th>
-<th>Snapshots</th>
-<th>Backups</th>
-<th>Purged</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>/home/$USER</code></td>
-<td><strong>50 GB</strong></td>
-<td>yes</td>
-<td><strong>NO</strong></td>
-<td>only when you leave UW</td>
-</tr>
-<tr class="even">
-<td><code>/project/&lt;project&gt;</code></td>
-<td><strong>5 TB</strong></td>
-<td>yes</td>
-<td><strong>NO</strong></td>
-<td>6 months after project ends</td>
-</tr>
-<tr class="odd">
-<td><code>/gscratch/$USER</code> (<code>$SCRATCH</code>)</td>
-<td><strong>5 TB</strong></td>
-<td>yes</td>
-<td><strong>NO</strong></td>
-<td><strong>after 90 days of inactivity</strong></td>
-</tr>
-<tr class="even">
-<td><code>/project/&lt;project&gt;/software</code></td>
-<td><strong>+250 GB</strong> on top of project</td>
-<td>yes</td>
-<td><strong>NO</strong></td>
-<td>with the project</td>
-</tr>
-<tr class="odd">
-<td><code>/lscratch</code></td>
-<td>node-local, varies</td>
-<td>no</td>
-<td><strong>NO</strong></td>
-<td><strong>wiped at the end of every job</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Check your usage and limits for home, scratch, and project:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arccquota</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="home-small-personal-for-config-not-data" class="level4" data-number="3.1.2.1">
-<h4 data-number="3.1.2.1" class="anchored" data-anchor-id="home-small-personal-for-config-not-data"><span class="header-section-number">3.1.2.1</span> <code>/home</code> — small, personal, for config not data</h4>
-<p>50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts, and small configs — not datasets and not software installs. When home fills up, things break (jobs fail to write logs, logins misbehave), so watch it with <code>arccquota</code> and <code>du -sh ~/* | sort -h</code>.</p>
+<section id="claude-and-claude-code" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="claude-and-claude-code"><span class="header-section-number">9.2</span> Claude and Claude Code</h2>
+<p><strong>Claude</strong> is Anthropic’s family of models. The current ones are <strong>Opus 4.8</strong> (<code>claude-opus-4-8</code>) and <strong>Sonnet 5</strong> (<code>claude-sonnet-5</code>) — Opus is the most capable for hard, multi-step work, Sonnet is faster and cheaper for routine tasks — plus <strong>Haiku 4.5</strong> for the simplest, fastest jobs and <strong>Fable 5</strong> (<code>claude-fable-5</code>) for the most demanding long-horizon work.</p>
+<p>You reach Claude a few ways:</p>
+<ul>
+<li><strong>Claude Code</strong> — Anthropic’s coding agent. It runs in your terminal (and as a desktop app, in the browser at <a href="https://claude.ai/code" class="uri">https://claude.ai/code</a>, and as VS Code / JetBrains extensions), reads and edits files in your project, and runs commands. This is the one that fits cluster work.</li>
+<li><strong>The Claude API</strong> — for building Claude into your own pipelines (e.g.&nbsp;an LLM step in a data workflow). Out of scope here, but worth knowing it exists.</li>
+</ul>
 </section>
-<section id="projectproject-the-shared-workhorse" class="level4" data-number="3.1.2.2">
-<h4 data-number="3.1.2.2" class="anchored" data-anchor-id="projectproject-the-shared-workhorse"><span class="header-section-number">3.1.2.2</span> <code>/project/&lt;project&gt;</code> — the shared workhorse</h4>
-<p>5 TB, shared by everyone on your project. This is where shared datasets, inputs, and results belong. Agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project ends.</p>
-</section>
-<section id="gscratchuser-fast-and-disposable" class="level4" data-number="3.1.2.3">
-<h4 data-number="3.1.2.3" class="anchored" data-anchor-id="gscratchuser-fast-and-disposable"><span class="header-section-number">3.1.2.3</span> <code>/gscratch/$USER</code> — fast and disposable</h4>
-<p>Also 5 TB, and the <strong>fast</strong> filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for <strong>90 days</strong> are purged automatically. Never keep the only copy of anything here.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Scratch purge is 90 days, not 45
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Legacy Confluence docs say 45 days; the current <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> wiki says 90. Both pages are live, but <strong>90 is the current policy.</strong> Either way, don’t treat scratch as storage.</p>
-</div>
-</div>
-</section>
-<section id="lscratch-node-local-gone-when-the-job-ends" class="level4" data-number="3.1.2.4">
-<h4 data-number="3.1.2.4" class="anchored" data-anchor-id="lscratch-node-local-gone-when-the-job-ends"><span class="header-section-number">3.1.2.4</span> <code>/lscratch</code> — node-local, gone when the job ends</h4>
-<p>Each <span class="gloss" data-def="A machine where jobs actually run, allocated to you by Slurm for a bounded time." aria-label="A machine where jobs actually run, allocated to you by Slurm for a bounded time.">compute node</span> has its own local disk at <code>/lscratch</code>. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s <strong>wiped when your job ends</strong>, so copy anything you want to keep back to <code>/project</code> or <code>/gscratch</code> before the job exits.</p>
-<p>(There is no <code>/data</code> filesystem, despite what some docs suggest.)</p>
-</section>
-</section>
-<section id="install-software-in-project-space-not-home" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="install-software-in-project-space-not-home"><span class="header-section-number">3.1.3</span> Install software in project space, not home</h3>
+<section id="using-it-with-the-cluster" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="using-it-with-the-cluster"><span class="header-section-number">9.3</span> Using it with the cluster</h2>
+<p>Two workable setups:</p>
+<ol type="1">
+<li><strong>On your laptop, against a synced copy of your code.</strong> Edit and iterate locally with the agent, then push or <code>rsync</code> (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>) to the cluster to run. Simplest, and keeps heavy work off shared machines entirely.</li>
+<li><strong>On a <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>.</strong> Claude Code needs internet egress, which the login nodes have. The agent itself is lightweight, but remember the cardinal rule (<a href="01-getting-started.html#sec-cluster" class="quarto-xref"><span>Section 1.1</span></a>): <strong>anything it runs, runs where you run it.</strong> If you let it execute a real computation on the login node, that’s the same violation as doing it yourself. Tell it to <em>submit jobs</em> and inspect results, not to run simulations in place — and do heavy interactive iteration inside an <code>salloc</code> session or a <code>debug</code>-partition job (<a href="07-working-with-jobs.html#sec-interactive" class="quarto-xref"><span>Section 7.3</span></a>, <a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</li>
+</ol>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Install software into <code>/project/&lt;project&gt;/software</code>, not <code>/home</code>
+The agent doesn’t know it’s on a shared machine
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Your project has an extra <strong>250 GB</strong> quota at <code>/project/&lt;project&gt;/software</code> for installing software. A single conda environment with a few scientific packages can be 10–20 GB — two of those fills a 50 GB home directory.</p>
-<p>Point conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>) shows how.</p>
+<p>It will happily run <code>python train.py</code> on the login node if you ask it to “run the training,” because it can’t see the etiquette you can. Be explicit: <em>“write and submit an sbatch job for this; don’t run it directly.”</em> Treat the agent like a capable collaborator who has never used a cluster before — which is exactly this book’s audience.</p>
 </div>
 </div>
 </section>
-<section id="a-sane-layout-to-adopt-on-day-one" class="level3" data-number="3.1.4">
-<h3 data-number="3.1.4" class="anchored" data-anchor-id="a-sane-layout-to-adopt-on-day-one"><span class="header-section-number">3.1.4</span> A sane layout to adopt on day one</h3>
-<pre class="text"><code>/home/&lt;you&gt;/                      # dotfiles, small scripts, SSH keys
-/project/&lt;project&gt;/
-    software/                     # conda envs, container images, manual builds
-    data/                         # shared input datasets
-    &lt;you&gt;/                        # your working area within the project
-/gscratch/&lt;you&gt;/                  # active job working dirs, heavy I/O, big temp output</code></pre>
+<section id="what-its-good-for-here" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="what-its-good-for-here"><span class="header-section-number">9.4</span> What it’s good for here</h2>
+<p>The cluster-specific tasks where an agent earns its keep:</p>
+<ul>
+<li><strong>Submit scripts.</strong> “Write an sbatch script that runs <code>run.py</code> on one <code>mb</code> node with 8 cores and 16 GB, <code>fast</code> QOS, 2-hour limit.” It knows the <code>#SBATCH</code> anatomy (<a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>); you check the account and the numbers.</li>
+<li><strong>Turning loops into job arrays.</strong> Hand it a bash loop over 500 inputs and ask for an array version (<a href="07-working-with-jobs.html#sec-arrays" class="quarto-xref"><span>Section 7.2</span></a>) — including the <code>sed -n</code>/0-index gotcha, which it will usually get right and you will verify.</li>
+<li><strong>Debugging failures.</strong> Paste a <code>sacct</code> state and the <code>slurm-*.out</code> tail and ask <em>why</em>. It’s good at recognizing OOM, timeouts, and “module not loaded in the script” (<a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>).</li>
+<li><strong><span class="gloss" data-def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption." aria-label="A periodic save of a job's state so it can resume instead of restart after a failure or preemption.">Checkpointing</span>.</strong> Adding save/resume and <code>--signal=B:USR1@120</code> handling to a long job (<a href="08-preemption-and-failures.html#sec-checkpointing" class="quarto-xref"><span>Section 8.1.3</span></a>).</li>
+<li><strong>Translating and explaining.</strong> Converting a serial Python prototype to something that scales, reading an unfamiliar WRF or GDAL pipeline, or porting an analysis between Python, R, and Julia (<a href="05-running-jobs.html#sec-hello-jobs" class="quarto-xref"><span>Section 5.2.7</span></a>).</li>
+<li><strong>Parsing cluster output.</strong> One-off scripts to summarize <code>sacct</code> history, or to extract which array tasks failed.</li>
+</ul>
 </section>
-</section>
-<section id="sec-moving-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-moving-data"><span class="header-section-number">3.2</span> Moving data in and out</h2>
-<section id="pick-the-right-tool-for-the-size-of-the-job" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="pick-the-right-tool-for-the-size-of-the-job"><span class="header-section-number">3.2.1</span> Pick the right tool for the size of the job</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Transfer</th>
-<th>Best tool</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Hundreds of GB / TB, or must-not-corrupt datasets</td>
-<td><strong>Globus</strong></td>
-</tr>
-<tr class="even">
-<td>A few files, a script, a config</td>
-<td><code>scp</code> or <code>rsync</code> over SSH</td>
-</tr>
-<tr class="odd">
-<td>To/from cloud storage (S3, Google Drive, etc.)</td>
-<td><code>rclone</code></td>
-</tr>
-<tr class="even">
-<td>Drag-and-drop a handful of files in a browser</td>
-<td>Portal → Files</td>
-</tr>
-</tbody>
-</table>
-<p>There is <strong>no dedicated data-transfer node (DTN)</strong> — CLI transfers go through the <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login nodes</span>, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.</p>
-</section>
-<section id="globus-the-recommended-path-for-real-data" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="globus-the-recommended-path-for-real-data"><span class="header-section-number">3.2.2</span> Globus — the recommended path for real data</h3>
-<p><a href="https://www.globus.org/">Globus</a> transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side, so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.</p>
-<ol type="1">
-<li>Log in at <a href="https://app.globus.org" class="uri">https://app.globus.org</a> (choose “University of Wyoming” as your organization, or your own institution).</li>
-<li>Search collections for <strong><code>uwyo-ARCC</code></strong> and pick <strong>“Medicine Bow”</strong>.</li>
-<li>The Medicine Bow collection’s root is <strong><code>cluster</code></strong>, so your project shows up at a path like <code>/cluster/medbow/project/&lt;project&gt;/...</code>.</li>
-<li>Set the other side to your institutional or personal collection (install <strong>Globus Connect Personal</strong> on your own machine to make it an endpoint), pick files, and hit <strong>Start</strong>.</li>
-</ol>
+<section id="verify-everything-it-produces" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="verify-everything-it-produces"><span class="header-section-number">9.5</span> Verify everything it produces</h2>
+<p>This is the load-bearing rule. An agent is confident whether or not it’s right, and it does not know <em>your</em> cluster’s specifics — the exact <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span> versions, which <span class="gloss" data-def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition." aria-label="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition.">partitions</span> exist, what your account may use. It will sometimes invent a plausible-but-wrong module name or flag.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Globus needs a full UW account
+Check generated commands against the machine before you trust them
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ARCC-Only accounts (external collaborators — <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) <strong>cannot use Globus.</strong> If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a <strong>guest collection</strong> set up for you.</p>
+<p>The module hierarchy is a common trap: an agent may write <code>module load gdal/3.13.0</code> after <code>gcc/14.2.0</code>, which <em>fails</em> — that version needs <code>gcc/15.2.0</code> (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>). The fix is the same habit the rest of this book preaches: run <code>module spider</code>, <code>sqos</code>, <code>showpartitions</code>, <code>sacctmgr show assoc</code> and confirm. <strong>Never submit an agent-written <code>sbatch</code> script, and never run an agent-written <code>rm</code>/<code>mv</code>/<code>chmod</code>, without reading it first.</strong> For destructive or long/expensive jobs, test on the <code>debug</code> partition first (<a href="06-partitions-qos-queues.html#sec-queue-times" class="quarto-xref"><span>Section 6.2</span></a>).</p>
 </div>
 </div>
+<p>A good workflow: let the agent draft, you read the diff, run it in a cheap <code>debug</code> job, and only promote it to the real queue once it’s known-good — exactly the edit-run-debug loop from <a href="08-preemption-and-failures.html#sec-fail" class="quarto-xref"><span>Section 8.2</span></a>, with the agent doing the typing.</p>
 </section>
-<section id="scp-and-rsync-fine-for-small-everyday-transfers" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="scp-and-rsync-fine-for-small-everyday-transfers"><span class="header-section-number">3.2.3</span> <code>scp</code> and <code>rsync</code> — fine for small, everyday transfers</h3>
-<p>From your laptop, push a file up:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> results.csv <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Pull one down:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/gscratch/<span class="op">&lt;</span>you<span class="op">&gt;</span>/output.nc .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rsync</code> is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avP</span> ./localdir/ <span class="op">&lt;</span>username<span class="op">&gt;</span>@medicinebow.arcc.uwyo.edu:/project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>/dir/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>-P</code> flag shows progress and enables resume; <code>-a</code> preserves timestamps and permissions. For more than a few GB, prefer Globus — a login-node <code>scp</code> of a huge file competes with everyone else’s login-node activity and will be slow.</p>
-</section>
-<section id="rclone-cloud-storage-s3-google-drive-box" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h3>
-<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1   <span class="co"># rclone needs a compiler module first</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s.</p>
-</section>
-<section id="a-quick-decision-guide" class="level3" data-number="3.2.5">
-<h3 data-number="3.2.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</h3>
+<section id="mind-what-data-you-send" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="mind-what-data-you-send"><span class="header-section-number">9.6</span> Mind what data you send</h2>
+<p>Using Claude sends the code and any data you share to Anthropic’s servers. For most <em>code</em> — submit scripts, analysis, boilerplate — that’s fine. Be careful with <strong>data</strong>:</p>
 <ul>
-<li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
-<li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or edit in the portal).</li>
-<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
-<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection.</li>
+<li><strong>Unpublished results, sensitive datasets, or anything export-controlled.</strong> ARID touches power- and water-utility infrastructure; some of that may carry sharing restrictions. When in doubt, don’t paste the data — share the <em>code</em> and describe the data’s shape instead, and check your project’s data-use policy and with your PI first.</li>
+<li><strong>Credentials.</strong> Never paste API keys, passwords, or private SSH keys into a prompt. If you do by accident, rotate them (regenerate your SSH key via the portal, <a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</li>
+<li><strong>Other people’s data.</strong> The <code>/project</code> filesystem is shared (<a href="03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>); don’t send a collaborator’s data without their okay.</li>
 </ul>
-<p>Next: making software available, starting with the module system (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
-
-
+<p>The rule of thumb: the agent is great at reasoning about <em>your code and the cluster</em>; keep sensitive <em>inputs</em> out of it unless you’ve confirmed that’s allowed.</p>
 </section>
+<section id="getting-access" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="getting-access"><span class="header-section-number">9.7</span> Getting access</h2>
+<p>Claude Code and the API are Anthropic products, separate from your <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> account — see <a href="https://claude.ai/code" class="uri">https://claude.ai/code</a> and <a href="https://docs.claude.com" class="uri">https://docs.claude.com</a> to get started. Usage is metered (there are paid plans and API pricing); check whether your project or department already has access before signing up individually. None of this runs through ARCC, so there’s nothing to request from <code>arcc-help@uwyo.edu</code> — but the code it helps you write still has to play by every rule in this book.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -881,13 +707,13 @@ Globus needs a full UW account
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/02-linux-essentials.html" class="pagination-link" aria-label="Linux essentials">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Linux essentials</span></span>
+      <a href="../chapters/08-preemption-and-failures.html" class="pagination-link" aria-label="Preemption, checkpointing, and failures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Preemption, checkpointing, and failures</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/04-software.html" class="pagination-link" aria-label="Software: modules, conda, and containers">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Software: modules, conda, and containers</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/10-reference.html" class="pagination-link" aria-label="Reference">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Reference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -899,7 +725,7 @@ Globus needs a full UW account
     </div>   
     <div class="nav-footer-center">
 <p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/03-storage-and-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/09-agentic-coding.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
