@@ -21,6 +21,8 @@ local ENTRIES = {
    def="A periodic save of a job's state so it can resume instead of restart after a failure or preemption."},
   {key="condo",       variants={"condo model","condo"},
    def="Research groups buy nodes (inv-*); others borrow them when idle, subject to reclaim/preemption."},
+  {key="investor",    variants={"investors","investor","inv-*"},
+   def="A research group, department, or PI that bought cluster nodes with their own funds. They get top priority on those inv-* partitions; jobs others backfill there can be preempted."},
   {key="core-hour",   variants={"core-hours","core-hour"},
    def="One CPU core used for one hour — the unit your allocation is measured in."},
   {key="partition",   variants={"partitions","partition"},
@@ -73,7 +75,9 @@ table.sort(TERMS, function(a, b) return #a.pat > #b.pat end)
 
 local seen = {}
 
-local function is_alnum(ch) return ch ~= "" and ch:match("[%w]") ~= nil end
+-- Word char = alphanumeric OR hyphen, so "investor" won't match inside
+-- "non-investor" and "core-hour" is treated as a single token.
+local function is_wordch(ch) return ch ~= "" and ch:match("[%w%-]") ~= nil end
 
 -- Find first whole-word match of `pat` in lowercased `lt` at/after `from`.
 local function find_word(lt, pat, from)
@@ -83,7 +87,7 @@ local function find_word(lt, pat, from)
     if not i then return nil end
     local before = i > 1 and lt:sub(i-1, i-1) or ""
     local after  = lt:sub(j+1, j+1)
-    if not is_alnum(before) and not is_alnum(after) then return i, j end
+    if not is_wordch(before) and not is_wordch(after) then return i, j end
     s = i + 1
   end
 end

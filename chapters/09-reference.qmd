@@ -275,8 +275,9 @@ Plain-language definitions of the terms this book uses.
 : How you request GPUs: `--gres=gpu:1` or `--gres=gpu:h100:2`. See @sec-gpu.
 
 **Investor / `inv-*`**
-: Nodes/partitions owned by a specific group, who get top priority; others can be preempted off
-  them. See @sec-preemption.
+: A research group, department, or PI that bought cluster nodes with their own funds. Their
+  `inv-*` partitions give them top priority; jobs others backfill there can be preempted. See
+  @sec-preemption.
 
 **Job array**
 : One script run many times with a varying index (`$SLURM_ARRAY_TASK_ID`), for parameter sweeps

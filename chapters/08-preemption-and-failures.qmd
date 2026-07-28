@@ -6,10 +6,10 @@ How long jobs survive preemption and walltime limits, and how to diagnose jobs t
 
 ### The condo model
 
-Much of MedicineBow's hardware was purchased by individual research groups. Those `inv-*`
-partitions belong to their investors, who get top priority (QOS 110) on them. Everyone else's
-jobs can **backfill** onto idle investor nodes — free capacity most of the time, with one
-condition.
+Much of MedicineBow's hardware was bought by individual research groups, departments, or PIs
+using their own grant or startup funds. Those buyers are the **investors**, and the nodes they
+paid for make up the `inv-*` partitions, where they get top priority (QOS 110). Everyone else
+can **backfill** onto idle investor nodes — free capacity most of the time, with one condition.
 
 ::: {.callout-warning}
 ## An investor can reclaim a node and requeue your job
