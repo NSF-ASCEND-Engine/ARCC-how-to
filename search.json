@@ -34,7 +34,7 @@
     "href": "index.html#how-the-book-is-organized",
     "title": "Getting Started on ARCC MedicineBow",
     "section": "How the book is organized",
-    "text": "How the book is organized\n\nPart I gets you an account and logged in.\nPart II is a minimal Linux survival kit.\nPart III covers the filesystems and moving data in and out.\nPart IV covers software: modules, conda, and containers.\nPart V covers Slurm, the batch scheduler — how to ask for resources, pick a queue, watch your jobs, run arrays, use GPUs, and handle preemption and failures.\nPart VI is quick reference: a cheat sheet, troubleshooting, and a glossary.\n\nConventions: shell commands you type are shown in code blocks. Boxes marked Gotcha or Important mark places people reliably get burned.",
+    "text": "How the book is organized\nThe chapters run roughly in the order you’ll need them: getting an account and logging in, a minimal Linux survival kit, the filesystems and moving data, software (modules, conda, containers), then the bulk of the book on Slurm — asking for resources, picking a queue, watching jobs, arrays, GPUs, and handling preemption and failures. The last few chapters are quick reference: a cheat sheet, troubleshooting, and a glossary.\nConventions: shell commands you type are shown in code blocks. Boxes marked Gotcha or Important mark places people reliably get burned.",
     "crumbs": [
       "Preface"
     ]
@@ -46,7 +46,6 @@
     "section": "",
     "text": "1.1 Mental model\nMedicineBow is not one big computer. It is a few hundred ordinary Linux servers (“nodes”) wired together, all mounting the same shared filesystems, all managed by a program that decides whose job runs where and when. That program is the scheduler (here, Slurm). Learning the cluster is mostly learning to work with the scheduler.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
@@ -57,7 +56,6 @@
     "section": "1.2 Login nodes vs. compute nodes",
     "text": "1.2 Login nodes vs. compute nodes\nThere are two kinds of machines, and confusing them is the most common beginner mistake.\nLogin nodes (mblog1, mblog2) are the front door. When you ssh in or open a terminal in the web portal, you land here. They are shared by everyone at once — dozens of people editing files, submitting jobs, and moving data. Use them for lightweight work: editing scripts, managing files, compiling small things, submitting and checking jobs.\nCompute nodes are where computation happens. You never SSH to them directly; you ask the scheduler for one (or many), and it gives you exclusive, accounted-for access for a bounded time. The default mb nodes have 96 CPU cores and ~1 TB of RAM each, and the GPU nodes carry up to 8 NVIDIA H100s.\n\n\n\n\n\n\nflowchart LR\n    U[\"Your laptop\"] --&gt;|\"ssh / web portal\"| L\n    subgraph MB [\"MedicineBow\"]\n        L[\"Login nodes&lt;br/&gt;mblog1 / mblog2&lt;br/&gt;shared, lightweight only\"]\n        S{{\"Slurm scheduler\"}}\n        L --&gt;|\"sbatch / salloc\"| S\n        S --&gt; C1[\"Compute node\"]\n        S --&gt; C2[\"Compute node\"]\n        S --&gt; C3[\"GPU node\"]\n    end\n    FS[(\"Shared filesystems&lt;br/&gt;home, project, scratch\")]\n    L --- FS\n    C1 --- FS\n    C3 --- FS\n\n\n\n\nFigure 1.1: You reach a shared login node from your laptop; the scheduler runs your jobs on dedicated compute nodes. All nodes see the same filesystems.\n\n\n\n\n\n\n\n\n\n\n\nDon’t compute on login nodes\n\n\n\nA heavy job on mblog1/mblog2 — a big simulation, a data-crunching Python script, a multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills runaway login-node processes (and emails you).\nRule of thumb: anything that takes more than a couple of minutes, or uses more than a core or two, belongs in a Slurm job or an interactive session. See Chapter 9.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
@@ -68,7 +66,6 @@
     "section": "1.3 Why share a machine at all?",
     "text": "1.3 Why share a machine at all?\nIf everyone had their own dedicated server, most servers would sit idle while a few people occasionally needed far more than one server could give. Pooling the hardware and scheduling access means:\n\nWhen you need 50 nodes for an ensemble, you can have them (briefly).\nWhen you need nothing, someone else uses the hardware you’re not using.\nA fair-share accounting system stops any one person from hogging everything.\n\nIn exchange, you sometimes wait in line and you have to describe your work up front (how many cores, how much memory, how long). Most of this book is about making those two things painless.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
@@ -79,7 +76,6 @@
     "section": "1.4 What MedicineBow is, concretely",
     "text": "1.4 What MedicineBow is, concretely\nMedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:\n\nGeneral CPU nodes (the mb partition): 25 nodes, 96 cores and ~1 TB RAM each.\nGPU nodes: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything CUDA.\nAbsorbed older clusters: the retired Teton, Beartooth, and WildIris clusters now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.\nInvestor (“condo”) nodes: hardware bought by specific research groups, which others can borrow when it’s idle — but the owner can reclaim it and bump your job (see Chapter 18).\n\nThe partition chapter (Chapter 12) covers which hardware to ask for, and the queue-times chapter (Chapter 13) covers which choices leave you waiting versus running now.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
@@ -90,7 +86,6 @@
     "section": "1.5 Where to get help",
     "text": "1.5 Where to get help\n\n\n\nChannel\nUse it for\n\n\n\n\narcc-help@uwyo.edu\nAnything. Real humans, ticketed via Jira Service Management.\n\n\nOffice hours (Zoom)\nTuesdays, 11am–1pm — bring your actual problem.\n\n\nARCC wiki\nThe official reference docs.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>What a cluster is</span>"
     ]
   },
@@ -101,7 +96,6 @@
     "section": "",
     "text": "2.1 How accounts work\nARCC will not create an account without written confirmation from a Principal Investigator who owns a project. Accounts are tied to funded projects for accounting and fair-share purposes.\nSo the first step is a conversation, not a form:\nFor ASCEND/ARID performers the project is something like cowy-firesurro (the project this guide was written under). Confirm the exact project name with your PI — you type it into every job you run (Chapter 10).",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -112,7 +106,6 @@
     "section": "",
     "text": "“Which project am I being added to, and can the PI email ARCC to add me?”",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -123,7 +116,6 @@
     "section": "2.2 Who can be a PI",
     "text": "2.2 Who can be a PI\n\nUW faculty (extended-term / tenure-track) or a Research Scientist.\nNot adjunct, not emeritus, not a postdoc or student.\n\nIf your advisor doesn’t qualify, someone who does must sponsor the project. This matters for a multi-institution engine like ASCEND, where the leader of your sub-project might not be UW faculty.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -134,7 +126,6 @@
     "section": "2.3 UW accounts vs. ARCC-Only accounts",
     "text": "2.3 UW accounts vs. ARCC-Only accounts\nASCEND spans UW, CSU, CU Boulder, Mines, NCAR, and NEON, so this distinction affects collaborators:\n\n\n\n\n\n\n\n\n\nFull UW account\nARCC-Only account\n\n\n\n\nWho\nUW-affiliated people\nExternal collaborators without a UW identity\n\n\nHPC (MedicineBow)\n✅\n✅\n\n\nGitLab\n✅\n✅\n\n\nGlobus data transfer\n✅\n❌ cannot use Globus\n\n\nOther UW services\n✅\n❌\n\n\n\n\n\n\n\n\n\nARCC-Only accounts and Globus\n\n\n\nExternal collaborators on ARCC-Only accounts cannot use Globus, the recommended way to move large datasets (Chapter 6). They’ll need a guest collection set up for them, or a UW person to broker transfers. Plan for this early if your data lives at CSU or NCAR.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -145,7 +136,6 @@
     "section": "2.4 The free tier",
     "text": "2.4 The free tier\nEach researcher’s baseline allocation:\n\n100,000 CPU core-hours per year\n20,000 GPU-hours per year\n\nThat is plenty for getting started — 100,000 core-hours is roughly one 96-core node running flat out for six weeks. Larger allocations and investor projects exist beyond this. Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources (Chapter 11).",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -156,7 +146,6 @@
     "section": "2.5 The practical checklist",
     "text": "2.5 The practical checklist\n\nConfirm with your PI which project you’re joining and its exact name.\nHave the PI email arcc-help@uwyo.edu to request your account on that project. (You emailing them yourself won’t work — they need the PI’s confirmation.)\nOnce ARCC provisions you, you’ll get a UW username. Your first login is Chapter 3.\nIf you’re an external collaborator, flag it now and ask how you’ll move data, since Globus won’t be available to you.\n\nNo VPN is required to reach ARCC, on campus or off, so once your account exists you can log in from anywhere.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Getting an account</span>"
     ]
   },
@@ -167,7 +156,6 @@
     "section": "",
     "text": "3.1 Two ways in: portal and SSH\nMedicineBow has a single hostname that serves both the web portal and SSH: medicinebow.arcc.uwyo.edu.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -178,7 +166,6 @@
     "section": "",
     "text": "The web portal (Open OnDemand) is a browser interface: a file explorer, a terminal, job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start here on day one.\nSSH is the terminal way in, and how you’ll work day-to-day once set up. It requires a key you generate through the portal first.\n\n\n\n\n\n\n\nDon’t use “Southpass”\n\n\n\nOlder notes may point you at southpass.arcc.uwyo.edu, the portal for the retired Beartooth cluster. The DNS name still resolves but has no live service behind it. The current portal is medicinebow.arcc.uwyo.edu.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -189,7 +176,6 @@
     "section": "3.2 Step 1 — Log into the portal",
     "text": "3.2 Step 1 — Log into the portal\nGo to https://medicinebow.arcc.uwyo.edu and sign in with your UW username and password. You’ll be prompted for Duo two-factor authentication. If you’ve never set up Duo, do it at https://wyosecure.uwyo.edu. No VPN is needed.\nOnce in, note the Files menu (browse /home, /project, /gscratch), the Clusters → Shell option (a terminal in your browser), and the Interactive Apps menu.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -200,7 +186,6 @@
     "section": "3.3 Step 2 — Generate your SSH key with the SSH Key Manager",
     "text": "3.3 Step 2 — Generate your SSH key with the SSH Key Manager\nSSH on MedicineBow is key-and-certificate based, not password based. Generate a key pair through the portal:\n\nIn the portal, open the SSH Key Manager.\nGenerate a key. It downloads as a zip named after your username.\nUnpack it into your local ~/.ssh and fix permissions:\n\nunzip ~/Downloads/&lt;username&gt;.zip -d ~/.ssh\nchmod 0600 -R ~/.ssh\nssh-add\nNow you can connect from your own terminal:\nssh &lt;username&gt;@medicinebow.arcc.uwyo.edu\n\n\n\n\n\n\nSSH keys expire after one year\n\n\n\nRoughly a year after setup, your ssh stops working — permission denied, no obvious reason. The key expired. Go back to the portal’s SSH Key Manager, generate a fresh key, and unzip it into ~/.ssh again. This is by design.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -211,7 +196,6 @@
     "section": "3.4 Step 3 — A comfortable SSH config (optional)",
     "text": "3.4 Step 3 — A comfortable SSH config (optional)\nAdd this to ~/.ssh/config on your laptop so you can just type ssh medbow:\nHost medbow\n    HostName medicinebow.arcc.uwyo.edu\n    User &lt;username&gt;\n    ServerAliveInterval 60\n    ServerAliveCountMax 5\nServerAliveInterval sends a small keepalive every 60 seconds so campus/VPN firewalls don’t silently drop your connection while you’re reading output.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -220,9 +204,8 @@
     "href": "chapters/03-first-login.html#which-door-should-i-use",
     "title": "3  First login, the portal, and SSH keys",
     "section": "3.5 Which door should I use?",
-    "text": "3.5 Which door should I use?\n\n\n\n\n\n\n\nYou want to…\nUse\n\n\n\n\nFirst-time setup, generate SSH keys\nPortal (required)\n\n\nA quick browser terminal from any machine\nPortal → Clusters → Shell\n\n\nA graphical desktop, RStudio, Jupyter\nPortal → Interactive Apps\n\n\nEveryday scripting, editing, job submission\nSSH from your terminal\n\n\nDrag-and-drop a few files\nPortal → Files (for big data, see Chapter 6)\n\n\n\nOnce you can log in and get a shell prompt, continue to the Linux survival kit (Chapter 4), or skip ahead to storage (Chapter 5) and Slurm (Part V) if you already know a terminal.",
+    "text": "3.5 Which door should I use?\n\n\n\n\n\n\n\nYou want to…\nUse\n\n\n\n\nFirst-time setup, generate SSH keys\nPortal (required)\n\n\nA quick browser terminal from any machine\nPortal → Clusters → Shell\n\n\nA graphical desktop, RStudio, Jupyter\nPortal → Interactive Apps\n\n\nEveryday scripting, editing, job submission\nSSH from your terminal\n\n\nDrag-and-drop a few files\nPortal → Files (for big data, see Chapter 6)\n\n\n\nOnce you can log in and get a shell prompt, continue to the Linux survival kit (Chapter 4), or skip ahead to storage (Chapter 5) and Slurm (Chapter 9) if you already know a terminal.",
     "crumbs": [
-      "Part I — Getting oriented",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>First login, the portal, and SSH keys</span>"
     ]
   },
@@ -233,7 +216,6 @@
     "section": "",
     "text": "4.1 Moving around\nIf you already live in a terminal, skim the tmux section. Everything here is standard Linux; nothing is ARCC-specific except the paths.\nThree shortcuts you’ll use constantly: ~ is your home directory, . is “here”, and .. is “up one”. Press Tab to complete a half-typed path.",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -244,7 +226,6 @@
     "section": "",
     "text": "pwd                 # where am I?\nls -lh              # list files, human-readable sizes\ncd /project/cowy-firesurro   # go somewhere\ncd                  # go home ($HOME)\ncd -                # go back to where you just were",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -255,7 +236,6 @@
     "section": "4.2 Looking at files without opening them",
     "text": "4.2 Looking at files without opening them\ncat file.txt          # dump a whole (small) file\nless big.log          # page through a big file; q to quit, / to search\nhead -n 20 file       # first 20 lines\ntail -n 50 file       # last 50 lines\ntail -f slurm-123.out # follow a job's output live as it's written\ntail -f on a job’s output file shows whether it’s doing anything.",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -266,7 +246,6 @@
     "section": "4.3 Editing files",
     "text": "4.3 Editing files\nnano is the easy choice — arrow keys work, and shortcuts are listed at the bottom of the screen (^O = save, ^X = exit).\nnano submit.sh\nvim is powerful but has a learning curve; if you don’t know it, nano is fine for a submit script. For anything bigger, edit on your laptop and use the portal’s file browser, VS Code’s Remote-SSH, or rsync (Chapter 6).",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -277,7 +256,6 @@
     "section": "4.4 Finding things",
     "text": "4.4 Finding things\ngrep -r \"account\" .          # search file contents recursively\nfind . -name \"*.nc\"          # find files by name\nfind . -size +1G             # find files bigger than 1 GB (great for quota hunts)\ndu -sh *                     # how big is each thing in this directory?\ndu -sh * | sort -h finds what’s eating your quota — useful given the 50 GB home limit (Chapter 5).",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -288,7 +266,6 @@
     "section": "4.5 Environment variables and your shell",
     "text": "4.5 Environment variables and your shell\nYour shell remembers settings in variables. A few you’ll meet:\necho $HOME        # /home/&lt;username&gt;\necho $USER        # your username\necho $SCRATCH     # /gscratch/&lt;username&gt; — your scratch space\necho $PATH        # where the shell looks for commands\nTo make something permanent (say, a handy alias), add it to ~/.bashrc:\nalias q='squeue --me'          # see just my jobs\nalias proj='cd /project/cowy-firesurro'\nRun source ~/.bashrc (or log out and back in) to apply changes.",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -299,7 +276,6 @@
     "section": "4.6 tmux: keep work alive across a dropped connection",
     "text": "4.6 tmux: keep work alive across a dropped connection\nWhen you SSH in and start something, closing your laptop or losing WiFi kills that shell and everything running in it. tmux keeps your session alive on the login node whether or not you’re connected.\ntmux new -s work     # start a named session \"work\"\n#   ... do things, launch an interactive job, watch output ...\n#   detach with:  Ctrl-b then d\ntmux ls              # list your sessions\ntmux attach -t work  # reattach later, even from a different computer\nThe workflow:\n\nSSH into the login node.\ntmux new -s work.\nInside tmux, do your editing, submit jobs, launch an interactive session (Chapter 17).\nDetach (Ctrl-b then d) and close your laptop. It all keeps running.\nTomorrow, SSH back in and tmux attach -t work — exactly where you left off.\n\n\n\n\n\n\n\ntmux is for login-node shells, not batch jobs\n\n\n\nA batch job (sbatch, Chapter 10) already runs independently of your connection — log out and it keeps going. tmux is for things that live in your shell: interactive sessions, monitoring, an editor you don’t want to lose.",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -310,7 +286,6 @@
     "section": "4.7 Permissions, briefly",
     "text": "4.7 Permissions, briefly\nYou’ll occasionally see chmod and permission strings like -rw-r-----. The main uses are fixing your SSH keys (chmod 0600 -R ~/.ssh, from Chapter 3) and making a script executable:\nchmod +x run.sh\nThere is no sudo on the cluster. You can’t install system packages or change things outside your own directories, and you don’t need to — everything you install goes in your own space (Chapter 8) or as modules (Chapter 7).",
     "crumbs": [
-      "Part II — Linux essentials",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Linux essentials</span>"
     ]
   },
@@ -321,7 +296,6 @@
     "section": "",
     "text": "5.1 Nothing is backed up\nNothing on MedicineBow is backed up. Not home, not project, not scratch.\nThere are snapshots (point-in-time copies you can sometimes restore from), but they live on the same storage array as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate Alcova service, which does have real nightly backups.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
@@ -332,7 +306,6 @@
     "section": "5.2 The three filesystems",
     "text": "5.2 The three filesystems\n\n\n\n\n\n\n\n\n\n\nPath\nQuota\nSnapshots\nBackups\nPurged\n\n\n\n\n/home/$USER\n50 GB\nyes\nNO\nonly when you leave UW\n\n\n/project/&lt;proj&gt;\n5 TB\nyes\nNO\n6 months after project ends\n\n\n/gscratch/$USER ($SCRATCH)\n5 TB\nyes\nNO\nafter 90 days of inactivity\n\n\n/project/&lt;proj&gt;/software\n+250 GB on top of project\nyes\nNO\nwith the project\n\n\n/lscratch\nnode-local, varies\nno\nNO\nwiped at the end of every job\n\n\n\nCheck your usage and limits for home, scratch, and project:\narccquota\n\n5.2.1 /home — small, personal, for config not data\n50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts, and small configs — not datasets and not software installs. When home fills up, things break (jobs fail to write logs, logins misbehave), so watch it with arccquota and du -sh ~/* | sort -h.\n\n\n5.2.2 /project/&lt;proj&gt; — the shared workhorse\n5 TB, shared by everyone on your project (e.g. cowy-firesurro). This is where shared datasets, inputs, and results belong. Agree on a directory convention with your group so you don’t clobber each other. It persists for 6 months after the project ends.\n\n\n5.2.3 /gscratch/$USER — fast and disposable\nAlso 5 TB, and the fast filesystem — use it as the working directory for jobs with heavy I/O. Files untouched for 90 days are purged automatically. Never keep the only copy of anything here.\n\n\n\n\n\n\nScratch purge is 90 days, not 45\n\n\n\nLegacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but 90 is the current policy. Either way, don’t treat scratch as storage.\n\n\n\n\n5.2.4 /lscratch — node-local, gone when the job ends\nEach compute node has its own local disk at /lscratch. It’s the fastest storage available to a job (no network in the way), ideal for scratch files a single job reads and rewrites constantly. It’s wiped when your job ends, so copy anything you want to keep back to /project or /gscratch before the job exits.\n(There is no /data filesystem, despite what some docs suggest.)",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
@@ -343,7 +316,6 @@
     "section": "5.3 Install software in project space, not home",
     "text": "5.3 Install software in project space, not home\n\n\n\n\n\n\nInstall software into /project/&lt;proj&gt;/software, not /home\n\n\n\nYour project has an extra 250 GB quota at /project/&lt;proj&gt;/software for installing software. A single conda environment with a few scientific packages can be 10–20 GB — two of those fills a 50 GB home directory.\nPoint conda, pip, R libraries, and manual builds at project software space from the start. The conda chapter (Chapter 8) shows how.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
@@ -354,7 +326,6 @@
     "section": "5.4 A sane layout to adopt on day one",
     "text": "5.4 A sane layout to adopt on day one\n/home/&lt;you&gt;/                      # dotfiles, small scripts, SSH keys\n/project/cowy-firesurro/\n    software/                     # conda envs, container images, manual builds\n    data/                         # shared input datasets\n    &lt;you&gt;/                        # your working area within the project\n/gscratch/&lt;you&gt;/                  # active job working dirs, heavy I/O, big temp output\nNext: getting data into these filesystems (Chapter 6).",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Where your data lives</span>"
     ]
   },
@@ -365,7 +336,6 @@
     "section": "",
     "text": "6.1 Pick the right tool for the size of the job\nThere is no dedicated data-transfer node (DTN) — CLI transfers go through the login nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it won’t tie up (or get killed on) a shared login node.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -376,7 +346,6 @@
     "section": "",
     "text": "Transfer\nBest tool\n\n\n\n\nHundreds of GB / TB, or must-not-corrupt datasets\nGlobus\n\n\nA few files, a script, a config\nscp or rsync over SSH\n\n\nTo/from cloud storage (S3, Google Drive, etc.)\nrclone\n\n\nDrag-and-drop a handful of files in a browser\nPortal → Files",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -387,7 +356,6 @@
     "section": "6.2 Globus — the recommended path for real data",
     "text": "6.2 Globus — the recommended path for real data\nGlobus transfers between “collections” (endpoints). It’s restartable, checksums what it moves, retries failures, and runs server-side, so you can start a multi-hundred-GB transfer, close your laptop, and get an email when it’s done.\n\nLog in at https://app.globus.org (choose “University of Wyoming” as your organization, or your own institution).\nSearch collections for uwyo-ARCC and pick “Medicine Bow”.\nThe Medicine Bow collection’s root is cluster, so your project shows up at a path like /cluster/medbow/project/cowy-firesurro/....\nSet the other side to your institutional or personal collection (install Globus Connect Personal on your own machine to make it an endpoint), pick files, and hit Start.\n\n\n\n\n\n\n\nGlobus needs a full UW account\n\n\n\nARCC-Only accounts (external collaborators — Chapter 2) cannot use Globus. If your data lives at CSU, CU, or NCAR and you’re on an ARCC-Only account, you’ll need a UW-side person to broker the transfer, or a guest collection set up for you.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -398,7 +366,6 @@
     "section": "6.3 scp and rsync — fine for small, everyday transfers",
     "text": "6.3 scp and rsync — fine for small, everyday transfers\nFrom your laptop, push a file up:\nscp results.csv &lt;username&gt;@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/&lt;you&gt;/\nPull one down:\nscp &lt;username&gt;@medicinebow.arcc.uwyo.edu:/gscratch/&lt;you&gt;/output.nc .\nrsync is better for directories and for resuming — it only copies what changed, so an interrupted transfer picks up where it left off:\nrsync -avP ./localdir/ &lt;username&gt;@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/&lt;you&gt;/dir/\nThe -P flag shows progress and enables resume; -a preserves timestamps and permissions. For more than a few GB, prefer Globus — a login-node scp of a huge file competes with everyone else’s login-node activity and will be slow.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -409,7 +376,6 @@
     "section": "6.4 rclone — cloud storage (S3, Google Drive, Box…)",
     "text": "6.4 rclone — cloud storage (S3, Google Drive, Box…)\nrclone is ARCC’s recommended CLI for moving data to and from cloud services. It’s a module:\nmodule load rclone/1.63.1\nrclone config          # one-time: set up a \"remote\" (S3 bucket, Drive, etc.)\nrclone copy mydata/ myremote:bucket/path/    # copy up\nrclone copy myremote:bucket/path/ ./mydata/  # copy down\nrclone verifies and retries, and handles many small files far better than a loop of scps.",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -420,7 +386,6 @@
     "section": "6.5 A quick decision guide",
     "text": "6.5 A quick decision guide\n\nMoving your project’s primary dataset onto the cluster? Globus.\nIterating on a submit script from your laptop? rsync (or edit in the portal).\nPulling results into a cloud bucket for a collaborator? rclone.\nExternal collaborator without Globus? Ask your UW PI about a guest collection.\n\nNext: making software available, starting with the module system (Chapter 7).",
     "crumbs": [
-      "Part III — Where your data lives",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Moving data in and out</span>"
     ]
   },
@@ -431,7 +396,6 @@
     "section": "",
     "text": "7.1 Why modules exist\nA cluster has hundreds of users who need incompatible software: three versions of Python, five compilers, conflicting builds of GDAL. Modules let you load exactly the versions you want into your shell for this session, without affecting anyone else. Load a module and its programs appear on your PATH; unload it and they vanish.",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
@@ -442,7 +406,6 @@
     "section": "",
     "text": "module load gcc/14.2.0        # add gcc 14 to this shell\nmodule list                   # what do I currently have loaded?\nmodule unload gcc/14.2.0      # remove it\nmodule purge                  # clear everything and start clean",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
@@ -453,7 +416,6 @@
     "section": "7.2 The hierarchy",
     "text": "7.2 The hierarchy\nMedicineBow uses Lmod in hierarchical mode. Modules are arranged in layers:\n\nCore modules are always visible: the compilers (gcc, nvhpc-sdk, oneapi), MPI, and standalone tools.\nCompiler-dependent modules — Python, R, GDAL, NetCDF, HDF5, CUDA — are hidden until you load a compiler. They were built against a specific compiler, so Lmod won’t show them until you’ve picked one.\n\nSo a new user runs module avail, doesn’t see gdal, and concludes it isn’t installed. It is — just one layer down.\n\n\n\n\n\n\nUse module spider, not module avail, to check whether something exists\n\n\n\nmodule avail shows only what’s loadable given what you’ve already loaded. module spider searches the entire tree and tells you both that something exists and what to load first to reach it.\nmodule spider gdal            # yes it exists; here are the versions\nmodule spider gdal/3.13.0     # ...and exactly what to load before it\n\n\nA typical geospatial stack, in order:\nmodule purge\nmodule load gcc/14.2.0        # 1. a compiler, first\nmodule load gdal/3.13.0       # 2. now GDAL is reachable\nmodule load netcdf-c/4.9.2-ompi",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
@@ -464,7 +426,6 @@
     "section": "7.3 What’s installed (a tour)",
     "text": "7.3 What’s installed (a tour)\nAsk the machine for the current list with module spider, but roughly:\n\nCompilers (core): gcc/{11.4.0, 11.5.0, 13.2.0, 14.2.0, 15.2.0}, nvhpc-sdk, oneapi, openmpi/5.0.10.\nAfter loading a compiler: python/{3.10.6, 3.12.0, 3.14.4}, r/{4.4.0, 4.5.3}, gdal/{3.7.3, 3.13.0}, netcdf-c/4.9.2-ompi, hdf5/1.14.3*, cuda-toolkit/{12.4.1, 12.6.1}, openmpi/4.1.6, rclone/1.63.1.\nStandalone: apptainer/{1.3.5, 1.4.1}, singularity/4.1.0, miniconda3/24.3.0, julia/{1.10.3, 1.11.6}.\n\n\n\n\n\n\n\nCUDA needs the deprecated gcc/13.2.0\n\n\n\ngcc/13.2.0 prints a deprecation warning pointing to gcc/14.2.0, but cuda-toolkit is only built against gcc/13.2.0. GPU users have to load it anyway:\nmodule load gcc/13.2.0        # the one that warns you — CUDA needs it\nmodule load cuda-toolkit/12.6.1\nIgnore the warning here; it’s a packaging quirk.",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
@@ -475,7 +436,6 @@
     "section": "7.4 Making a set of modules load automatically",
     "text": "7.4 Making a set of modules load automatically\nOnce you know the stack a project needs, save it as a named collection so you don’t retype it:\nmodule purge\nmodule load gcc/14.2.0 gdal/3.13.0 netcdf-c/4.9.2-ompi\nmodule save geostack          # remember this set as \"geostack\"\n\n# next session:\nmodule restore geostack\nPrefer module restore in submit scripts over hand-loading a long list — it’s reproducible and self-documents the environment your job needs.\n\n\n\n\n\n\nLoad modules in your submit script, not just interactively\n\n\n\nModules loaded on the login node don’t carry into a batch job. Put the module load / module restore lines inside your sbatch script so the job builds the same environment every time (Chapter 10).\n\n\nWhen a package isn’t available as a module — or you need a pip/conda world — see the next chapter (Chapter 8).",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Software modules</span>"
     ]
   },
@@ -486,7 +446,6 @@
     "section": "",
     "text": "8.1 Point conda away from home first\nThe miniconda3 module gives you conda:\nBy default, conda writes environments and a package cache into ~/.conda and ~/miniconda3, inside your 50 GB home quota. A couple of scientific environments will fill it. Before creating any environments, point conda at your project’s 250 GB software space.\nCreate ~/.condarc:\nNow new environments and the download cache land in project space:\nOther conda notes:",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
@@ -497,7 +456,6 @@
     "section": "",
     "text": "module load miniconda3/24.3.0\n\n\npkgs_dirs:\n  - /project/cowy-firesurro/software/&lt;you&gt;/conda/pkgs\nenvs_dirs:\n  - /project/cowy-firesurro/software/&lt;you&gt;/conda/envs\n\nconda create -n geo python=3.12 numpy xarray netcdf4\nconda activate geo\n\n\n\n\n\n\nSet .condarc before your first conda create\n\n\n\nEnvironments created before you set .condarc are stranded in home. If you’ve already made the mess: conda env list, remove the home-based envs, and recreate them under project space.\n\n\n\n\nNo mamba is installed on the cluster; use conda directly.\nActivate conda inside your submit script, not just interactively, so batch jobs get the same environment (Chapter 10).\nconda clean -a reclaims space from the package cache.",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
@@ -506,9 +464,8 @@
     "href": "chapters/08-conda-containers.html#apptainer-containers-for-reproducibility-and-portability",
     "title": "8  Conda and containers",
     "section": "8.2 Apptainer: containers for reproducibility and portability",
-    "text": "8.2 Apptainer: containers for reproducibility and portability\nA container bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as you, with no root, which makes it the HPC-safe alternative to Docker.\nmodule load apptainer/1.4.1\n\n# Pull a Docker image and convert it to an Apptainer image (.sif):\napptainer pull mytool.sif docker://ghcr.io/someorg/mytool:latest\n\n# Run something inside it:\napptainer exec mytool.sif mytool --help\n\n# Bind your data into the container so it can see it:\napptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc\nStore .sif images in /project/&lt;proj&gt;/software — they can be large.\n\n8.2.1 Container vs. module vs. conda\n\n\n\n\n\n\n\nSituation\nBest choice\n\n\n\n\nThe software is already an Lmod module\nmodule (Chapter 7) — least effort\n\n\nPure Python/R stack, you want to iterate\nconda\n\n\nComplex native dependencies that fight the system\nApptainer\n\n\nYou need bit-for-bit reproducibility across machines\nApptainer\n\n\nA published tool ships a Docker image\nApptainer (apptainer pull docker://…)\n\n\n\n\n\n\n\n\n\nGPUs inside containers\n\n\n\nTo use the node’s GPUs from inside a container, add the --nv flag so Apptainer exposes the NVIDIA driver: apptainer exec --nv mytool.sif .... Pair this with a GPU job (Section 17.2).\n\n\nNext: running your work through the scheduler (Part V, starting at Chapter 9).",
+    "text": "8.2 Apptainer: containers for reproducibility and portability\nA container bundles an application with its entire operating-system environment into a single image file. On HPC the runtime is Apptainer (formerly Singularity). It runs containers as you, with no root, which makes it the HPC-safe alternative to Docker.\nmodule load apptainer/1.4.1\n\n# Pull a Docker image and convert it to an Apptainer image (.sif):\napptainer pull mytool.sif docker://ghcr.io/someorg/mytool:latest\n\n# Run something inside it:\napptainer exec mytool.sif mytool --help\n\n# Bind your data into the container so it can see it:\napptainer exec --bind /project/cowy-firesurro:/data mytool.sif mytool /data/input.nc\nStore .sif images in /project/&lt;proj&gt;/software — they can be large.\n\n8.2.1 Container vs. module vs. conda\n\n\n\n\n\n\n\nSituation\nBest choice\n\n\n\n\nThe software is already an Lmod module\nmodule (Chapter 7) — least effort\n\n\nPure Python/R stack, you want to iterate\nconda\n\n\nComplex native dependencies that fight the system\nApptainer\n\n\nYou need bit-for-bit reproducibility across machines\nApptainer\n\n\nA published tool ships a Docker image\nApptainer (apptainer pull docker://…)\n\n\n\n\n\n\n\n\n\nGPUs inside containers\n\n\n\nTo use the node’s GPUs from inside a container, add the --nv flag so Apptainer exposes the NVIDIA driver: apptainer exec --nv mytool.sif .... Pair this with a GPU job (Section 17.2).\n\n\nNext: running your work through the scheduler (Chapter 9).",
     "crumbs": [
-      "Part IV — Software",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Conda and containers</span>"
     ]
   },
@@ -519,7 +476,6 @@
     "section": "",
     "text": "9.1 Why share a machine\nWith 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks idle and starts running. Two jobs land on the same node and thrash its memory until both crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell whether a node is free.\nSlurm replaces “grab a node and hope” with a contract:",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Why a scheduler exists</span>"
     ]
   },
@@ -530,7 +486,6 @@
     "section": "",
     "text": "You describe the work: resources and a time limit.\nSlurm reserves exactly that, on nodes that can provide it, and accounts for it.\nYour job runs with those resources guaranteed and isolated from other jobs.\nWhen your time limit is up, the job ends, which keeps the line moving.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Why a scheduler exists</span>"
     ]
   },
@@ -541,7 +496,6 @@
     "section": "9.2 The two ways to run work",
     "text": "9.2 The two ways to run work\nBatch jobs (sbatch) are the normal mode: you write a script that lists the resources you need and the commands to run, submit it, and walk away. Slurm runs it when your turn comes and writes the output to a file. Use this for essentially all real computation. (Chapter 10)\nInteractive jobs (salloc) give you a live shell on a compute node for debugging, exploring data, or developing a script. You still go through the scheduler and consume your allocation, but you get a prompt instead of a script. (Chapter 17)\nBoth run on compute nodes, not the login node (Chapter 1).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Why a scheduler exists</span>"
     ]
   },
@@ -552,7 +506,6 @@
     "section": "9.3 The three questions every job answers",
     "text": "9.3 The three questions every job answers\nWhether batch or interactive, you tell Slurm three things:\n\n\n\n\n\n\n\n\nQuestion\nDirective\nCovered in\n\n\n\n\nWho pays? (which project)\n--account\nChapter 10\n\n\nHow much, and how long?\n--cpus-per-task, --mem, --time, …\nChapter 11\n\n\nWhat kind of node, and how urgent?\n--partition, --qos\nChapter 12\n\n\n\nGet these right and jobs run smoothly. Get them wrong and you wait a long time, get rejected at submit time, or watch the job die partway through. The next chapters take them one at a time.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Why a scheduler exists</span>"
     ]
   },
@@ -563,7 +516,6 @@
     "section": "9.4 A first look at the tools",
     "text": "9.4 A first look at the tools\nYou’ll meet these properly later; here’s the vocabulary:\nsbatch submit.sh        # submit a batch job\nsalloc ...              # get an interactive session\nsqueue --me             # what are my jobs doing?\nscancel &lt;jobid&gt;         # cancel a job\nsacct -j &lt;jobid&gt;        # after the fact: what happened, and how much did it use?\nARCC also ships friendlier wrappers — showjobreasons (“why isn’t my job running?”), showuserlimits (“what am I allowed to ask for?”), showpartitions, sqos — used in Chapter 12 and Chapter 15.\nNext: writing an actual job.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Why a scheduler exists</span>"
     ]
   },
@@ -574,7 +526,6 @@
     "section": "",
     "text": "10.1 The smallest useful job\nHere is a complete, working submit script. Save it as submit.sh:\nSubmit it:\nWatch it and read the output:\nThat’s the loop: write script, sbatch, watch, read output.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -585,7 +536,6 @@
     "section": "",
     "text": "#!/bin/bash\n#SBATCH --account=cowy-firesurro     # WHO PAYS — the one you can't omit\n#SBATCH --job-name=hello\n#SBATCH --time=00:10:00              # 10 minutes; jobs are killed at the limit\n#SBATCH --cpus-per-task=1\n#SBATCH --mem=4G                     # always set memory explicitly (see below)\n#SBATCH --output=slurm-%j.out        # %j is replaced by the job ID\n\necho \"Running on host: $(hostname)\"\necho \"Job $SLURM_JOB_ID started at $(date)\"\n\nmodule purge\nmodule load gcc/14.2.0 python/3.12.0\n\npython my_analysis.py\n\necho \"Finished at $(date)\"\n\nsbatch submit.sh\n# Submitted batch job 123456\n\nsqueue --me                 # is it pending / running?\ntail -f slurm-123456.out    # follow output as it's written",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -596,7 +546,6 @@
     "section": "10.2 The required directive: --account",
     "text": "10.2 The required directive: --account\n#SBATCH --account=cowy-firesurro\n\n\n\n\n\n\n--account is your project, not your username\n\n\n\nEvery job on MedicineBow must specify an account, and it’s the project name (cowy-firesurro), not your login name. Leave it out and the job is rejected immediately. This is the most common first error. Confirm your exact project name with your PI (Chapter 2) and put it in every script, or set it once as a default:\n# add to ~/.bashrc so you never forget it\nexport SBATCH_ACCOUNT=cowy-firesurro\nEven so, keep --account in the script itself. It documents intent and survives being run by a collaborator whose default differs.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -607,7 +556,6 @@
     "section": "10.3 Anatomy, directive by directive",
     "text": "10.3 Anatomy, directive by directive\n\n\n\n\n\n\n\n\nDirective\nWhat it does\nNotes\n\n\n\n\n--account\nwhich project pays\nrequired\n\n\n--job-name\nlabel in the queue\nmakes squeue readable\n\n\n--time\nwall-clock limit\njob is killed at this limit — pad it a bit\n\n\n--partition\nwhich hardware pool\ndefault is mb; see Chapter 12\n\n\n--qos\nurgency/limits tier\ndefault is normal; see Chapter 12\n\n\n--cpus-per-task\nCPU cores\nsee Chapter 11\n\n\n--mem\nmemory for the job\nalways set this — see below\n\n\n--output\nwhere stdout/stderr go\n%j = job ID, %x = job name\n\n\n--mail-type, --mail-user\nemail on events\nEND,FAIL is a sane choice\n\n\n\n#SBATCH lines must come before any real commands; the first non-comment, non-#SBATCH line ends the directive block. After that, it’s a bash script that runs on the compute node.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -618,7 +566,6 @@
     "section": "10.4 Set memory explicitly",
     "text": "10.4 Set memory explicitly\n\n\n\n\n\n\nThe 10 GB-per-core default on mb\n\n\n\nOn the default mb partition, if you don’t set --mem, Slurm gives you 10 GB per CPU core (DefMemPerCPU=10000). So this request:\n#SBATCH --cpus-per-task=8       # and no --mem line\nasks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the job queues longer. Set --mem (whole-job) or --mem-per-cpu explicitly. Covered in depth in Chapter 11.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -629,7 +576,6 @@
     "section": "10.5 Making the environment reproducible",
     "text": "10.5 Making the environment reproducible\nA batch job starts in a mostly clean environment. Build the environment you need inside the script so it runs the same way every time, independent of what you had loaded at submit time:\nmodule purge\nmodule restore geostack        # a saved module set (see @sec-modules)\n# or, for conda:\nmodule load miniconda3/24.3.0\nconda activate geo",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -640,7 +586,6 @@
     "section": "10.6 Useful variables inside a job",
     "text": "10.6 Useful variables inside a job\nSlurm sets environment variables your script can use:\n$SLURM_JOB_ID          # the job's ID\n$SLURM_CPUS_PER_TASK   # cores you were given — pass to your program's thread count\n$SLURM_ARRAY_TASK_ID   # which array element this is (see @sec-arrays)\n$SLURM_SUBMIT_DIR      # the directory you ran sbatch from\nA common pattern matches your program’s threads to what Slurm gave you:\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nThe next two chapters cover doing this well: asking for the right resources (Chapter 11) and choosing the right queue (Chapter 12).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Anatomy of a batch job</span>"
     ]
   },
@@ -651,7 +596,6 @@
     "section": "",
     "text": "11.1 Cores, tasks, and the words Slurm uses\nFor most jobs you need two ideas:\nAsking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores and makes you wait longer. Match the request to what your code can use.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -662,7 +606,6 @@
     "section": "",
     "text": "A task is one instance of your program. Most jobs are a single task.\nCPUs per task is how many cores that program can use (its threads).\n\n#SBATCH --nodes=1                # keep a job on one node unless it's true MPI\n#SBATCH --ntasks=1               # one program instance\n#SBATCH --cpus-per-task=8        # that can use 8 cores\n\nSingle-threaded program? --ntasks=1 --cpus-per-task=1.\nMultithreaded (OpenMP, most numpy/xarray work)? --ntasks=1 --cpus-per-task=N, and set export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK.\nMPI across many nodes? Use --nodes and --ntasks, and launch with srun (Chapter 20).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -673,7 +616,6 @@
     "section": "11.2 Memory",
     "text": "11.2 Memory\nSet memory explicitly, every time. Two ways:\n#SBATCH --mem=32G              # total memory for the whole job (simplest)\n# or\n#SBATCH --mem-per-cpu=4G       # memory per core (scales with --cpus-per-task)\n\n\n\n\n\n\nThe 10 GB/core default on mb\n\n\n\nIf you omit --mem on the default partition, you get 10 GB per core, so --cpus-per-task=8 becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set your memory explicitly. (Full story in Chapter 10.)\n\n\nFor a first run, estimate a bit high so the job isn’t killed, then measure and right-size (below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer (Chapter 19), so memory is the one resource where running out is fatal rather than slow.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -684,7 +626,6 @@
     "section": "11.3 Time",
     "text": "11.3 Time\n#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)\nYour job is killed the instant it hits this limit, so the request must exceed the real runtime; pad by roughly 25%. Don’t pad wildly, though: a shorter time limit means a lower QOS ceiling and better odds of backfilling into gaps, so it often starts sooner (Chapter 13).\n\n\n\n\n\n\nNo per-partition default time, so set --time\n\n\n\nPartitions on MedicineBow don’t set a default wall time. Without --time, you inherit the partition maximum (7 days), which your QOS will likely reject (the normal QOS caps at 3 days). Always set --time yourself.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -695,7 +636,6 @@
     "section": "11.4 Over-asking slows you down",
     "text": "11.4 Over-asking slows you down\nA bigger request is a rarer set of free resources to find:\n\nMore cores / memory → fewer nodes can satisfy you → longer wait, and you’re charged for cores you didn’t use.\nMore time → lower-priority QOS tier and fewer backfill opportunities → longer wait.\nA GPU you don’t use → you sit in the busy GPU queue for nothing (Chapter 13).\n\nThe fix is to right-size.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -706,7 +646,6 @@
     "section": "11.5 Measure, then right-size, with seff",
     "text": "11.5 Measure, then right-size, with seff\nAfter a job finishes, seff tells you what it actually used versus what you reserved:\nseff 123456\nJob ID: 123456\nState: COMPLETED\nCores: 8\nCPU Efficiency: 24.13% of 04:16:00 core-walltime      &lt;- you used ~2 of 8 cores\nMemory Utilized: 5.31 GB\nMemory Efficiency: 16.59% of 32.00 GB                 &lt;- 32G reserved, 5G used\nRead that as: next time ask for ~2 cores and ~8 GB. Low CPU efficiency means you reserved cores your code can’t use; low memory efficiency means you can ask for far less and start sooner.\nCheck what you’re allowed to ask for with ARCC’s helper:\nshowuserlimits\nNext: where to send the job — partitions and QOS, and their queue-time consequences (Chapter 12, Chapter 13).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Asking for resources</span>"
     ]
   },
@@ -717,7 +656,6 @@
     "section": "",
     "text": "12.1 Partition = which hardware\nA partition is a named pool of nodes. Submit with --partition=&lt;name&gt; (the default is mb).\n¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with showpartitions and sinfo.\nThe inv-* partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and preempt your job (Chapter 18).\nYou can list several partitions and let Slurm use whichever frees up first; --partition=mb,teton,beartooth is common for CPU throughput work.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Partitions and QOS on MedicineBow</span>"
     ]
   },
@@ -728,7 +666,6 @@
     "section": "",
     "text": "Partition\nNodes\nCores/node\nMem/node\nGPUs/node\nGood for\n\n\n\n\nmb (default)\n25\n96 (EPYC 9454)\n~1023 GB\n—\ngeneral CPU work\n\n\nmb-h100\n6\n96\n~1281 GB\n8× H100\nlarge model training, PINNs\n\n\nmb-l40s\n4\n96\n~765 GB\n8× L40S¹\ninference, mid-size training\n\n\nmb-a30\n8\n96\n~765 GB\n8× A30\ndev/GPU, smaller models\n\n\nmb-a6000\n1\n64\n~1023 GB\n4× A6000\nGPU dev\n\n\nmb-r6000\n3\n72\n~515 GB\n4× R6000\nGPU dev\n\n\ndebug\n4\n28\n~128 GB\n—\nquick tests (pair with debug QOS)\n\n\nteton\n~250\n32\n~120 GB+\n—\nlarge CPU throughput, arrays\n\n\nbeartooth\n9\n56\n~257 GB+\n—\nCPU work\n\n\nwildiris\n5\n48\n~507 GB+\n—\nCPU work\n\n\nnon-investor\n110\nmixed\nmixed\n—\nCPU work you don’t want preempted\n\n\nnon-investor-gpu\n7\nmixed\nmixed\nmixed\nGPU work you don’t want preempted\n\n\ninv-*\nvaries\nvaries\nvaries\nvaries\ninvestor-owned; borrowable but preemptible\n\n\n\n\n\n\n\n\n\n\n\nAvoiding preemption: use non-investor, not --constraint\n\n\n\n--constraint=non-investor matches nothing on the current machine and does nothing. Use a partition instead: --partition=non-investor (110 CPU nodes) or --partition=non-investor-gpu (7 GPU nodes) stays on hardware that won’t be reclaimed. This is the right home for long, un-checkpointed runs.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Partitions and QOS on MedicineBow</span>"
     ]
   },
@@ -739,7 +676,6 @@
     "section": "12.2 QOS = which service tier",
     "text": "12.2 QOS = which service tier\nA Quality of Service sets three things at once: your maximum walltime, your CPU footprint cap, and your priority. Submit with --qos=&lt;name&gt; (the default is normal).\n\n\n\n\n\n\n\n\n\n\nQOS\nPriority\nMax walltime\nCPU cap / account\nYour project can use it?\n\n\n\n\ninteractive\n90\n8 h\n4746\n✅\n\n\nfast\n80\n12 h\n4746\n✅\n\n\nnormal (default)\n70\n3 d\n4746\n✅\n\n\nlong\n60\n7 d\n2876\n✅\n\n\ndebug\n0\n1 h\n7 cpu / 32 G / 2 nodes\n✅\n\n\nextended\n50\n14 d\n2157\n❌ (not granted)\n\n\ninv-* (investor)\n110\n14 d\nvaries\n❌ (owners only)\n\n\n\nConfirm your own list any time:\nsacctmgr -n show assoc user=$USER format=qos\n# cowy-firesurro:  debug, fast, interactive, long, normal\nsqos                         # full QOS table with limits\n\n\n\n\n\n\nThe walltime trade-off\n\n\n\nLonger requested walltime means lower priority and a smaller footprint cap. fast (12 h) gives priority 80 and the full 4746-core cap; long (7 d) drops to priority 60 and a ~40%-smaller cap. This trade-off drives the recommendations in Chapter 13.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Partitions and QOS on MedicineBow</span>"
     ]
   },
@@ -750,7 +686,6 @@
     "section": "12.3 DenyOnLimit: rejected at submit",
     "text": "12.3 DenyOnLimit: rejected at submit\nEvery QOS is flagged DenyOnLimit. If you ask for more than a QOS allows — say a 5-day run under normal (max 3 d), or more cores than the cap — Slurm rejects the job at submit time with a clear error rather than queuing it indefinitely. Fix the request and resubmit.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Partitions and QOS on MedicineBow</span>"
     ]
   },
@@ -761,7 +696,6 @@
     "section": "12.4 Putting both knobs in a script",
     "text": "12.4 Putting both knobs in a script\n#SBATCH --partition=mb          # hardware: general CPU nodes\n#SBATCH --qos=fast              # tier: 12h max, high priority\n#SBATCH --time=02:00:00         # within the fast 12h ceiling\nFor a GPU job:\n#SBATCH --partition=mb-l40s\n#SBATCH --qos=normal\n#SBATCH --gres=gpu:1            # ask for 1 GPU (see @sec-gpu)\n#SBATCH --time=08:00:00",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Partitions and QOS on MedicineBow</span>"
     ]
   },
@@ -772,7 +706,6 @@
     "section": "",
     "text": "13.1 What the queue looks like\nAt a representative midday moment on MedicineBow there were roughly 2,000 jobs running and 800 pending. Almost every pending job’s reason was Priority — the machine is busy and you’re in line, not that you asked for something impossible.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Queue times: which partition for what</span>"
     ]
   },
@@ -783,7 +716,6 @@
     "section": "13.2 Measured wait times (start minus eligible)",
     "text": "13.2 Measured wait times (start minus eligible)\nThe table below is from ~1.7 million jobs over a recent 3-day window, measured as the time between a job becoming eligible and starting. Read it for order of magnitude, not as a promise; your wait depends on how busy the machine is and how big your request is.\n\n\n\n\n\n\n\n\n\nPartition\nMedian wait\n90th percentile\nCharacter\n\n\n\n\nteton\n~0 s\n~13 min\nhuge pool; throughput/array work starts fast\n\n\nmb (default CPU)\n&lt;1 min\n~10 min\nplentiful; short CPU jobs start quickly\n\n\nbeartooth\n~4 min\n~11 min\nsteady CPU capacity\n\n\nmb-a30 (GPU)\n~2 min\n~1.5 h\nsmaller GPUs, usually gettable\n\n\nmb-h100 (GPU)\nseconds–hours\n~8–9 h\nbimodal: idle now, or a long wait\n\n\nmb-l40s (GPU)\n~1 h\n~2–6 h\nconsistently contended\n\n\nbeartooth-gpu\n~1 h\n~7 h\ncontended\n\n\n\nBy QOS, the CPU signal is even clearer:\n\n\n\nQOS\nMedian wait\n90th percentile\n\n\n\n\ninteractive\n~11 s\n~30 s\n\n\nfast\n~0 s\n~13 min\n\n\nnormal\n~19 s\n~8 min\n\n\n\n\n\n\n\n\n\nHow to read these numbers\n\n\n\nThis window included a large fast-QOS job array on teton, which pulls the teton/fast medians toward zero. The normal-QOS row (tens of thousands of ordinary jobs: median ~19 s, 90th percentile ~8 min) is the most representative figure for a normal CPU job. The pattern holds either way: CPU work starts fast; GPU work, especially L40S/H100, is where you wait. Measure the live picture before a big campaign — see the commands at the end of this chapter.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Queue times: which partition for what</span>"
     ]
   },
@@ -794,7 +726,6 @@
     "section": "13.3 Short proof-of-concept vs. long simulation",
     "text": "13.3 Short proof-of-concept vs. long simulation\n\n\n\n\n\n\nflowchart TD\n    Q{\"What are you doing?\"} --&gt; T[\"Quick test: does it run?\"]\n    Q --&gt; D[\"Interactive development\"]\n    Q --&gt; N[\"Normal CPU job, under 3 days\"]\n    Q --&gt; Lng[\"Long simulation, 3-7 days\"]\n    Q --&gt; G[\"GPU work\"]\n    T --&gt; Tp[\"partition debug + qos debug\"]\n    D --&gt; Dp[\"partition mb + qos interactive\"]\n    N --&gt; Np[\"partition mb or mb,teton + qos normal/fast\"]\n    Lng --&gt; Lp[\"partition non-investor + qos long + checkpoint\"]\n    G --&gt; Gq{\"iterating or production?\"}\n    Gq --&gt;|\"dev\"| Gd[\"partition mb-a30\"]\n    Gq --&gt;|\"production\"| Gp[\"partition mb-h100 / mb-l40s\"]\n\n\n\n\nFigure 13.1: Where to send a job. Short work wants a fast start (debug/interactive/fast); long work wants a big, non-preemptible pool (non-investor + long) and checkpointing.\n\n\n\n\n\n\n13.3.1 Short proof-of-concept / debugging / “does it even run?”\nYou want to start now, run briefly, and iterate. Priority and low wait matter; walltime and footprint don’t.\n#SBATCH --partition=debug        # 4 dedicated test nodes, usually idle\n#SBATCH --qos=debug              # 1 h max, but starts almost instantly\n#SBATCH --time=00:30:00\n#SBATCH --cpus-per-task=2\n#SBATCH --mem=8G\n\nUse the debug partition + debug QOS for the fastest possible start on a tiny job (cap: 1 h, ≤2 nodes, ≤7 cores, ≤32 G).\nNeed a bit more than debug allows but still want to start fast? Use fast QOS on mb (12 h ceiling, priority 80) — median start of seconds.\nDeveloping interactively? interactive QOS starts in ~10–30 s (Chapter 17).\nFor GPU proof-of-concept, develop on mb-a30 (starts in minutes), not H100.\n\n\n\n13.3.2 Long production simulation / big ensemble / final runs\nYou need days of walltime and want to avoid preemption, accepting a longer initial wait in exchange for a long, stable run.\n#SBATCH --partition=non-investor   # big pool that won't be reclaimed\n#SBATCH --qos=long                 # up to 7 days\n#SBATCH --time=5-00:00:00\n#SBATCH --cpus-per-task=16\n#SBATCH --mem=32G\n\nUse long QOS for multi-day runs (7 d ceiling). normal (3 d) is the default and fine for sub-3-day jobs.\nSubmit to --partition=non-investor (CPU) or non-investor-gpu (GPU) so an investor can’t reclaim your node mid-run. Or list several CPU partitions (--partition=mb,teton,beartooth) to start on whichever frees first — at the cost of possible preemption on inv-* hardware.\nCheckpoint (Section 18.3) so a node failure, walltime overrun, or preemption doesn’t cost you the whole run.\nRight-size first (Chapter 11): a leaner request under long starts sooner than a bloated one.\n\n\n\n13.3.3 The quick decision table\n\n\n\n\n\n\n\n\n\nYour situation\nPartition\nQOS\nWhy\n\n\n\n\n“Does my script run at all?”\ndebug\ndebug\nnear-instant start, 1 h cap\n\n\nFast CPU test, up to 12 h\nmb\nfast\npriority 80, full core cap, seconds to start\n\n\nInteractive development\nmb\ninteractive\n~10–30 s start, live shell\n\n\nNormal CPU job, &lt; 3 days\nmb (or mb,teton)\nnormal\ndefault; ~20 s median start\n\n\nLong CPU simulation, 3–7 days\nnon-investor\nlong\nbig non-preemptible pool\n\n\nGPU proof-of-concept\nmb-a30\nnormal\nGPUs you can usually get in minutes\n\n\nGPU production / big training\nmb-h100 / mb-l40s\nnormal/long\nmost power; expect an hours-long wait",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Queue times: which partition for what</span>"
     ]
   },
@@ -805,7 +736,6 @@
     "section": "13.4 Check the live queue before you commit",
     "text": "13.4 Check the live queue before you commit\nHistorical medians are a guide; the live machine is what matters. Before a big submission:\nshowpartitions               # idle vs busy nodes, per partition, right now\nsinfo -p mb-h100 -o \"%P %t %D\"   # how many H100 nodes are idle this second?\ngpuavail                     # ARCC helper: free GPUs by type\nsqueue -p mb-l40s            # how deep is the line for this partition?\nshowuserlimits               # what am I allowed to ask for?\nIf showpartitions shows idle H100 nodes, submit now. If the GPU partitions are full and the line is long, either develop on mb-a30 or submit and walk away.\nOnce a job is queued, showjobreasons &lt;jobid&gt; explains why it’s still pending (Chapter 15) — usually Priority (wait) or Resources (large request).\nChapter 14 explains why QOS dominates your position in that line.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Queue times: which partition for what</span>"
     ]
   },
@@ -816,7 +746,6 @@
     "section": "",
     "text": "14.1 The formula\nSlurm computes a priority score for every pending job and runs the highest scores first (subject to backfill, below). The score is a weighted sum; MedicineBow’s weights are:\nEach factor is a number between 0 and 1, multiplied by its weight, and summed. The biggest lever, by a wide margin, is QOS.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -827,7 +756,6 @@
     "section": "",
     "text": "PriorityWeightQOS       = 200     &lt;- dominant\nPriorityWeightFairShare = 100\nPriorityWeightJobSize   = 100\nPriorityWeightAge       = 10\nPriorityWeightPartition = 0       (partition doesn't affect priority here)",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -838,7 +766,6 @@
     "section": "14.2 What each factor means",
     "text": "14.2 What each factor means\nQOS (weight 200). Higher-priority QOS means a better position. From Chapter 12: interactive (90) &gt; fast (80) &gt; normal (70) &gt; long (60). Choosing fast over long is worth more priority than any amount of waiting, which is why the short-vs-long decision in Chapter 13 matters.\nFair-share (weight 100) — recent usage. Slurm tracks how much your account has used lately relative to its share. Heavy use this week lowers your fair-share factor, and thus your priority, for a while; it recovers as usage decays (half-life ~7 days here). This mechanism stops any one group from monopolizing the machine and rewards steady use over bursts.\nJob size (weight 100). A factor based on the resources requested. With the SMALL_RELATIVE_TO_TIME flag this cluster sets, it interacts with your time request — another reason not to over-ask (Chapter 11).\nAge (weight 10) — time spent waiting. A job gains priority the longer it sits, maxing out after ~3 days. At weight 10, age is a tie-breaker, not a strategy; you won’t age past someone who chose a better QOS.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -849,7 +776,6 @@
     "section": "14.3 Practical takeaway",
     "text": "14.3 Practical takeaway\n\n\n\n\n\n\nQOS dominates priority\n\n\n\nBecause QOS is weighted 2× fair-share and 20× age, the highest-leverage choice for start time is the most appropriate high-priority QOS your job fits — the shortest walltime tier that still lets it finish (Chapter 13). Waiting longer, resubmitting, or submitting at 3am have little effect by comparison.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -860,7 +786,6 @@
     "section": "14.4 Backfill: why a small job can jump the line",
     "text": "14.4 Backfill: why a small job can jump the line\nPriority sets the order, but Slurm also backfills: if the top job is waiting for, say, 40 nodes to free up, Slurm slots a smaller, shorter job into the gap now, as long as that doesn’t delay the top job’s reserved start time. This is why a 20-minute test can start immediately even when the queue looks deep, and why short jobs start sooner than long ones. Requesting less time and fewer resources makes your job backfill-eligible in more gaps — another payoff for right-sizing.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -871,7 +796,6 @@
     "section": "14.5 Seeing your own priority",
     "text": "14.5 Seeing your own priority\nsprio -j &lt;jobid&gt;            # the priority breakdown for a pending job\nsprio -l                    # all pending jobs, with factor columns\nshowjobreasons &lt;jobid&gt;      # ARCC helper: plain-language \"why am I waiting?\"\nIf sprio shows a low QOS factor because you’re on long but the job would finish in 10 hours, resubmitting under fast is the most effective change you can make.\nNext: watching jobs run and diagnosing them when they don’t (Chapter 15).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>How priority is computed</span>"
     ]
   },
@@ -882,7 +806,6 @@
     "section": "",
     "text": "15.1 While it’s queued or running\nThe state column: PD pending, R running, CG completing. For pending jobs, the reason in parentheses is what matters:\nARCC’s helper turns this into a sentence:\nFollow a running job’s output live:\nThe states a job moves through, and how it can end:\nstateDiagram-v2\n    [*] --&gt; PENDING: sbatch\n    PENDING --&gt; RUNNING: your turn\n    RUNNING --&gt; COMPLETED: exits 0\n    RUNNING --&gt; FAILED: exits non-zero\n    RUNNING --&gt; TIMEOUT: hits time limit\n    RUNNING --&gt; OUT_OF_MEMORY: exceeds memory\n    RUNNING --&gt; PENDING: preempted / requeued\n    COMPLETED --&gt; [*]\n    FAILED --&gt; [*]\n    TIMEOUT --&gt; [*]\n    OUT_OF_MEMORY --&gt; [*]\n\n\n\n\nFigure 15.1: A job waits (PENDING), runs, then reaches one terminal state. TIMEOUT and OUT_OF_MEMORY mean you under-requested; preemption sends the job back to PENDING.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -893,7 +816,6 @@
     "section": "",
     "text": "squeue --me                       # all my jobs, with state and reason\nsqueue --me -t PENDING            # just the ones still waiting\nsqueue -j 123456                  # one specific job\n\n\n\n\n\n\n\n\n\nReason\nMeaning\nWhat to do\n\n\n\n\nPriority\nbusy machine, you’re in line\nwait — or pick a better QOS (Chapter 14)\n\n\nResources\nyour request is large; waiting for it to free\nconsider right-sizing (Chapter 11)\n\n\nQOSMaxWallDurationPerJobLimit\n--time exceeds the QOS ceiling\nlower --time or change QOS\n\n\nAssocGrpCpuLimit\nyour account’s core cap is maxed\nwait for your other jobs to finish\n\n\nReqNodeNotAvail\nrequested node is down/reserved\ndrop over-specific constraints\n\n\nDependency\nwaiting on another job\nexpected, if you set --dependency\n\n\n\n\nshowjobreasons 123456       # \"why isn't this running?\" in plain language\n\ntail -f slurm-123456.out",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -904,7 +826,6 @@
     "section": "15.2 After it finishes: did it work, and was it sized right?",
     "text": "15.2 After it finishes: did it work, and was it sized right?\nsacct -j 123456 --format=JobID,State,Elapsed,MaxRSS,ReqMem,TotalCPU,ExitCode\nKey columns: State (COMPLETED, FAILED, TIMEOUT, OUT_OF_MEMORY, CANCELLED), Elapsed (wall time used vs. your --time), MaxRSS (peak memory actually used vs. your --mem), and ExitCode.\nseff is a friendlier summary:\nseff 123456\nIt prints CPU and memory efficiency as percentages. Low numbers mean you over-asked — reduce the request next time to start sooner (Chapter 11).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -915,7 +836,6 @@
     "section": "15.3 ARCC’s own helpers",
     "text": "15.3 ARCC’s own helpers\nThese live on your PATH by default and each replaces several squeue/scontrol commands:\nshowuserjobs                # everything you (and optionally others) have queued/running\nshowjob 123456              # a rich, readable view of one job\nshownode mbcpu-001          # what's running on a given node, and how loaded it is\nshowuserlimits              # what am I actually allowed to request?\nshowq / joblist             # cluster-wide queue overviews\npestat                      # per-node CPU/memory load across the cluster\n\n\n\n\n\n\narccq does not exist\n\n\n\nSome docs mention an arccq command as an alternative to squeue. It isn’t installed on MedicineBow — use squeue, showuserjobs, or joblist instead.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -926,7 +846,6 @@
     "section": "15.4 Cancelling",
     "text": "15.4 Cancelling\nscancel 123456              # cancel one job\nscancel --me                # cancel ALL my jobs (careful)\nscancel --me --state=PENDING   # cancel only my still-waiting jobs\nscancel 123456_7            # cancel one element of a job array (@sec-arrays)",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -937,7 +856,6 @@
     "section": "15.5 A monitoring routine",
     "text": "15.5 A monitoring routine\nFor a job you care about:\n\nsbatch submit.sh → note the job ID.\nsqueue --me → is it PD or R? If PD for a while, showjobreasons &lt;id&gt;.\nRunning → tail -f slurm-&lt;id&gt;.out.\nDone → seff &lt;id&gt; to right-size the next one.\n\nNext: job arrays.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Watching a job</span>"
     ]
   },
@@ -948,7 +866,6 @@
     "section": "",
     "text": "16.1 The problem it solves\nYou have 500 parameter combinations to sweep, or 500 raster tiles / watersheds / weather-days to process. A bash loop runs them serially in one job, so one crash near the end wastes everything. Copy-pasting 500 submit scripts is no better. An array job is one script, submitted once, that Slurm turns into 500 independent tasks it can run in parallel and backfill wherever there’s room.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Job arrays</span>"
     ]
   },
@@ -959,7 +876,6 @@
     "section": "16.2 The mechanics",
     "text": "16.2 The mechanics\nAdd --array and use $SLURM_ARRAY_TASK_ID to pick which piece of work this task does:\n#!/bin/bash\n#SBATCH --account=cowy-firesurro\n#SBATCH --job-name=sweep\n#SBATCH --array=1-500                 # 500 tasks, indices 1..500\n#SBATCH --qos=fast                    # short independent tasks → high-priority QOS\n#SBATCH --time=00:30:00               # per task\n#SBATCH --cpus-per-task=2\n#SBATCH --mem=8G\n#SBATCH --output=logs/sweep-%A_%a.out # %A = array job id, %a = task index\n\nmodule purge\nmodule load gcc/14.2.0 python/3.12.0\n\n# Use the task index to select this task's work:\npython run_case.py --case-id ${SLURM_ARRAY_TASK_ID}\nSubmit once:\nmkdir -p logs\nsbatch submit_array.sh        # creates 500 tasks: 12345_1, 12345_2, ... 12345_500\nEach task is scheduled independently. Because they’re small and short, they backfill well (Chapter 14) and the whole sweep finishes faster than running them in series.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Job arrays</span>"
     ]
   },
@@ -970,7 +886,6 @@
     "section": "16.3 Driving work from the index",
     "text": "16.3 Driving work from the index\nThe index is just a number; you map it to real work. Common patterns:\nLine N of a parameter file:\nPARAM=$(sed -n \"${SLURM_ARRAY_TASK_ID}p\" params.txt)\npython run.py $PARAM\nThe Nth input file:\nFILES=(/project/cowy-firesurro/data/tiles/*.tif)\nTHIS=${FILES[$SLURM_ARRAY_TASK_ID]}      # note: arrays are 0-indexed in bash\npython process.py \"$THIS\"\n(If you index files from a bash array, start --array=0; if you use sed -n Np, start --array=1. Off-by-one here is the classic array bug.)",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Job arrays</span>"
     ]
   },
@@ -981,7 +896,6 @@
     "section": "16.4 Throttling",
     "text": "16.4 Throttling\nCap how many tasks run simultaneously with %:\n#SBATCH --array=1-500%20        # at most 20 tasks running at a time\nThis keeps you under your account’s core cap (and protects your fair-share, Chapter 14) while still processing all 500. A modest % limit is often faster overall, because you stop competing with yourself and stay backfill-friendly.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Job arrays</span>"
     ]
   },
@@ -992,7 +906,6 @@
     "section": "16.5 Managing an array",
     "text": "16.5 Managing an array\nsqueue --me                     # shows pending tasks collapsed, e.g. 12345_[6-500]\nscancel 12345                   # cancel the whole array\nscancel 12345_7                 # cancel just task 7\nsacct -j 12345                  # per-task outcomes after the fact\nTo find which tasks failed (so you can rerun only those):\nsacct -j 12345 --format=JobID,State,ExitCode -n | grep -v COMPLETED\nthen resubmit just those indices: sbatch --array=17,43,88 submit_array.sh.\n\n\n\n\n\n\nArrays vs. MPI jobs\n\n\n\nAn array is for independent tasks that don’t communicate: sweeps, ensembles, per-file pipelines. If your tasks must talk to each other — a single domain-decomposed simulation — use an MPI job instead (Chapter 20).\n\n\nArrays are also the natural unit for ensembles — fire-weather members, hydrologic scenarios, Monte-Carlo draws — one array task per member, each writing to its own output, collected afterward.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>Job arrays</span>"
     ]
   },
@@ -1003,7 +916,6 @@
     "section": "",
     "text": "17.1 Interactive sessions with salloc\nFor hands-on work — debugging a crash, exploring a dataset, building a model interactively — request an interactive allocation:\nsalloc requires at least --account and --time. It grants a shell on a compute node, where you can run heavy work off the login node. The interactive QOS starts in ~10–30 seconds (Chapter 13) with an 8-hour ceiling.\nWhen you’re done, exit the shell to release the allocation and free the cores for others.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Interactive sessions and GPU jobs</span>"
     ]
   },
@@ -1014,7 +926,6 @@
     "section": "",
     "text": "salloc --account=cowy-firesurro --qos=interactive \\\n       --time=02:00:00 --cpus-per-task=4 --mem=16G\n\n\n\n\n\n\n\nLaunch salloc from inside tmux\n\n\n\nAn interactive session lives in your shell. If your laptop sleeps or WiFi drops, the shell dies and the session ends. Start tmux on the login node first, then salloc inside it (Section 4.6). You can then detach, close the laptop, and reattach later with the session intact, as long as it’s within your --time.\n\n\n\n\n17.1.1 Interactive apps in the portal\nThe web portal (Chapter 3) offers graphical interactive apps — a full XFCE desktop, RStudio, and Jupyter — that launch as scheduled jobs behind the scenes. These handle interactive and GPU notebook work without manual salloc and port-forwarding.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Interactive sessions and GPU jobs</span>"
     ]
   },
@@ -1025,7 +936,6 @@
     "section": "17.2 GPU jobs",
     "text": "17.2 GPU jobs\nRequest GPUs with --gres=gpu:&lt;count&gt; and target a GPU partition:\n#!/bin/bash\n#SBATCH --account=cowy-firesurro\n#SBATCH --partition=mb-l40s          # or mb-h100, mb-a30, ...\n#SBATCH --qos=normal\n#SBATCH --gres=gpu:1                 # one GPU on the node\n#SBATCH --cpus-per-task=8            # CPUs to feed the GPU\n#SBATCH --mem=64G\n#SBATCH --time=08:00:00\n\nmodule purge\nmodule load gcc/13.2.0 cuda-toolkit/12.6.1   # CUDA needs gcc 13.2, see below\nnvidia-smi                                    # confirm the GPU is visible\npython train.py\nTo request a specific GPU type you can also use the typed form, e.g. --gres=gpu:h100:2 for two H100s on one node.\n\n17.2.1 Choosing a GPU partition\n\n\n\n\n\n\n\n\n\nGPU partition\nGPUs\nTypical wait\nUse for\n\n\n\n\nmb-a30\n8× A30\nminutes\ndevelopment, proof-of-concept, debugging\n\n\nmb-a6000 / mb-r6000\n4× each\nshort–moderate\nGPU dev, mid-size jobs\n\n\nmb-l40s\n8× L40S\n~1 h+\ninference, mid-size training\n\n\nmb-h100\n8× H100\nseconds–hours\nlarge training / production only\n\n\n\n\n\n\n\n\n\nDevelop on A30s, not H100s\n\n\n\nH100 nodes are the most contended resource on the machine — waits of several hours are normal when they’re busy (Chapter 13). Do fast-iteration development on A30s, usually available in minutes, and submit to mb-h100 only for a real training run that needs it. Check gpuavail and showpartitions before choosing.\n\n\n\n\n\n\n\n\nGPU compiler requirement\n\n\n\ncuda-toolkit is built only against gcc/13.2.0, even though gcc/13.2.0 prints a deprecation warning pointing to gcc/14.2.0. For GPU/CUDA work, load gcc/13.2.0 and ignore the warning (Chapter 7). Inside containers, add --nv to expose the GPU (Chapter 8).\n\n\n\n\n17.2.2 Checking GPU availability and usage\ngpuavail                    # ARCC helper: free GPUs by type, right now\nslurm_gpustat               # cluster-wide GPU utilization\nsinfo -p mb-h100 -o \"%P %t %G %D\"   # H100 node states this second\nnvidia-smi                  # inside a GPU job: is my code actually using the GPU?\nnvtop                       # inside a GPU job: live GPU usage, like htop for GPUs\nIf nvidia-smi shows 0% utilization while your job runs, your code isn’t actually on the GPU. Verify early.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Interactive sessions and GPU jobs</span>"
     ]
   },
@@ -1036,7 +946,6 @@
     "section": "",
     "text": "18.1 The condo model\nMuch of MedicineBow’s hardware was purchased by individual research groups. Those inv-* partitions belong to their investors, who get top priority (QOS 110) on them. Everyone else’s jobs can backfill onto idle investor nodes — free capacity most of the time, with one condition.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Preemption, the condo model, and checkpointing</span>"
     ]
   },
@@ -1047,7 +956,6 @@
     "section": "",
     "text": "An investor can reclaim a node and requeue your job\n\n\n\nIf you land on investor hardware and the owner submits work, your job is preempted — Slurm kills it and, by default here, requeues it: it returns to the pending queue and starts over from the beginning when resources free up. Any progress not written to disk is lost. This can happen minutes into a job or days in.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Preemption, the condo model, and checkpointing</span>"
     ]
   },
@@ -1058,7 +966,6 @@
     "section": "18.2 Two ways to protect a long run",
     "text": "18.2 Two ways to protect a long run\n1. Run where you can’t be preempted. Submit long production jobs to the non-preemptible pool:\n#SBATCH --partition=non-investor        # 110 CPU nodes, not reclaimable\n# or non-investor-gpu for GPU work\nThis is the right home for anything long that you haven’t checkpointed. (The --constraint=non-investor some docs mention does not work — it’s a partition, not a constraint. See Chapter 12.)\n2. Checkpoint, so preemption is cheap. If you run on borrowable hardware (or list several partitions for faster starts), save state periodically so a requeue is survivable.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Preemption, the condo model, and checkpointing</span>"
     ]
   },
@@ -1069,7 +976,6 @@
     "section": "18.3 Checkpointing",
     "text": "18.3 Checkpointing\nA checkpoint is a periodic save of enough state to resume rather than restart. It protects against preemption, node failures, and hitting your walltime limit. Any job measured in days should checkpoint.\nThe pattern:\n\nEvery so often (every N iterations, or every ~30–60 min of wall time), write current state to a checkpoint file in /gscratch or /project — not /lscratch, which is wiped when the job ends (Chapter 5).\nOn startup, check for a checkpoint and resume from it if present, otherwise start fresh.\nWrite checkpoints atomically (write to a temp file, then rename) so a crash mid-write can’t corrupt your only checkpoint. Keep the last one or two.\n\nMany scientific codes have this built in — WRF has restart files, PyTorch has torch.save/load for model+optimizer state, PETSc and Sundials have checkpoint hooks. Turn these on and set the interval to your risk tolerance.\nAuto-resubmit on requeue. Combine checkpointing with a self-resubmitting job so a preempted or timed-out job resumes automatically:\n#SBATCH --requeue                          # allow this job to be requeued\n#SBATCH --open-mode=append                 # don't clobber the log on requeue\n#SBATCH --signal=B:USR1@120                # send USR1 120s before the walltime kill\n\n# resume from checkpoint if one exists\nif [ -f state.ckpt ]; then\n    ./simulate --restart state.ckpt\nelse\n    ./simulate --fresh\nfi\nThe --signal line asks Slurm to warn your script 120 seconds before the walltime kill; trap that signal to flush a final checkpoint.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Preemption, the condo model, and checkpointing</span>"
     ]
   },
@@ -1080,7 +986,6 @@
     "section": "18.4 Requeue behavior worth knowing",
     "text": "18.4 Requeue behavior worth knowing\n\nA requeued job keeps its job ID but starts its command from the beginning — Slurm doesn’t magically resume your program; your checkpoint does.\n--open-mode=append stops the requeued run from overwriting the previous log.\nCheck whether a job was requeued with sacct -j &lt;id&gt; --format=JobID,State,Start,End — you’ll see multiple rows.\n\n\n\n\n\n\n\nCheckpoint jobs that run longer than a few hours\n\n\n\nShort jobs (minutes to an hour or two) can just be rerun if something goes wrong. Any multi-hour or multi-day job should checkpoint, and any long production run should also prefer non-investor. A non-preemptible partition plus checkpoints is what lets big simulations finish reliably on a shared machine.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Preemption, the condo model, and checkpointing</span>"
     ]
   },
@@ -1091,7 +996,6 @@
     "section": "",
     "text": "19.1 Step one: what state did it end in?\nThe State column is your first clue:",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1102,7 +1006,6 @@
     "section": "",
     "text": "sacct -j 123456 --format=JobID,State,ExitCode,Elapsed,MaxRSS,ReqMem,DerivedExitCode\n\n\n\n\n\n\n\n\n\nState\nMeaning\nUsual fix\n\n\n\n\nCOMPLETED\nexit code 0\nnone (but check the output is correct)\n\n\nOUT_OF_MEMORY\nkilled by the OOM killer\nraise --mem (see below)\n\n\nTIMEOUT\nhit the --time limit\nraise --time, or checkpoint (Section 18.3)\n\n\nFAILED\nyour program exited non-zero\nread the .out/.err file — it’s your bug\n\n\nNODE_FAIL\nthe hardware died\nresubmit; checkpoint so it’s cheap\n\n\nPREEMPTED / REQUEUED\ninvestor reclaimed the node\nChapter 18\n\n\nCANCELLED\nsomeone ran scancel (maybe you)\n—",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1113,7 +1016,6 @@
     "section": "19.2 Out of memory",
     "text": "19.2 Out of memory\nA job that exceeds its memory reservation is killed by the Linux OOM killer — you’ll see OUT_OF_MEMORY in sacct, and often a truncated or empty output file.\nsacct -j 123456 --format=JobID,State,MaxRSS,ReqMem\n# MaxRSS is peak memory actually used; compare to ReqMem\nIf MaxRSS is near or above ReqMem, raise --mem and resubmit. Then use seff (Chapter 15) on the successful run to right-size going forward. Note the 10 GB/core default on mb (Chapter 11) — sometimes you already had enough memory and something else was wrong.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1124,7 +1026,6 @@
     "section": "19.3 Timeout",
     "text": "19.3 Timeout\nTIMEOUT means your job was still running when the clock ran out and Slurm killed it. Options, in order of preference:\n\nCheckpoint so the next run resumes instead of restarting (Section 18.3). This is the durable fix for genuinely long work.\nRaise --time — but staying under your QOS ceiling (normal = 3 d, long = 7 d), and knowing a longer request may wait longer to start (Chapter 13).\nMake the job finish faster — more cores if it scales, or a smaller problem per job (an array, Chapter 16).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1135,7 +1036,6 @@
     "section": "19.4 Your program crashed (FAILED)",
     "text": "19.4 Your program crashed (FAILED)\nFAILED with a non-zero exit code is usually your code, not the cluster. Read the output:\ncat slurm-123456.out          # stdout+stderr (or separate --error file)\nCommon cluster-specific culprits:\n\nModule not loaded in the script. Interactive worked, batch didn’t — because you loaded modules on the login node but not inside the submit script. Put module load in the script (Chapter 10).\nWrong paths. A relative path that existed where you ran sbatch but not where the job ran. Use absolute paths or $SLURM_SUBMIT_DIR.\nconda env not activated in the script (Chapter 8).\nWrote to /lscratch and it vanished — that’s node-local and wiped at job end (Chapter 5).",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1146,7 +1046,6 @@
     "section": "19.5 Node failure and preemption",
     "text": "19.5 Node failure and preemption\nNODE_FAIL (hardware died) and PREEMPTED/REQUEUED (investor reclaimed the node, Chapter 18) are not your bug. The response is the same: checkpoint so a restart is cheap, run long jobs on non-investor, and add --requeue so they come back automatically. If node failures recur on the same node, report it to arcc-help@uwyo.edu with the job ID.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1157,7 +1056,6 @@
     "section": "19.6 A debugging loop",
     "text": "19.6 A debugging loop\n\nsacct -j &lt;id&gt; ... → get the State, narrowing it to one of the four families above.\nResource-related (OOM/timeout) → adjust --mem/--time, resubmit.\nFAILED → read slurm-&lt;id&gt;.out, fix the code/env, and reproduce it fast in a debug-QOS job (near-instant start, Chapter 13) rather than waiting in a long queue each iteration.\nOnce it works, seff &lt;id&gt; → right-size → promote to the real partition/QOS.\n\nUse the debug partition as your fast edit-run-debug loop, and graduate to big queues only once the job is known-good.",
     "crumbs": [
-      "Part V — Slurm",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>When jobs fail</span>"
     ]
   },
@@ -1168,7 +1066,6 @@
     "section": "",
     "text": "20.1 Climb only as high as you need\nMPI and GPUs sound like “real HPC,” but the right answer is usually lower on the ladder and simpler. Match the rung to the shape of your problem.\nflowchart LR\n    A[\"Serial&lt;br/&gt;1 core\"] --&gt; B[\"Job array&lt;br/&gt;many independent runs\"]\n    B --&gt; C[\"Multicore&lt;br/&gt;threads, 1 node\"]\n    C --&gt; D[\"MPI&lt;br/&gt;1 program, many nodes\"]\n    D --&gt; E[\"GPU&lt;br/&gt;ML / PINNs\"]\n    style B stroke-width:3px,stroke:#4a2c82\n\n\n\n\nFigure 20.1: The parallelism ladder. Climb only as high as the problem needs; most work is solved at the job-array rung (highlighted).",
     "crumbs": [
-      "Part VI — Working well",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>The parallelism ladder</span>"
     ]
   },
@@ -1179,7 +1076,6 @@
     "section": "",
     "text": "20.1.1 Rung 1 — Serial\nOne core, one task. Fine for small jobs, and the right baseline: get it correct on one core first. If a serial job is fast enough, you’re done — don’t parallelize unnecessarily.\n#SBATCH --ntasks=1\n#SBATCH --cpus-per-task=1\n\n\n20.1.2 Rung 2 — Job array (many independent serial runs)\nIf you need to run the same thing many times over different inputs — a parameter sweep, an ensemble, per-file processing — this is almost always the answer. Low complexity, and it backfills well (Chapter 16).\n#SBATCH --array=1-500%20\npython run.py --id ${SLURM_ARRAY_TASK_ID}\n\n\n20.1.3 Rung 3 — Multicore (one program, many threads, one node)\nIf a single run is too slow and your code is multithreaded (OpenMP, or numpy/xarray/PyTorch using many cores), give it more cores on one node:\n#SBATCH --nodes=1\n#SBATCH --cpus-per-task=16\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\n./my_threaded_program\nOnly ask for as many cores as your code actually scales to — check with seff afterward (Chapter 11). Doubling cores rarely doubles speed.\n\n\n20.1.4 Rung 4 — MPI (one program across many nodes)\nWhen a single problem is too big for one node — a domain-decomposed simulation like WRF, where pieces must exchange data every step — you need MPI: one program, many processes across many nodes, communicating.\n#SBATCH --nodes=4\n#SBATCH --ntasks=384                 # e.g. 96 tasks/node × 4 nodes\n#SBATCH --cpus-per-task=1\n\nmodule purge\nmodule load gcc/14.2.0 openmpi/5.0.10\nsrun ./my_mpi_simulation             # srun launches the MPI ranks\nUse srun (not mpirun) to launch — it’s integrated with Slurm and gets the task layout right automatically. MPI is a step up in complexity; use it only when a problem won’t fit on one node. For long MPI runs, prefer non-investor and checkpoint (Chapter 18).\n\n\n20.1.5 Rung 5 — GPU\nFor workloads built for GPUs — deep learning, PINNs, some CFD/linear algebra — a GPU can beat dozens of CPU cores, but only if your code actually targets the GPU (Section 17.2); a CPU program gains nothing from a GPU node except a longer queue. Develop on mb-a30, scale up to mb-h100 for real training (Chapter 13).\n#SBATCH --partition=mb-a30\n#SBATCH --gres=gpu:1\nmodule load gcc/13.2.0 cuda-toolkit/12.6.1\npython train.py",
     "crumbs": [
-      "Part VI — Working well",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>The parallelism ladder</span>"
     ]
   },
@@ -1190,7 +1086,6 @@
     "section": "20.2 Choosing a rung",
     "text": "20.2 Choosing a rung\n\n\n\n\n\n\n\nYour situation\nRung\n\n\n\n\nIt’s already fast enough\nSerial\n\n\n“Run this many times over different inputs”\nJob array (start here)\n\n\nOne run is slow; code uses threads\nMulticore\n\n\nOne problem too big for a single node; parts must communicate\nMPI\n\n\nCode is written for GPUs (ML/PINN)\nGPU\n\n\n\nYou can combine rungs — e.g. an array of multicore jobs (a sweep where each run uses 8 cores), which covers a large fraction of real research computing. Start as low as you can; climb only when you need to.",
     "crumbs": [
-      "Part VI — Working well",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>The parallelism ladder</span>"
     ]
   },
@@ -1201,7 +1096,6 @@
     "section": "",
     "text": "21.1 Connect\nEverything you’ll reach for, on one page.",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1212,7 +1106,6 @@
     "section": "",
     "text": "ssh &lt;username&gt;@medicinebow.arcc.uwyo.edu     # after SSH Key Manager setup\n# Portal: https://medicinebow.arcc.uwyo.edu   (Open OnDemand)\n# Keys expire yearly → regenerate in the portal's SSH Key Manager",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1223,7 +1116,6 @@
     "section": "21.2 Storage (nothing is backed up)",
     "text": "21.2 Storage (nothing is backed up)\narccquota                  # usage vs. limits for home / scratch / project\ndu -sh * | sort -h         # what's eating my quota here?\n\n\n\n\n\n\n\n\nPath\nQuota\nNote\n\n\n\n\n/home/$USER\n50 GB\nsmall; config only\n\n\n/project/cowy-firesurro\n5 TB\nshared group data\n\n\n/gscratch/$USER ($SCRATCH)\n5 TB\nfast, purged after 90 days idle\n\n\n/project/&lt;proj&gt;/software\n+250 GB\nput conda/containers here\n\n\n/lscratch\nnode-local\nwiped at job end",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1234,7 +1126,6 @@
     "section": "21.3 Modules",
     "text": "21.3 Modules\nmodule spider &lt;name&gt;       # does it exist? what to load first? (use THIS, not avail)\nmodule load gcc/14.2.0 &lt;pkg&gt;\nmodule purge               # clean slate\nmodule save &lt;name&gt; / module restore &lt;name&gt;",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1245,7 +1136,6 @@
     "section": "21.4 Submit and manage jobs",
     "text": "21.4 Submit and manage jobs\nsbatch submit.sh           # submit batch job\nsalloc -A cowy-firesurro --qos=interactive -t 2:00:00 -c 4 --mem=16G   # interactive\nsqueue --me                # my jobs\nshowjobreasons &lt;id&gt;        # why is it waiting? (plain English)\nscancel &lt;id&gt;               # cancel (scancel --me = all mine)\nseff &lt;id&gt;                  # after the fact: was it sized right?\nsacct -j &lt;id&gt; --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1256,7 +1146,6 @@
     "section": "21.5 Minimal submit script",
     "text": "21.5 Minimal submit script\n#!/bin/bash\n#SBATCH --account=cowy-firesurro     # REQUIRED — project, not username\n#SBATCH --job-name=myjob\n#SBATCH --partition=mb               # default CPU pool\n#SBATCH --qos=fast                   # 12h, high priority\n#SBATCH --time=02:00:00\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G                    # ALWAYS set memory (mb default is 10G/core!)\n#SBATCH --output=slurm-%j.out\n\nmodule purge\nmodule load gcc/14.2.0 python/3.12.0\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\npython my_script.py",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1267,7 +1156,6 @@
     "section": "21.6 Choosing partition + QOS",
     "text": "21.6 Choosing partition + QOS\n\n\n\nGoal\n--partition\n--qos\n\n\n\n\n“Does it run?” (tiny test)\ndebug\ndebug (1 h, instant)\n\n\nFast CPU test (≤12 h)\nmb\nfast\n\n\nInteractive dev\nmb\ninteractive\n\n\nNormal CPU job (&lt;3 d)\nmb or mb,teton\nnormal\n\n\nLong CPU sim (3–7 d)\nnon-investor\nlong\n\n\nGPU dev / proof-of-concept\nmb-a30\nnormal\n\n\nGPU production run\nmb-h100 / mb-l40s\nnormal/long\n\n\n\nQOS ceilings & priority: interactive 8h/p90 · fast 12h/p80 · normal 3d/p70 · long 7d/p60 · debug 1h/p0. Priority is dominated by QOS (weight 200 vs age 10) — pick the shortest tier your job fits.",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1278,7 +1166,6 @@
     "section": "21.7 GPUs",
     "text": "21.7 GPUs\n#SBATCH --partition=mb-l40s\n#SBATCH --gres=gpu:1                 # or gpu:h100:2 for a specific type/count\nmodule load gcc/13.2.0 cuda-toolkit/12.6.1   # CUDA needs gcc 13.2 (deprecated but required)\ngpuavail                             # free GPUs by type, right now\nnvidia-smi / nvtop                   # is my code actually using the GPU?",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1289,7 +1176,6 @@
     "section": "21.8 Job arrays",
     "text": "21.8 Job arrays\n#SBATCH --array=1-500%20             # 500 tasks, ≤20 at once (max array size 10000)\n#SBATCH --output=logs/%A_%a.out\npython run.py --id ${SLURM_ARRAY_TASK_ID}",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1300,7 +1186,6 @@
     "section": "21.9 Check the live queue before a big submit",
     "text": "21.9 Check the live queue before a big submit\nshowpartitions             # idle vs busy nodes per partition\ngpuavail                   # free GPUs now\nsinfo -p mb-h100 -o \"%P %t %D\"\nshowuserlimits             # what am I allowed to ask for?",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1311,7 +1196,6 @@
     "section": "21.10 Common mistakes to avoid",
     "text": "21.10 Common mistakes to avoid\n\n--account=&lt;project&gt; is required on every job.\nOn mb, no --mem → 10 GB per core silently. Always set --mem.\nNothing is backed up. Keep a copy off-cluster.\nInstall software in /project/&lt;proj&gt;/software, not /home (50 GB).\nmodule spider, not module avail.\nLong jobs → non-investor partition and checkpoint (investors preempt).\nNever compute on the login node. Use sbatch/salloc.\nUse tmux so a dropped connection doesn’t kill interactive work.",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>Cheat sheet</span>"
     ]
   },
@@ -1322,7 +1206,6 @@
     "section": "",
     "text": "22.1 Login and access\nA symptom-first index to the rest of the book.\n“Permission denied (publickey)” when I ssh — it worked before. Your SSH key almost certainly expired (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into ~/.ssh, chmod 0600 -R ~/.ssh (Chapter 3).\n“Permission denied” on a brand-new setup. Check permissions: chmod 0600 -R ~/.ssh, and make sure you unzipped the key into ~/.ssh. Confirm you’re using medicinebow.arcc.uwyo.edu, not the dead southpass name.\nI can’t get an account at all. Only a PI can request it, in writing, against a project. You cannot self-register (Chapter 2).\nGlobus won’t let me add the collection. If you’re an external collaborator on an ARCC-Only account, you can’t use Globus. You need a UW-side guest collection (Chapter 6).",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1333,7 +1216,6 @@
     "section": "22.2 Jobs won’t submit",
     "text": "22.2 Jobs won’t submit\nsbatch: error: ... You have to specify an account. Add --account=cowy-firesurro (Chapter 10).\nJob violates accounting/QOS policy (...) at submit time. Your request exceeds a QOS limit (every QOS is DenyOnLimit). Usually --time exceeds the QOS ceiling — e.g. 5 days under normal (max 3 d). Lower --time or switch QOS (Chapter 12). Check ceilings with sqos and showuserlimits.\nInvalid qos specification. Your account can’t use that QOS. Yours are debug, fast, interactive, long, normal (sacctmgr -n show assoc user=$USER format=qos).",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1344,7 +1226,6 @@
     "section": "22.3 Jobs won’t start",
     "text": "22.3 Jobs won’t start\nStuck in PENDING with reason Priority. The machine is just busy and you’re in line. Either wait, or pick a higher-priority (shorter) QOS — QOS dominates priority here (Chapter 14). Small/short jobs backfill sooner.\nStuck with reason Resources. You asked for a lot (many cores, much memory, a scarce GPU). Right-size (Chapter 11), or accept the wait. showjobreasons &lt;id&gt; explains in plain language.\nGPU job pending for hours. H100/L40S are heavily contended (Chapter 13). Develop on mb-a30 instead, and check gpuavail/showpartitions for what’s actually free before submitting.\nPending with QOSMax... or AssocGrpCpuLimit. You (or your account) hit a cap — e.g. too many cores in flight at once. Wait for your other jobs to finish, or throttle an array with % (Chapter 16).",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1355,7 +1236,6 @@
     "section": "22.4 Jobs fail",
     "text": "22.4 Jobs fail\nOUT_OF_MEMORY. Raise --mem. Compare MaxRSS to ReqMem in sacct (Chapter 19). Watch the 10 GB/core default trap (Chapter 11).\nTIMEOUT. Job outran --time. Checkpoint (Section 18.3), raise --time within the QOS ceiling, or split the work into an array.\nFAILED, worked interactively but not in batch. You loaded modules / activated conda on the login node but not inside the submit script. Put them in the script (Chapter 10, Chapter 8).\nOutput file references files that “don’t exist.” Relative paths from the wrong directory, or you wrote to /lscratch (wiped at job end). Use absolute paths or $SLURM_SUBMIT_DIR; copy /lscratch output out before the job ends (Chapter 5).\nPREEMPTED / REQUEUED on a long job. You were on investor hardware and got reclaimed. Move to --partition=non-investor and checkpoint (Chapter 18).",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1366,7 +1246,6 @@
     "section": "22.5 Software",
     "text": "22.5 Software\n“That module doesn’t exist” but I’m sure it does. module avail only shows what’s reachable now. Use module spider &lt;name&gt; — you probably need to load a compiler first (Chapter 7).\nCUDA won’t build / link. Load gcc/13.2.0 (not 14) — cuda-toolkit is built against 13.2 despite its deprecation warning (Chapter 7).\nHome directory full, everything breaking. Conda in /home. Move envs to /project/&lt;proj&gt;/software via ~/.condarc, and clean up (Chapter 8). Check with du -sh ~/* | sort -h.\nGPU job runs but is slow / nvidia-smi shows 0%. Your code isn’t actually on the GPU. Verify the framework sees CUDA; in a container, you need --nv (Section 17.2).",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1377,7 +1256,6 @@
     "section": "22.6 Still stuck?",
     "text": "22.6 Still stuck?\nEmail arcc-help@uwyo.edu with your job ID, the submit script, and the error. Or bring it to office hours, Tuesdays 11am–1pm on Zoom. Include what you already tried — it gets you a faster answer.",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Troubleshooting</span>"
     ]
   },
@@ -1388,7 +1266,6 @@
     "section": "",
     "text": "Plain-language definitions of the terms this book uses.\n\nAccount (Slurm)\n\nThe project that a job is charged to (e.g. cowy-firesurro). Required on every job via --account. Not your username. See Chapter 10.\n\nARCC\n\nAdvanced Research Computing Center — the UW group that runs MedicineBow.\n\nASCEND / ARID\n\nThe NSF Regional Innovation Engine (ASCEND) and its wildfire-resilience program (ARID) that many readers of this book work under. See the preface.\n\nBackfill\n\nSlurm slotting a small, short job into a gap in the schedule without delaying higher-priority jobs. Why short jobs start fast. See Chapter 14.\n\nBatch job\n\nA job submitted as a script with sbatch that runs unattended when scheduled. The normal way to run work. See Chapter 10.\n\nCheckpoint\n\nA periodic save of a job’s state so it can resume instead of restart after a preemption, timeout, or crash. Essential for long jobs. See Section 18.3.\n\nCompute node\n\nA machine where computation actually runs, allocated to you by Slurm. Distinct from a login node. See Chapter 1.\n\nCondo model\n\nThe funding model where research groups buy nodes (inv-*) and others borrow them when idle, subject to reclaim/preemption. See Chapter 18.\n\nCore-hour\n\nOne CPU core used for one hour — the unit your allocation is measured in. Reserving 8 cores for 1 hour costs 8 core-hours whether or not you use them.\n\nDenyOnLimit\n\nA QOS flag meaning an over-limit request is rejected at submit time, not silently queued. See Chapter 12.\n\nFair-share\n\nA priority factor reflecting your account’s recent usage relative to its share; heavy recent use temporarily lowers your priority. See Chapter 14.\n\nGRES (Generic RESource)\n\nHow you request GPUs: --gres=gpu:1 or --gres=gpu:h100:2. See Section 17.2.\n\nInvestor / inv-*\n\nNodes/partitions owned by a specific group, who get top priority; others can be preempted off them. See Chapter 18.\n\nJob array\n\nOne script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles. Max 10,000 tasks. See Chapter 16.\n\nLmod / module\n\nThe system that loads specific software versions into your shell on demand. Hierarchical: many modules are hidden until you load a compiler. Use module spider. See Chapter 7.\n\nLogin node\n\nThe shared front-end machine (mblog1, mblog2) you land on when you connect. For editing and submitting — not for computing. See Chapter 1.\n\nMedicineBow\n\nUW/ARCC’s current flagship HPC cluster. The subject of this book.\n\nMPI\n\nMessage Passing Interface — the standard for a single parallel program spanning many cores or nodes that communicate. Launched with srun. Contrast with job arrays. See Chapter 20.\n\nOnDemand (Open OnDemand)\n\nThe web portal at medicinebow.arcc.uwyo.edu — file browser, terminal, and interactive apps. See Chapter 3.\n\nOOM (Out Of Memory)\n\nWhen a job exceeds its memory reservation and is killed. Fix by raising --mem. See Chapter 19.\n\nPartition\n\nA named pool of nodes with particular hardware (mb, mb-h100, teton, non-investor, …). Chosen with --partition. See Chapter 12.\n\nPreemption\n\nAn investor reclaiming a borrowed node, causing your job to be killed and (here) requeued. See Chapter 18.\n\nPriority\n\nThe score that orders pending jobs. On MedicineBow it’s dominated by QOS (weight 200). See Chapter 14.\n\nQOS (Quality of Service)\n\nThe service tier that sets your max walltime, resource cap, and priority (debug, fast, normal, long, …). See Chapter 12.\n\nRequeue\n\nPutting a killed (preempted/failed) job back in the pending queue to start over. Pair with checkpointing. See Chapter 18.\n\nScratch (/gscratch, $SCRATCH)\n\nFast, large, temporary storage purged after 90 days of inactivity. Not backed up. See Chapter 5.\n\nseff\n\nA command showing a finished job’s CPU and memory efficiency — use it to right-size. See Chapter 15.\n\nSlurm\n\nThe scheduler that manages all jobs on the cluster. See Chapter 9.\n\nSnapshot\n\nA point-in-time copy of a filesystem, on the same array as the live data. Protects against accidental deletion, not hardware loss. Not a backup. See Chapter 5.\n\nWalltime\n\nReal elapsed clock time a job is allowed (--time). The job is killed at the limit. See Chapter 11.",
     "crumbs": [
-      "Part VII — Reference",
       "<span class='chapter-number'>23</span>  <span class='chapter-title'>Glossary</span>"
     ]
   }
