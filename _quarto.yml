@@ -8,7 +8,7 @@ book:
   author: "Josh Day (Rallypoint One)"
   date: last-modified
   search: true
-  repo-url: https://github.com/RallypointOne/ARCC-how-to
+  repo-url: https://github.com/NSF-ASCEND-Engine/ARCC-how-to
   repo-actions: [edit, issue]
   sidebar:
     style: docked

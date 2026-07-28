@@ -3,7 +3,7 @@
 A [Quarto](https://quarto.org) book that onboards new researchers (ASCEND / ARID
 performers) to the University of Wyoming's **ARCC MedicineBow** HPC cluster.
 
-📖 **Published site:** https://rallypointone.github.io/ARCC-how-to/
+📖 **Published site:** https://nsf-ascend-engine.github.io/ARCC-how-to/
 
 ## What's inside
 
