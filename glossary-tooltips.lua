@@ -28,7 +28,7 @@ local ENTRIES = {
   {key="partition",   variants={"partitions","partition"},
    def="A named pool of nodes with particular hardware (mb, mb-h100, teton, ...), chosen with --partition."},
   {key="preemption",  variants={"preemption","preempted","preempt"},
-   def="An investor reclaiming a borrowed node, killing your job and (here) requeuing it."},
+   def="When an investor reclaims a node you'd borrowed while idle, Slurm stops your job; on MedicineBow it is then requeued (put back in the queue to start over)."},
   {key="qos",         variants={"QOS"},
    def="Quality of Service: the tier setting your max walltime, resource cap, and priority."},
   {key="requeue",     variants={"requeue","requeued"},

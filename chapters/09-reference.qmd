@@ -310,8 +310,9 @@ Plain-language definitions of the terms this book uses.
   Chosen with `--partition`. See @sec-partitions.
 
 **Preemption**
-: An investor reclaiming a borrowed node, causing your job to be killed and (here) requeued.
-  See @sec-preemption.
+: When an investor reclaims a node you had borrowed while it was idle, Slurm stops your
+  running job. On MedicineBow the stopped job is automatically requeued — put back in the
+  queue to start over — rather than simply cancelled. See @sec-preemption.
 
 **Priority**
 : The score that orders pending jobs. On MedicineBow it's dominated by QOS (weight 200). See
