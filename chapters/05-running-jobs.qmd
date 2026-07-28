@@ -1,0 +1,319 @@
+# Running jobs with Slurm
+
+
+The scheduler, the anatomy of a batch job, and how to ask for the right resources.
+
+
+## Why a scheduler exists {#sec-why-scheduler}
+
+::: {.tldr}
+Hundreds of people share a few hundred nodes. Slurm is the scheduler: you describe a job
+(cores, memory, time, node type), it puts the job in line and runs it when those resources
+are free. You interact with the cluster almost entirely through Slurm.
+:::
+
+### Why share a machine
+
+With 300 researchers, 300 nodes, and no scheduler, everyone logs into whatever node looks
+idle and starts running. Two jobs land on the same node and thrash its memory until both
+crash. A two-week run occupies the node you need for a five-minute test. Nobody can tell
+whether a node is free.
+
+Slurm replaces "grab a node and hope" with a contract:
+
+1. You **describe** the work: resources and a time limit.
+2. Slurm **reserves** exactly that, on nodes that can provide it, and **accounts** for it.
+3. Your job runs with those resources guaranteed and isolated from other jobs.
+4. When your time limit is up, the job ends, which keeps the line moving.
+
+### The two ways to run work
+
+**Batch jobs** (`sbatch`) are the normal mode: you write a script that lists the resources
+you need and the commands to run, submit it, and walk away. Slurm runs it when your turn
+comes and writes the output to a file. Use this for essentially all real computation.
+(@sec-anatomy)
+
+**Interactive jobs** (`salloc`) give you a live shell *on a compute node* for debugging,
+exploring data, or developing a script. You still go through the scheduler and consume your
+allocation, but you get a prompt instead of a script. (@sec-interactive)
+
+Both run on **compute nodes**, not the login node (@sec-cluster).
+
+### The three questions every job answers
+
+Whether batch or interactive, you tell Slurm three things:
+
+| Question | Directive | Covered in |
+|---|---|---|
+| **Who pays?** (which project) | `--account` | @sec-anatomy |
+| **How much, and how long?** | `--cpus-per-task`, `--mem`, `--time`, … | @sec-resources |
+| **What kind of node, and how urgent?** | `--partition`, `--qos` | @sec-partitions |
+
+Get these right and jobs run smoothly. Get them wrong and you wait a long time, get rejected
+at submit time, or watch the job die partway through. The sections that follow take them one
+at a time.
+
+### A first look at the tools
+
+You'll meet these properly later; here's the vocabulary:
+
+```bash
+sbatch submit.sh        # submit a batch job
+salloc ...              # get an interactive session
+squeue --me             # what are my jobs doing?
+scancel <jobid>         # cancel a job
+sacct -j <jobid>        # after the fact: what happened, and how much did it use?
+```
+
+ARCC also ships friendlier wrappers — `showjobreasons` ("why isn't my job running?"),
+`showuserlimits` ("what am I allowed to ask for?"), `showpartitions`, `sqos` — used in
+@sec-partitions and @sec-monitoring.
+
+
+## Anatomy of a batch job {#sec-anatomy}
+
+::: {.tldr}
+A batch job is a shell script with `#SBATCH` directives at the top. The required directive is
+`--account=<project>` — your project name, not your username. Submit with `sbatch`; Slurm
+writes output to `slurm-<jobid>.out`.
+:::
+
+### The smallest useful job
+
+Here is a complete, working submit script. Save it as `submit.sh`:
+
+```bash
+#!/bin/bash
+#SBATCH --account=cowy-firesurro     # WHO PAYS — the one you can't omit
+#SBATCH --job-name=hello
+#SBATCH --time=00:10:00              # 10 minutes; jobs are killed at the limit
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G                     # always set memory explicitly (see below)
+#SBATCH --output=slurm-%j.out        # %j is replaced by the job ID
+
+echo "Running on host: $(hostname)"
+echo "Job $SLURM_JOB_ID started at $(date)"
+
+module purge
+module load gcc/14.2.0 python/3.12.0
+
+python my_analysis.py
+
+echo "Finished at $(date)"
+```
+
+Submit it:
+
+```bash
+sbatch submit.sh
+# Submitted batch job 123456
+```
+
+Watch it and read the output:
+
+```bash
+squeue --me                 # is it pending / running?
+tail -f slurm-123456.out    # follow output as it's written
+```
+
+That's the loop: write script, `sbatch`, watch, read output.
+
+### The required directive: `--account`
+
+```bash
+#SBATCH --account=cowy-firesurro
+```
+
+::: {.callout-important}
+## `--account` is your *project*, not your username
+Every job on MedicineBow must specify an account, and it's the *project* name
+(`cowy-firesurro`), not your login name. Leave it out and the job is rejected immediately.
+This is the most common first error. Confirm your exact project name with your PI
+(@sec-account) and put it in every script, or set it once as a default:
+
+```bash
+# add to ~/.bashrc so you never forget it
+export SBATCH_ACCOUNT=cowy-firesurro
+```
+
+Even so, keep `--account` in the script itself. It documents intent and survives being run by
+a collaborator whose default differs.
+:::
+
+### Anatomy, directive by directive
+
+| Directive | What it does | Notes |
+|---|---|---|
+| `--account` | which project pays | **required** |
+| `--job-name` | label in the queue | makes `squeue` readable |
+| `--time` | wall-clock limit | job is **killed** at this limit — pad it a bit |
+| `--partition` | which hardware pool | default is `mb`; see @sec-partitions |
+| `--qos` | urgency/limits tier | default is `normal`; see @sec-partitions |
+| `--cpus-per-task` | CPU cores | see @sec-resources |
+| `--mem` | memory for the job | **always set this** — see below |
+| `--output` | where stdout/stderr go | `%j` = job ID, `%x` = job name |
+| `--mail-type`, `--mail-user` | email on events | `END,FAIL` is a sane choice |
+
+`#SBATCH` lines must come before any real commands; the first non-comment, non-`#SBATCH` line
+ends the directive block. After that, it's a bash script that runs on the compute node.
+
+### Set memory explicitly
+
+::: {.callout-warning}
+## The 10 GB-per-core default on `mb`
+On the default `mb` partition, if you don't set `--mem`, Slurm gives you 10 GB per CPU core
+(`DefMemPerCPU=10000`). So this request:
+
+```bash
+#SBATCH --cpus-per-task=8       # and no --mem line
+```
+
+asks for 80 GB of RAM, which is harder to schedule than the 8 GB you probably needed, so the
+job queues longer. Set `--mem` (whole-job) or `--mem-per-cpu` explicitly. Covered in depth in
+@sec-resources.
+:::
+
+### Making the environment reproducible
+
+A batch job starts in a mostly clean environment. Build the environment you need *inside the
+script* so it runs the same way every time, independent of what you had loaded at submit
+time:
+
+```bash
+module purge
+module restore geostack        # a saved module set (see @sec-modules)
+# or, for conda:
+module load miniconda3/24.3.0
+conda activate geo
+```
+
+### Useful variables inside a job
+
+Slurm sets environment variables your script can use:
+
+```bash
+$SLURM_JOB_ID          # the job's ID
+$SLURM_CPUS_PER_TASK   # cores you were given — pass to your program's thread count
+$SLURM_ARRAY_TASK_ID   # which array element this is (see @sec-arrays)
+$SLURM_SUBMIT_DIR      # the directory you ran sbatch from
+```
+
+A common pattern matches your program's threads to what Slurm gave you:
+
+```bash
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+```
+
+The next section covers asking for the right resources (@sec-resources); choosing the right
+queue comes after (@sec-partitions).
+
+
+## Asking for resources {#sec-resources}
+
+::: {.tldr}
+Ask for what your job needs — cores, memory, time — and no more. Every extra core, gigabyte,
+or hour makes the job harder to schedule, so it waits longer and burns more of your
+allocation. Always set `--mem` explicitly, and measure real usage with `seff` after your first
+run, then right-size.
+:::
+
+### Cores, tasks, and the words Slurm uses
+
+For most jobs you need two ideas:
+
+- A **task** is one instance of your program. Most jobs are a single task.
+- **CPUs per task** is how many cores that program can use (its threads).
+
+```bash
+#SBATCH --nodes=1                # keep a job on one node unless it's true MPI
+#SBATCH --ntasks=1               # one program instance
+#SBATCH --cpus-per-task=8        # that can use 8 cores
+```
+
+- **Single-threaded program?** `--ntasks=1 --cpus-per-task=1`.
+- **Multithreaded (OpenMP, most numpy/xarray work)?** `--ntasks=1 --cpus-per-task=N`, and
+  set `export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK`.
+- **MPI across many nodes?** Use `--nodes` and `--ntasks`, and launch with `srun` (@sec-ladder).
+
+Asking for 8 cores does not make a single-threaded program faster; it reserves 7 idle cores
+and makes you wait longer. Match the request to what your code can use.
+
+### Memory
+
+Set memory explicitly, every time. Two ways:
+
+```bash
+#SBATCH --mem=32G              # total memory for the whole job (simplest)
+# or
+#SBATCH --mem-per-cpu=4G       # memory per core (scales with --cpus-per-task)
+```
+
+::: {.callout-warning}
+## The 10 GB/core default on `mb`
+If you omit `--mem` on the default partition, you get 10 GB per core, so `--cpus-per-task=8`
+becomes an 80 GB request. That queues slower and can be rejected if it exceeds a limit. Set
+your memory explicitly. (Full story in @sec-anatomy.)
+:::
+
+For a first run, estimate a bit high so the job isn't killed, then measure and right-size
+(below). A job that exceeds its memory request is killed by the out-of-memory (OOM) killer
+(@sec-fail), so memory is the one resource where running out is fatal rather than slow.
+
+### Time
+
+```bash
+#SBATCH --time=04:00:00        # HH:MM:SS  (or D-HH:MM:SS, e.g. 2-00:00:00)
+```
+
+Your job is killed the instant it hits this limit, so the request must exceed the real
+runtime; pad by roughly 25%. Don't pad wildly, though: a shorter time limit means a lower QOS
+ceiling and better odds of backfilling into gaps, so it often starts sooner
+(@sec-queue-times).
+
+::: {.callout-note}
+## No per-partition default time, so set `--time`
+Partitions on MedicineBow don't set a default wall time. Without `--time`, you inherit the
+partition maximum (7 days), which your QOS will likely reject (the `normal` QOS caps at 3
+days). Always set `--time` yourself.
+:::
+
+### Over-asking slows you down
+
+A bigger request is a rarer set of free resources to find:
+
+- **More cores / memory** → fewer nodes can satisfy you → longer wait, and you're charged for
+  cores you didn't use.
+- **More time** → lower-priority QOS tier and fewer backfill opportunities → longer wait.
+- **A GPU you don't use** → you sit in the busy GPU queue for nothing (@sec-queue-times).
+
+The fix is to right-size.
+
+### Measure, then right-size, with `seff`
+
+After a job finishes, `seff` tells you what it actually used versus what you reserved:
+
+```bash
+seff 123456
+```
+
+```text
+Job ID: 123456
+State: COMPLETED
+Cores: 8
+CPU Efficiency: 24.13% of 04:16:00 core-walltime      <- you used ~2 of 8 cores
+Memory Utilized: 5.31 GB
+Memory Efficiency: 16.59% of 32.00 GB                 <- 32G reserved, 5G used
+```
+
+Read that as: *next time ask for ~2 cores and ~8 GB.* Low CPU efficiency means you reserved
+cores your code can't use; low memory efficiency means you can ask for far less and start
+sooner.
+
+Check what you're allowed to ask for with ARCC's helper:
+
+```bash
+showuserlimits
+```
+
+Next: where to send the job — partitions and QOS, and their queue-time consequences
+(@sec-partitions, @sec-queue-times).

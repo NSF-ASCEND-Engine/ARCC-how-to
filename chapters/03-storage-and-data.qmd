@@ -1,0 +1,189 @@
+# Storage and moving data
+
+
+The three filesystems, what each one promises, and how to get data in and out.
+
+
+## Where your data lives {#sec-storage}
+
+::: {.tldr}
+MedicineBow has three filesystems: **home** (50 GB, small), **project** (5 TB, shared with
+your group, where datasets and results live), and **scratch** (5 TB, fast, purged after 90
+days of inactivity). **None is backed up.** Install software into `/project/<proj>/software`,
+not home — one conda env can fill your home directory.
+:::
+
+### Nothing is backed up
+
+**Nothing on MedicineBow is backed up. Not home, not project, not scratch.**
+
+There *are* snapshots (point-in-time copies you can sometimes restore from), but they live on
+the **same storage array** as your live data — if the array fails, the snapshots fail with
+it. Snapshots protect against accidental deletion, not hardware loss. Anything you can't
+afford to lose needs a copy elsewhere: your institution's storage, a cloud bucket, or the
+separate **Alcova** service, which does have real nightly backups.
+
+### The three filesystems
+
+| Path | Quota | Snapshots | Backups | Purged |
+|---|---|---|---|---|
+| `/home/$USER` | **50 GB** | yes | **NO** | only when you leave UW |
+| `/project/<proj>` | **5 TB** | yes | **NO** | 6 months after project ends |
+| `/gscratch/$USER` (`$SCRATCH`) | **5 TB** | yes | **NO** | **after 90 days of inactivity** |
+| `/project/<proj>/software` | **+250 GB** on top of project | yes | **NO** | with the project |
+| `/lscratch` | node-local, varies | no | **NO** | **wiped at the end of every job** |
+
+Check your usage and limits for home, scratch, and project:
+
+```bash
+arccquota
+```
+
+#### `/home` — small, personal, for config not data
+
+50 GB fills fast once a conda environment eats 15 GB of it. Home is for dotfiles, scripts,
+and small configs — not datasets and not software installs. When home fills up, things break
+(jobs fail to write logs, logins misbehave), so watch it with `arccquota` and
+`du -sh ~/* | sort -h`.
+
+#### `/project/<proj>` — the shared workhorse
+
+5 TB, shared by everyone on your project (e.g. `cowy-firesurro`). This is where shared
+datasets, inputs, and results belong. Agree on a directory convention with your group so you
+don't clobber each other. It persists for 6 months after the project ends.
+
+#### `/gscratch/$USER` — fast and disposable
+
+Also 5 TB, and the **fast** filesystem — use it as the working directory for jobs with heavy
+I/O. Files untouched for **90 days** are purged automatically. Never keep the only copy of
+anything here.
+
+::: {.callout-note}
+## Scratch purge is 90 days, not 45
+Legacy Confluence docs say 45 days; the current ARCC wiki says 90. Both pages are live, but
+**90 is the current policy.** Either way, don't treat scratch as storage.
+:::
+
+#### `/lscratch` — node-local, gone when the job ends
+
+Each compute node has its own local disk at `/lscratch`. It's the fastest storage available
+to a job (no network in the way), ideal for scratch files a single job reads and rewrites
+constantly. It's **wiped when your job ends**, so copy anything you want to keep back to
+`/project` or `/gscratch` before the job exits.
+
+(There is no `/data` filesystem, despite what some docs suggest.)
+
+### Install software in project space, not home
+
+::: {.callout-important}
+## Install software into `/project/<proj>/software`, not `/home`
+Your project has an extra **250 GB** quota at `/project/<proj>/software` for installing
+software. A single conda environment with a few scientific packages can be 10–20 GB — two of
+those fills a 50 GB home directory.
+
+Point conda, pip, R libraries, and manual builds at project software space from the start.
+The conda chapter (@sec-conda) shows how.
+:::
+
+### A sane layout to adopt on day one
+
+```text
+/home/<you>/                      # dotfiles, small scripts, SSH keys
+/project/cowy-firesurro/
+    software/                     # conda envs, container images, manual builds
+    data/                         # shared input datasets
+    <you>/                        # your working area within the project
+/gscratch/<you>/                  # active job working dirs, heavy I/O, big temp output
+```
+
+
+## Moving data in and out {#sec-moving-data}
+
+::: {.tldr}
+For big or important transfers, use **Globus** — restartable, verified, survives a sleeping
+laptop. For small stuff, `scp`/`rsync` over SSH to `medicinebow.arcc.uwyo.edu` works, and
+`rclone` (a module) is ARCC's recommended CLI for cloud storage. Note: **external
+collaborators on ARCC-Only accounts can't use Globus.**
+:::
+
+### Pick the right tool for the size of the job
+
+| Transfer | Best tool |
+|---|---|
+| Hundreds of GB / TB, or must-not-corrupt datasets | **Globus** |
+| A few files, a script, a config | `scp` or `rsync` over SSH |
+| To/from cloud storage (S3, Google Drive, etc.) | `rclone` |
+| Drag-and-drop a handful of files in a browser | Portal → Files |
+
+There is **no dedicated data-transfer node (DTN)** — CLI transfers go through the login
+nodes, and Globus manages its own endpoint. Another reason to prefer Globus for big moves: it
+won't tie up (or get killed on) a shared login node.
+
+### Globus — the recommended path for real data
+
+[Globus](https://www.globus.org/) transfers between "collections" (endpoints). It's
+restartable, checksums what it moves, retries failures, and runs server-side, so you can
+start a multi-hundred-GB transfer, close your laptop, and get an email when it's done.
+
+1. Log in at <https://app.globus.org> (choose "University of Wyoming" as your organization,
+   or your own institution).
+2. Search collections for **`uwyo-ARCC`** and pick **"Medicine Bow"**.
+3. The Medicine Bow collection's root is **`cluster`**, so your project shows up at a path
+   like `/cluster/medbow/project/cowy-firesurro/...`.
+4. Set the other side to your institutional or personal collection (install **Globus
+   Connect Personal** on your own machine to make it an endpoint), pick files, and hit
+   **Start**.
+
+::: {.callout-warning}
+## Globus needs a full UW account
+ARCC-Only accounts (external collaborators — @sec-account) **cannot use Globus.** If your
+data lives at CSU, CU, or NCAR and you're on an ARCC-Only account, you'll need a UW-side
+person to broker the transfer, or a **guest collection** set up for you.
+:::
+
+### `scp` and `rsync` — fine for small, everyday transfers
+
+From your laptop, push a file up:
+
+```bash
+scp results.csv <username>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<you>/
+```
+
+Pull one down:
+
+```bash
+scp <username>@medicinebow.arcc.uwyo.edu:/gscratch/<you>/output.nc .
+```
+
+`rsync` is better for directories and for resuming — it only copies what changed, so an
+interrupted transfer picks up where it left off:
+
+```bash
+rsync -avP ./localdir/ <username>@medicinebow.arcc.uwyo.edu:/project/cowy-firesurro/<you>/dir/
+```
+
+The `-P` flag shows progress and enables resume; `-a` preserves timestamps and permissions.
+For more than a few GB, prefer Globus — a login-node `scp` of a huge file competes with
+everyone else's login-node activity and will be slow.
+
+### `rclone` — cloud storage (S3, Google Drive, Box…)
+
+`rclone` is ARCC's recommended CLI for moving data to and from cloud services. It's a module:
+
+```bash
+module load rclone/1.63.1
+rclone config          # one-time: set up a "remote" (S3 bucket, Drive, etc.)
+rclone copy mydata/ myremote:bucket/path/    # copy up
+rclone copy myremote:bucket/path/ ./mydata/  # copy down
+```
+
+`rclone` verifies and retries, and handles many small files far better than a loop of `scp`s.
+
+### A quick decision guide
+
+- **Moving your project's primary dataset onto the cluster?** Globus.
+- **Iterating on a submit script from your laptop?** `rsync` (or edit in the portal).
+- **Pulling results into a cloud bucket for a collaborator?** `rclone`.
+- **External collaborator without Globus?** Ask your UW PI about a guest collection.
+
+Next: making software available, starting with the module system (@sec-modules).
