@@ -452,7 +452,6 @@ Figure&nbsp;20.1: The parallelism ladder. Climb only as high as the problem need
 <p>If you need to run the <em>same</em> thing many times over different inputs — a parameter sweep, an ensemble, per-file processing — this is almost always the answer. Low complexity, and it backfills well (<a href="16-job-arrays.html" class="quarto-xref"><span>Chapter 16</span></a>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="at">--id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Use this whenever “I need to run it N times” applies.</p>
 </section>
 <section id="rung-3-multicore-one-program-many-threads-one-node" class="level3" data-number="20.1.3">
 <h3 data-number="20.1.3" class="anchored" data-anchor-id="rung-3-multicore-one-program-many-threads-one-node"><span class="header-section-number">20.1.3</span> Rung 3 — Multicore (one program, many threads, one node)</h3>

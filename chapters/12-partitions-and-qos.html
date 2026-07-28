@@ -538,7 +538,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><small>¹ One L40S node has 4 GPUs instead of 8. Numbers are the machine as observed in July 2026; verify current state with <code>showpartitions</code> and <code>sinfo</code>.</small></p>
-<p>Teton, Beartooth, and WildIris are retired clusters now folded into MedicineBow as large partitions; Teton alone is ~250 nodes. The <code>inv-*</code> partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and preempt your job (<a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>).</p>
+<p>The <code>inv-*</code> partitions are investor (“condo”) hardware: you can run on them when they’re idle, but the owner can reclaim the node and preempt your job (<a href="18-preemption-and-checkpointing.html" class="quarto-xref"><span>Chapter 18</span></a>).</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -658,7 +658,6 @@ The walltime trade-off
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=normal</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1            # ask for 1 GPU (see @sec-gpu)</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=08:00:00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Which combination to pick depends on whether you’re doing a quick proof-of-concept or a long production run, and on how busy each queue is. That’s <a href="13-queue-times.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
 
 
 </section>
