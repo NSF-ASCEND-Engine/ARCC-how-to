@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1ec15b09a77a06bb5b9882e46ae3df3b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -218,14 +218,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#connect" id="toc-connect" class="nav-link" data-scroll-target="#connect"><span class="header-section-number">9.1.1</span> Connect</a></li>
   <li><a href="#storage-nothing-is-backed-up" id="toc-storage-nothing-is-backed-up" class="nav-link" data-scroll-target="#storage-nothing-is-backed-up"><span class="header-section-number">9.1.2</span> Storage (nothing is backed up)</a></li>
-  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules"><span class="header-section-number">9.1.3</span> Modules</a></li>
-  <li><a href="#submit-and-manage-jobs" id="toc-submit-and-manage-jobs" class="nav-link" data-scroll-target="#submit-and-manage-jobs"><span class="header-section-number">9.1.4</span> Submit and manage jobs</a></li>
-  <li><a href="#minimal-submit-script" id="toc-minimal-submit-script" class="nav-link" data-scroll-target="#minimal-submit-script"><span class="header-section-number">9.1.5</span> Minimal submit script</a></li>
-  <li><a href="#choosing-partition-qos" id="toc-choosing-partition-qos" class="nav-link" data-scroll-target="#choosing-partition-qos"><span class="header-section-number">9.1.6</span> Choosing partition + QOS</a></li>
-  <li><a href="#gpus" id="toc-gpus" class="nav-link" data-scroll-target="#gpus"><span class="header-section-number">9.1.7</span> GPUs</a></li>
-  <li><a href="#job-arrays" id="toc-job-arrays" class="nav-link" data-scroll-target="#job-arrays"><span class="header-section-number">9.1.8</span> Job arrays</a></li>
-  <li><a href="#check-the-live-queue-before-a-big-submit" id="toc-check-the-live-queue-before-a-big-submit" class="nav-link" data-scroll-target="#check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.9</span> Check the live queue before a big submit</a></li>
-  <li><a href="#common-mistakes-to-avoid" id="toc-common-mistakes-to-avoid" class="nav-link" data-scroll-target="#common-mistakes-to-avoid"><span class="header-section-number">9.1.10</span> Common mistakes to avoid</a></li>
+  <li><a href="#s3-buckets" id="toc-s3-buckets" class="nav-link" data-scroll-target="#s3-buckets"><span class="header-section-number">9.1.3</span> S3 buckets</a></li>
+  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules"><span class="header-section-number">9.1.4</span> Modules</a></li>
+  <li><a href="#submit-and-manage-jobs" id="toc-submit-and-manage-jobs" class="nav-link" data-scroll-target="#submit-and-manage-jobs"><span class="header-section-number">9.1.5</span> Submit and manage jobs</a></li>
+  <li><a href="#minimal-submit-script" id="toc-minimal-submit-script" class="nav-link" data-scroll-target="#minimal-submit-script"><span class="header-section-number">9.1.6</span> Minimal submit script</a></li>
+  <li><a href="#choosing-partition-qos" id="toc-choosing-partition-qos" class="nav-link" data-scroll-target="#choosing-partition-qos"><span class="header-section-number">9.1.7</span> Choosing partition + QOS</a></li>
+  <li><a href="#gpus" id="toc-gpus" class="nav-link" data-scroll-target="#gpus"><span class="header-section-number">9.1.8</span> GPUs</a></li>
+  <li><a href="#job-arrays" id="toc-job-arrays" class="nav-link" data-scroll-target="#job-arrays"><span class="header-section-number">9.1.9</span> Job arrays</a></li>
+  <li><a href="#check-the-live-queue-before-a-big-submit" id="toc-check-the-live-queue-before-a-big-submit" class="nav-link" data-scroll-target="#check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.10</span> Check the live queue before a big submit</a></li>
+  <li><a href="#common-mistakes-to-avoid" id="toc-common-mistakes-to-avoid" class="nav-link" data-scroll-target="#common-mistakes-to-avoid"><span class="header-section-number">9.1.11</span> Common mistakes to avoid</a></li>
   </ul></li>
   <li><a href="#sec-troubleshooting" id="toc-sec-troubleshooting" class="nav-link" data-scroll-target="#sec-troubleshooting"><span class="header-section-number">9.2</span> Troubleshooting</a>
   <ul class="collapse">
@@ -234,7 +235,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#jobs-wont-start" id="toc-jobs-wont-start" class="nav-link" data-scroll-target="#jobs-wont-start"><span class="header-section-number">9.2.3</span> Jobs won’t start</a></li>
   <li><a href="#jobs-fail" id="toc-jobs-fail" class="nav-link" data-scroll-target="#jobs-fail"><span class="header-section-number">9.2.4</span> Jobs fail</a></li>
   <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software"><span class="header-section-number">9.2.5</span> Software</a></li>
-  <li><a href="#still-stuck" id="toc-still-stuck" class="nav-link" data-scroll-target="#still-stuck"><span class="header-section-number">9.2.6</span> Still stuck?</a></li>
+  <li><a href="#s3-buckets-1" id="toc-s3-buckets-1" class="nav-link" data-scroll-target="#s3-buckets-1"><span class="header-section-number">9.2.6</span> S3 buckets</a></li>
+  <li><a href="#still-stuck" id="toc-still-stuck" class="nav-link" data-scroll-target="#still-stuck"><span class="header-section-number">9.2.7</span> Still stuck?</a></li>
   </ul></li>
   <li><a href="#sec-glossary" id="toc-sec-glossary" class="nav-link" data-scroll-target="#sec-glossary"><span class="header-section-number">9.3</span> Glossary</a></li>
   </ul>
@@ -318,42 +320,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="modules" class="level3" data-number="9.1.3">
-<h3 data-number="9.1.3" class="anchored" data-anchor-id="modules"><span class="header-section-number">9.1.3</span> Modules</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider <span class="op">&lt;</span>name<span class="op">&gt;</span>       <span class="co"># does it exist? what to load first? (use THIS, not avail)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 <span class="op">&lt;</span>pkg<span class="op">&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge               <span class="co"># clean slate</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save <span class="op">&lt;</span>name<span class="op">&gt;</span> / module restore <span class="op">&lt;</span>name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="s3-buckets" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="s3-buckets"><span class="header-section-number">9.1.3</span> S3 buckets</h3>
+<p>Endpoint <code>https://s3.arcc.uwyo.edu</code>; one-time <code>rclone</code> setup in <a href="03-storage-and-data.html#sec-s3-rclone" class="quarto-xref"><span>Section 3.3.3</span></a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> lsd arccs3:                                 <span class="co"># list buckets</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy <span class="op">&lt;</span>dir<span class="op">&gt;</span> arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/<span class="op">&lt;</span>prefix<span class="op">&gt;</span> -P      <span class="co"># upload new/changed files</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/<span class="op">&lt;</span>prefix<span class="op">&gt;</span> <span class="op">&lt;</span>dir<span class="op">&gt;</span> -P      <span class="co"># download, or refresh a cache</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> check <span class="op">&lt;</span>dir<span class="op">&gt;</span> arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/<span class="op">&lt;</span>prefix<span class="op">&gt;</span>        <span class="co"># confirm a transfer</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> link <span class="at">--expire</span> 72h arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/<span class="op">&lt;</span>key<span class="op">&gt;</span>     <span class="co"># time-limited download link</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="submit-and-manage-jobs" class="level3" data-number="9.1.4">
-<h3 data-number="9.1.4" class="anchored" data-anchor-id="submit-and-manage-jobs"><span class="header-section-number">9.1.4</span> Submit and manage jobs</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh           <span class="co"># submit batch job</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> <span class="op">&lt;</span>project<span class="op">&gt;</span> --qos=interactive <span class="at">-t</span> 2:00:00 <span class="at">-c</span> 4 <span class="at">--mem</span><span class="op">=</span>16G   <span class="co"># interactive</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                <span class="co"># my jobs</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>        <span class="co"># why is it waiting? (plain English)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>               <span class="co"># cancel one job (scancel -u $USER = all mine)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>                  <span class="co"># after the fact: was it sized right?</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>id<span class="op">&gt;</span> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="modules" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="modules"><span class="header-section-number">9.1.4</span> Modules</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> spider <span class="op">&lt;</span>name<span class="op">&gt;</span>       <span class="co"># does it exist? what to load first? (use THIS, not avail)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 <span class="op">&lt;</span>pkg<span class="op">&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge               <span class="co"># clean slate</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> save <span class="op">&lt;</span>name<span class="op">&gt;</span> / module restore <span class="op">&lt;</span>name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="minimal-submit-script" class="level3" data-number="9.1.5">
-<h3 data-number="9.1.5" class="anchored" data-anchor-id="minimal-submit-script"><span class="header-section-number">9.1.5</span> Minimal submit script</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;     # REQUIRED — project, not username</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=myjob</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb               # default CPU pool</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast                   # 12h, high priority</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G                    # ALWAYS set memory (mb default is 10G/core!)</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=slurm-%j.out</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMP_NUM_THREADS</span><span class="op">=</span><span class="va">$SLURM_CPUS_PER_TASK</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="submit-and-manage-jobs" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="submit-and-manage-jobs"><span class="header-section-number">9.1.5</span> Submit and manage jobs</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> submit.sh           <span class="co"># submit batch job</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">salloc</span> <span class="at">-A</span> <span class="op">&lt;</span>project<span class="op">&gt;</span> --qos=interactive <span class="at">-t</span> 2:00:00 <span class="at">-c</span> 4 <span class="at">--mem</span><span class="op">=</span>16G   <span class="co"># interactive</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span>                <span class="co"># my jobs</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showjobreasons</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>        <span class="co"># why is it waiting? (plain English)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>               <span class="co"># cancel one job (scancel -u $USER = all mine)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">seff</span> <span class="op">&lt;</span>id<span class="op">&gt;</span>                  <span class="co"># after the fact: was it sized right?</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sacct</span> <span class="at">-j</span> <span class="op">&lt;</span>id<span class="op">&gt;</span> --format=JobID,State,Elapsed,MaxRSS,ReqMem,ExitCode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="choosing-partition-qos" class="level3" data-number="9.1.6">
-<h3 data-number="9.1.6" class="anchored" data-anchor-id="choosing-partition-qos"><span class="header-section-number">9.1.6</span> Choosing partition + QOS</h3>
+<section id="minimal-submit-script" class="level3" data-number="9.1.6">
+<h3 data-number="9.1.6" class="anchored" data-anchor-id="minimal-submit-script"><span class="header-section-number">9.1.6</span> Minimal submit script</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;     # REQUIRED — project, not username</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=myjob</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb               # default CPU pool</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast                   # 12h, high priority</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G                    # ALWAYS set memory (mb default is 10G/core!)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=slurm-%j.out</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 python/3.12.0</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMP_NUM_THREADS</span><span class="op">=</span><span class="va">$SLURM_CPUS_PER_TASK</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="choosing-partition-qos" class="level3" data-number="9.1.7">
+<h3 data-number="9.1.7" class="anchored" data-anchor-id="choosing-partition-qos"><span class="header-section-number">9.1.7</span> Choosing partition + QOS</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -402,29 +414,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p><strong><span class="gloss" data-def="Quality of Service: the tier setting your max walltime, resource cap, and priority." aria-label="Quality of Service: the tier setting your max walltime, resource cap, and priority.">QOS</span> ceilings &amp; <span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span>:</strong> <code>interactive</code> 8h, priority 90 · <code>fast</code> 12h, priority 80 · <code>normal</code> 3d, priority 70 · <code>long</code> 7d, priority 60 · <code>debug</code> 1h, priority 0. <strong>Priority is dominated by QOS</strong> (weight 200 vs age 10) — pick the shortest tier your job fits. (<code>debug</code> still starts fast because its 4 nodes are dedicated and usually idle, not because of priority.)</p>
 </section>
-<section id="gpus" class="level3" data-number="9.1.7">
-<h3 data-number="9.1.7" class="anchored" data-anchor-id="gpus"><span class="header-section-number">9.1.7</span> GPUs</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb-l40s</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1                 # or gpu:h100:2 for a specific type/count</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0 cuda-toolkit/12.6.1   <span class="co"># CUDA needs gcc 13.2 (deprecated but required)</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                             <span class="co"># free GPUs by type, right now</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span> / nvtop                   <span class="co"># is my code actually using the GPU?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="gpus" class="level3" data-number="9.1.8">
+<h3 data-number="9.1.8" class="anchored" data-anchor-id="gpus"><span class="header-section-number">9.1.8</span> GPUs</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb-l40s</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1                 # or gpu:h100:2 for a specific type/count</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/13.2.0 cuda-toolkit/12.6.1   <span class="co"># CUDA needs gcc 13.2 (deprecated but required)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                             <span class="co"># free GPUs by type, right now</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span> / nvtop                   <span class="co"># is my code actually using the GPU?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="job-arrays" class="level3" data-number="9.1.8">
-<h3 data-number="9.1.8" class="anchored" data-anchor-id="job-arrays"><span class="header-section-number">9.1.8</span> Job arrays</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20             # 500 tasks, ≤20 at once (max array size 10000)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=logs/%A_%a.out</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="at">--id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="job-arrays" class="level3" data-number="9.1.9">
+<h3 data-number="9.1.9" class="anchored" data-anchor-id="job-arrays"><span class="header-section-number">9.1.9</span> Job arrays</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=1-500%20             # 500 tasks, ≤20 at once (max array size 10000)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=logs/%A_%a.out</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="at">--id</span> <span class="va">${SLURM_ARRAY_TASK_ID}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="check-the-live-queue-before-a-big-submit" class="level3" data-number="9.1.9">
-<h3 data-number="9.1.9" class="anchored" data-anchor-id="check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.9</span> Check the live queue before a big submit</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showpartitions</span>             <span class="co"># idle vs busy nodes per partition</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                   <span class="co"># free GPUs now</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sinfo</span> <span class="at">-p</span> mb-h100 <span class="at">-o</span> <span class="st">"%P %t %D"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>             <span class="co"># what am I allowed to ask for?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="check-the-live-queue-before-a-big-submit" class="level3" data-number="9.1.10">
+<h3 data-number="9.1.10" class="anchored" data-anchor-id="check-the-live-queue-before-a-big-submit"><span class="header-section-number">9.1.10</span> Check the live queue before a big submit</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">showpartitions</span>             <span class="co"># idle vs busy nodes per partition</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gpuavail</span>                   <span class="co"># free GPUs now</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sinfo</span> <span class="at">-p</span> mb-h100 <span class="at">-o</span> <span class="st">"%P %t %D"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">showuserlimits</span>             <span class="co"># what am I allowed to ask for?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="common-mistakes-to-avoid" class="level3" data-number="9.1.10">
-<h3 data-number="9.1.10" class="anchored" data-anchor-id="common-mistakes-to-avoid"><span class="header-section-number">9.1.10</span> Common mistakes to avoid</h3>
+<section id="common-mistakes-to-avoid" class="level3" data-number="9.1.11">
+<h3 data-number="9.1.11" class="anchored" data-anchor-id="common-mistakes-to-avoid"><span class="header-section-number">9.1.11</span> Common mistakes to avoid</h3>
 <ul>
 <li><code>--account=&lt;project&gt;</code> is <strong>required</strong> on every job.</li>
 <li>On <code>mb</code>, no <code>--mem</code> → <strong>10 GB per core</strong> silently. Always set <code>--mem</code>.</li>
@@ -475,8 +487,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Home directory full, everything breaking.</strong> Conda in <code>/home</code>. Move envs to <code>/project/&lt;project&gt;/software</code> via <code>~/.condarc</code>, and clean up (<a href="04-software.html#sec-conda" class="quarto-xref"><span>Section 4.2</span></a>). Check with <code>du -sh ~/* | sort -h</code>.</p>
 <p><strong>GPU job runs but is slow / <code>nvidia-smi</code> shows 0%.</strong> Your code isn’t actually on the GPU. Verify the framework sees CUDA; in a container, you need <code>--nv</code> (<a href="07-working-with-jobs.html#sec-gpu" class="quarto-xref"><span>Section 7.3.2</span></a>).</p>
 </section>
-<section id="still-stuck" class="level3" data-number="9.2.6">
-<h3 data-number="9.2.6" class="anchored" data-anchor-id="still-stuck"><span class="header-section-number">9.2.6</span> Still stuck?</h3>
+<section id="s3-buckets-1" class="level3" data-number="9.2.6">
+<h3 data-number="9.2.6" class="anchored" data-anchor-id="s3-buckets-1"><span class="header-section-number">9.2.6</span> S3 buckets</h3>
+<p><strong><code>InvalidAccessKeyId</code> or <code>SignatureDoesNotMatch</code> from <code>rclone</code>.</strong> The access key (first error) or secret key (second) in the <code>arccs3</code> remote is wrong. Repeat the <code>rclone config create</code> step with the keys <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> issued; it overwrites the remote (<a href="03-storage-and-data.html#sec-s3-rclone" class="quarto-xref"><span>Section 3.3.3</span></a>).</p>
+<p><strong>Python <code>boto3</code> fails with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>.</strong> Install <code>certifi</code> in the same environment, or <code>export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt</code> (<a href="03-storage-and-data.html#sec-s3-code" class="quarto-xref"><span>Section 3.3.7</span></a>).</p>
+<p><strong><code>pathfinder.arcc.uwyo.edu</code> times out.</strong> That is the service’s old name. Use the endpoint <code>https://s3.arcc.uwyo.edu</code> (<a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>).</p>
+<p><strong>Home filled up while a <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span> was mounted.</strong> <code>rclone mount</code> caches in <code>~/.cache/rclone</code> unless told otherwise. Unmount, delete that directory, and pass <code>--cache-dir</code> on <code>/lscratch</code> or <code>/gscratch</code> (<a href="03-storage-and-data.html#sec-s3-cache" class="quarto-xref"><span>Section 3.3.6</span></a>).</p>
+</section>
+<section id="still-stuck" class="level3" data-number="9.2.7">
+<h3 data-number="9.2.7" class="anchored" data-anchor-id="still-stuck"><span class="header-section-number">9.2.7</span> Still stuck?</h3>
 <p>Email <strong><code>arcc-help@uwyo.edu</code></strong> with your <strong>job ID</strong>, the submit script, and the error. Or bring it to <strong>office hours, Tuesdays 11am–1pm</strong> on Zoom. Include what you already tried — it gets you a faster answer.</p>
 </section>
 </section>
@@ -503,6 +522,10 @@ Slurm slotting a small, short job into a gap in the schedule without delaying hi
 <dt><strong>Batch job</strong></dt>
 <dd>
 A job submitted as a script with <code>sbatch</code> that runs unattended when scheduled. The normal way to run work. See <a href="05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Section 5.2</span></a>.
+</dd>
+<dt><strong>Bucket</strong></dt>
+<dd>
+A named container of objects in S3 object storage; an object is addressed as <code>&lt;bucket&gt;/&lt;key&gt;</code>. See <a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.
 </dd>
 <dt><strong>Checkpoint</strong></dt>
 <dd>
@@ -559,6 +582,10 @@ UW/ARCC’s current flagship HPC cluster. The subject of this book.
 <dt><strong>MPI</strong></dt>
 <dd>
 Message Passing Interface — the standard for a single parallel program spanning many cores or nodes that communicate. Launched with <code>srun</code>. Contrast with job arrays. See <a href="07-working-with-jobs.html#sec-ladder" class="quarto-xref"><span>Section 7.4</span></a>.
+</dd>
+<dt><strong>Object storage (S3)</strong></dt>
+<dd>
+Storage reached over HTTPS with an access key and secret key, holding whole-file objects in buckets instead of files in a directory tree. ARCC’s service is at <code>s3.arcc.uwyo.edu</code>. Not backed up. See <a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.
 </dd>
 <dt><strong>OnDemand (Open OnDemand)</strong></dt>
 <dd>
@@ -1034,7 +1061,7 @@ Real elapsed clock time a job is allowed (<code>--time</code>). The job is kille
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Built for ASCEND/ARID performers. Not an official <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> document.</p>
+<p>Built for ASCEND/ARID performers. Not an official ARCC document.</p>
 <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/09-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;

@@ -76,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1ec15b09a77a06bb5b9882e46ae3df3b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -230,6 +230,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#rclone-cloud-storage-s3-google-drive-box" id="toc-rclone-cloud-storage-s3-google-drive-box" class="nav-link" data-scroll-target="#rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</a></li>
   <li><a href="#a-quick-decision-guide" id="toc-a-quick-decision-guide" class="nav-link" data-scroll-target="#a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</a></li>
   </ul></li>
+  <li><a href="#sec-s3" id="toc-sec-s3" class="nav-link" data-scroll-target="#sec-s3"><span class="header-section-number">3.3</span> ARCC S3 object storage</a>
+  <ul class="collapse">
+  <li><a href="#how-a-bucket-differs-from-project" id="toc-how-a-bucket-differs-from-project" class="nav-link" data-scroll-target="#how-a-bucket-differs-from-project"><span class="header-section-number">3.3.1</span> How a bucket differs from <code>/project</code></a></li>
+  <li><a href="#getting-a-bucket-and-keys" id="toc-getting-a-bucket-and-keys" class="nav-link" data-scroll-target="#getting-a-bucket-and-keys"><span class="header-section-number">3.3.2</span> Getting a bucket and keys</a></li>
+  <li><a href="#sec-s3-rclone" id="toc-sec-s3-rclone" class="nav-link" data-scroll-target="#sec-s3-rclone"><span class="header-section-number">3.3.3</span> Set up <code>rclone</code> once</a></li>
+  <li><a href="#upload-and-download" id="toc-upload-and-download" class="nav-link" data-scroll-target="#upload-and-download"><span class="header-section-number">3.3.4</span> Upload and download</a></li>
+  <li><a href="#sec-s3-link" id="toc-sec-s3-link" class="nav-link" data-scroll-target="#sec-s3-link"><span class="header-section-number">3.3.5</span> Share a file with a time-limited link</a></li>
+  <li><a href="#sec-s3-cache" id="toc-sec-s3-cache" class="nav-link" data-scroll-target="#sec-s3-cache"><span class="header-section-number">3.3.6</span> Caching bucket data for jobs</a></li>
+  <li><a href="#sec-s3-code" id="toc-sec-s3-code" class="nav-link" data-scroll-target="#sec-s3-code"><span class="header-section-number">3.3.7</span> From Python, R, and Julia</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/edit/main/chapters/03-storage-and-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/NSF-ASCEND-Engine/ARCC-how-to/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -255,13 +265,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The three filesystems, what each one promises, and how to get data in and out.</p>
+<p>The three filesystems, what each one promises, how to get data in and out, and <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s S3 <span class="gloss" data-def="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up." aria-label="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up.">object storage</span>.</p>
 <section id="sec-storage" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-storage"><span class="header-section-number">3.1</span> Where your data lives</h2>
 <section id="nothing-is-backed-up" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</h3>
 <p><strong>Nothing on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is backed up. Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>.</strong></p>
-<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies; within about 20 days you can ask <code>arcc-help@uwyo.edu</code> to restore from one), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud bucket, or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
+<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies; within about 20 days you can ask <code>arcc-help@uwyo.edu</code> to restore from one), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span>, an ARCC S3 bucket (separate hardware, but also not backed up; <a href="#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>), or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
 </section>
 <section id="the-three-filesystems" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</h3>
@@ -387,10 +397,14 @@ Install software into <code>/project/&lt;project&gt;/software</code>, not <code>
 <td><code>scp</code> or <code>rsync</code> over SSH</td>
 </tr>
 <tr class="odd">
-<td>To/from cloud storage (S3, Google Drive, etc.)</td>
-<td><code>rclone</code></td>
+<td>To/from ARCC’s S3 buckets</td>
+<td><code>rclone</code> (<a href="#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>)</td>
 </tr>
 <tr class="even">
+<td>To/from other cloud storage (AWS S3, Google Drive, etc.)</td>
+<td><code>rclone</code></td>
+</tr>
+<tr class="odd">
 <td>Drag-and-drop a handful of files in a browser</td>
 <td>Portal → Files</td>
 </tr>
@@ -433,21 +447,364 @@ Globus needs a full UW account
 </section>
 <section id="rclone-cloud-storage-s3-google-drive-box" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="rclone-cloud-storage-s3-google-drive-box"><span class="header-section-number">3.2.4</span> <code>rclone</code> — cloud storage (S3, Google Drive, Box…)</h3>
-<p><code>rclone</code> is <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
+<p><code>rclone</code> is ARCC’s recommended CLI for moving data to and from cloud services. It’s a <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">module</span>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1   <span class="co"># rclone needs a compiler module first</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config          <span class="co"># one-time: set up a "remote" (S3 bucket, Drive, etc.)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy mydata/ myremote:bucket/path/    <span class="co"># copy up</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy myremote:bucket/path/ ./mydata/  <span class="co"># copy down</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s.</p>
+<p><code>rclone</code> verifies and retries, and handles many small files far better than a loop of <code>scp</code>s. For ARCC’s own S3 service — setup, caching data for jobs, and access from Python, R, and Julia — see <a href="#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.</p>
 </section>
 <section id="a-quick-decision-guide" class="level3" data-number="3.2.5">
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="a-quick-decision-guide"><span class="header-section-number">3.2.5</span> A quick decision guide</h3>
 <ul>
 <li><strong>Moving your project’s primary dataset onto the cluster?</strong> Globus.</li>
 <li><strong>Iterating on a submit script from your laptop?</strong> <code>rsync</code> (or edit in the portal).</li>
-<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>.</li>
-<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection.</li>
+<li><strong>Pulling results into a cloud bucket for a collaborator?</strong> <code>rclone</code>; for ARCC’s S3 service, see <a href="#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.</li>
+<li><strong>External collaborator without Globus?</strong> Ask your UW PI about a guest collection, or share files from an ARCC S3 bucket with time-limited links (<a href="#sec-s3-link" class="quarto-xref"><span>Section 3.3.5</span></a>).</li>
 </ul>
+</section>
+</section>
+<section id="sec-s3" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-s3"><span class="header-section-number">3.3</span> ARCC S3 object storage</h2>
+<p>ARCC runs an S3-compatible object store on hardware separate from the cluster filesystems. You reach it over HTTPS with an access key and a secret key: from login nodes, from compute nodes inside jobs, and from machines off the cluster. ARCC suggests it for sharing data with collaborators outside UW. This section covers getting a bucket, moving data with <code>rclone</code>, caching bucket data for jobs, and reading and writing from Python, R, and Julia.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Endpoint: <code>https://s3.arcc.uwyo.edu</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The service is a Ceph Object Gateway at <strong><code>https://s3.arcc.uwyo.edu</code></strong>, checked from login and compute nodes in September 2026. ARCC’s pages also call the service <strong>Pathfinder</strong>; the hostname <code>pathfinder.arcc.uwyo.edu</code> does not respond from the cluster. If ARCC gives you a different endpoint with your keys, use theirs.</p>
+</div>
+</div>
+<section id="how-a-bucket-differs-from-project" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="how-a-bucket-differs-from-project"><span class="header-section-number">3.3.1</span> How a bucket differs from <code>/project</code></h3>
+<p>A <strong>bucket</strong> holds <strong>objects</strong>: a file’s bytes stored under a key such as <code>inputs/era5/2024-07.nc</code>. There are no directories; the slashes are part of the key, and tools display them as folders. Programs reach objects through an S3 client or library rather than a file path (except through a mount, <a href="#sec-s3-cache" class="quarto-xref"><span>Section 3.3.6</span></a>), and an object is replaced whole rather than edited in place.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>/project/&lt;project&gt;</code></th>
+<th>ARCC S3 bucket</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Access</td>
+<td>file path</td>
+<td>S3 client or library, with keys</td>
+</tr>
+<tr class="even">
+<td>Reachable from</td>
+<td>the cluster</td>
+<td>the cluster and off-cluster machines</td>
+</tr>
+<tr class="odd">
+<td>Modify part of a file</td>
+<td>yes</td>
+<td>no — objects are replaced whole</td>
+</tr>
+<tr class="even">
+<td>Hardware</td>
+<td>cluster storage array (shared with home and scratch)</td>
+<td>separate Ceph cluster</td>
+</tr>
+<tr class="odd">
+<td>Backed up</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>Cost</td>
+<td>included with the project</td>
+<td>charged at ARCC’s hardware-cost rate</td>
+</tr>
+<tr class="odd">
+<td>How to get it</td>
+<td>comes with the project</td>
+<td>separate request (below)</td>
+</tr>
+</tbody>
+</table>
+<p>Typical uses:</p>
+<ul>
+<li>A second copy of results on hardware separate from home, project, and scratch.</li>
+<li>Sharing data with collaborators outside UW, including those on ARCC-Only accounts that can’t use Globus (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>).</li>
+<li>Time-limited download links for individual files (<a href="#sec-s3-link" class="quarto-xref"><span>Section 3.3.5</span></a>).</li>
+<li>A reference copy of an input dataset that jobs pull from and people off the cluster can also read.</li>
+</ul>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+S3 is not backed up either
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ARCC states that the S3 service is not backed up. A copy in S3 is on different hardware from home, project, and scratch, so it is not lost if the cluster’s storage array fails, but it is still a single copy. Data you can’t regenerate needs a copy outside ARCC as well.</p>
+</div>
+</div>
+</section>
+<section id="getting-a-bucket-and-keys" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="getting-a-bucket-and-keys"><span class="header-section-number">3.3.2</span> Getting a bucket and keys</h3>
+<ol type="1">
+<li><strong>Request it</strong> with ARCC’s research project request form, and state in the description that you are requesting the S3 service. ASCEND/ARID performers: ask your team or Virginia Iglesias (<a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>) first whether your project already has a bucket.</li>
+<li><strong>Save the keys when they arrive.</strong> After approval, ARCC replies with a temporary link, active for a few days, to an <strong>access key</strong> and a <strong>secret key</strong>. Store both in a password manager. Anyone with both keys has full access to your buckets.</li>
+<li><strong>Buckets:</strong> ARCC creates one bucket for the project, and your keys can create one more (two total). Ask ARCC if you need more.</li>
+</ol>
+<p>Charges cover hardware cost only; ARCC and UW’s Office of Research and Economic Development subsidize staff and datacenter costs. Rates are in the <a href="https://www.uwyo.edu/arcc/policies/costpolicy.html">ARCC Cost Policies</a>.</p>
+<p>On a laptop, ARCC supports <code>rclone</code> and MSP360 Explorer (a Windows/macOS GUI); Cyberduck, Transmit, and <code>s3cmd</code> are best-effort.</p>
+</section>
+<section id="sec-s3-rclone" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="sec-s3-rclone"><span class="header-section-number">3.3.3</span> Set up <code>rclone</code> once</h3>
+<p><code>rclone</code> is installed as a module and is ARCC’s supported command-line client. Create a remote named <code>arccs3</code>. Reading the keys with <code>read</code> keeps them out of your shell history:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">read</span> <span class="at">-rp</span>  <span class="st">"Access key: "</span> <span class="va">AK</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">read</span> <span class="at">-rsp</span> <span class="st">"Secret key: "</span> <span class="va">SK</span><span class="kw">;</span> <span class="bu">echo</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> config create arccs3 s3 provider=Ceph endpoint=https://s3.arcc.uwyo.edu <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    access_key_id=<span class="st">"</span><span class="va">$AK</span><span class="st">"</span> secret_access_key=<span class="st">"</span><span class="va">$SK</span><span class="st">"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">unset</span> <span class="va">AK</span> <span class="va">SK</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This writes the remote to <code>~/.config/rclone/rclone.conf</code>, with permissions that let only you read it. The keys are stored there in plain text; don’t copy that file into a Git repository or a shared directory. On a laptop, <code>rclone config</code> prompts for the same values: storage type <code>s3</code>, provider <code>Ceph</code>, your two keys, and the endpoint.</p>
+<p>Check the connection:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> lsd arccs3:                 <span class="co"># your buckets</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> lsf arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>         <span class="co"># top level of a bucket</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> size arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>        <span class="co"># object count and total size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>InvalidAccessKeyId</code> means the access key is wrong; <code>SignatureDoesNotMatch</code> means the secret key is wrong. Run the <code>rclone config create</code> step again with the right keys; it overwrites the remote.</p>
+</section>
+<section id="upload-and-download" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="upload-and-download"><span class="header-section-number">3.3.4</span> Upload and download</h3>
+<p>A remote path is <code>arccs3:&lt;bucket&gt;/&lt;key prefix&gt;</code>. <code>rclone copy</code> sends only files that are missing or differ (by size and modification time) at the destination, so re-running an interrupted copy skips what already arrived.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># upload a directory</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy /project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>/results arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/results <span class="at">-P</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># download a prefix</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/inputs/era5 /gscratch/<span class="va">$USER</span>/era5 <span class="at">-P</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># one file, to an exact key</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copyto summary.csv arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/results/summary.csv</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># after a large transfer, confirm both sides match</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> check /project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>/results arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>-P</code> shows live progress.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>rclone sync</code> deletes files
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>rclone sync SRC DST</code> makes <code>DST</code> match <code>SRC</code>, <strong>deleting</strong> anything in <code>DST</code> that isn’t in <code>SRC</code>. With the arguments reversed, it deletes the data you meant to keep. Use <code>copy</code> unless you need deletions, and run <code>sync</code> with <code>--dry-run</code> first.</p>
+</div>
+</div>
+<section id="large-transfers" class="level4" data-number="3.3.4.1">
+<h4 data-number="3.3.4.1" class="anchored" data-anchor-id="large-transfers"><span class="header-section-number">3.3.4.1</span> Large transfers</h4>
+<ul>
+<li><strong>Run them in a job</strong>, not on a login node — there is no data-transfer node (<a href="#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>), and compute nodes can reach the S3 endpoint.</li>
+<li><strong>Many small files:</strong> raise <code>--transfers</code> (files in parallel, default 4) and <code>--checkers</code> (comparisons in parallel, default 8). Each object is a separate HTTPS request, so for hundreds of thousands of small files, pack them into a <code>tar</code> archive first.</li>
+<li><strong>A few large files:</strong> raise <code>--s3-chunk-size</code> (default 5 MiB) and <code>--s3-upload-concurrency</code> (default 4) to send more of each file in parallel. <code>rclone</code> holds <code>--s3-upload-concurrency</code> chunks in memory for each file it is transferring, so size <code>--mem</code> to match.</li>
+</ul>
+<p>A transfer job:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=s3-upload</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=08:00:00</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=8G</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=s3-upload-%j.out</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy /project/<span class="op">&lt;</span>project<span class="op">&gt;</span>/<span class="op">&lt;</span>you<span class="op">&gt;</span>/archive arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/archive <span class="dt">\</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--transfers</span> 16 <span class="at">--checkers</span> 16 <span class="dt">\</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--stats</span> 5m <span class="at">--stats-one-line</span> <span class="at">--stats-log-level</span> NOTICE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>--stats</code> flags write a one-line progress report to the job log every five minutes. Without <code>--stats-log-level NOTICE</code>, <code>rclone</code> doesn’t print them at its default log level.</p>
+</section>
+</section>
+<section id="sec-s3-link" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="sec-s3-link"><span class="header-section-number">3.3.5</span> Share a file with a time-limited link</h3>
+<p><code>rclone link</code> creates a presigned URL: anyone with the URL can download that object, without keys, until it expires.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> link <span class="at">--expire</span> 72h arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/results/summary.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>S3 presigned links last at most 7 days; <code>rclone</code> shortens longer requests to 7 days.</p>
+</section>
+<section id="sec-s3-cache" class="level3" data-number="3.3.6">
+<h3 data-number="3.3.6" class="anchored" data-anchor-id="sec-s3-cache"><span class="header-section-number">3.3.6</span> Caching bucket data for jobs</h3>
+<p>Each read from a bucket is a network request. A job that reads the same objects repeatedly, or an array whose tasks each download the same inputs, spends time waiting on the network and adds load to a shared service. Download the data to cluster storage once and have jobs read local files. The bucket stays the source of truth; the local copy is a cache you can delete and rebuild.</p>
+<section id="a-persistent-cache-on-gscratch" class="level4" data-number="3.3.6.1">
+<h4 data-number="3.3.6.1" class="anchored" data-anchor-id="a-persistent-cache-on-gscratch"><span class="header-section-number">3.3.6.1</span> A persistent cache on <code>/gscratch</code></h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">CACHE</span><span class="op">=</span>/gscratch/<span class="va">$USER</span>/s3cache/<span class="op">&lt;</span>bucket<span class="op">&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/inputs <span class="st">"</span><span class="va">$CACHE</span><span class="st">/inputs"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Re-running the command downloads only objects that are new or changed since the last run. Run it before submitting a <span class="gloss" data-def="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles." aria-label="One script run many times with a varying index ($SLURM_ARRAY_TASK_ID), for parameter sweeps and ensembles.">job array</span> (<a href="07-working-with-jobs.html#sec-arrays" class="quarto-xref"><span>Section 7.2</span></a>) and point the tasks at <code>$CACHE</code>; running it inside every task repeats the bucket listing once per task. <code>/gscratch</code> purges files untouched for 90 days (<a href="#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>); the same command rebuilds whatever was purged.</p>
+</section>
+<section id="stage-to-lscratch-for-io-heavy-jobs" class="level4" data-number="3.3.6.2">
+<h4 data-number="3.3.6.2" class="anchored" data-anchor-id="stage-to-lscratch-for-io-heavy-jobs"><span class="header-section-number">3.3.6.2</span> Stage to <code>/lscratch</code> for I/O-heavy jobs</h4>
+<p>Copy inputs to the node-local disk at the start of the job, and send results to the bucket at the end:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=&lt;project&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=s3-stage</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=mb</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --qos=fast</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=s3-stage-%j.out</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> purge</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1 python/3.12.0</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="va">WORK</span><span class="op">=</span>/lscratch/<span class="va">$USER</span>/<span class="va">$SLURM_JOB_ID</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$WORK</span><span class="st">"</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/inputs <span class="st">"</span><span class="va">$WORK</span><span class="st">/inputs"</span>      <span class="co"># or copy from your /gscratch cache</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_model.py <span class="at">--input</span> <span class="st">"</span><span class="va">$WORK</span><span class="st">/inputs"</span> <span class="at">--output</span> <span class="st">"</span><span class="va">$WORK</span><span class="st">/output"</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># keep the results on /gscratch if the upload fails</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy <span class="st">"</span><span class="va">$WORK</span><span class="st">/output"</span> arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/results/<span class="va">$SLURM_JOB_ID</span> <span class="dt">\</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">||</span> <span class="fu">cp</span> <span class="at">-r</span> <span class="st">"</span><span class="va">$WORK</span><span class="st">/output"</span> /gscratch/<span class="va">$USER</span>/output-<span class="va">$SLURM_JOB_ID</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> <span class="st">"</span><span class="va">$WORK</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mount-a-bucket-with-a-local-cache" class="level4" data-number="3.3.6.3">
+<h4 data-number="3.3.6.3" class="anchored" data-anchor-id="mount-a-bucket-with-a-local-cache"><span class="header-section-number">3.3.6.3</span> Mount a bucket with a local cache</h4>
+<p><code>rclone mount</code> presents a bucket as a directory, for programs that need a file path or read only parts of large files. With <code>--vfs-cache-mode full</code>, the parts a program reads are saved to local disk, and later reads of those parts don’t go over the network. Mount inside a job, on node-local disk:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">MNT</span><span class="op">=</span>/lscratch/<span class="va">$USER</span>/<span class="va">$SLURM_JOB_ID</span>/mnt</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="va">CACHE</span><span class="op">=</span>/lscratch/<span class="va">$USER</span>/<span class="va">$SLURM_JOB_ID</span>/cache</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="st">"</span><span class="va">$MNT</span><span class="st">"</span> <span class="st">"</span><span class="va">$CACHE</span><span class="st">"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> mount arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span> <span class="st">"</span><span class="va">$MNT</span><span class="st">"</span> <span class="at">--daemon</span> <span class="at">--read-only</span> <span class="dt">\</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--vfs-cache-mode</span> full <span class="at">--cache-dir</span> <span class="st">"</span><span class="va">$CACHE</span><span class="st">"</span> <span class="at">--vfs-cache-max-size</span> 100G</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">trap</span> <span class="st">'fusermount3 -u "$MNT"; rm -rf "/lscratch/$USER/$SLURM_JOB_ID"'</span> EXIT</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze.py <span class="st">"</span><span class="va">$MNT</span><span class="st">/inputs/era5/2024-07.nc"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Always pass <code>--cache-dir</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The default <code>rclone</code> cache directory is <code>~/.cache/rclone</code>, inside your 50 GB home quota (<a href="#sec-storage" class="quarto-xref"><span>Section 3.1</span></a>). A <code>--vfs-cache-mode full</code> mount without <code>--cache-dir</code> can fill home. <code>--vfs-cache-max-size</code> limits how large the cache grows.</p>
+</div>
+</div>
+<p>Use <code>rclone copy</code> when programs read whole files; use a mount when they read small parts of large files, or when downloading everything first isn’t practical.</p>
+</section>
+</section>
+<section id="sec-s3-code" class="level3" data-number="3.3.7">
+<h3 data-number="3.3.7" class="anchored" data-anchor-id="sec-s3-code"><span class="header-section-number">3.3.7</span> From Python, R, and Julia</h3>
+<p>S3 libraries work with ARCC’s service once pointed at the endpoint. Put the keys in the standard AWS environment variables, in a file only you can read:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> ~/.arcc-s3 <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> 600 ~/.arcc-s3</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.arcc-s3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~/.arcc-s3</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">AWS_ACCESS_KEY_ID</span><span class="op">=&lt;</span>access key<span class="op">&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">AWS_SECRET_ACCESS_KEY</span><span class="op">=&lt;</span>secret key<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Run <code>source ~/.arcc-s3</code> in your shell before starting Python, R, or Julia, and in submit scripts that use these libraries. Each example downloads an object into a <code>/gscratch</code> cache the first time it’s requested, reuses the local file after that, and uploads a result. The download goes to a temporary name and is then renamed, so parallel tasks never read a partial file.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>ARCC has tested <code>boto3</code>. Install it with <code>certifi</code> in a virtual environment in project space (<a href="04-software.html#sec-pkgdirs" class="quarto-xref"><span>Section 4.3</span></a>): <code>pip install boto3 certifi</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> boto3</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>s3 <span class="op">=</span> boto3.client(<span class="st">"s3"</span>, endpoint_url<span class="op">=</span><span class="st">"https://s3.arcc.uwyo.edu"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>CACHE <span class="op">=</span> os.path.join(<span class="st">"/gscratch"</span>, os.environ[<span class="st">"USER"</span>], <span class="st">"s3cache"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Local path to s3://bucket/key, downloaded on first use</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cached(bucket, key):</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> os.path.join(CACHE, bucket, key)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(path):</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        os.makedirs(os.path.dirname(path), exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        s3.download_file(bucket, key, path)  <span class="co"># writes a temporary file, then renames it</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> path</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(cached(<span class="st">"&lt;bucket&gt;"</span>, <span class="st">"inputs/stations.csv"</span>)) <span class="im">as</span> f:</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    stations <span class="op">=</span> f.read()</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>s3.upload_file(<span class="st">"output/summary.csv"</span>, <span class="st">"&lt;bucket&gt;"</span>, <span class="st">"results/summary.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>CERTIFICATE_VERIFY_FAILED</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Without <code>certifi</code> installed, <code>boto3</code> uses its own bundled list of certificate authorities, which lacks the root that <code>s3.arcc.uwyo.edu</code>’s certificate chains to, and every request fails with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>. Install <code>certifi</code>, or point <code>boto3</code> at the system list with <code>export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt</code>.</p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>ARCC has tested <code>aws.s3</code>. Install it with <code>install.packages("aws.s3")</code> after setting <code>R_LIBS_USER</code> (<a href="04-software.html#sec-pkgdirs" class="quarto-xref"><span>Section 4.3</span></a>).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(aws.s3)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AWS_S3_ENDPOINT =</span> <span class="st">"s3.arcc.uwyo.edu"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cache <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"/gscratch"</span>, <span class="fu">Sys.getenv</span>(<span class="st">"USER"</span>), <span class="st">"s3cache"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Local path to s3://bucket/key, downloaded on first use</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>cached <span class="ot">&lt;-</span> <span class="cf">function</span>(bucket, key) {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(cache, bucket, key)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(path)) {</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dir.create</span>(<span class="fu">dirname</span>(path), <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    tmp <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path, <span class="st">".part"</span>, <span class="fu">Sys.getpid</span>())</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">save_object</span>(key, <span class="at">bucket =</span> bucket, <span class="at">file =</span> tmp, <span class="at">region =</span> <span class="st">""</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.rename</span>(tmp, path)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  path</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>stations <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">cached</span>(<span class="st">"&lt;bucket&gt;"</span>, <span class="st">"inputs/stations.csv"</span>))</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="fu">put_object</span>(<span class="at">file =</span> <span class="st">"output/summary.csv"</span>, <span class="at">object =</span> <span class="st">"results/summary.csv"</span>,</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">bucket =</span> <span class="st">"&lt;bucket&gt;"</span>, <span class="at">region =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>region = ""</code> is required: with the default region, <code>aws.s3</code> sends requests to <code>us-east-1.s3.arcc.uwyo.edu</code> instead of the endpoint.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><code>AWSS3.jl</code> provides the S3 operations. <code>Minio.jl</code> provides <code>MinioConfig</code>, an AWS.jl configuration for S3-compatible servers; it is named for MinIO, another S3 server, and works with ARCC’s Ceph gateway. Install both with <code>] add AWSS3 Minio</code> after setting <code>JULIA_DEPOT_PATH</code> (<a href="04-software.html#sec-pkgdirs" class="quarto-xref"><span>Section 4.3</span></a>).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">AWSS3</span>, <span class="bu">Minio</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>cfg <span class="op">=</span> <span class="fu">MinioConfig</span>(<span class="st">"https://s3.arcc.uwyo.edu"</span>;</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    username<span class="op">=</span><span class="cn">ENV</span>[<span class="st">"AWS_ACCESS_KEY_ID"</span>],</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    password<span class="op">=</span><span class="cn">ENV</span>[<span class="st">"AWS_SECRET_ACCESS_KEY"</span>],</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> CACHE <span class="op">=</span> <span class="fu">joinpath</span>(<span class="st">"/gscratch"</span>, <span class="cn">ENV</span>[<span class="st">"USER"</span>], <span class="st">"s3cache"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Local path to s3://bucket/key, downloaded on first use</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">cached</span>(bucket, key)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> <span class="fu">joinpath</span>(CACHE, bucket, key)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> !<span class="fu">isfile</span>(path)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mkpath</span>(<span class="fu">dirname</span>(path))</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        tmp <span class="op">=</span> <span class="st">"</span><span class="sc">$</span>path<span class="st">.part</span><span class="sc">$</span>(<span class="fu">getpid</span>())<span class="st">"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">s3_get_file</span>(cfg, bucket, key, tmp)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mv</span>(tmp, path; force<span class="op">=</span><span class="cn">true</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> path</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> <span class="fu">read</span>(<span class="fu">cached</span>(<span class="st">"&lt;bucket&gt;"</span>, <span class="st">"inputs/stations.csv"</span>), <span class="dt">String</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="fu">s3_put</span>(cfg, <span class="st">"&lt;bucket&gt;"</span>, <span class="st">"results/summary.csv"</span>, <span class="fu">read</span>(<span class="st">"output/summary.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <p>Next: making software available, starting with the module system (<a href="04-software.html#sec-modules" class="quarto-xref"><span>Section 4.1</span></a>).</p>
 
 

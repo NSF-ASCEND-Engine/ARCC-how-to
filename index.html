@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Josh Day (Rallypoint One)">
-<meta name="dcterms.date" content="2026-07-28">
+<meta name="dcterms.date" content="2026-09-14">
 
 <title>Getting Started on ARCC MedicineBow</title>
 <style>
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dd1a08d91448376eafec114c07ff0dc1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1ec15b09a77a06bb5b9882e46ae3df3b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 28, 2026</p>
+      <p class="date">September 14, 2026</p>
     </div>
   </div>
   
@@ -262,7 +262,7 @@ This is not an official ARCC document
 <ol type="1">
 <li><strong>Getting started on the cluster</strong> — what an HPC cluster is, how to request an account, and first login through the portal and SSH keys.</li>
 <li><strong>Linux essentials</strong> — the minimum shell you need: moving around, editing files, and keeping work alive across a dropped connection with <code>tmux</code>.</li>
-<li><strong>Storage and moving data</strong> — the three filesystems (and the fact that nothing is backed up), plus Globus, <code>rsync</code>, and <code>rclone</code> for transfers.</li>
+<li><strong>Storage and moving data</strong> — the three filesystems (and the fact that nothing is backed up), Globus, <code>rsync</code>, and <code>rclone</code> for transfers, and ARCC’s S3 <span class="gloss" data-def="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up." aria-label="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up.">object storage</span>: uploading, downloading, and caching <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span> data for jobs.</li>
 <li><strong>Software: <span class="gloss" data-def="The module system that loads specific software versions into your shell on demand." aria-label="The module system that loads specific software versions into your shell on demand.">modules</span>, conda, and containers</strong> — loading software with Lmod, using conda without filling your home directory, and running containers with Apptainer.</li>
 <li><strong>Running jobs with Slurm</strong> — why a scheduler exists, the anatomy of a <span class="gloss" data-def="A job submitted as a script with sbatch that runs unattended when scheduled." aria-label="A job submitted as a script with sbatch that runs unattended when scheduled.">batch job</span>, and asking for the right resources.</li>
 <li><strong>Partitions, QOS, and queue times</strong> — which hardware and service tier to choose, measured wait times, and how job <span class="gloss" data-def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)." aria-label="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200).">priority</span> is actually computed here.</li>
