@@ -29,6 +29,19 @@ du -sh * | sort -h         # what's eating my quota here?
 | `/project/<project>/software` | +250 GB | put conda/containers here |
 | `/lscratch` | node-local | **wiped at job end** |
 
+### S3 buckets
+
+Endpoint `https://s3.arcc.uwyo.edu`; one-time `rclone` setup in @sec-s3-rclone.
+
+```bash
+module load gcc/14.2.0 rclone/1.63.1
+rclone lsd arccs3:                                 # list buckets
+rclone copy <dir> arccs3:<bucket>/<prefix> -P      # upload new/changed files
+rclone copy arccs3:<bucket>/<prefix> <dir> -P      # download, or refresh a cache
+rclone check <dir> arccs3:<bucket>/<prefix>        # confirm a transfer
+rclone link --expire 72h arccs3:<bucket>/<key>     # time-limited download link
+```
+
 ### Modules
 
 ```bash
@@ -219,6 +232,24 @@ Conda in `/home`. Move envs to `/project/<project>/software` via `~/.condarc`, a
 Your code isn't actually on the GPU. Verify the framework sees CUDA; in a container, you need
 `--nv` (@sec-gpu).
 
+### S3 buckets
+
+**`InvalidAccessKeyId` or `SignatureDoesNotMatch` from `rclone`.**
+The access key (first error) or secret key (second) in the `arccs3` remote is wrong. Repeat the
+`rclone config create` step with the keys ARCC issued; it overwrites the remote
+(@sec-s3-rclone).
+
+**Python `boto3` fails with `SSL: CERTIFICATE_VERIFY_FAILED`.**
+Install `certifi` in the same environment, or
+`export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt` (@sec-s3-code).
+
+**`pathfinder.arcc.uwyo.edu` times out.**
+That is the service's old name. Use the endpoint `https://s3.arcc.uwyo.edu` (@sec-s3).
+
+**Home filled up while a bucket was mounted.**
+`rclone mount` caches in `~/.cache/rclone` unless told otherwise. Unmount, delete that
+directory, and pass `--cache-dir` on `/lscratch` or `/gscratch` (@sec-s3-cache).
+
 ### Still stuck?
 
 Email **`arcc-help@uwyo.edu`** with your **job ID**, the submit script, and the error. Or
@@ -248,6 +279,10 @@ Plain-language definitions of the terms this book uses.
 **Batch job**
 : A job submitted as a script with `sbatch` that runs unattended when scheduled. The normal way
   to run work. See @sec-anatomy.
+
+**Bucket**
+: A named container of objects in S3 object storage; an object is addressed as
+  `<bucket>/<key>`. See @sec-s3.
 
 **Checkpoint**
 : A periodic save of a job's state so it can *resume* instead of *restart* after a preemption,
@@ -304,6 +339,11 @@ Plain-language definitions of the terms this book uses.
 **MPI**
 : Message Passing Interface — the standard for a single parallel program spanning many cores or
   nodes that communicate. Launched with `srun`. Contrast with job arrays. See @sec-ladder.
+
+**Object storage (S3)**
+: Storage reached over HTTPS with an access key and secret key, holding whole-file objects in
+  buckets instead of files in a directory tree. ARCC's service is at `s3.arcc.uwyo.edu`. Not
+  backed up. See @sec-s3.
 
 **OnDemand (Open OnDemand)**
 : The web portal at `medicinebow.arcc.uwyo.edu` — file browser, terminal, and interactive apps.

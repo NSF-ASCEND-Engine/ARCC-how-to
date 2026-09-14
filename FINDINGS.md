@@ -277,6 +277,36 @@ unmistakable Spack fingerprint.
 - **No dedicated DTN** appears anywhere in the docs; transfers go through the login nodes, or
   through Globus.
 
+### ARCC S3 object storage **[LIVE, 2026-09-14]** + **[DOCS]**
+
+- **[LIVE]** Endpoint `https://s3.arcc.uwyo.edu` → `server: Ceph Object Gateway (squid)`.
+  Reachable from `mblog2` and compute node `mbcpu-001`. Cert `*.s3.arcc.uwyo.edu` (InCommon →
+  emSign Root CA - G1); wildcard DNS for virtual-host bucket names. Public DNS: 129.72.9.94.
+- **[LIVE]** `pathfinder.arcc.uwyo.edu` (the old name, still used on the wiki) resolves, but
+  port 443 times out from the cluster. The current wiki S3 pages never state an endpoint.
+- **[LIVE]** `rclone/1.63.1` (needs `gcc/13.2.0` or `14.2.0`) with `provider=Ceph` reaches the
+  endpoint; dummy keys → `InvalidAccessKeyId` (403). `rclone config create` writes a 0600
+  `~/.config/rclone/rclone.conf` and overwrites an existing remote of the same name. `--stats`
+  output only appears at the default log level with `--stats-log-level NOTICE`.
+- **[LIVE]** `rclone mount` (FUSE) works on login and compute nodes (compute nodes have
+  `fusermount3` only). Default `--cache-dir` is `~/.cache/rclone`, in home.
+- **[LIVE]** `/lscratch` on compute nodes is a world-writable sticky directory (3.5 TB NVMe on
+  `mbcpu-001`); Slurm creates no per-job directory (`TMPDIR=/tmp`). User-created
+  subdirectories from earlier jobs were still present, which conflicts with "wiped at the end of
+  every job".
+- **[LIVE]** Clients: no `aws`, `s3cmd`, `s5cmd`, `mc`, or Python `boto3` installed. pip `boto3`
+  without `certifi` fails TLS verification (botocore's bundled CA list has no emSign root);
+  installing `certifi` or setting `AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt` fixes it.
+  R `aws.s3` needs `region=""` (the default region sends requests to
+  `us-east-1.s3.arcc.uwyo.edu`). Julia `AWSS3` + `Minio.MinioConfig` works unchanged.
+- **[LIVE]** Interactive `srun` is rejected under `--qos=fast`; it requires `interactive` or
+  `debug`.
+- **[DOCS]** Request through ARCC's research project request form, noting S3 in the
+  description. Keys arrive through a temporary link (active a few days). ARCC creates one
+  bucket; the keys can create one more (2 total by default). "S3 itself is not backed up."
+  Hardware-cost pricing (ARCC Cost Policies page). Supported clients: `rclone`, MSP360 Explorer;
+  best-effort: Cyberduck, Transmit, `s3cmd`. Tested packages: `boto3`, `aws.s3`.
+
 ---
 
 ## 7. Build environment for this book

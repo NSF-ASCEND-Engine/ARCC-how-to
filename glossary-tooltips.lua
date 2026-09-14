@@ -61,6 +61,10 @@ local ENTRIES = {
    def="Out Of Memory — when a job exceeds its memory reservation and is killed. Fix by raising --mem."},
   {key="priority",    variants={"priority"},
    def="The score that orders pending jobs; on MedicineBow dominated by QOS (weight 200)."},
+  {key="bucket",      variants={"buckets","bucket"},
+   def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>."},
+  {key="object-storage", variants={"object storage","object store"},
+   def="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up."},
 }
 
 -- Flatten to a lookup list of {pat=lowercased, key, def}, longest first so

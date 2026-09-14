@@ -1,6 +1,7 @@
 # Storage and moving data
 
-The three filesystems, what each one promises, and how to get data in and out.
+The three filesystems, what each one promises, how to get data in and out, and ARCC's S3 object
+storage.
 
 ## Where your data lives {#sec-storage}
 
@@ -12,8 +13,9 @@ There *are* snapshots (point-in-time copies; within about 20 days you can ask
 `arcc-help@uwyo.edu` to restore from one), but they live on
 the **same storage array** as your live data — if the array fails, the snapshots fail with
 it. Snapshots protect against accidental deletion, not hardware loss. Anything you can't
-afford to lose needs a copy elsewhere: your institution's storage, a cloud bucket, or the
-separate **Alcova** service, which does have real nightly backups.
+afford to lose needs a copy elsewhere: your institution's storage, a cloud bucket, an ARCC S3
+bucket (separate hardware, but also not backed up; @sec-s3), or the separate **Alcova**
+service, which does have real nightly backups.
 
 ### The three filesystems
 
@@ -88,7 +90,8 @@ The conda chapter (@sec-conda) shows how.
 |---|---|
 | Hundreds of GB / TB, or must-not-corrupt datasets | **Globus** |
 | A few files, a script, a config | `scp` or `rsync` over SSH |
-| To/from cloud storage (S3, Google Drive, etc.) | `rclone` |
+| To/from ARCC's S3 buckets | `rclone` (@sec-s3) |
+| To/from other cloud storage (AWS S3, Google Drive, etc.) | `rclone` |
 | Drag-and-drop a handful of files in a browser | Portal → Files |
 
 There is **no dedicated data-transfer node (DTN)** — CLI transfers go through the login
@@ -154,12 +157,394 @@ rclone copy myremote:bucket/path/ ./mydata/  # copy down
 ```
 
 `rclone` verifies and retries, and handles many small files far better than a loop of `scp`s.
+For ARCC's own S3 service — setup, caching data for jobs, and access from Python, R, and Julia
+— see @sec-s3.
 
 ### A quick decision guide
 
 - **Moving your project's primary dataset onto the cluster?** Globus.
 - **Iterating on a submit script from your laptop?** `rsync` (or edit in the portal).
-- **Pulling results into a cloud bucket for a collaborator?** `rclone`.
-- **External collaborator without Globus?** Ask your UW PI about a guest collection.
+- **Pulling results into a cloud bucket for a collaborator?** `rclone`; for ARCC's S3 service,
+  see @sec-s3.
+- **External collaborator without Globus?** Ask your UW PI about a guest collection, or share
+  files from an ARCC S3 bucket with time-limited links (@sec-s3-link).
+
+## ARCC S3 object storage {#sec-s3}
+
+ARCC runs an S3-compatible object store on hardware separate from the cluster filesystems. You
+reach it over HTTPS with an access key and a secret key: from login nodes, from compute nodes
+inside jobs, and from machines off the cluster. ARCC suggests it for sharing data with
+collaborators outside UW. This section covers getting a bucket, moving data with `rclone`,
+caching bucket data for jobs, and reading and writing from Python, R, and Julia.
+
+::: {.callout-note}
+## Endpoint: `https://s3.arcc.uwyo.edu`
+The service is a Ceph Object Gateway at **`https://s3.arcc.uwyo.edu`**, checked from login and
+compute nodes in September 2026. ARCC's pages also call the service **Pathfinder**; the
+hostname `pathfinder.arcc.uwyo.edu` does not respond from the cluster. If ARCC gives you a
+different endpoint with your keys, use theirs.
+:::
+
+### How a bucket differs from `/project`
+
+A **bucket** holds **objects**: a file's bytes stored under a key such as
+`inputs/era5/2024-07.nc`. There are no directories; the slashes are part of the key, and tools
+display them as folders. Programs reach objects through an S3 client or library rather than a
+file path (except through a mount, @sec-s3-cache), and an object is replaced whole rather than
+edited in place.
+
+| | `/project/<project>` | ARCC S3 bucket |
+|---|---|---|
+| Access | file path | S3 client or library, with keys |
+| Reachable from | the cluster | the cluster and off-cluster machines |
+| Modify part of a file | yes | no — objects are replaced whole |
+| Hardware | cluster storage array (shared with home and scratch) | separate Ceph cluster |
+| Backed up | no | no |
+| Cost | included with the project | charged at ARCC's hardware-cost rate |
+| How to get it | comes with the project | separate request (below) |
+
+Typical uses:
+
+- A second copy of results on hardware separate from home, project, and scratch.
+- Sharing data with collaborators outside UW, including those on ARCC-Only accounts that can't
+  use Globus (@sec-account).
+- Time-limited download links for individual files (@sec-s3-link).
+- A reference copy of an input dataset that jobs pull from and people off the cluster can also
+  read.
+
+::: {.callout-warning}
+## S3 is not backed up either
+ARCC states that the S3 service is not backed up. A copy in S3 is on different hardware from
+home, project, and scratch, so it is not lost if the cluster's storage array fails, but it is
+still a single copy. Data you can't regenerate needs a copy outside ARCC as well.
+:::
+
+### Getting a bucket and keys
+
+1. **Request it** with ARCC's research project request form, and state in the description that
+   you are requesting the S3 service. ASCEND/ARID performers: ask your team or Virginia
+   Iglesias (@sec-account) first whether your project already has a bucket.
+2. **Save the keys when they arrive.** After approval, ARCC replies with a temporary link,
+   active for a few days, to an **access key** and a **secret key**. Store both in a password
+   manager. Anyone with both keys has full access to your buckets.
+3. **Buckets:** ARCC creates one bucket for the project, and your keys can create one more (two
+   total). Ask ARCC if you need more.
+
+Charges cover hardware cost only; ARCC and UW's Office of Research and Economic Development
+subsidize staff and datacenter costs. Rates are in the
+[ARCC Cost Policies](https://www.uwyo.edu/arcc/policies/costpolicy.html).
+
+On a laptop, ARCC supports `rclone` and MSP360 Explorer (a Windows/macOS GUI); Cyberduck,
+Transmit, and `s3cmd` are best-effort.
+
+### Set up `rclone` once {#sec-s3-rclone}
+
+`rclone` is installed as a module and is ARCC's supported command-line client. Create a remote
+named `arccs3`. Reading the keys with `read` keeps them out of your shell history:
+
+```bash
+module load gcc/14.2.0 rclone/1.63.1
+
+read -rp  "Access key: " AK
+read -rsp "Secret key: " SK; echo
+rclone config create arccs3 s3 provider=Ceph endpoint=https://s3.arcc.uwyo.edu \
+    access_key_id="$AK" secret_access_key="$SK"
+unset AK SK
+```
+
+This writes the remote to `~/.config/rclone/rclone.conf`, with permissions that let only you
+read it. The keys are stored there in plain text; don't copy that file into a Git repository or
+a shared directory. On a laptop, `rclone config` prompts for the same values: storage type
+`s3`, provider `Ceph`, your two keys, and the endpoint.
+
+Check the connection:
+
+```bash
+rclone lsd arccs3:                 # your buckets
+rclone lsf arccs3:<bucket>         # top level of a bucket
+rclone size arccs3:<bucket>        # object count and total size
+```
+
+`InvalidAccessKeyId` means the access key is wrong; `SignatureDoesNotMatch` means the secret key
+is wrong. Run the `rclone config create` step again with the right keys; it overwrites the
+remote.
+
+### Upload and download
+
+A remote path is `arccs3:<bucket>/<key prefix>`. `rclone copy` sends only files that are missing
+or differ (by size and modification time) at the destination, so re-running an interrupted copy
+skips what already arrived.
+
+```bash
+# upload a directory
+rclone copy /project/<project>/<you>/results arccs3:<bucket>/results -P
+
+# download a prefix
+rclone copy arccs3:<bucket>/inputs/era5 /gscratch/$USER/era5 -P
+
+# one file, to an exact key
+rclone copyto summary.csv arccs3:<bucket>/results/summary.csv
+
+# after a large transfer, confirm both sides match
+rclone check /project/<project>/<you>/results arccs3:<bucket>/results
+```
+
+`-P` shows live progress.
+
+::: {.callout-warning}
+## `rclone sync` deletes files
+`rclone sync SRC DST` makes `DST` match `SRC`, **deleting** anything in `DST` that isn't in
+`SRC`. With the arguments reversed, it deletes the data you meant to keep. Use `copy` unless you
+need deletions, and run `sync` with `--dry-run` first.
+:::
+
+#### Large transfers
+
+- **Run them in a job**, not on a login node — there is no data-transfer node
+  (@sec-moving-data), and compute nodes can reach the S3 endpoint.
+- **Many small files:** raise `--transfers` (files in parallel, default 4) and `--checkers`
+  (comparisons in parallel, default 8). Each object is a separate HTTPS request, so for hundreds
+  of thousands of small files, pack them into a `tar` archive first.
+- **A few large files:** raise `--s3-chunk-size` (default 5 MiB) and `--s3-upload-concurrency`
+  (default 4) to send more of each file in parallel. `rclone` holds `--s3-upload-concurrency`
+  chunks in memory for each file it is transferring, so size `--mem` to match.
+
+A transfer job:
+
+```bash
+#!/bin/bash
+#SBATCH --account=<project>
+#SBATCH --job-name=s3-upload
+#SBATCH --partition=mb
+#SBATCH --qos=fast
+#SBATCH --time=08:00:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --output=s3-upload-%j.out
+
+module purge
+module load gcc/14.2.0 rclone/1.63.1
+
+rclone copy /project/<project>/<you>/archive arccs3:<bucket>/archive \
+    --transfers 16 --checkers 16 \
+    --stats 5m --stats-one-line --stats-log-level NOTICE
+```
+
+The `--stats` flags write a one-line progress report to the job log every five minutes. Without
+`--stats-log-level NOTICE`, `rclone` doesn't print them at its default log level.
+
+### Share a file with a time-limited link {#sec-s3-link}
+
+`rclone link` creates a presigned URL: anyone with the URL can download that object, without
+keys, until it expires.
+
+```bash
+rclone link --expire 72h arccs3:<bucket>/results/summary.csv
+```
+
+S3 presigned links last at most 7 days; `rclone` shortens longer requests to 7 days.
+
+### Caching bucket data for jobs {#sec-s3-cache}
+
+Each read from a bucket is a network request. A job that reads the same objects repeatedly, or
+an array whose tasks each download the same inputs, spends time waiting on the network and adds
+load to a shared service. Download the data to cluster storage once and have jobs read local
+files. The bucket stays the source of truth; the local copy is a cache you can delete and
+rebuild.
+
+#### A persistent cache on `/gscratch`
+
+```bash
+CACHE=/gscratch/$USER/s3cache/<bucket>
+rclone copy arccs3:<bucket>/inputs "$CACHE/inputs"
+```
+
+Re-running the command downloads only objects that are new or changed since the last run. Run it
+before submitting a job array (@sec-arrays) and point the tasks at `$CACHE`; running it inside
+every task repeats the bucket listing once per task. `/gscratch` purges files untouched for 90
+days (@sec-storage); the same command rebuilds whatever was purged.
+
+#### Stage to `/lscratch` for I/O-heavy jobs
+
+Copy inputs to the node-local disk at the start of the job, and send results to the bucket at
+the end:
+
+```bash
+#!/bin/bash
+#SBATCH --account=<project>
+#SBATCH --job-name=s3-stage
+#SBATCH --partition=mb
+#SBATCH --qos=fast
+#SBATCH --time=04:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --output=s3-stage-%j.out
+
+module purge
+module load gcc/14.2.0 rclone/1.63.1 python/3.12.0
+
+WORK=/lscratch/$USER/$SLURM_JOB_ID
+mkdir -p "$WORK"
+
+rclone copy arccs3:<bucket>/inputs "$WORK/inputs"      # or copy from your /gscratch cache
+python run_model.py --input "$WORK/inputs" --output "$WORK/output"
+
+# keep the results on /gscratch if the upload fails
+rclone copy "$WORK/output" arccs3:<bucket>/results/$SLURM_JOB_ID \
+    || cp -r "$WORK/output" /gscratch/$USER/output-$SLURM_JOB_ID
+rm -rf "$WORK"
+```
+
+#### Mount a bucket with a local cache
+
+`rclone mount` presents a bucket as a directory, for programs that need a file path or read only
+parts of large files. With `--vfs-cache-mode full`, the parts a program reads are saved to local
+disk, and later reads of those parts don't go over the network. Mount inside a job, on
+node-local disk:
+
+```bash
+MNT=/lscratch/$USER/$SLURM_JOB_ID/mnt
+CACHE=/lscratch/$USER/$SLURM_JOB_ID/cache
+mkdir -p "$MNT" "$CACHE"
+
+rclone mount arccs3:<bucket> "$MNT" --daemon --read-only \
+    --vfs-cache-mode full --cache-dir "$CACHE" --vfs-cache-max-size 100G
+trap 'fusermount3 -u "$MNT"; rm -rf "/lscratch/$USER/$SLURM_JOB_ID"' EXIT
+
+python analyze.py "$MNT/inputs/era5/2024-07.nc"
+```
+
+::: {.callout-important}
+## Always pass `--cache-dir`
+The default `rclone` cache directory is `~/.cache/rclone`, inside your 50 GB home quota
+(@sec-storage). A `--vfs-cache-mode full` mount without `--cache-dir` can fill home.
+`--vfs-cache-max-size` limits how large the cache grows.
+:::
+
+Use `rclone copy` when programs read whole files; use a mount when they read small parts of
+large files, or when downloading everything first isn't practical.
+
+### From Python, R, and Julia {#sec-s3-code}
+
+S3 libraries work with ARCC's service once pointed at the endpoint. Put the keys in the standard
+AWS environment variables, in a file only you can read:
+
+```bash
+touch ~/.arcc-s3 && chmod 600 ~/.arcc-s3
+nano ~/.arcc-s3
+```
+
+```bash
+# ~/.arcc-s3
+export AWS_ACCESS_KEY_ID=<access key>
+export AWS_SECRET_ACCESS_KEY=<secret key>
+```
+
+Run `source ~/.arcc-s3` in your shell before starting Python, R, or Julia, and in submit scripts
+that use these libraries. Each example downloads an object into a `/gscratch` cache the first
+time it's requested, reuses the local file after that, and uploads a result. The download goes
+to a temporary name and is then renamed, so parallel tasks never read a partial file.
+
+::: {.panel-tabset}
+
+#### Python
+
+ARCC has tested `boto3`. Install it with `certifi` in a virtual environment in project space
+(@sec-pkgdirs): `pip install boto3 certifi`.
+
+```python
+import os
+import boto3
+
+s3 = boto3.client("s3", endpoint_url="https://s3.arcc.uwyo.edu")
+CACHE = os.path.join("/gscratch", os.environ["USER"], "s3cache")
+
+# Local path to s3://bucket/key, downloaded on first use
+def cached(bucket, key):
+    path = os.path.join(CACHE, bucket, key)
+    if not os.path.exists(path):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        s3.download_file(bucket, key, path)  # writes a temporary file, then renames it
+    return path
+
+with open(cached("<bucket>", "inputs/stations.csv")) as f:
+    stations = f.read()
+
+s3.upload_file("output/summary.csv", "<bucket>", "results/summary.csv")
+```
+
+::: {.callout-note}
+## `CERTIFICATE_VERIFY_FAILED`
+Without `certifi` installed, `boto3` uses its own bundled list of certificate authorities, which
+lacks the root that `s3.arcc.uwyo.edu`'s certificate chains to, and every request fails with
+`SSL: CERTIFICATE_VERIFY_FAILED`. Install `certifi`, or point `boto3` at the system list with
+`export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt`.
+:::
+
+#### R
+
+ARCC has tested `aws.s3`. Install it with `install.packages("aws.s3")` after setting
+`R_LIBS_USER` (@sec-pkgdirs).
+
+```r
+library(aws.s3)
+Sys.setenv(AWS_S3_ENDPOINT = "s3.arcc.uwyo.edu")
+cache <- file.path("/gscratch", Sys.getenv("USER"), "s3cache")
+
+# Local path to s3://bucket/key, downloaded on first use
+cached <- function(bucket, key) {
+  path <- file.path(cache, bucket, key)
+  if (!file.exists(path)) {
+    dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
+    tmp <- paste0(path, ".part", Sys.getpid())
+    save_object(key, bucket = bucket, file = tmp, region = "")
+    file.rename(tmp, path)
+  }
+  path
+}
+
+stations <- read.csv(cached("<bucket>", "inputs/stations.csv"))
+
+put_object(file = "output/summary.csv", object = "results/summary.csv",
+           bucket = "<bucket>", region = "")
+```
+
+`region = ""` is required: with the default region, `aws.s3` sends requests to
+`us-east-1.s3.arcc.uwyo.edu` instead of the endpoint.
+
+#### Julia
+
+`AWSS3.jl` provides the S3 operations. `Minio.jl` provides `MinioConfig`, an AWS.jl
+configuration for S3-compatible servers; it is named for MinIO, another S3 server, and works
+with ARCC's Ceph gateway. Install both with `] add AWSS3 Minio` after setting
+`JULIA_DEPOT_PATH` (@sec-pkgdirs).
+
+```julia
+using AWSS3, Minio
+
+cfg = MinioConfig("https://s3.arcc.uwyo.edu";
+    username=ENV["AWS_ACCESS_KEY_ID"],
+    password=ENV["AWS_SECRET_ACCESS_KEY"],
+)
+const CACHE = joinpath("/gscratch", ENV["USER"], "s3cache")
+
+# Local path to s3://bucket/key, downloaded on first use
+function cached(bucket, key)
+    path = joinpath(CACHE, bucket, key)
+    if !isfile(path)
+        mkpath(dirname(path))
+        tmp = "$path.part$(getpid())"
+        s3_get_file(cfg, bucket, key, tmp)
+        mv(tmp, path; force=true)
+    end
+    return path
+end
+
+stations = read(cached("<bucket>", "inputs/stations.csv"), String)
+
+s3_put(cfg, "<bucket>", "results/summary.csv", read("output/summary.csv"))
+```
+
+:::
 
 Next: making software available, starting with the module system (@sec-modules).

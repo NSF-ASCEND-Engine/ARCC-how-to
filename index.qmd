@@ -47,7 +47,8 @@ The chapters run in the order you'll need them:
 2. **Linux essentials** — the minimum shell you need: moving around, editing files, and keeping
    work alive across a dropped connection with `tmux`.
 3. **Storage and moving data** — the three filesystems (and the fact that nothing is backed
-   up), plus Globus, `rsync`, and `rclone` for transfers.
+   up), Globus, `rsync`, and `rclone` for transfers, and ARCC's S3 object storage: uploading,
+   downloading, and caching bucket data for jobs.
 4. **Software: modules, conda, and containers** — loading software with Lmod, using conda
    without filling your home directory, and running containers with Apptainer.
 5. **Running jobs with Slurm** — why a scheduler exists, the anatomy of a batch job, and asking
