@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Josh Day (Rallypoint One)">
-<meta name="dcterms.date" content="2026-09-14">
+<meta name="dcterms.date" content="2026-09-25">
 
 <title>Getting Started on ARCC MedicineBow</title>
 <style>
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1ec15b09a77a06bb5b9882e46ae3df3b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-51e0cb7b58d25a667d26bd4dfaa5ecc7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2026</p>
+      <p class="date">September 25, 2026</p>
     </div>
   </div>
   
@@ -249,7 +249,8 @@ This is not an official ARCC document
 <section id="quick-orientation" class="level2">
 <h2 class="anchored" data-anchor-id="quick-orientation">Quick orientation</h2>
 <ol type="1">
-<li><strong>Request your account by emailing Virginia Iglesias</strong> (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>), who coordinates ASCEND/ARID access. (See <a href="chapters/01-getting-started.html#sec-account" class="quarto-xref"><span>Getting an account</span></a>.)</li>
+<li><strong>Submit an <a href="https://uwyo-erx.my.site.com/ERx_Forms__Portal_Register">application</a></strong></li>
+<li><strong>Request access to a project by emailing Josh Day and/or Virginia Iglesias</strong> (<a href="mailto:josh@rallypoint1.com" class="email">josh@rallypoint1.com</a> and <a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>), who coordinates ASCEND/ARID access. (See <a href="chapters/01-getting-started.html#sec-account" class="quarto-xref"><span>Getting an account</span></a>.)</li>
 <li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>. There are <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span>, but they live on the same array. (See <a href="chapters/03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Where your data lives</span></a>.)</li>
 <li><strong>Never run real computation on a <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>.</strong> Log in, then hand work to the scheduler (<span class="gloss" data-def="The scheduler that manages all jobs on the cluster." aria-label="The scheduler that manages all jobs on the cluster.">Slurm</span>) or grab an interactive session. (See <a href="chapters/05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Why a scheduler exists</span></a>.)</li>
 <li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code>. (See <a href="chapters/05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Anatomy of a batch job</span></a>.)</li>
