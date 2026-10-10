@@ -1,20 +1,8 @@
 # Preface {.unnumbered}
 
-A practical guide to getting work done on **MedicineBow**, the University of Wyoming's
-high-performance computing (HPC) cluster, run by the **Advanced Research Computing Center
-(ARCC)**.
-
-It is written for people joining the **ASCEND** engine and its **ARID** program, and
-assumes you are comfortable on a computer but have never used a shared supercomputer. Each
-chapter explains *why* before *how*.
-
-## Why this book exists
-
-The official documentation — the [ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) —
-is good but has gaps and is in places out of date. The content here was written while
-onboarding on the live cluster and cross-checked against the running system in July 2026.
-Where the docs and the machine disagree, this book follows the machine and notes the
-conflict.
+This book serves as an onboarding document for NSF ASCEND Engine performers doing work on
+MedicineBow, the University of Wyoming's high-performance computing (HPC) cluster, run by the
+**Advanced Research Computing Center (ARCC)**.
 
 ::: {.callout-note}
 ## This is not an official ARCC document
@@ -26,8 +14,9 @@ policy at any time. When in doubt, the
 
 ## Quick orientation
 
-1. **Request access to a project by emailing Josh Day and/or Virginia Iglesias** (<josh@rallypoint1.com> and <virginia@innosphere.org>), who
-   coordinates ASCEND/ARID access. (See @sec-account.)
+1. **Request access through the ASCEND PIs.** Ask your project PI to add you, or email Josh
+   Day (<josh@rallypoint1.com>) or Virginia Iglesias (<virginia@innosphere.org>) to request
+   a new project. (See @sec-account.)
 2. **Nothing on the cluster is backed up.** Not home, not project, not scratch. There
    are snapshots, but they live on the same array. (See @sec-storage.)
 3. **Never run real computation on a login node.** Log in, then hand work to the

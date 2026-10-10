@@ -31,7 +31,7 @@ du -sh * | sort -h         # what's eating my quota here?
 
 ### S3 buckets
 
-Endpoint `https://s3.arcc.uwyo.edu`; one-time `rclone` setup in @sec-s3-rclone.
+Endpoint `https://s3.arcc.uwyo.edu`.
 
 ```bash
 module load gcc/14.2.0 rclone/1.63.1
@@ -145,15 +145,16 @@ A symptom-first index to the rest of the book.
 
 **"Permission denied (publickey)" when I `ssh` — it worked before.**
 Your SSH key almost certainly **expired** (they last one year). Regenerate it in the portal's
-SSH Key Manager, unzip into `~/.ssh`, `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*` (@sec-first-login).
+SSH Key Manager, unzip into `~/.ssh`, `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`.
 
 **"Permission denied" on a brand-new setup.**
 Check permissions: `chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`, and make sure you unzipped the key into `~/.ssh`.
 Confirm you're using `medicinebow.arcc.uwyo.edu` and your SSH key hasn't expired.
 
 **I can't get an account at all.**
-Account requests for ASCEND/ARID performers are coordinated through the program — email
-Virginia Iglesias (<virginia@innosphere.org>). See @sec-account.
+Account requests for ASCEND/ARID performers are coordinated through the program — ask your
+project PI, or email Josh Day (<josh@rallypoint1.com>) or Virginia Iglesias
+(<virginia@innosphere.org>). See @sec-account.
 
 **Globus won't let me add the collection.**
 If you're an external collaborator on an **ARCC-Only account**, you can't use Globus. You need
@@ -236,19 +237,18 @@ Your code isn't actually on the GPU. Verify the framework sees CUDA; in a contai
 
 **`InvalidAccessKeyId` or `SignatureDoesNotMatch` from `rclone`.**
 The access key (first error) or secret key (second) in the `arccs3` remote is wrong. Repeat the
-`rclone config create` step with the keys ARCC issued; it overwrites the remote
-(@sec-s3-rclone).
+`rclone config create` step with the keys ARCC issued; it overwrites the remote.
 
 **Python `boto3` fails with `SSL: CERTIFICATE_VERIFY_FAILED`.**
 Install `certifi` in the same environment, or
-`export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt` (@sec-s3-code).
+`export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt`.
 
 **`pathfinder.arcc.uwyo.edu` times out.**
-That is the service's old name. Use the endpoint `https://s3.arcc.uwyo.edu` (@sec-s3).
+That is the service's old name. Use the endpoint `https://s3.arcc.uwyo.edu`.
 
 **Home filled up while a bucket was mounted.**
 `rclone mount` caches in `~/.cache/rclone` unless told otherwise. Unmount, delete that
-directory, and pass `--cache-dir` on `/lscratch` or `/gscratch` (@sec-s3-cache).
+directory, and pass `--cache-dir` on `/lscratch` or `/gscratch`.
 
 ### Still stuck?
 
@@ -282,7 +282,7 @@ Plain-language definitions of the terms this book uses.
 
 **Bucket**
 : A named container of objects in S3 object storage; an object is addressed as
-  `<bucket>/<key>`. See @sec-s3.
+  `<bucket>/<key>`.
 
 **Checkpoint**
 : A periodic save of a job's state so it can *resume* instead of *restart* after a preemption,
@@ -343,11 +343,10 @@ Plain-language definitions of the terms this book uses.
 **Object storage (S3)**
 : Storage reached over HTTPS with an access key and secret key, holding whole-file objects in
   buckets instead of files in a directory tree. ARCC's service is at `s3.arcc.uwyo.edu`. Not
-  backed up. See @sec-s3.
+  backed up.
 
 **OnDemand (Open OnDemand)**
 : The web portal at `medicinebow.arcc.uwyo.edu` — file browser, terminal, and interactive apps.
-  See @sec-first-login.
 
 **OOM (Out Of Memory)**
 : When a job exceeds its memory reservation and is killed. Fix by raising `--mem`. See @sec-fail.

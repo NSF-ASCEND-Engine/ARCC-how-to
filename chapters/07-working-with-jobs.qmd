@@ -239,7 +239,7 @@ When you're done, `exit` the shell to release the allocation and free the cores 
 
 #### Interactive apps in the portal
 
-The web portal (@sec-first-login) offers graphical interactive apps — a full XFCE desktop,
+The web portal (<https://medicinebow.arcc.uwyo.edu>) offers graphical interactive apps — a full XFCE desktop,
 **RStudio**, and **Jupyter** — that launch as scheduled jobs behind the scenes. These handle
 interactive and GPU notebook work without manual `salloc` and port-forwarding.
 

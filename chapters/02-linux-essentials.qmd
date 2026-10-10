@@ -115,7 +115,7 @@ monitoring, an editor you don't want to lose.
 ## Permissions, briefly
 
 You'll occasionally see `chmod` and permission strings like `-rw-r-----`. The main uses are
-fixing your SSH keys (`chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`, from @sec-first-login) and making a script
+fixing your SSH keys (`chmod 700 ~/.ssh && chmod 600 ~/.ssh/*`) and making a script
 executable:
 
 ```bash

@@ -1,27 +1,23 @@
 # Getting started on the cluster
 
-Getting from zero to a shell prompt: what the machine is, how to get an account, and how to log in.
-
 ## What a cluster is {#sec-cluster}
 
 ### Mental model
 
-MedicineBow is not one big computer. It is a few hundred ordinary Linux servers ("nodes")
-wired together, all mounting the same shared filesystems, all managed by a program that
-decides whose job runs where and when. That program is the **scheduler** (here,
-[Slurm](https://slurm.schedmd.com/)). Learning the cluster is mostly learning to work
-*with* the scheduler.
+MedicineBow is a few hundred ordinary Linux servers ("nodes") wired together, all mounting the same
+shared filesystems, all managed by a scheduler ([Slurm](https://slurm.schedmd.com/)) that decides
+whose job runs where and when.
 
 ### Login nodes vs. compute nodes
 
-There are two kinds of machines, and confusing them is the most common beginner mistake.
+There are two kinds of machines:
 
-**Login nodes** (`mblog1`, `mblog2`) are the front door. When you `ssh` in or open a
+1. **Login nodes** (`mblog1`, `mblog2`) are the front door. When you `ssh` in or open a
 terminal in the web portal, you land here. They are shared by everyone at once — dozens of
 people editing files, submitting jobs, and moving data. Use them for lightweight work:
 editing scripts, managing files, compiling small things, submitting and checking jobs.
 
-**Compute nodes** are where computation happens. You never SSH to them directly; you ask
+2. **Compute nodes** are where computation happens. You never SSH to them directly; you ask
 the scheduler for one (or many), and it gives you exclusive, dedicated access for a
 bounded time. The default `mb` nodes have **96 CPU cores and ~1 TB of RAM each**, and the
 GPU nodes carry up to **8 NVIDIA H100s**.
@@ -49,43 +45,10 @@ flowchart LR
 
 ::: {.callout-important}
 ## Don't compute on login nodes
-A heavy job on `mblog1`/`mblog2` — a big simulation, a data-crunching Python script, a
-multi-hour build — slows the machine for everyone logging in. ARCC monitors this and kills
-runaway login-node processes (and emails you).
-
-Rule of thumb: anything that takes more than a couple of minutes, or uses more than a core
-or two, belongs in a Slurm job or an interactive session. See @sec-why-scheduler.
+A big job on `mblog1`/`mblog2` slows the machine for everyone logging in. ARCC monitors this and
+kills runaway login-node processes (and emails you).
 :::
 
-### Why share a machine at all?
-
-If everyone had their own dedicated server, most servers would sit idle while a few people
-occasionally needed far more than one server could give. Pooling the hardware and
-scheduling access means:
-
-- When you need 50 nodes for an ensemble, you can have them (briefly).
-- When you need nothing, someone else uses the hardware you're not using.
-- A fair-share accounting system stops any one person from hogging everything.
-
-In exchange, you sometimes **wait in line** and you have to **describe your work up front**
-(how many cores, how much memory, how long). Most of this book is about making those two
-things painless.
-
-### What MedicineBow is, concretely
-
-MedicineBow is a RHEL 9 Linux cluster. Its hardware is a mix of:
-
-- **General CPU nodes** (the `mb` partition): 25 nodes, 96 cores and ~1 TB RAM each.
-- **GPU nodes**: H100, L40S, A30, A6000, and R6000 flavors — for ML, PINNs, and anything
-  CUDA.
-- **Absorbed older clusters**: the retired *Teton*, *Beartooth*, and *WildIris* clusters
-  now live on as large partitions inside MedicineBow. Teton alone is ~250 nodes.
-- **Investor ("condo") nodes**: hardware bought by specific research groups, which others
-  can borrow when it's idle — but the owner can reclaim it and bump your job (see
-  @sec-preemption).
-
-@sec-partitions covers which hardware to ask for, and @sec-queue-times covers which choices
-leave you waiting versus running now.
 
 ### Where to get help
 
@@ -97,16 +60,42 @@ leave you waiting versus running now.
 
 ## Getting an account {#sec-account}
 
-### How to request an account
+Email **Josh Day** (<josh@rallypoint1.com>) or **Virginia Iglesias**
+(<virginia@innosphere.org>) with:
 
-Access to MedicineBow for ASCEND/ARID performers is coordinated through the program. To
-request an account, email **Virginia Iglesias** (<virginia@innosphere.org>) and mention that
-you're an ASCEND/ARID performer who needs MedicineBow access. She'll arrange for you to be
-added to the project.
+1. Whether this is for an existing project (and which one), or a new one
+2. Project name
+3. Project PI
+4. CPU hours requested
+5. GPU hours requested
+6. Storage needed beyond the 5 TB default, if any
 
-Accounts are tied to a project — your ASCEND/ARID project — which is also the name you type
-into **every job** you run (@sec-anatomy). Confirm your exact project name with Virginia or
-your team; this book writes it as `<project>` in examples, and you substitute your own.
+### Requesting a new project
+
+1. Email **Josh Day** (<josh@rallypoint1.com>) or **Virginia Iglesias**
+(<virginia@innosphere.org>) with the desired:
+ a. Project name (use `/cowy-projectname`)
+ b. Project PI
+ c. CPU hours requested
+ d. GPU hours requested
+ e. Storage needed beyond the 5 TB default, if any
+
+ ASCEND uses a shared `/cowy` project for data sharing between projects, which ARCC will add you to
+ automatically when your `cowy-projectname` is approved.
+
+ 2. PI fills out [new project request](https://uwyo.teamdynamix.com/TDClient/1940/Portal/Requests/Service/55398/New-Project-Request/Request).
+
+### Adding users to a project
+
+As an "Attachment" in the new project form, the PI provides details for each user to be added to the project:
+1. First and last name
+2. Email address
+3. Institution
+4. Phone number
+5. Whether they are a foreign national under the ITAR/EAR definitions.
+
+Alternatively, the PI can request users by contacting <arcc-help@uwyo.edu> with the project name and
+above info for each user.
 
 ### UW accounts vs. ARCC-Only accounts
 
@@ -125,107 +114,5 @@ collaborators:
 ## ARCC-Only accounts and Globus
 External collaborators on ARCC-Only accounts **cannot use Globus**, the recommended way to
 move large datasets (@sec-moving-data). They'll need a *guest collection* set up for them,
-or a UW person to broker transfers. Plan for this early if your data lives at CSU or NCAR.
+or a UW person to broker transfers. Plan for this early if your data lives at CSU, NCAR, etc.
 :::
-
-### The free tier
-
-Each researcher's baseline allocation:
-
-- **100,000 CPU core-hours per year**
-- **20,000 GPU-hours per year**
-
-That is plenty for getting started — 100,000 core-hours is roughly one 96-core node running
-flat out for six weeks. Larger allocations and investor projects exist beyond this.
-Core-hours are counted as (cores × wall-clock hours), a reason not to over-ask for resources
-(@sec-resources).
-
-### The practical checklist
-
-1. Email **Virginia Iglesias** (<virginia@innosphere.org>) to request a MedicineBow account,
-   mentioning that you're an ASCEND/ARID performer.
-2. You'll be added to the project and issued a UW username. Then log in for the first time —
-   see @sec-first-login.
-3. If you're an external (non-UW) collaborator, say so — you'll get an **ARCC-Only** account,
-   which can't use Globus (@sec-moving-data), so ask how you'll move data.
-
-No VPN is required to reach ARCC, on campus or off, so once your account exists you can log
-in from anywhere.
-
-## First login, the portal, and SSH keys {#sec-first-login}
-
-### Two ways in: portal and SSH
-
-MedicineBow has a single hostname that serves both the web portal and SSH:
-`medicinebow.arcc.uwyo.edu`.
-
-- **The web portal** (Open OnDemand) is a browser interface: a file explorer, a terminal,
-  job submission forms, and interactive apps (desktop sessions, RStudio, Jupyter). Start
-  here on day one.
-- **SSH** is the terminal way in, and how you'll work day-to-day once set up. It requires a
-  key you generate through the portal first.
-
-### Step 1 — Log into the portal
-
-Go to <https://medicinebow.arcc.uwyo.edu> and sign in with your UW username and password.
-You'll be prompted for **Duo** two-factor authentication. If you've never set up Duo, do it
-at <https://wyosecure.uwyo.edu>. No VPN is needed.
-
-Once in, note the **Files** menu (browse `/home`, `/project`, `/gscratch`), the **Clusters →
-Shell** option (a terminal in your browser), and the **Interactive Apps** menu.
-
-### Step 2 — Generate your SSH key with the SSH Key Manager
-
-SSH on MedicineBow is **key-and-certificate based, not password based**. Generate a key pair
-through the portal:
-
-1. In the portal, open the **SSH Key Manager**.
-2. Generate a key. It downloads as a zip named after your username.
-3. Unpack it into your local `~/.ssh` and fix permissions:
-
-```bash
-unzip ~/Downloads/<username>.zip -d ~/.ssh
-chmod 700 ~/.ssh && chmod 600 ~/.ssh/*
-ssh-add
-```
-
-Now you can connect from your own terminal:
-
-```bash
-ssh <username>@medicinebow.arcc.uwyo.edu
-```
-
-::: {.callout-important}
-## SSH keys expire after one year
-Roughly a year after setup, your `ssh` stops working — permission denied, no obvious
-reason. The key expired. Go back to the portal's SSH Key Manager, generate a fresh key, and
-unzip it into `~/.ssh` again. This is by design.
-:::
-
-### Step 3 — A comfortable SSH config (optional)
-
-Add this to `~/.ssh/config` on your laptop so you can just type `ssh medbow`:
-
-```
-Host medbow
-    HostName medicinebow.arcc.uwyo.edu
-    User <username>
-    ServerAliveInterval 60
-    ServerAliveCountMax 5
-```
-
-`ServerAliveInterval` sends a small keepalive every 60 seconds so campus or home firewalls
-don't silently drop your connection while you're reading output.
-
-### Which door should I use?
-
-| You want to… | Use |
-|---|---|
-| First-time setup, generate SSH keys | Portal (required) |
-| A quick browser terminal from any machine | Portal → Clusters → Shell |
-| A graphical desktop, RStudio, Jupyter | Portal → Interactive Apps |
-| Everyday scripting, editing, job submission | SSH from your terminal |
-| Drag-and-drop a few files | Portal → Files (for big data, see @sec-moving-data) |
-
-Once you can log in and get a shell prompt, continue to the Linux survival kit (@sec-linux),
-or skip ahead to storage (@sec-storage) and Slurm (@sec-why-scheduler) if you already know a terminal.
