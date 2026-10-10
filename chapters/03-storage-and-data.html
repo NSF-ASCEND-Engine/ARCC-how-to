@@ -254,13 +254,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The three filesystems, what each one promises, how to get data in and out, and <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>’s S3 <span class="gloss" data-def="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up." aria-label="Storage reached over HTTPS with an access key and secret key (the S3 protocol), holding whole-file objects in buckets. ARCC's is at s3.arcc.uwyo.edu. Not backed up.">object storage</span>.</p>
+<p>The three filesystems, what each one promises, how to get data in and out, and <code>/project/cowy</code>, the storage shared across ASCEND projects.</p>
 <section id="sec-storage" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-storage"><span class="header-section-number">3.1</span> Where your data lives</h2>
 <section id="nothing-is-backed-up" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="nothing-is-backed-up"><span class="header-section-number">3.1.1</span> Nothing is backed up</h3>
 <p><strong>Nothing on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span> is backed up. Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>.</strong></p>
-<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies; within about 20 days you can ask <code>arcc-help@uwyo.edu</code> to restore from one), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span>, an ARCC S3 bucket (separate hardware, but also not backed up), or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
+<p>There <em>are</em> <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span> (point-in-time copies; within about 20 days you can ask <code>arcc-help@uwyo.edu</code> to restore from one), but they live on the <strong>same storage array</strong> as your live data — if the array fails, the snapshots fail with it. Snapshots protect against accidental deletion, not hardware loss. Anything you can’t afford to lose needs a copy elsewhere: your institution’s storage, a cloud <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span>, an <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> S3 bucket (separate hardware, but also not backed up), or the separate <strong>Alcova</strong> service, which does have real nightly backups.</p>
 </section>
 <section id="the-three-filesystems" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="the-three-filesystems"><span class="header-section-number">3.1.2</span> The three filesystems</h3>
@@ -400,14 +400,10 @@ Install software into <code>/project/&lt;project&gt;/software</code>, not <code>
 <td><code>scp</code> or <code>rsync</code> over SSH</td>
 </tr>
 <tr class="odd">
-<td>To/from ARCC’s S3 buckets</td>
+<td>To/from cloud storage (AWS S3, Google Drive, etc.)</td>
 <td><code>rclone</code></td>
 </tr>
 <tr class="even">
-<td>To/from other cloud storage (AWS S3, Google Drive, etc.)</td>
-<td><code>rclone</code></td>
-</tr>
-<tr class="odd">
 <td>Drag-and-drop a handful of files in a browser</td>
 <td>Portal → Files</td>
 </tr>
