@@ -58,17 +58,7 @@ kills runaway login-node processes (and emails you).
 | Office hours (Zoom) | Tuesdays, 11am–1pm — bring your actual problem. |
 | [ARCC wiki](https://pages.arcc.uwyo.edu/arcc-wiki/main/) | The official reference docs. |
 
-## Getting an account {#sec-account}
-
-Email **Josh Day** (<josh@rallypoint1.com>) or **Virginia Iglesias**
-(<virginia@innosphere.org>) with:
-
-1. Whether this is for an existing project (and which one), or a new one
-2. Project name
-3. Project PI
-4. CPU hours requested
-5. GPU hours requested
-6. Storage needed beyond the 5 TB default, if any
+## Getting access {#sec-account}
 
 ### Requesting a new project
 
