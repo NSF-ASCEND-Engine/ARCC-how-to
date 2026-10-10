@@ -1,7 +1,7 @@
 # Storage and moving data
 
-The three filesystems, what each one promises, how to get data in and out, and ARCC's S3 object
-storage.
+The three filesystems, what each one promises, how to get data in and out, and `/project/cowy`,
+the storage shared across ASCEND projects.
 
 ## Where your data lives {#sec-storage}
 
@@ -102,8 +102,7 @@ The conda chapter (@sec-conda) shows how.
 |---|---|
 | Hundreds of GB / TB, or must-not-corrupt datasets | **Globus** |
 | A few files, a script, a config | `scp` or `rsync` over SSH |
-| To/from ARCC's S3 buckets | `rclone` |
-| To/from other cloud storage (AWS S3, Google Drive, etc.) | `rclone` |
+| To/from cloud storage (AWS S3, Google Drive, etc.) | `rclone` |
 | Drag-and-drop a handful of files in a browser | Portal → Files |
 
 There is **no dedicated data-transfer node (DTN)** — CLI transfers go through the login

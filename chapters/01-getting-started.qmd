@@ -63,21 +63,23 @@ kills runaway login-node processes (and emails you).
 ### Requesting a new project
 
 1. Email **Josh Day** (<josh@rallypoint1.com>) or **Virginia Iglesias**
-(<virginia@innosphere.org>) with the desired:
- a. Project name (use `/cowy-projectname`)
- b. Project PI
- c. CPU hours requested
- d. GPU hours requested
- e. Storage needed beyond the 5 TB default, if any
+   (<virginia@innosphere.org>) with the desired:
 
- ASCEND uses a shared `/cowy` project for data sharing between projects, which ARCC will add you to
- automatically when your `cowy-projectname` is approved.
+   a. Project name (`cowy-<name>`; its directory will be `/project/cowy-<name>`)
+   b. Project PI
+   c. CPU hours requested
+   d. GPU hours requested
+   e. Storage needed beyond the 5 TB default, if any
 
- 2. PI fills out [new project request](https://uwyo.teamdynamix.com/TDClient/1940/Portal/Requests/Service/55398/New-Project-Request/Request).
+   ASCEND uses a shared `/project/cowy` space for data sharing between projects, which ARCC
+   will add you to automatically when your `cowy-<name>` project is approved.
+
+2. PI fills out [new project request](https://uwyo.teamdynamix.com/TDClient/1940/Portal/Requests/Service/55398/New-Project-Request/Request).
 
 ### Adding users to a project
 
 As an "Attachment" in the new project form, the PI provides details for each user to be added to the project:
+
 1. First and last name
 2. Email address
 3. Institution
