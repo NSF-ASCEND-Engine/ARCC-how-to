@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="s3-buckets" class="level3" data-number="9.1.3">
 <h3 data-number="9.1.3" class="anchored" data-anchor-id="s3-buckets"><span class="header-section-number">9.1.3</span> S3 buckets</h3>
-<p>Endpoint <code>https://s3.arcc.uwyo.edu</code>; one-time <code>rclone</code> setup in <a href="03-storage-and-data.html#sec-s3-rclone" class="quarto-xref"><span>Section 3.3.3</span></a>.</p>
+<p>Endpoint <code>https://s3.arcc.uwyo.edu</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/14.2.0 rclone/1.63.1</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> lsd arccs3:                                 <span class="co"># list buckets</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> copy <span class="op">&lt;</span>dir<span class="op">&gt;</span> arccs3:<span class="op">&lt;</span>bucket<span class="op">&gt;</span>/<span class="op">&lt;</span>prefix<span class="op">&gt;</span> -P      <span class="co"># upload new/changed files</span></span>
@@ -454,9 +454,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A symptom-first index to the rest of the book.</p>
 <section id="login-and-access" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="login-and-access"><span class="header-section-number">9.2.1</span> Login and access</h3>
-<p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code> (<a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>).</p>
+<p><strong>“Permission denied (publickey)” when I <code>ssh</code> — it worked before.</strong> Your SSH key almost certainly <strong>expired</strong> (they last one year). Regenerate it in the portal’s SSH Key Manager, unzip into <code>~/.ssh</code>, <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code>.</p>
 <p><strong>“Permission denied” on a brand-new setup.</strong> Check permissions: <code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/*</code>, and make sure you unzipped the key into <code>~/.ssh</code>. Confirm you’re using <code>medicinebow.arcc.uwyo.edu</code> and your SSH key hasn’t expired.</p>
-<p><strong>I can’t get an account at all.</strong> Account requests for ASCEND/ARID performers are coordinated through the program — email Virginia Iglesias (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>). See <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>.</p>
+<p><strong>I can’t get an account at all.</strong> Account requests for ASCEND/ARID performers are coordinated through the program — ask your project PI, or email Josh Day (<a href="mailto:josh@rallypoint1.com" class="email">josh@rallypoint1.com</a>) or Virginia Iglesias (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>). See <a href="01-getting-started.html#sec-account" class="quarto-xref"><span>Section 1.2</span></a>.</p>
 <p><strong>Globus won’t let me add the collection.</strong> If you’re an external collaborator on an <strong>ARCC-Only account</strong>, you can’t use Globus. You need a UW-side guest collection (<a href="03-storage-and-data.html#sec-moving-data" class="quarto-xref"><span>Section 3.2</span></a>).</p>
 </section>
 <section id="jobs-wont-submit" class="level3" data-number="9.2.2">
@@ -489,10 +489,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="s3-buckets-1" class="level3" data-number="9.2.6">
 <h3 data-number="9.2.6" class="anchored" data-anchor-id="s3-buckets-1"><span class="header-section-number">9.2.6</span> S3 buckets</h3>
-<p><strong><code>InvalidAccessKeyId</code> or <code>SignatureDoesNotMatch</code> from <code>rclone</code>.</strong> The access key (first error) or secret key (second) in the <code>arccs3</code> remote is wrong. Repeat the <code>rclone config create</code> step with the keys <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> issued; it overwrites the remote (<a href="03-storage-and-data.html#sec-s3-rclone" class="quarto-xref"><span>Section 3.3.3</span></a>).</p>
-<p><strong>Python <code>boto3</code> fails with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>.</strong> Install <code>certifi</code> in the same environment, or <code>export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt</code> (<a href="03-storage-and-data.html#sec-s3-code" class="quarto-xref"><span>Section 3.3.7</span></a>).</p>
-<p><strong><code>pathfinder.arcc.uwyo.edu</code> times out.</strong> That is the service’s old name. Use the endpoint <code>https://s3.arcc.uwyo.edu</code> (<a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>).</p>
-<p><strong>Home filled up while a <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span> was mounted.</strong> <code>rclone mount</code> caches in <code>~/.cache/rclone</code> unless told otherwise. Unmount, delete that directory, and pass <code>--cache-dir</code> on <code>/lscratch</code> or <code>/gscratch</code> (<a href="03-storage-and-data.html#sec-s3-cache" class="quarto-xref"><span>Section 3.3.6</span></a>).</p>
+<p><strong><code>InvalidAccessKeyId</code> or <code>SignatureDoesNotMatch</code> from <code>rclone</code>.</strong> The access key (first error) or secret key (second) in the <code>arccs3</code> remote is wrong. Repeat the <code>rclone config create</code> step with the keys <span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span> issued; it overwrites the remote.</p>
+<p><strong>Python <code>boto3</code> fails with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>.</strong> Install <code>certifi</code> in the same environment, or <code>export AWS_CA_BUNDLE=/etc/pki/tls/certs/ca-bundle.crt</code>.</p>
+<p><strong><code>pathfinder.arcc.uwyo.edu</code> times out.</strong> That is the service’s old name. Use the endpoint <code>https://s3.arcc.uwyo.edu</code>.</p>
+<p><strong>Home filled up while a <span class="gloss" data-def="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>." aria-label="A named container of objects in S3 object storage; an object is addressed as <bucket>/<key>.">bucket</span> was mounted.</strong> <code>rclone mount</code> caches in <code>~/.cache/rclone</code> unless told otherwise. Unmount, delete that directory, and pass <code>--cache-dir</code> on <code>/lscratch</code> or <code>/gscratch</code>.</p>
 </section>
 <section id="still-stuck" class="level3" data-number="9.2.7">
 <h3 data-number="9.2.7" class="anchored" data-anchor-id="still-stuck"><span class="header-section-number">9.2.7</span> Still stuck?</h3>
@@ -525,7 +525,7 @@ A job submitted as a script with <code>sbatch</code> that runs unattended when s
 </dd>
 <dt><strong>Bucket</strong></dt>
 <dd>
-A named container of objects in S3 object storage; an object is addressed as <code>&lt;bucket&gt;/&lt;key&gt;</code>. See <a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.
+A named container of objects in S3 object storage; an object is addressed as <code>&lt;bucket&gt;/&lt;key&gt;</code>.
 </dd>
 <dt><strong>Checkpoint</strong></dt>
 <dd>
@@ -585,11 +585,11 @@ Message Passing Interface — the standard for a single parallel program spannin
 </dd>
 <dt><strong>Object storage (S3)</strong></dt>
 <dd>
-Storage reached over HTTPS with an access key and secret key, holding whole-file objects in buckets instead of files in a directory tree. ARCC’s service is at <code>s3.arcc.uwyo.edu</code>. Not backed up. See <a href="03-storage-and-data.html#sec-s3" class="quarto-xref"><span>Section 3.3</span></a>.
+Storage reached over HTTPS with an access key and secret key, holding whole-file objects in buckets instead of files in a directory tree. ARCC’s service is at <code>s3.arcc.uwyo.edu</code>. Not backed up.
 </dd>
 <dt><strong>OnDemand (Open OnDemand)</strong></dt>
 <dd>
-The web portal at <code>medicinebow.arcc.uwyo.edu</code> — file browser, terminal, and interactive apps. See <a href="01-getting-started.html#sec-first-login" class="quarto-xref"><span>Section 1.3</span></a>.
+The web portal at <code>medicinebow.arcc.uwyo.edu</code> — file browser, terminal, and interactive apps.
 </dd>
 <dt><strong>OOM (Out Of Memory)</strong></dt>
 <dd>

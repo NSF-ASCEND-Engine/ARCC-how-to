@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Josh Day (Rallypoint One)">
-<meta name="dcterms.date" content="2026-09-30">
+<meta name="dcterms.date" content="2026-10-10">
 
 <title>Getting Started on ARCC MedicineBow</title>
 <style>
@@ -183,7 +183,6 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
-  <li><a href="#why-this-book-exists" id="toc-why-this-book-exists" class="nav-link" data-scroll-target="#why-this-book-exists">Why this book exists</a></li>
   <li><a href="#quick-orientation" id="toc-quick-orientation" class="nav-link" data-scroll-target="#quick-orientation">Quick orientation</a></li>
   <li><a href="#how-the-book-is-organized" id="toc-how-the-book-is-organized" class="nav-link" data-scroll-target="#how-the-book-is-organized">How the book is organized</a></li>
   </ul></li>
@@ -213,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 30, 2026</p>
+      <p class="date">October 10, 2026</p>
     </div>
   </div>
   
@@ -227,11 +226,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>A practical guide to getting work done on <strong><span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span></strong>, the University of Wyoming’s high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (<span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>)</strong>.</p>
-<p>It is written for people joining the <strong>ASCEND</strong> engine and its <strong>ARID</strong> program, and assumes you are comfortable on a computer but have never used a shared supercomputer. Each chapter explains <em>why</em> before <em>how</em>.</p>
-<section id="why-this-book-exists" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-book-exists">Why this book exists</h2>
-<p>The official documentation — the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">ARCC wiki</a> — is good but has gaps and is in places out of date. The content here was written while onboarding on the live cluster and cross-checked against the running system in July 2026. Where the docs and the machine disagree, this book follows the machine and notes the conflict.</p>
+<p>This book serves as an onboarding document for NSF ASCEND Engine performers doing work on <span class="gloss" data-def="UW/ARCC's flagship HPC cluster — the subject of this book." aria-label="UW/ARCC's flagship HPC cluster — the subject of this book.">MedicineBow</span>, the University of Wyoming’s high-performance computing (HPC) cluster, run by the <strong>Advanced Research Computing Center (<span class="gloss" data-def="Advanced Research Computing Center — the UW group that runs MedicineBow." aria-label="Advanced Research Computing Center — the UW group that runs MedicineBow.">ARCC</span>)</strong>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -245,11 +240,10 @@ This is not an official ARCC document
 <p>It’s a community onboarding guide. It can drift out of date, and ARCC can change policy at any time. When in doubt, the <a href="https://pages.arcc.uwyo.edu/arcc-wiki/main/">official wiki</a> and <code>arcc-help@uwyo.edu</code> are authoritative. Corrections are very welcome.</p>
 </div>
 </div>
-</section>
 <section id="quick-orientation" class="level2">
 <h2 class="anchored" data-anchor-id="quick-orientation">Quick orientation</h2>
 <ol type="1">
-<li><strong>Request access to a project by emailing Josh Day and/or Virginia Iglesias</strong> (<a href="mailto:josh@rallypoint1.com" class="email">josh@rallypoint1.com</a> and <a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>), who coordinates ASCEND/ARID access. (See <a href="chapters/01-getting-started.html#sec-account" class="quarto-xref"><span>Getting an account</span></a>.)</li>
+<li><strong>Request access through the ASCEND PIs.</strong> Ask your project PI to add you, or email Josh Day (<a href="mailto:josh@rallypoint1.com" class="email">josh@rallypoint1.com</a>) or Virginia Iglesias (<a href="mailto:virginia@innosphere.org" class="email">virginia@innosphere.org</a>) to request a new project. (See <a href="chapters/01-getting-started.html#sec-account" class="quarto-xref"><span>Getting an account</span></a>.)</li>
 <li><strong>Nothing on the cluster is backed up.</strong> Not home, not project, not <span class="gloss" data-def="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up." aria-label="Fast, large, temporary storage (/gscratch) purged after 90 days of inactivity. Not backed up.">scratch</span>. There are <span class="gloss" data-def="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup." aria-label="A point-in-time filesystem copy on the same array as live data — guards against deletion, not hardware loss. Not a backup.">snapshots</span>, but they live on the same array. (See <a href="chapters/03-storage-and-data.html#sec-storage" class="quarto-xref"><span>Where your data lives</span></a>.)</li>
 <li><strong>Never run real computation on a <span class="gloss" data-def="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing." aria-label="A shared front-end machine (mblog1/mblog2) for editing and submitting jobs — not for heavy computing.">login node</span>.</strong> Log in, then hand work to the scheduler (<span class="gloss" data-def="The scheduler that manages all jobs on the cluster." aria-label="The scheduler that manages all jobs on the cluster.">Slurm</span>) or grab an interactive session. (See <a href="chapters/05-running-jobs.html#sec-why-scheduler" class="quarto-xref"><span>Why a scheduler exists</span></a>.)</li>
 <li><strong>Every job must name your project account</strong> with <code>--account=&lt;project&gt;</code>. (See <a href="chapters/05-running-jobs.html#sec-anatomy" class="quarto-xref"><span>Anatomy of a batch job</span></a>.)</li>
